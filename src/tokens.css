@@ -1,0 +1,156 @@
+/*
+ * Design tokens. twitch.css maps Twitch's own variables and components onto
+ * these: change a value here and it moves everywhere.
+ * Sizes that sit next to Twitch's own are in rem (Twitch sets 1rem = 10px).
+ */
+:root {
+  /* Spacing multiplier, driven by the popup (data-rs-space="1|2|3"). */
+  --rs-scale: 1.25;
+  --rs-1: calc(4px * var(--rs-scale));
+  --rs-2: calc(8px * var(--rs-scale));
+  --rs-3: calc(12px * var(--rs-scale));
+  --rs-4: calc(16px * var(--rs-scale));
+  --rs-6: calc(24px * var(--rs-scale));
+  --rs-8: calc(32px * var(--rs-scale));
+  --rs-12: calc(48px * var(--rs-scale));
+
+  --rs-radius-s: 8px;
+  --rs-radius-m: 12px;
+  --rs-radius-l: 18px;
+  --rs-radius-pill: 999px;
+
+  /* Type scale. */
+  --rs-text-1: 1.1rem; /* metadata, section headers, tags */
+  --rs-text-2: 1.2rem; /* small-caps labels, pills */
+  --rs-text-3: 1.3rem; /* secondary text */
+  --rs-text-4: 1.4rem; /* body */
+  --rs-text-5: 1.5rem; /* card titles */
+  --rs-text-6: 1.6rem; /* block headings */
+  --rs-text-title: 2rem; /* stream title */
+  --rs-text-display: 4rem; /* shelf titles */
+  --rs-caps-tracking: 0.06em;
+  --rs-font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  /* Max width of the content column under a player (three 320px panels + gaps). */
+  --rs-measure: 1000px;
+  /*
+   * Distance from the sidebar to a page's content: what Following ends up
+   * with (column padding + 3rem of ours + 3rem of Twitch's), for the pages
+   * that are not built on that column.
+   */
+  --rs-page-inset: calc(var(--rs-8) + 6rem);
+  --rs-avatar-card: 3.2rem;
+  /* Twitch's own size for the channel avatar under the player. */
+  --rs-avatar-channel: 6.4rem;
+
+  --rs-ease: 0.15s ease;
+
+  /* Overridden inline by content.js with the colour picked in the popup. */
+  --rs-accent: #8b7cf6;
+  --rs-on-accent: #fff;
+
+  /* Pills and controls laid over thumbnails. */
+  --rs-scrim: rgba(0, 0, 0, 0.65);
+  --rs-on-scrim: #fff;
+
+  /* Dim behind dialogs. */
+  --rs-backdrop: rgba(0, 0, 0, 0.5);
+}
+
+:root[data-rs-space="1"] { --rs-scale: 1; }
+:root[data-rs-space="3"] { --rs-scale: 1.6; }
+
+/*
+ * Palette, in two layers.
+ *
+ * Surfaces (page, panels, raised controls, floating layers) follow Twitch's
+ * theme by default. When a background is picked in the popup, content.js
+ * sets --rs-bg-custom and data-rs-bg="light|dark" (its tone) on <html>, and
+ * the other surfaces are derived from that colour instead.
+ *
+ * Ink (text, borders, hover) follows the tone of the background:
+ * Twitch's theme by default, the custom background's tone when there is one,
+ * so text stays readable on a light colour picked under the dark theme.
+ *
+ * Twitch nests themed regions, each re-declaring the palette: the custom
+ * rules name those nested roots too, or they would fall back to the default.
+ */
+:root {
+  --rs-bg: #fafafa;
+  --rs-surface: #ffffff;
+  --rs-raised: #f1f1f3;
+  --rs-float: #ffffff;
+}
+
+.tw-root--theme-dark {
+  --rs-bg: #0f1012;
+  --rs-surface: #16171a;
+  --rs-raised: #1e1f23;
+  --rs-float: #24252a;
+}
+
+:root[data-rs-bg],
+:root[data-rs-bg] :is(.tw-root--theme-dark, .tw-root--theme-light) {
+  --rs-bg: var(--rs-bg-custom);
+}
+
+/* Same steps as the default palettes: sidebars a touch off the page, and so on. */
+:root[data-rs-bg="light"],
+:root[data-rs-bg="light"] :is(.tw-root--theme-dark, .tw-root--theme-light) {
+  --rs-surface: color-mix(in srgb, var(--rs-bg), white 60%);
+  --rs-raised: color-mix(in srgb, var(--rs-bg), black 4%);
+  --rs-float: color-mix(in srgb, var(--rs-bg), white 80%);
+}
+
+:root[data-rs-bg="dark"],
+:root[data-rs-bg="dark"] :is(.tw-root--theme-dark, .tw-root--theme-light) {
+  --rs-surface: color-mix(in srgb, var(--rs-bg), white 3%);
+  --rs-raised: color-mix(in srgb, var(--rs-bg), white 6%);
+  --rs-float: color-mix(in srgb, var(--rs-bg), white 9%);
+}
+
+:root,
+:root[data-rs-bg="light"],
+:root[data-rs-bg="light"] :is(.tw-root--theme-dark, .tw-root--theme-light) {
+  --rs-text: #16171a;
+  --rs-muted: #6b6d75;
+  --rs-hover: rgba(0, 0, 0, 0.05);
+  --rs-border: rgba(0, 0, 0, 0.08);
+  --rs-float-border: rgba(0, 0, 0, 0.12);
+}
+
+.tw-root--theme-dark,
+:root[data-rs-bg="dark"],
+:root[data-rs-bg="dark"] :is(.tw-root--theme-dark, .tw-root--theme-light) {
+  --rs-text: #ececee;
+  --rs-muted: #9a9ca4;
+  --rs-hover: rgba(255, 255, 255, 0.06);
+  --rs-border: rgba(255, 255, 255, 0.07);
+  --rs-float-border: rgba(255, 255, 255, 0.12);
+}
+
+/*
+ * Derived tokens. Declared on every theme root, not just :root, so they are
+ * recomputed from that root's palette (Twitch nests themed regions).
+ */
+:root,
+.tw-root--theme-dark,
+.tw-root--theme-light {
+  /* Text levels between --rs-text and --rs-muted, and below --rs-muted. */
+  --rs-text-soft: color-mix(in srgb, var(--rs-text) 80%, transparent);
+  --rs-label: color-mix(in srgb, var(--rs-text) 60%, var(--rs-muted));
+  --rs-faint: color-mix(in srgb, var(--rs-muted) 75%, transparent);
+
+  --rs-accent-hover: color-mix(in srgb, var(--rs-accent) 85%, white);
+  --rs-accent-active: color-mix(in srgb, var(--rs-accent) 85%, black);
+  --rs-accent-tint: color-mix(in srgb, var(--rs-accent) 12%, transparent);
+  --rs-accent-tint-strong: color-mix(in srgb, var(--rs-accent) 22%, transparent);
+  --rs-accent-quiet: color-mix(in srgb, var(--rs-accent) 65%, var(--rs-muted));
+
+  /* Twitch's live reds, with fallbacks should it rename them. */
+  --rs-live: var(--color-text-live, #ff8280);
+  --rs-live-dot: var(--color-fill-live, #eb0400);
+  --rs-live-tint: color-mix(in srgb, var(--rs-live) 14%, transparent);
+
+  --rs-hairline: 1px solid var(--rs-border);
+}

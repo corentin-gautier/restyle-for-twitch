@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Restyle</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <h1>Restyle</h1>
+
+    <section>
+      <label class="row">
+        <span>Activer sur Twitch</span>
+        <input type="checkbox" class="switch" data-key="twitch" />
+      </label>
+    </section>
+
+    <section>
+      <div class="row">
+        <span>Espacement</span>
+        <div class="segmented" id="space">
+          <button type="button" data-value="1">Compact</button>
+          <button type="button" data-value="2">Aéré</button>
+          <button type="button" data-value="3">Très aéré</button>
+        </div>
+      </div>
+      <label class="row">
+        <span>Couleur d'accent</span>
+        <input type="color" data-key="accent" />
+      </label>
+      <div class="row">
+        <span>Couleur de fond</span>
+        <span class="group">
+          <button type="button" class="reset" data-reset="background">Par défaut</button>
+          <input type="color" data-key="background" data-fallback="#0f1012" aria-label="Couleur de fond" />
+        </span>
+      </div>
+    </section>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

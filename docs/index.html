@@ -171,6 +171,15 @@
   th { width: 14em; font-weight: 600; }
   td { color: var(--muted); }
 
+  .settings { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 40px; align-items: start; margin-top: 32px; }
+  .settings table { margin-top: 0; }
+  .settings th { width: 10em; }
+  .popup-shot figcaption { margin-top: 10px; font: 13px/1.5 var(--mono); color: var(--muted); }
+
+  @media (max-width: 900px) {
+    .settings { grid-template-columns: minmax(0, 1fr); }
+  }
+
   @media (max-width: 720px) {
     th { width: auto; }
     nav a.hide-sm { display: none; }
@@ -300,13 +309,21 @@
       <h2>Settings</h2>
       <p>Click the extension's icon. Changes apply at once, without reloading the page.</p>
 
+      <div class="settings">
       <table>
         <tr><th scope="row">Enable on Twitch</th><td>Turns the whole restyle on or off.</td></tr>
         <tr><th scope="row">Spacing</th><td>Three densities: compact, airy, very airy.</td></tr>
+        <tr><th scope="row">Themes</th><td>Eight ready-made pairs of background and accent colours, dark and light.</td></tr>
         <tr><th scope="row">Accent colour</th><td>The colour of links, tags and highlights.</td></tr>
         <tr><th scope="row">Plain chat</th><td>Hides chat badges and shows every username in the text colour.</td></tr>
         <tr><th scope="row">Background colour</th><td>The page colour. Sidebars, chat, menus and text colours are derived from it. Reset it to follow Twitch's own light or dark theme.</td></tr>
+        <tr><th scope="row">Channel colours</th><td>On a channel's pages, takes the accent and a tinted background from the channel's own colour, adjusted until text stays readable.</td></tr>
       </table>
+      <figure class="popup-shot">
+        <img src="popup.png" width="300" height="560" loading="lazy" alt="The settings popup, with the Midnight theme selected among eight colour swatches." />
+        <figcaption>The settings popup, here with the Midnight theme.</figcaption>
+      </figure>
+      </div>
     </section>
 
     <section id="install">

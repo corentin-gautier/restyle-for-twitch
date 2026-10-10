@@ -25,7 +25,10 @@ It is an unofficial project, not affiliated with or endorsed by Twitch.
 - **Channel page**: a rounded, inset player and a centred column for the stream
   information and panels.
 - **Chat**: muted messages that return to full contrast on hover, a fade at the
-  top, and no leaderboard above it.
+  top, and no leaderboard above it. Its popups (emotes, cheers, rewards, drops,
+  chat identity) share one framed style.
+- **Themes**: eight ready-made colour pairs, or the colours of the channel you
+  are watching.
 - **Menus and dialogs**: flat surfaces with a border instead of shadows, and a
   dimmed backdrop behind dialogs.
 
@@ -40,9 +43,13 @@ without reloading the page.
 | --- | --- |
 | Enable on Twitch | Turns the whole restyle on or off. |
 | Spacing | Three densities: compact, airy, very airy. |
+| Themes | Eight ready-made pairs of background and accent colours, dark and light. |
 | Accent colour | The colour of links, tags and highlights. |
 | Plain chat | Hides chat badges and shows every username in the text colour. |
 | Background colour | The page colour. Sidebars, chat, menus and text colours are derived from it. Reset to follow Twitch's own light or dark theme. |
+| Channel colours | On a channel's pages, takes the accent and a tinted background from the channel's own colour, adjusted until text stays readable. Channels without a colour, or with a grey one, keep your settings. |
+
+<img src="docs/popup.png" width="300" alt="The settings popup, with the Midnight theme selected" />
 
 The settings popup is in English or French, following the browser's language.
 

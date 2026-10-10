@@ -9,7 +9,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | --- | --- |
 | `src/tokens.css` | Design tokens (`--rs-*`): spacing, radii, type scale, palette. |
 | `src/twitch.css` | All the rules, scoped under `html:not([data-rs="off"])`, in the sections listed below. |
-| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. |
+| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. |
 | `popup/` | Settings popup. Texts come from `_locales/` (en, fr). |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store. |
@@ -57,6 +57,8 @@ checked in a headless Chrome; the others need the user's session.
 | Category, clips | `/directory/category/<slug>/clips?range=7d` | Public | same | filter row |
 | Search | `/search?term=<query>` | Public | Search results | `.search-results`, `.search-result-card` |
 | Settings | `/settings/profile` | Logged in | Pages | `.settings-tabs`, `.settings-root__content` |
+| Drops | `/drops/inventory` | Logged in | Pages (account pages) | `.drops-tabs`, `.drops-root__content` |
+| Wallet, Subscriptions | `/wallet`, `/subscriptions` | Logged in | Pages (account pages) | a block holding an `<h2>`, tabs and content |
 
 ### Channel pages
 
@@ -81,11 +83,12 @@ checked in a headless Chrome; the others need the user's session.
 | Shelf titles | Pages; Offline channel page | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
 | Tags and category chips | Cards; Channel page | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
 | Live chat | Chat | `.chat-line__message`, leaderboard hidden, highlight cards. |
+| Chat popups | Chat | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 
 ## Not covered yet
 
-- Logged-in variants: Following, Settings, notifications, whispers, user menu,
-  the logged-in Subscribe panel. Ask the user for a DOM dump or a screenshot.
+- The chat settings popover is positioned by Twitch's script and overhangs
+  the chat's left edge; left as is.
 - Light theme and a custom background colour, beyond the token layer.
 - Theatre mode, narrow windows, the clip page (`/<channel>/clip/<slug>`).
 - Twitch in another language: a few rules match English `aria-label`s.
@@ -98,3 +101,9 @@ with `puppeteer-core` and the system Chrome), inject `src/tokens.css` and
 screenshot. Take a capture without the stylesheet too when unsure whether a
 defect comes from Twitch or from the extension. Keep such scripts out of the
 repository.
+
+Logged-in pages need the user's session: a Chrome started by puppeteer is
+refused by Twitch's login. Start a normal Chrome on a separate profile with
+`--user-data-dir=<dir> --remote-debugging-port=<port>`, let the user log in,
+then attach with `puppeteer.connect()`. Only open pages and popups; never
+post, buy or change account settings.

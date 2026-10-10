@@ -1,0 +1,29 @@
+{
+  "extDescription": {
+    "message": "A calmer, more coherent interface for Twitch."
+  },
+  "enable": {
+    "message": "Enable on Twitch"
+  },
+  "spacing": {
+    "message": "Spacing"
+  },
+  "spacingCompact": {
+    "message": "Compact"
+  },
+  "spacingAiry": {
+    "message": "Airy"
+  },
+  "spacingVeryAiry": {
+    "message": "Very airy"
+  },
+  "accent": {
+    "message": "Accent colour"
+  },
+  "background": {
+    "message": "Background colour"
+  },
+  "reset": {
+    "message": "Default"
+  }
+}

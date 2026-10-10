@@ -7,6 +7,15 @@ const DEFAULTS = {
   background: "",
 };
 
+// Labels come from _locales, in the browser's language (English otherwise).
+document.documentElement.lang = chrome.i18n.getUILanguage();
+for (const el of document.querySelectorAll("[data-i18n]")) {
+  el.textContent = chrome.i18n.getMessage(el.dataset.i18n) || el.textContent;
+}
+for (const el of document.querySelectorAll("[data-i18n-label]")) {
+  el.setAttribute("aria-label", chrome.i18n.getMessage(el.dataset.i18nLabel) || el.getAttribute("aria-label"));
+}
+
 const inputs = document.querySelectorAll("[data-key]");
 const spaceButtons = document.querySelectorAll("#space button");
 const resetButtons = document.querySelectorAll("[data-reset]");
@@ -19,7 +28,8 @@ function render(settings) {
     else input.value = value || input.dataset.fallback;
   }
   for (const button of resetButtons) {
-    button.hidden = !settings[button.dataset.reset];
+    // Only offered once the setting differs from its default.
+    button.hidden = settings[button.dataset.reset] === DEFAULTS[button.dataset.reset];
   }
   for (const button of spaceButtons) {
     button.setAttribute("aria-pressed", String(Number(button.dataset.value) === settings.space));

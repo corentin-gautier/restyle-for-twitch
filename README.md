@@ -43,7 +43,7 @@ without reloading the page.
 | Accent colour | The colour of links, tags and highlights. |
 | Background colour | The page colour. Sidebars, chat, menus and text colours are derived from it. Reset to follow Twitch's own light or dark theme. |
 
-The settings popup is currently in French.
+The settings popup is in English or French, following the browser's language.
 
 ## Install
 

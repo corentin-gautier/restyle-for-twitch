@@ -347,12 +347,30 @@ html:not([data-rs="off"]) {
     color: var(--rs-muted) !important;
   }
 
+  /*
+   * Sign-up banner shown at the bottom to logged-out visitors: a rounded
+   * bar inset from the window's edges instead of a full-width band.
+   */
+  & #twilight-sticky-footer-root:has(.upsell-bottom-banner__coolcat) {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+    background: var(--rs-surface) !important;
+
+    & article {
+      border-radius: var(--rs-radius-l) !important;
+    }
+  }
+
   /* ==== Pages: home, Following, Browse ==== */
   & .common-centered-column,
   & [data-a-target="front-page-main-content"] {
     max-width: 1760px;
     margin-inline: auto !important;
     padding-inline: var(--rs-8) !important;
+  }
+
+  /* Home sits in one more padded wrapper than the other pages: same left edge as Browse. */
+  & [data-a-target="front-page-main-content"] {
+    padding-inline: 3rem !important;
   }
 
   /*
@@ -523,6 +541,7 @@ html:not([data-rs="off"]) {
     & input,
     & select,
     & button[aria-haspopup],
+    & [data-test-selector^="toggle-balloon-wrapper"] > button,
     & [role="combobox"] {
       height: 4rem !important;
       min-height: 4rem !important;
@@ -540,8 +559,14 @@ html:not([data-rs="off"]) {
     }
 
     & button[aria-haspopup],
+    & [data-test-selector^="toggle-balloon-wrapper"] > button,
     & [role="combobox"]:not(input) {
       padding-inline: var(--rs-4) !important;
+    }
+
+    /* Wrappers sized for Twitch's shorter menu buttons. */
+    & :has(> [data-test-selector^="toggle-balloon-wrapper"]) {
+      height: auto !important;
     }
 
     /*
@@ -593,6 +618,15 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /* The line under a Browse section's title ("Games", "IRL"...). */
+  & .vertical-directory-home-header p.tw-title {
+    margin-top: var(--rs-2) !important;
+    font-size: var(--rs-text-6) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    color: var(--rs-muted) !important;
+  }
+
   /* The title's type, on any page. */
   & .twilight-main h1:not(.channel-info-content *, article *) {
     margin-top: 0 !important;
@@ -609,7 +643,7 @@ html:not([data-rs="off"]) {
    * Only on pages that show cards: Settings and the like use the same
    * headings for form sections and field labels.
    */
-  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .tw-tower *, .game-card *, [class*="card" i] *, a *),
+  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, [class*="card" i] *, a *),
   & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) {
     font-size: var(--rs-text-display) !important;
     font-weight: 700 !important;
@@ -619,7 +653,7 @@ html:not([data-rs="off"]) {
     padding-block: var(--rs-8) var(--rs-3) !important;
   }
 
-  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .tw-tower *, .game-card *, [class*="card" i] *, a *) *,
+  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, [class*="card" i] *, a *) *,
   & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) * {
     font-size: inherit !important;
     font-weight: inherit !important;
@@ -764,6 +798,15 @@ html:not([data-rs="off"]) {
   }
 
   /* Its corner and edge pieces are the empty siblings of the thumbnail wrapper. */
+  /*
+   * Shared streams ("guest star") frame their thumbnail with a gradient: the
+   * picture is cut out of it by a square inset. The cut-out follows the
+   * rounded corners instead, for a frame of even width all around.
+   */
+  & .guest-star-live-card-clip-edge {
+    clip-path: inset(3px round calc(var(--rs-radius-l) - 3px)) !important;
+  }
+
   & .tw-hover-accent-effect > div:empty {
     display: none !important;
   }
@@ -847,12 +890,147 @@ html:not([data-rs="off"]) {
     margin-top: var(--rs-3) !important;
   }
 
-  & article [class*="ScImageWrapper"]:has(.preview-card-avatar) {
+  & article [class*="ScImageWrapper"]:has(.preview-card-avatar, [data-test-selector="preview-card-avatar"], [data-test-selector="preview-card-box-art"]) {
     flex: 0 0 var(--rs-avatar-card) !important;
     width: var(--rs-avatar-card) !important;
     min-width: var(--rs-avatar-card) !important;
     margin-top: 0 !important;
     align-self: flex-start !important;
+  }
+
+  /*
+   * Video and clip cards on channel pages put the category's box art, or a
+   * larger avatar, in that slot: both are brought to the avatar's width so
+   * the text starts on the same line as on every other card.
+   */
+  & article [data-test-selector="preview-card-box-art"] {
+    display: block !important;
+    width: 100% !important;
+    border-radius: 0.6rem !important;
+    overflow: hidden !important;
+  }
+
+  & article [data-test-selector="preview-card-avatar"] .tw-avatar:not([class*="mini-avatar"] *) {
+    width: var(--rs-avatar-card) !important;
+    height: var(--rs-avatar-card) !important;
+  }
+
+  /*
+   * "Chapters" under a video's title: a small button in the tags' accent
+   * tint, but taller and squarer than a tag, since it opens a menu. Its
+   * count loses its own pill and joins the label.
+   */
+  & article [class*="ScTextWrapper"] button:has(.tw-pill) {
+    height: 2.8rem !important;
+    min-height: 0 !important;
+    margin-top: var(--rs-2) !important;
+    padding: 0 1rem !important;
+    border-radius: var(--rs-radius-s) !important;
+    background: var(--rs-accent-tint) !important;
+    color: var(--rs-accent-quiet) !important;
+    transition: background-color var(--rs-ease);
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+
+    & p,
+    & .tw-pill {
+      font-size: var(--rs-text-2) !important;
+      font-weight: 600 !important;
+      line-height: 2.8rem !important;
+      color: inherit !important;
+    }
+
+    & .tw-pill {
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    & svg {
+      width: 1.6rem !important;
+      height: 1.6rem !important;
+      fill: currentColor !important;
+    }
+
+    & .tw-core-button-icon,
+    & :has(> .tw-core-button-icon) {
+      display: flex !important;
+      width: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Twitch's paddings between icon, label and count, replaced by one small gap. */
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0 0 0.4rem !important;
+    }
+
+    & :has(> .tw-pill) {
+      margin: 0 0 0 0.4rem !important;
+      padding: 0 !important;
+    }
+  }
+
+  /*
+   * Its popup, the list of chapters: a small-caps heading, then padded rows
+   * that light up on hover, each with a small rounded box art.
+   */
+  & .tw-balloon:has(.preview-card-game-balloon__content) {
+    & > div {
+      padding: var(--rs-1) !important;
+    }
+
+    & > div > :not(.preview-card-game-balloon__content) {
+      padding: var(--rs-2) var(--rs-2) var(--rs-1) !important;
+      border: 0 !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    & .media-row > a {
+      border-radius: var(--rs-radius-s) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--rs-hover) !important;
+      }
+
+      & > div {
+        align-items: center !important;
+        padding: var(--rs-1) var(--rs-2) !important;
+      }
+    }
+
+    & .media-row__image-wrapper {
+      flex: 0 0 var(--rs-avatar-card) !important;
+      width: var(--rs-avatar-card) !important;
+      border-radius: 0.6rem !important;
+      overflow: hidden !important;
+    }
+
+    & :has(> .media-row__info-text) {
+      padding: 0 0 0 var(--rs-2) !important;
+    }
+
+    & .media-row__info-text p {
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .media-row__info-description p {
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-muted) !important;
+    }
   }
 
   & article [class*="ScTextWrapper"] {
@@ -862,12 +1040,19 @@ html:not([data-rs="off"]) {
     margin-top: 0 !important;
     padding-top: 0 !important;
 
-    /* Shared wrapper: dissolved so name and category become items of the column. */
-    & > :has([data-a-target="preview-card-channel-link"]):has([data-a-target="preview-card-game-link"]):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
+    /*
+     * Shared wrapper: dissolved so name and category become items of the
+     * column. On clips the second line is the "Clipped by" link instead.
+     */
+    & > :has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
       display: contents !important;
 
-      & > :is([data-a-target="preview-card-game-link"], :has([data-a-target="preview-card-game-link"])) {
+      & > :is([data-a-target="preview-card-game-link"], :has([data-a-target="preview-card-game-link"])),
+      & > :has([data-a-target="preview-card-clip-curator-link"]) {
         order: 1 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
       }
     }
   }
@@ -879,8 +1064,8 @@ html:not([data-rs="off"]) {
 
   /* The name, in each of the three builds. */
   & article a[data-a-target="preview-card-channel-link"] > div:has(> p[data-a-target="preview-card-channel-link"]),
-  & article [class*="ScTextWrapper"] > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"])),
-  & article [class*="ScTextWrapper"] > :has([data-a-target="preview-card-game-link"]):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])) {
+  & article [class*="ScTextWrapper"] > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
+  & article [class*="ScTextWrapper"] > :has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])) {
     order: -1 !important;
     display: flex !important;
     align-items: center !important;
@@ -916,7 +1101,8 @@ html:not([data-rs="off"]) {
   }
 
   & [data-a-target="preview-card-game-link"],
-  & [data-a-target="preview-card-game-link"] * {
+  & [data-a-target="preview-card-game-link"] *,
+  & [data-a-target="preview-card-clip-curator-link"] {
     font-size: var(--rs-text-2) !important;
     font-weight: 400 !important;
     letter-spacing: 0 !important;
@@ -927,6 +1113,7 @@ html:not([data-rs="off"]) {
   & article p[data-a-target="preview-card-channel-link"]:hover,
   & article p[data-a-target="preview-card-channel-link"]:hover p,
   & article a[data-a-target="preview-card-channel-link"]:not(:has([data-a-target="preview-card-title-link"])):hover p,
+  & [data-a-target="preview-card-clip-curator-link"]:hover,
   & [data-a-target="preview-card-game-link"]:hover,
   & [data-a-target="preview-card-game-link"]:hover * {
     color: var(--rs-text) !important;
@@ -1079,9 +1266,13 @@ html:not([data-rs="off"]) {
     padding-right: 0 !important;
   }
 
+  & #live-channel-stream-information div:has(> .metadata-layout__support) {
+    padding-left: var(--rs-4) !important;
+  }
+
   /* First row: as tall as the avatar, so the name and buttons sit on its middle line. */
   & .metadata-layout__support {
-    min-height: var(--rs-avatar-channel) !important;
+    /* min-height: var(--rs-avatar-channel) !important; */
     align-items: center !important;
   }
 
@@ -1100,10 +1291,10 @@ html:not([data-rs="off"]) {
    * label, and the rest (game, uptime) is one quiet metadata level.
    */
   & .channel-info-content h1 {
-    font-size: var(--rs-text-4) !important;
+    font-size: var(--rs-text-5) !important;
     font-weight: 600 !important;
     line-height: 1.4 !important;
-    color: var(--rs-muted) !important;
+    color: var(--rs-text) !important;
   }
 
   & [data-a-target="stream-title"] {
@@ -1122,7 +1313,8 @@ html:not([data-rs="off"]) {
   }
 
   /* The category under the title is a chip like the tags beside it. */
-  & [data-a-target="stream-game-link"] {
+  & [data-a-target="stream-game-link"],
+  & [data-a-target="video-info-game-boxart-link"] {
     display: inline-flex !important;
     align-items: center !important;
     min-height: 2rem !important;
@@ -1137,7 +1329,9 @@ html:not([data-rs="off"]) {
   }
 
   & [data-a-target="stream-game-link"],
-  & [data-a-target="stream-game-link"] * {
+  & [data-a-target="stream-game-link"] *,
+  & [data-a-target="video-info-game-boxart-link"],
+  & [data-a-target="video-info-game-boxart-link"] * {
     font-size: var(--rs-text-1) !important;
     font-weight: 500 !important;
     color: var(--rs-accent-quiet) !important;
@@ -1253,6 +1447,7 @@ html:not([data-rs="off"]) {
   }
 
   & .channel-panels-container {
+    width: auto !important;
     height: auto !important;
     columns: 28rem 3 !important;
     column-gap: var(--rs-4) !important;
@@ -1267,15 +1462,536 @@ html:not([data-rs="off"]) {
   }
 
   & .default-panel {
+    box-sizing: border-box !important;
     width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
     background: var(--rs-surface) !important;
     border: var(--rs-hairline) !important;
     border-radius: var(--rs-radius-l) !important;
     padding: var(--rs-4) !important;
 
+    /* Twitch gives the panel's blocks a fixed 320px layout: they follow the column instead. */
+    & > *,
     & img {
       max-width: 100% !important;
+    }
+
+    & img {
       height: auto !important;
+    }
+  }
+
+  /*
+   * ==== Category page header ====
+   * Box art rounded like every other thumbnail, and the name at the size of
+   * the other pages' titles.
+   */
+  & .directory-header-new__info .tw-aspect {
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+  }
+
+  & .directory-header-new__info h1 {
+    font-size: var(--rs-text-display) !important;
+    font-weight: 700 !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: var(--rs-2) !important;
+  }
+
+  /*
+   * ==== Search results ====
+   * Same distance from the sidebar as the other pages, rounded thumbnails,
+   * and one text hierarchy per result.
+   */
+  & .search-results {
+    padding-inline: calc(var(--rs-page-inset) - 4.6rem) !important;
+
+    /* One result: name, then quieter lines for category, viewers and title. */
+    & .search-result-card {
+      gap: var(--rs-2) !important;
+    }
+
+    & .search-result-card__img,
+    & .search-result-card__img-wrapper:not(:has(.tw-avatar)) {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & strong a {
+      font-size: var(--rs-text-5) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & p:not(.tw-title),
+    & p:not(.tw-title) a {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & p[data-test-selector$="__title"] {
+      color: var(--rs-text-soft) !important;
+    }
+
+    & .tw-aspect:not(.tw-avatar *) {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+  }
+
+  /*
+   * ==== Offline channel page ====
+   * Twitch paints the page in the channel's colour and lets it show beside
+   * the content; the page background takes over, across the full width.
+   */
+  & .channel-root--home {
+    background: var(--rs-bg) !important;
+  }
+
+  & .channel-root__info--home .channel-info-content {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /*
+   * Hero: the banner becomes an inset, rounded frame like the live player.
+   * Clipped rather than padded, so Twitch's own sizing is left alone.
+   */
+  & .channel-root__player--offline > div:has(> .home) {
+    clip-path: inset(var(--rs-2) round var(--rs-radius-l));
+  }
+
+  /*
+   * The banner is a backdrop, not the subject: washed with the page colour
+   * so the two panels in front of it carry the hero.
+   */
+  & .channel-root__player--offline > div:has(> .home) {
+    box-shadow: inset 0 0 0 100vmax color-mix(in srgb, var(--rs-bg) 78%, transparent) !important;
+  }
+
+  /*
+   * The two panels share the width of the column below (avatar on the left,
+   * buttons on the right): the text panel starts on its left edge and takes
+   * the room the video leaves, the video ends on its right edge.
+   */
+  & .home-offline-hero > div:has(> .home-carousel-info) {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: var(--rs-measure) !important;
+    margin-inline: auto !important;
+    padding-inline: 3.2rem !important;
+    justify-content: space-between !important;
+    gap: var(--rs-4) !important;
+  }
+
+  & .home-carousel-info {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  /* The wrapper is wider than the video it holds: brought back to Twitch's fixed video width. */
+  & .home-video__wrapper {
+    flex: 0 0 53.3rem !important;
+    width: 53.3rem !important;
+    margin: 0 !important;
+  }
+
+  & .home-carousel-info,
+  & .home-video {
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+  }
+
+  & .home-carousel-info {
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    box-shadow: none !important;
+  }
+
+  /*
+   * The hero's video is the persistent player laid over its panel: no inset
+   * there, and only the top corners rounded, to follow the panel's.
+   */
+  &:has(.channel-root--home) .persistent-player:not(.persistent-player--theatre) {
+    padding: 0 !important;
+    background: transparent !important;
+
+    & .video-player,
+    & .video-player__container,
+    & .video-ref,
+    & video {
+      border-radius: var(--rs-radius-m) var(--rs-radius-m) 0 0 !important;
+    }
+  }
+
+  /*
+   * The About tab lives in the same wrapper as the other tabs' content: it
+   * keeps that wrapper's inset, which the live page's About rule removes.
+   */
+  & .channel-root__info--home .channel-info-content .home__lower-content:has(.about-section__panel) {
+    padding-inline: 3.2rem !important;
+  }
+
+  /* Schedule tab: its caption is a sentence about the last stream, not a shelf title. */
+  & [data-test-selector="schedule-caption"] {
+    font-size: var(--rs-text-6) !important;
+    font-weight: 500 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  /*
+   * "Featured Clips" card heading the clips shelf: Twitch paints it in the
+   * channel's colour, with white text and a white button. It becomes a card
+   * like the others, and its button a quiet one.
+   */
+  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) {
+    justify-content: space-between !important;
+    padding: var(--rs-3) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    /* The avatars hang over the top edge by an inline negative margin. */
+    & > div {
+      margin: 0 !important;
+    }
+
+    & img {
+      border-radius: 50% !important;
+    }
+
+    & p.tw-title {
+      font-size: var(--rs-text-6) !important;
+      font-weight: 600 !important;
+      line-height: 1.3 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & a {
+      background: var(--rs-hover) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-accent-tint-strong) !important;
+      }
+
+      & * {
+        font-size: var(--rs-text-3) !important;
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+
+  /* Offline, the channel name is the page's title, not a label above one. */
+  & .home-header-sticky h1 {
+    font-size: var(--rs-text-title) !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--rs-text) !important;
+  }
+
+  /* Kept out of the shelf-title rule: a caption beside a video, not a landmark. */
+  & .home-carousel-info h2 {
+    font-size: 2.4rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /*
+   * Shelves of categories and suggested channels: Twitch sizes their items
+   * for its own, wider column. They share the row instead.
+   */
+  & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower > * {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    min-width: 0 !important;
+  }
+
+  /*
+   * Shelf titles on a channel's own page, on every tab, and under a video:
+   * the same display size and air as the shelves of the home page. Panel titles and the
+   * About heading are not shelves and keep their own size.
+   */
+  & .home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"]),
+  & .channel-info-content :has(> .preview-card-carousel) p.tw-title {
+    font-size: var(--rs-text-display) !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--rs-text) !important;
+    padding-block: var(--rs-8) var(--rs-3) !important;
+  }
+
+  & .home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"]) *,
+  & .channel-info-content :has(> .preview-card-carousel) p.tw-title > span {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+  }
+
+  /*
+   * ==== Video (VOD) page ====
+   * Same column as a live channel. The video's own block (date, title,
+   * category, views) sits bare on the column's edges; the channel block
+   * under it is a card.
+   */
+  & .metadata-layout__split-top,
+  & .metadata-layout__split-top > * {
+    padding-inline: 0 !important;
+    margin-inline: 0 !important;
+  }
+
+  & .timestamp-metadata__bar {
+    display: none !important;
+  }
+
+  & div:has(> .timestamp-metadata__bar) > p {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: var(--rs-text-3) !important;
+    font-weight: 500 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  /* The title: the block that follows the date. */
+  & .metadata-layout__split-top div:has(> div > .timestamp-metadata__bar) + div {
+    margin-top: var(--rs-1) !important;
+    padding-right: var(--rs-8) !important;
+    font-size: var(--rs-text-title) !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--rs-text) !important;
+  }
+
+  /* Category chip and view count on one line; the chip replaces the dot. */
+  & div:has(> [data-a-target="video-info-game-boxart-link"]) {
+    display: flex !important;
+    align-items: center !important;
+    gap: var(--rs-2) !important;
+    margin-top: var(--rs-2) !important;
+
+    & > span {
+      display: none !important;
+    }
+
+    & > p {
+      font-size: var(--rs-text-3) !important;
+      font-weight: 500 !important;
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  & .metadata-layout__split-top + div {
+    padding: 0 !important;
+    margin: var(--rs-4) 0 0 !important;
+
+    & > div {
+      margin: 0 !important;
+      padding: var(--rs-4) !important;
+      background: var(--rs-surface) !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+    }
+
+    & h1 {
+      font-size: var(--rs-text-6) !important;
+      color: var(--rs-text) !important;
+    }
+
+    /* "last live" and follower count under the name. */
+    & .metadata-layout__support + div,
+    & .metadata-layout__support + div * {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  /*
+   * "Filter By" above a channel's videos and clips: label and menu sit at
+   * the right edge of the column, like "Sort by" on the directory pages.
+   * The row has no hook of its own; it is the one holding a lone <strong>
+   * label next to a button, nested one level deeper on the videos tab.
+   */
+  & .channel-info-content div:has(> div > strong:only-child):has(button),
+  & .channel-info-content div:has(> div > div > strong:only-child):has(button) {
+    justify-content: flex-end !important;
+  }
+
+  & .channel-info-content div:has(> div > strong:only-child):has(button) > div {
+    flex-grow: 0 !important;
+  }
+
+  /* Shelves of other videos: on the column's edges, with titled rows. */
+  & .channel-info-content > div:has(.preview-card-carousel) > div {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  /*
+   * Shelf header: the title on the left, its link ("View All", "Play All")
+   * pushed to the right edge as a small-caps label, like "Show more"
+   * elsewhere. A subtitle ("4 videos") stays tucked under the title.
+   */
+  & .channel-info-content div:has(> p.tw-title > [data-test-selector="title"]) {
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    margin: 0 0 var(--rs-3) !important;
+
+    &:has(+ [data-test-selector="subtitle"]) {
+      margin-bottom: 0 !important;
+    }
+  }
+
+  & .channel-info-content [data-test-selector="subtitle"] {
+    margin-bottom: var(--rs-3) !important;
+    font-size: var(--rs-text-3) !important;
+    color: var(--rs-muted) !important;
+  }
+
+  & [data-a-target^="video-shelf-expand-link"] {
+    text-decoration: none !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+
+    & > div {
+      gap: 0.4rem !important;
+    }
+
+    & p {
+      font-size: var(--rs-text-2) !important;
+      font-weight: 600 !important;
+      letter-spacing: var(--rs-caps-tracking) !important;
+      text-transform: uppercase !important;
+      color: inherit !important;
+    }
+
+    & svg {
+      fill: currentColor !important;
+    }
+
+    &:hover {
+      color: var(--rs-text) !important;
+    }
+  }
+
+
+  /*
+   * ==== Subscribe and Gift a Sub panels ====
+   * Twitch separates their blocks with background steps that the palette
+   * flattens into one colour. The steps are redrawn: a bordered floating box,
+   * tinted cards for the gift options, bordered fields, a ruled footer.
+   */
+  & .sub-modal {
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+  }
+
+  & .support-panel {
+    background: var(--rs-float) !important;
+
+    & .gifting-option,
+    & .gift-theme-selector {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & .gifting-option {
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-accent-tint) !important;
+      }
+    }
+
+    & .gift-theme-selector label {
+      border-radius: var(--rs-radius-s) !important;
+    }
+
+    & .tw-select,
+    & input:is([type="text"], [type="number"]) {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-s) !important;
+      box-shadow: inset 0 0 0 1px var(--rs-float-border) !important;
+    }
+
+    /* The channel's name heads the panel: a title, not body text. */
+    & p.tw-title {
+      font-size: var(--rs-text-title) !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+    }
+
+    /* Footer with the actions, under the scrolling part. */
+    & > .scrollable-area + div {
+      border-top: var(--rs-hairline) !important;
+    }
+  }
+
+  /* Checkboxes stay square: only radio buttons are round. */
+  & .tw-checkbox__label::before {
+    border-radius: 0.4rem !important;
+  }
+
+  /*
+   * ==== Filter and sort menus ====
+   * Twitch builds them in several ways (rows straight in the box or behind
+   * padded wrappers, links, buttons or checkboxes), each with its own inner
+   * margins. One box padding and one row size for all of them. Dialogs with
+   * headings, pictures or text fields are not menus and are left alone.
+   */
+  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"][class*="Attached"] > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"]))) {
+    padding: 0.6rem !important;
+
+    /* Wrappers between the box and its rows. */
+    & div:has(> div > .tw-interactable),
+    & div:has(> div > div > .tw-interactable) {
+      padding: 0 !important;
+    }
+
+    & .tw-interactable {
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    & .tw-interactable > div,
+    & div:has(> div > div > .tw-checkbox) {
+      align-items: center !important;
+      min-height: 3.6rem !important;
+      padding: 0.6rem 1rem !important;
+    }
+
+    /* Rows holding a pill ("Top 24h") pad their label a second time. */
+    & .tw-interactable > div > div > div:has(.tw-pill) {
+      padding: 0 !important;
+    }
+
+    /* Checkbox lists scroll and end with a footer: the padding moves inside. */
+    &:has(.tw-checkbox) {
+      padding: 0 !important;
+    }
+
+    & .scrollable-area > div {
+      padding: 0.6rem !important;
+    }
+
+    & div:has(> div > div > .tw-checkbox) {
+      display: flex !important;
+      border-radius: var(--rs-radius-m) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
     }
   }
 
@@ -1307,8 +2023,36 @@ html:not([data-rs="off"]) {
    * top slot of the chat room when that is what it holds. Pinned messages,
    * predictions and hype trains (community highlights) are left alone.
    */
-  & .chat-room__content > div:has([class*="channelLeaderboard" i]):not(:has([class*="community-highlight"])) {
+  & .chat-room__content > div:has([class*="Leaderboard" i]):not(:has([class*="community-highlight"])) {
     display: none !important;
+  }
+
+  /*
+   * Progress bar of a highlight card (drops, hype train goals...): Twitch
+   * hangs it under the card, where it crosses the rounded border. It becomes
+   * a thin line inside the card, clipped by the card's own corners.
+   */
+  /* Positions the bar against a box inside the card's clipping wrapper. */
+  & .community-highlight div:has(> .highlight__progress-bar) {
+    position: relative !important;
+  }
+
+  & .community-highlight .highlight__progress-bar {
+    inset: auto 0 0 !important;
+    z-index: 1 !important;
+    width: auto !important;
+    height: 0.3rem !important;
+    border-radius: 0 !important;
+
+    & .tw-progress-bar {
+      height: 100% !important;
+      background: var(--rs-border) !important;
+    }
+
+    & [data-a-target="tw-progress-bar-animation"] {
+      height: 100% !important;
+      background: var(--rs-accent) !important;
+    }
   }
 
   /*
@@ -1396,6 +2140,84 @@ html:not([data-rs="off"]) {
     font-size: var(--rs-text-1) !important;
     font-variant-numeric: tabular-nums !important;
     color: var(--rs-faint) !important;
+  }
+
+  /*
+   * Chat replay on videos: built from other components than the live chat
+   * (.video-chat, .vod-message), and given the same treatment: surface,
+   * spacing, quiet messages that come back on hover, fade at the top.
+   */
+  & .video-chat,
+  & .video-chat__header {
+    background: var(--rs-surface) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  & .video-chat__header span {
+    font-weight: 600 !important;
+  }
+
+  & .video-chat__message-list-wrapper {
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--rs-12)) !important;
+  }
+
+  & .video-chat__message-list-wrapper li {
+    padding-inline: var(--rs-2) !important;
+  }
+
+  & .vod-message {
+    padding: var(--rs-2) !important;
+    border-radius: var(--rs-radius-m) !important;
+    line-height: 1.55 !important;
+    transition: background var(--rs-ease);
+
+    & .video-chat__message,
+    & .text-fragment {
+      color: var(--rs-text-soft) !important;
+      transition: color var(--rs-ease);
+    }
+
+    & .chat-badge {
+      opacity: 0.6 !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    & .video-chat__message-author {
+      font-weight: 600 !important;
+      text-decoration: none !important;
+    }
+
+    /* The timestamp is a button that seeks the video: no box of its own. */
+    & .vod-message__header button {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    & .vod-message__header p {
+      font-size: var(--rs-text-1) !important;
+      font-variant-numeric: tabular-nums !important;
+      line-height: 2.2rem !important;
+      color: var(--rs-faint) !important;
+    }
+
+    &:hover {
+      background: var(--rs-hover) !important;
+
+      & .video-chat__message,
+      & .text-fragment {
+        color: var(--rs-text) !important;
+      }
+
+      & .chat-author__display-name {
+        filter: none !important;
+        opacity: 1 !important;
+      }
+
+      & .chat-badge {
+        opacity: 1 !important;
+      }
+    }
   }
 
   & .chat-input {

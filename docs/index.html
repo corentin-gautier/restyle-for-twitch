@@ -1,244 +1,371 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Restyle for Twitch</title>
-    <meta name="description" content="A calmer, more coherent interface for twitch.tv, as a Chrome extension." />
-    <meta property="og:title" content="Restyle for Twitch" />
-    <meta property="og:description" content="A calmer, more coherent interface for twitch.tv, as a Chrome extension." />
-    <meta property="og:image" content="screenshot.png" />
-    <link rel="icon" href="icon.png" />
-    <style>
-      :root {
-        --bg: #0f1012;
-        --surface: #16171a;
-        --text: #ececee;
-        --muted: #9a9ca4;
-        --border: rgba(255, 255, 255, 0.08);
-        --accent: #8b7cf6;
-        --on-accent: #fff;
-        --radius: 18px;
-        --measure: 1080px;
-      }
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Restyle for Twitch: a calmer interface for twitch.tv</title>
+<meta name="description" content="Free Chrome extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
+<meta name="author" content="Corentin Gautier">
+<link rel="canonical" href="https://corentin-gautier.github.io/restyle-for-twitch/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Restyle for Twitch">
+<meta property="og:title" content="Restyle for Twitch: a calmer interface for twitch.tv">
+<meta property="og:description" content="Free Chrome extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
+<meta property="og:url" content="https://corentin-gautier.github.io/restyle-for-twitch/">
+<meta property="og:image" content="https://corentin-gautier.github.io/restyle-for-twitch/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Restyle for Twitch: Twitch, with the noise turned down">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#f4f3ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f0c" media="(prefers-color-scheme: dark)">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Restyle for Twitch",
+  "description": "Free Chrome extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.",
+  "url": "https://corentin-gautier.github.io/restyle-for-twitch/",
+  "image": "https://corentin-gautier.github.io/restyle-for-twitch/og-image.png",
+  "applicationCategory": "BrowserApplication",
+  "operatingSystem": "Chrome 120 or later",
+  "codeRepository": "https://github.com/corentin-gautier/restyle-for-twitch",
+  "author": { "@type": "Person", "name": "Corentin Gautier", "url": "https://github.com/corentin-gautier" },
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "featureList": [
+    "Quieter sidebar and top bar",
+    "Home page without the autoplaying carousel",
+    "Inset, rounded player and centred channel column",
+    "Muted chat that returns to full contrast on hover",
+    "Flat menus and dialogs",
+    "Accent colour, background colour and spacing settings"
+  ]
+}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23c8f031'/%3E%3Cpath d='M7 8h5v16H7z' fill='%23111210' opacity='.45'/%3E%3Cpath d='M14 8h11v9H14z' fill='%23111210'/%3E%3Cpath d='M14 19h11v5H14z' fill='%23111210' opacity='.45'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f4f3ee;
+    --surface: #fbfaf6;
+    --text: #111210;
+    --muted: #55584f;
+    --border: #c9c9be;
+    --accent: #c8f031;
+    --on-accent: #111210;
+    --accent-text: #3f6212;
+    --code-bg: #e8e7df;
+    --screen: #111210;
+    --marker: linear-gradient(transparent 60%, var(--accent) 60% 92%, transparent 92%);
+    --marker-ink: currentColor;
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    --rule: 1.5px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e0f0c;
+      --surface: #171914;
+      --text: #eeefe6;
+      --muted: #a4a798;
+      --border: #33352d;
+      --accent-text: #c8f031;
+      --code-bg: #1f211b;
+      --screen: #191b15;
+      --marker: none;
+      --marker-ink: var(--accent);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.6 var(--sans);
+  }
+  a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  a:hover { background: var(--accent); color: var(--on-accent); }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
 
-      @media (prefers-color-scheme: light) {
-        :root {
-          --bg: #fafafa;
-          --surface: #ffffff;
-          --text: #16171a;
-          --muted: #6b6d75;
-          --border: rgba(0, 0, 0, 0.1);
-          --accent: #6a58e8;
-        }
-      }
+  header.top { border-bottom: var(--rule) solid var(--text); }
+  header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; padding-block: 14px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: -0.02em; text-decoration: none; }
+  .brand:hover { background: none; color: inherit; }
+  .brand svg { flex-shrink: 0; }
+  nav { display: flex; gap: 18px; font: 13px var(--mono); }
+  nav a { text-decoration: none; }
 
-      * { box-sizing: border-box; }
+  .hero { padding: clamp(48px, 9vw, 96px) 0 56px; }
+  .hero h1 { margin: 0 0 24px; font-size: clamp(38px, 7.4vw, 76px); font-weight: 700; line-height: 0.98; letter-spacing: -0.04em; text-wrap: balance; }
+  .hero h1 em { background: var(--marker); color: var(--marker-ink); font-style: normal; font-weight: 300; }
+  .hero p { margin: 0 0 32px; max-width: 60ch; font-size: 19px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn { display: inline-block; padding: 13px 22px; border: var(--rule) solid var(--text); color: var(--text); font-weight: 600; line-height: 1.2; text-decoration: none; }
+  .btn::after { content: " →"; content: " →" / ""; font-family: var(--mono); }
+  .btn.primary { background: var(--text); color: var(--bg); }
+  .btn:hover, .btn.primary:hover { background: var(--accent); color: var(--on-accent); }
 
-      body {
-        margin: 0;
-        background: var(--bg);
-        color: var(--text);
-        font: 17px/1.6 "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-        -webkit-font-smoothing: antialiased;
-      }
+  .index { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: var(--rule); margin: 0; padding: var(--rule); list-style: none; background: var(--text); }
+  .index a { display: block; height: 100%; padding: 16px 18px; background: var(--bg); color: inherit; text-decoration: none; }
+  .index a:hover { background: var(--accent); color: var(--on-accent); }
+  .index strong { display: block; letter-spacing: -0.01em; }
+  .index span { font-size: 14px; color: var(--muted); }
+  .index a:hover span { color: inherit; }
 
-      a { color: var(--accent); }
+  main { counter-reset: section; }
+  section { padding: 72px 0 0; counter-increment: section; }
+  h2 { margin: 0 0 12px; font-size: clamp(30px, 4.8vw, 46px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; text-wrap: balance; }
+  h2::before { content: counter(section, decimal-leading-zero); content: counter(section, decimal-leading-zero) / ""; display: block; margin-bottom: 18px; color: var(--accent-text); font: 500 13px/1 var(--mono); letter-spacing: 0.08em; }
+  h2 + p { margin-top: 0; color: var(--muted); font-size: 18px; }
 
-      .wrap {
-        max-width: var(--measure);
-        margin: 0 auto;
-        padding: 0 24px;
-      }
+  .feature { display: grid; grid-template-columns: minmax(0, 1fr) 282px; gap: 32px; align-items: start; padding: 32px 0; border-top: var(--rule) solid var(--text); scroll-margin-top: 16px; }
+  .feature.text-only { grid-template-columns: minmax(0, 1fr); }
+  .feature:first-of-type { margin-top: 32px; }
+  .feature h3 { margin: 12px 0 8px; font-size: 24px; line-height: 1.15; letter-spacing: -0.03em; }
+  .feature p, .feature ul { margin: 0 0 12px; max-width: 62ch; }
+  .feature ul { padding-left: 20px; }
+  .feature li { margin-bottom: 6px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; font: 500 11.5px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
+  .tag { padding: 2px 8px; border: 1px solid currentColor; }
+  .tag.auto { border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+  .where { font: 13px/1.5 var(--mono); color: var(--muted); }
+  figure { margin: 0; }
+  figure img { display: block; width: 100%; height: auto; border: var(--rule) solid var(--text); background: #fff; }
 
-      header {
-        padding: 96px 0 56px;
-        text-align: center;
-      }
+  code, kbd { font: 0.875em/1.5 var(--mono); }
+  :not(pre) > code, kbd { padding: 2px 5px; background: var(--code-bg); overflow-wrap: anywhere; }
+  pre { margin: 0 0 12px; padding: 16px 18px; background: var(--screen); color: #eeefe6; overflow-x: auto; }
+  pre code { font-size: 13.5px; }
 
-      header img {
-        width: 72px;
-        height: 72px;
-        border-radius: 16px;
-      }
+  .steps { margin: 32px 0 0; padding: 0; list-style: none; counter-reset: step; }
+  .steps > li { position: relative; padding: 0 0 20px 48px; counter-increment: step; }
+  .steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; background: var(--accent); color: var(--on-accent); font: 600 13px/28px var(--mono); text-align: center; }
+  .steps p { margin: 0 0 10px; }
+  .note { margin: 0; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--surface); }
 
-      h1 {
-        margin: 24px 0 12px;
-        font-size: clamp(36px, 7vw, 64px);
-        line-height: 1.05;
-        letter-spacing: -0.03em;
-        text-wrap: balance;
-      }
+  footer { margin-top: 80px; padding: 24px 0 40px; border-top: var(--rule) solid var(--text); font: 12.5px/1.6 var(--mono); color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
-      h1 span { color: var(--accent); }
+  .shot { margin: 0 0 8px; }
+  .shot img { background: var(--screen); }
+  .compare { --pos: 50%; }
+  .compare__pages { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+  .compare__pages button { padding: 6px 12px; border: var(--rule) solid var(--text); background: none; color: var(--text); font: 500 12px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+  .compare__pages button:hover, .compare__pages button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+  .compare__pages button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+  .compare__frame { position: relative; border: var(--rule) solid var(--text); background: var(--screen); overflow: hidden; }
+  .compare__frame img { border: 0; }
+  .compare__before { position: absolute; inset: 0; height: 100%; object-fit: cover; clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+  .compare__handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 3px; margin-left: -1.5px; background: var(--accent); pointer-events: none; }
+  .compare__handle::after { content: "↔"; position: absolute; top: 50%; left: 50%; width: 36px; height: 36px; margin: -18px 0 0 -18px; background: var(--accent); color: var(--on-accent); font: 600 16px/36px var(--mono); text-align: center; }
+  .compare__label { position: absolute; top: 12px; padding: 2px 8px; background: var(--accent); color: var(--on-accent); font: 500 11.5px/1.6 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; pointer-events: none; }
+  .compare__label--before { left: 12px; }
+  .compare__label--after { right: 12px; }
+  .compare input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
+  .compare__frame:has(input:focus-visible) { outline: 2px solid var(--text); outline-offset: 3px; }
+  .shot figcaption { margin-top: 10px; font: 13px/1.5 var(--mono); color: var(--muted); }
+  table { width: 100%; margin: 32px 0 0; border-collapse: collapse; border-top: var(--rule) solid var(--text); }
+  th, td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
+  th { width: 14em; font-weight: 600; }
+  td { color: var(--muted); }
 
-      .lede {
-        max-width: 34em;
-        margin: 0 auto;
-        color: var(--muted);
-        font-size: 20px;
-        text-wrap: balance;
-      }
+  @media (max-width: 720px) {
+    th { width: auto; }
+    nav a.hide-sm { display: none; }
+    .feature { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+    figure { max-width: 282px; }
+  }
+</style>
+</head>
+<body>
 
-      .actions {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 12px;
-        justify-content: center;
-        margin-top: 32px;
-      }
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" fill="#c8f031"/><path d="M7 8h5v16H7z" fill="#111210" opacity=".45"/><path d="M14 8h11v9H14z" fill="#111210"/><path d="M14 19h11v5H14z" fill="#111210" opacity=".45"/></svg>
+      Restyle for Twitch
+    </a>
+    <nav aria-label="Main">
+      <a class="hide-sm" href="#features">Features</a>
+      <a class="hide-sm" href="#settings">Settings</a>
+      <a class="hide-sm" href="#install">Install</a>
+      <a href="https://github.com/corentin-gautier/restyle-for-twitch">GitHub</a>
+    </nav>
+  </div>
+</header>
 
-      .button {
-        padding: 12px 22px;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        color: var(--text);
-        font-weight: 600;
-        text-decoration: none;
-      }
+<main id="top">
+  <div class="wrap">
 
-      .button.primary {
-        border-color: transparent;
-        background: var(--accent);
-        color: var(--on-accent);
-      }
-
-      .shot {
-        display: block;
-        width: 100%;
-        height: auto;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-      }
-
-      h2 {
-        margin: 96px 0 32px;
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.06em;
-        text-transform: uppercase;
-        color: var(--muted);
-      }
-
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 16px;
-      }
-
-      .card {
-        padding: 24px;
-        border: 1px solid var(--border);
-        border-radius: var(--radius);
-        background: var(--surface);
-      }
-
-      .card h3 {
-        margin: 0 0 8px;
-        font-size: 18px;
-      }
-
-      .card p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 15px;
-      }
-
-      ol {
-        max-width: 40em;
-        margin: 0;
-        padding-left: 1.2em;
-      }
-
-      ol li { margin-bottom: 8px; }
-
-      code {
-        padding: 2px 6px;
-        border-radius: 6px;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        font-size: 0.9em;
-      }
-
-      .note {
-        max-width: 40em;
-        color: var(--muted);
-      }
-
-      footer {
-        margin-top: 96px;
-        padding: 32px 0 64px;
-        border-top: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 14px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <img src="icon.png" alt="" />
-        <h1>A calmer <span>Twitch</span></h1>
-        <p class="lede">
-          Restyle for Twitch is a Chrome extension that quiets the noisy parts of twitch.tv
-          and gives the content more room. Nothing is added, nothing works differently.
-        </p>
-        <div class="actions">
-          <a class="button primary" href="#install">Install</a>
-          <a class="button" href="https://github.com/corentin-gautier/restyle-for-twitch">View on GitHub</a>
-        </div>
-      </header>
-
-      <img class="shot" src="screenshot.png" width="2400" height="1364"
-           alt="The Twitch home page with Restyle for Twitch enabled" />
-
-      <h2>What it changes</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>A quieter sidebar</h3>
-          <p>Smaller rows, small-caps headers and right-aligned viewer counts. No stories, no hover cards.</p>
-        </div>
-        <div class="card">
-          <h3>Cleaner pages</h3>
-          <p>No autoplaying carousel on the home page. Large shelf titles, rounded thumbnails, streamer names first.</p>
-        </div>
-        <div class="card">
-          <h3>A framed player</h3>
-          <p>The player is inset and rounded, with the stream information in a centred column below it.</p>
-        </div>
-        <div class="card">
-          <h3>A calmer chat</h3>
-          <p>Muted messages that return to full contrast on hover, and a soft fade at the top.</p>
-        </div>
-        <div class="card">
-          <h3>Flat menus and dialogs</h3>
-          <p>Borders instead of shadows, and a dimmed backdrop behind dialogs.</p>
-        </div>
-        <div class="card">
-          <h3>Your colours</h3>
-          <p>Pick an accent colour, a background colour and a spacing density. Sidebars and text adapt to the background.</p>
-        </div>
+    <div class="hero">
+      <h1>Twitch, with the noise turned <em>down</em></h1>
+      <p>Restyle for Twitch is a free Chrome extension that quiets the busy parts of twitch.tv and gives the content more room. Nothing is added, and nothing works differently.</p>
+      <div class="actions">
+        <a class="btn primary" href="#install">Install the extension</a>
+        <a class="btn" href="https://github.com/corentin-gautier/restyle-for-twitch">View on GitHub</a>
       </div>
-
-      <h2 id="install">Install</h2>
-      <ol>
-        <li>Download or clone the <a href="https://github.com/corentin-gautier/restyle-for-twitch">repository</a>.</li>
-        <li>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong>.</li>
-        <li>Click <strong>Load unpacked</strong> and select the repository folder.</li>
-      </ol>
-      <p class="note">
-        The extension is not on the Chrome Web Store yet. It needs Chrome 120 or later.
-      </p>
-
-      <h2>Privacy</h2>
-      <p class="note">
-        The extension only runs on twitch.tv. It collects nothing and sends nothing anywhere.
-        Its one permission is used to remember your settings.
-      </p>
-
-      <footer>
-        Restyle for Twitch is an unofficial project, not affiliated with or endorsed by Twitch.
-      </footer>
     </div>
-  </body>
+
+    <figure class="shot compare" data-compare>
+      <div class="compare__pages" role="group" aria-label="Page to compare">
+        <button type="button" aria-pressed="true" data-page="home" data-label="the home page">Home</button>
+        <button type="button" aria-pressed="false" data-page="browse" data-label="the Browse page">Browse</button>
+        <button type="button" aria-pressed="false" data-page="channel" data-label="an offline channel">Channel</button>
+        <button type="button" aria-pressed="false" data-page="video" data-label="a video and its chat replay">Video</button>
+      </div>
+      <div class="compare__frame">
+        <img data-after src="home-after.webp" width="1600" height="900" alt="Twitch with the extension: the home page">
+        <img data-before class="compare__before" src="home-before.webp" width="1600" height="900" alt="Twitch without the extension: the home page">
+        <span class="compare__label compare__label--before" aria-hidden="true">Before</span>
+        <span class="compare__label compare__label--after" aria-hidden="true">After</span>
+        <span class="compare__handle" aria-hidden="true"></span>
+        <input type="range" min="0" max="100" value="50" step="any" aria-label="Share of the image showing Twitch without the extension">
+      </div>
+      <figcaption>Twitch without and with the extension. Pick a page, then drag the divider or use the arrow keys.</figcaption>
+    </figure>
+
+    <section id="features">
+      <h2>What the extension changes</h2>
+      <p>It is a stylesheet laid over twitch.tv. Turn it off in one click and Twitch is back as it was.</p>
+
+      <ul class="index" style="margin-top: 32px">
+        <li><a href="#sidebar"><strong>Sidebar and top bar</strong><span>Smaller, quieter, no stories</span></a></li>
+        <li><a href="#pages"><strong>Home, Browse, Search</strong><span>No carousel, clearer cards</span></a></li>
+        <li><a href="#channel"><strong>Channel pages</strong><span>Framed player, one column</span></a></li>
+        <li><a href="#chat"><strong>Chat</strong><span>Muted until hovered</span></a></li>
+        <li><a href="#menus"><strong>Menus and dialogs</strong><span>Flat, with borders</span></a></li>
+        <li><a href="#settings"><strong>Your colours</strong><span>Accent, background, spacing</span></a></li>
+      </ul>
+
+      <article class="feature text-only" id="sidebar">
+        <div>
+          <div class="tags"><span class="tag">Navigation</span></div>
+          <h3>A quieter sidebar and top bar</h3>
+          <ul>
+            <li>Smaller rows, small-caps section headers, viewer counts aligned to the right.</li>
+            <li>No stories, no hover cards, no "For You" header.</li>
+            <li>More room in the top bar, a pill-shaped search field, dimmed icons.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature text-only" id="pages">
+        <div>
+          <div class="tags"><span class="tag">Home</span><span class="tag">Browse</span><span class="tag">Search</span></div>
+          <h3>Cleaner pages</h3>
+          <ul>
+            <li>The autoplaying carousel is removed from the home page, and its video is paused.</li>
+            <li>Large shelf titles, the same on the home page, channel pages and under a video.</li>
+            <li>Rounded thumbnails, and cards that put the streamer's name first.</li>
+            <li>Tags and categories become small chips in your accent colour.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature text-only" id="channel">
+        <div>
+          <div class="tags"><span class="tag">Channel</span></div>
+          <h3>A framed player</h3>
+          <ul>
+            <li>The player is inset and rounded, with the stream information in a centred column below it.</li>
+            <li>Offline channels, videos and clips follow the same column and the same cards.</li>
+            <li>Panels line up on the column instead of floating in the middle.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature text-only" id="chat">
+        <div>
+          <div class="tags"><span class="tag">Chat</span></div>
+          <h3>A calmer chat</h3>
+          <ul>
+            <li>Muted messages that return to full contrast on hover, and a soft fade at the top.</li>
+            <li>The gifter leaderboard above the messages is hidden.</li>
+            <li>Chat replay on videos gets the same treatment as the live chat.</li>
+          </ul>
+        </div>
+      </article>
+      <article class="feature text-only" id="menus">
+        <div>
+          <div class="tags"><span class="tag">Menus</span><span class="tag">Dialogs</span></div>
+          <h3>Flat menus and dialogs</h3>
+          <ul>
+            <li>Borders instead of shadows, and a dimmed backdrop behind dialogs.</li>
+            <li>Filter and sort menus share one row size and one inner margin.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <section id="settings">
+      <h2>Settings</h2>
+      <p>Click the extension's icon. Changes apply at once, without reloading the page.</p>
+
+      <table>
+        <tr><th scope="row">Enable on Twitch</th><td>Turns the whole restyle on or off.</td></tr>
+        <tr><th scope="row">Spacing</th><td>Three densities: compact, airy, very airy.</td></tr>
+        <tr><th scope="row">Accent colour</th><td>The colour of links, tags and highlights.</td></tr>
+        <tr><th scope="row">Background colour</th><td>The page colour. Sidebars, chat, menus and text colours are derived from it. Reset it to follow Twitch's own light or dark theme.</td></tr>
+      </table>
+    </section>
+
+    <section id="install">
+      <h2>Install the Chrome extension</h2>
+      <p>It is not on the Chrome Web Store yet. Until then, load it from the source. Requires Chrome 120 or later.</p>
+
+      <ol class="steps">
+        <li>
+          <p>Download or clone the repository.</p>
+          <pre><code>git clone https://github.com/corentin-gautier/restyle-for-twitch.git</code></pre>
+        </li>
+        <li>
+          <p>Open <code>chrome://extensions</code> and turn on <strong>Developer mode</strong>.</p>
+        </li>
+        <li>
+          <p>Click <strong>Load unpacked</strong> and select the repository folder.</p>
+        </li>
+      </ol>
+
+      <p class="note">Twitch changes its markup without notice, so an update on their side can break part of the restyle. If something looks wrong, <a href="https://github.com/corentin-gautier/restyle-for-twitch/issues">open an issue</a> with a screenshot and the page's address.</p>
+    </section>
+
+    <section id="privacy">
+      <h2>Privacy</h2>
+      <p>The extension only runs on twitch.tv. It collects nothing and sends nothing anywhere. Its one permission, <code>storage</code>, is used to remember your settings.</p>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Restyle for Twitch, by <a href="https://corentin-gautier.github.io/">Corentin Gautier</a>. An unofficial project, not affiliated with or endorsed by Twitch.</span>
+    <span><a href="https://github.com/corentin-gautier/restyle-for-twitch/issues">Report an issue</a></span>
+  </div>
+</footer>
+
+<script>
+  // Before/after slider: the range input laid over the image drives the reveal,
+  // and the buttons above swap the pair of screenshots.
+  for (const figure of document.querySelectorAll('[data-compare]')) {
+    const input = figure.querySelector('input');
+    const before = figure.querySelector('[data-before]');
+    const after = figure.querySelector('[data-after]');
+    const buttons = figure.querySelectorAll('[data-page]');
+    const update = () => figure.style.setProperty('--pos', input.value + '%');
+    input.addEventListener('input', update);
+    update();
+
+    for (const button of buttons) {
+      button.addEventListener('click', () => {
+        for (const other of buttons) other.setAttribute('aria-pressed', String(other === button));
+        before.src = button.dataset.page + '-before.webp';
+        after.src = button.dataset.page + '-after.webp';
+        before.alt = 'Twitch without the extension: ' + button.dataset.label;
+        after.alt = 'Twitch with the extension: ' + button.dataset.label;
+      });
+    }
+  }
+</script>
+
+</body>
 </html>

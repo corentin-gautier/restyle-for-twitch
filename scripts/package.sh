@@ -10,7 +10,7 @@ stage=$(mktemp -d)
 trap 'rm -rf "$stage"' EXIT
 
 mkdir -p dist "$stage/src"
-cp -R icons popup "$stage/"
+cp -R _locales icons popup "$stage/"
 cp src/content.js src/tokens.css src/twitch.css "$stage/src/"
 node -e '
   const manifest = require("./manifest.json");

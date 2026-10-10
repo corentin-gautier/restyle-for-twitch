@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Restyle for Twitch</title>
@@ -8,31 +8,35 @@
   <body>
     <h1>Restyle for Twitch</h1>
 
+    <!-- Texts are the English fallback; popup.js replaces them from _locales. -->
     <section>
       <label class="row">
-        <span>Activer sur Twitch</span>
+        <span data-i18n="enable">Enable on Twitch</span>
         <input type="checkbox" class="switch" data-key="twitch" />
       </label>
     </section>
 
     <section>
       <div class="row">
-        <span>Espacement</span>
+        <span data-i18n="spacing">Spacing</span>
         <div class="segmented" id="space">
-          <button type="button" data-value="1">Compact</button>
-          <button type="button" data-value="2">Aéré</button>
-          <button type="button" data-value="3">Très aéré</button>
+          <button type="button" data-value="1" data-i18n="spacingCompact">Compact</button>
+          <button type="button" data-value="2" data-i18n="spacingAiry">Airy</button>
+          <button type="button" data-value="3" data-i18n="spacingVeryAiry">Very airy</button>
         </div>
       </div>
-      <label class="row">
-        <span>Couleur d'accent</span>
-        <input type="color" data-key="accent" />
-      </label>
       <div class="row">
-        <span>Couleur de fond</span>
+        <span data-i18n="accent">Accent colour</span>
         <span class="group">
-          <button type="button" class="reset" data-reset="background">Par défaut</button>
-          <input type="color" data-key="background" data-fallback="#0f1012" aria-label="Couleur de fond" />
+          <button type="button" class="reset" data-reset="accent" data-i18n="reset">Default</button>
+          <input type="color" data-key="accent" data-i18n-label="accent" aria-label="Accent colour" />
+        </span>
+      </div>
+      <div class="row">
+        <span data-i18n="background">Background colour</span>
+        <span class="group">
+          <button type="button" class="reset" data-reset="background" data-i18n="reset">Default</button>
+          <input type="color" data-key="background" data-fallback="#0f1012" data-i18n-label="background" aria-label="Background colour" />
         </span>
       </div>
     </section>

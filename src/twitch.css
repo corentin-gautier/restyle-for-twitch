@@ -185,6 +185,89 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * Search suggestions. The tray is a box laid over the field (it holds a
+   * hidden copy of it, then the results): a floating layer like the menus,
+   * with roomier rows that light up on hover.
+   */
+  & .top-nav div:has(> div > div > .search-tray) {
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    /* Concentric with the pill-shaped field it wraps: half its height, plus the padding around it. */
+    border-radius: calc(2rem + var(--rs-1)) !important;
+    box-shadow: none !important;
+    /* The border must not shift the hidden field off the real one. */
+    margin: -2px !important;
+    /* Fix width */
+    width: calc(100% + 4px) !important;
+  }
+
+  & .search-tray {
+    padding-top: var(--rs-1) !important;
+
+    & a {
+      border-radius: var(--rs-radius-l) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & .search-item {
+      align-items: center !important;
+      min-height: 5.2rem !important;
+      padding: 1rem 1.6rem !important;
+    }
+
+    /* The magnifier of "Search for…" sits in the middle of the icon column, like the avatars. */
+    & [class*="search-item__icon"] {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    & [class*="search-item__icon"],
+    & [class*="search-item__icon"] .tw-avatar {
+      width: var(--rs-avatar-card) !important;
+      height: var(--rs-avatar-card) !important;
+    }
+
+    /* One icon column for every row, even the last one which has no icon, so the text lines up. */
+    & .search-item > :first-child:not(:has(strong, p)) {
+      box-sizing: border-box !important;
+      flex: 0 0 calc(var(--rs-avatar-card) + 1rem) !important;
+      width: calc(var(--rs-avatar-card) + 1rem) !important;
+      padding: 0 1rem 0 0 !important;
+      margin: 0 !important;
+    }
+
+    & .search-item > :first-child:not(:has(strong, p)) + * {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+
+    /* Name, then a quieter line (category and title, or "Channel"). */
+    & strong,
+    & strong span {
+      font-size: var(--rs-text-3) !important;
+    }
+
+    & p {
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /* Viewer count, as in the sidebar. */
+    & [aria-label$="viewers"] {
+      font-size: var(--rs-text-2) !important;
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
   /* ==== Left sidebar ==== */
   & .side-nav,
   & .side-nav__scrollable_content {

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.3.0...v1.4.0) (2026-10-10)
+
+
+### Features
+
+* add theme presets and a channel colours option ([c752875](https://github.com/corentin-gautier/restyle-for-twitch/commit/c7528754a17b8a41fecb1cbd3153da044eca0410))
+* restyle the chat popups and the logged-in pages ([94667db](https://github.com/corentin-gautier/restyle-for-twitch/commit/94667dbe953cbf32d5d8514d4621ba17b71bfa33))
+
+
+### Fixes
+
+* search popup ([4de4bc6](https://github.com/corentin-gautier/restyle-for-twitch/commit/4de4bc67ee092a95bdb77914c1b538d6f6166ccf))
+
+
+### Documentation
+
+* show the settings popup and document the new settings ([dbac00c](https://github.com/corentin-gautier/restyle-for-twitch/commit/dbac00c6f083cda353c2244e6c999476171e3ac6))
+
 ## [1.3.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.2.0...v1.3.0) (2026-10-10)
 
 

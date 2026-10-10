@@ -21,9 +21,10 @@ jobs:
           node-version: 22
       - name: Package the extension
         run: cp "$(./scripts/package.sh)" restyle-for-twitch.zip
+      # Minor versions are "## [x.y.0]" in the changelog, patches "### [x.y.z]".
       - name: Extract this version's notes from the changelog
         run: |
-          awk '/^##? \[?[0-9]+\.[0-9]+\.[0-9]+/ { if (seen) exit; seen = 1; next } seen' CHANGELOG.md > notes.md
+          awk '/^##?#? \[?[0-9]+\.[0-9]+\.[0-9]+/ { if (seen) exit; seen = 1; next } seen' CHANGELOG.md > notes.md
       - name: Create the release
         env:
           GH_TOKEN: ${{ github.token }}

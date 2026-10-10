@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.4.0...v1.4.1) (2026-10-10)
+
+
+### Build and release
+
+* publish a GitHub release with the packaged extension on each tag ([4ca0c16](https://github.com/corentin-gautier/restyle-for-twitch/commit/4ca0c16772e09cc4d0e35531ed1aa9865bb5d90d))
+
 ## [1.4.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.3.0...v1.4.0) (2026-10-10)
 
 

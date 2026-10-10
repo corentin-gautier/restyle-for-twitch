@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.4.2](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.4.1...v1.4.2) (2026-10-10)
+
+
+### Build and release
+
+* read patch versions' notes from the changelog too ([d28705a](https://github.com/corentin-gautier/restyle-for-twitch/commit/d28705a068fe3697f0b71ebbb4dc3eaa4c9ffab9))
+
+
+### Fixes
+
+* make the player's settings menu and keyboard shortcuts follow the theme ([978e639](https://github.com/corentin-gautier/restyle-for-twitch/commit/978e639720b722a13d30a75b258a68c3a9484db4))
+
 ### [1.4.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.4.0...v1.4.1) (2026-10-10)
 
 

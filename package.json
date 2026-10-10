@@ -1,6 +1,6 @@
 {
   "name": "restyle-for-twitch",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "private": true,
   "description": "A calmer, more coherent interface for Twitch, as a Chrome extension.",
   "scripts": {

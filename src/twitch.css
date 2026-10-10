@@ -11,10 +11,18 @@ html:not([data-rs="off"]) {
    * Theme: Twitch declares its palette on the element carrying the theme
    * class, so the remap has to sit on that same element to win.
    */
+  /*
+   * The player's settings menu (the gear) is always dark, whatever the
+   * theme: its palette comes from a generated class on one of its wrappers,
+   * so the three of them are named too.
+   */
   &.tw-root--theme-dark,
   &.tw-root--theme-light,
   & .tw-root--theme-dark,
-  & .tw-root--theme-light {
+  & .tw-root--theme-light,
+  & .ReactModal__Content div:has(> [data-a-target="player-settings-menu"]),
+  & .ReactModal__Content div:has(> div > [data-a-target="player-settings-menu"]),
+  & .ReactModal__Content div:has(> div > div > [data-a-target="player-settings-menu"]) {
     --color-background-body: var(--rs-bg) !important;
     --color-background-base: var(--rs-bg) !important;
     --color-background-alt: var(--rs-surface) !important;
@@ -2925,5 +2933,115 @@ html:not([data-rs="off"]) {
   & div:has(> div > [data-a-target="whisper-search-input"]) {
     padding: 0 var(--rs-1) var(--rs-2) !important;
     background: transparent !important;
+  }
+
+  /* Player settings menu: the same floating surface as the other menus. */
+  & .ReactModal__Content div:has(> div > div > [data-a-target="player-settings-menu"]) {
+    background: var(--rs-float) !important;
+    /* An outline: a border would narrow the rows and wrap their labels. */
+    outline: 1px solid var(--rs-float-border) !important;
+    outline-offset: -1px !important;
+    border-radius: var(--rs-radius-l) !important;
+    overflow: hidden !important;
+  }
+
+  /* Its text and controls are painted in fixed light-on-dark colours. */
+  & [data-a-target="player-settings-menu"] {
+    & *:not(.tw-pill, .tw-pill *) {
+      color: var(--rs-text) !important;
+    }
+
+    & [role="separator"] {
+      border-color: var(--rs-border) !important;
+    }
+
+    & .tw-toggle__button {
+      background: var(--rs-raised) !important;
+    }
+
+    & .tw-toggle__input:checked + .tw-toggle__button {
+      border-color: var(--rs-accent) !important;
+
+      &::after {
+        background: var(--rs-accent) !important;
+      }
+
+      & * {
+        color: var(--rs-accent) !important;
+        fill: var(--rs-accent) !important;
+      }
+    }
+
+    & .tw-radio__input:checked + label::before {
+      border-color: var(--rs-accent) !important;
+    }
+
+    & .tw-radio__input:checked + label::after {
+      background: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Keyboard shortcuts, opened from that menu: a table laid over the
+   * player's top-left corner. A floating card set in from the corner, with
+   * a title row and the keys as chips.
+   */
+  & div:has(> #keyboard-shortcuts-overlay) {
+    /* Twitch's fixed width is too narrow once the cells are padded. */
+    width: max-content !important;
+    margin: var(--rs-2) !important;
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+  }
+
+  & #keyboard-shortcuts-overlay {
+    /* The table draws a ring of its own inside the card. */
+    & table {
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & td {
+      padding: 0.6rem 1rem !important;
+      vertical-align: middle !important;
+      white-space: nowrap !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    & td:last-child {
+      padding-left: var(--rs-6) !important;
+      text-align: right !important;
+    }
+
+    & tr:first-child td {
+      padding-bottom: 1rem !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+      border-bottom: var(--rs-hairline) !important;
+    }
+
+    & tr:nth-child(2) td {
+      padding-top: 1rem !important;
+    }
+
+    /* The close button is painted in Twitch's purple. */
+    & button,
+    & button * {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+
+    & td:last-child > span {
+      display: inline-block !important;
+      padding: 0.1rem 0.7rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-s) !important;
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-text) !important;
+    }
   }
 }

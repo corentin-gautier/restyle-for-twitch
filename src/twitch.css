@@ -616,6 +616,38 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Account pages (logged in), on the same margins. Drops keeps its title
+   * and tabs in a header like Settings; Wallet and Subscriptions are one
+   * block holding a title, tabs and content.
+   */
+  & .twilight-main > header > div:has(> .drops-tabs),
+  & .twilight-main div:has(> .drops-root__content) {
+    padding-inline: var(--rs-page-inset) !important;
+  }
+
+  & .twilight-main div:has(> h2):has(> div > .tw-tabs, > [role="tablist"]):not(.settings-tabs) {
+    margin: calc(var(--rs-8) + 2rem) var(--rs-page-inset) var(--rs-8) !important;
+
+    & > h2 {
+      margin-bottom: 1rem !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+      letter-spacing: -0.025em !important;
+    }
+  }
+
+  /* Eight tabs: a tighter gap lets them fit in a common window. */
+  & .settings-tabs [role="tablist"] {
+    gap: var(--rs-4) !important;
+  }
+
+  /* Settings, Wallet, Subscriptions: the page title, as large as Following's. */
+  & .settings-tabs h2,
+  & .twilight-main div:has(> div > .tw-tabs, > [role="tablist"]) > h2 {
+    font-size: 6rem !important;
+  }
+
+  /*
    * Browse: the filter row under the tabs (tag search, "Sort by"). Roomier
    * controls, the height of the top bar's search field. The section is only
    * identifiable by its English label.
@@ -727,7 +759,8 @@ html:not([data-rs="off"]) {
    * headings for form sections and field labels.
    */
   & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, [class*="card" i] *, a *),
-  & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) {
+  & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *),
+  & .twilight-main [data-a-target="following-channels-header"] {
     font-size: var(--rs-text-display) !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
@@ -785,6 +818,32 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * When the tabs do not fit (Settings), Twitch adds a scroll button before
+   * and after the list; laid out as blocks they stack above and below it.
+   * The list scrolls sideways on its own instead.
+   */
+  & .twilight-main .tw-tabs:has(> div > button) {
+    & > div:has(> button) {
+      display: none !important;
+    }
+
+  }
+
+  /* Tabs never wrap or shrink: a list that is too long scrolls sideways. */
+  & .twilight-main [role="tablist"] {
+    overflow: auto hidden !important;
+    scrollbar-width: none !important;
+
+    & > * {
+      flex: none !important;
+    }
+
+    & [role="tab"] {
+      white-space: nowrap !important;
+    }
+  }
+
   & .twilight-main [role="tab"] {
     display: flex !important;
     align-items: center !important;
@@ -796,6 +855,11 @@ html:not([data-rs="off"]) {
     border-radius: 0 !important;
     background: transparent !important;
     color: var(--rs-muted) !important;
+    /* Also on the tab itself: some carry their label without a wrapper. */
+    font-size: var(--rs-text-2) !important;
+    font-weight: 600 !important;
+    letter-spacing: var(--rs-caps-tracking) !important;
+    text-transform: uppercase !important;
     transition: color var(--rs-ease), box-shadow var(--rs-ease);
 
     & * {
@@ -1765,11 +1829,44 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Home tab of a live channel: the live video, scaled up, is the hero's
+   * backdrop. It cannot be clipped itself (Twitch sizes and scales it), so
+   * a frame in the page colour is laid over the band instead: square
+   * outside, rounded inside, like the offline banner's inset. The band's
+   * height is Twitch's constant, also set inline on the block below it.
+   */
+  &:has(.channel-root--live.channel-root--home) .persistent-player:not(.persistent-player--theatre) :is(.video-player, .video-player__container, .video-ref, video) {
+    border-radius: 0 !important;
+  }
+
+  & .channel-root--live.channel-root--home .channel-root__info--home::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 468px;
+    box-sizing: border-box;
+    border: var(--rs-2) solid var(--rs-bg);
+    border-radius: calc(var(--rs-radius-l) + var(--rs-2));
+    box-shadow: 0 0 0 100px var(--rs-bg);
+    clip-path: inset(0);
+    pointer-events: none;
+  }
+
+  /* The chat column waits off to the right there, and would add a sideways scroll. */
+  & .root-scrollable:has(.channel-root--home) {
+    overflow-x: hidden !important;
+  }
+
+  /*
    * The About tab lives in the same wrapper as the other tabs' content: it
    * keeps that wrapper's inset, which the live page's About rule removes.
    */
   & .channel-root__info--home .channel-info-content .home__lower-content:has(.about-section__panel) {
     padding-inline: 3.2rem !important;
+    padding-block-start: var(--rs-4) !important;
   }
 
   /* Schedule tab: its caption is a sentence about the last stream, not a shelf title. */
@@ -2395,6 +2492,314 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * Emote picker: one floating surface. Twitch paints the search row, the
+   * section headers and the tab column in a darker step that the palette
+   * turns into mismatched bands.
+   */
+  & .emote-picker {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [class*="emote-picker__search-content"] {
+      padding: var(--rs-3) 0 var(--rs-2) var(--rs-3) !important;
+      background: transparent !important;
+    }
+
+    & .tw-input {
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    /* Section headers stay opaque: they stick while the emotes scroll under them. */
+    /* Taller than Twitch's, to show more emotes at once. */
+    & .emote-picker__scroll-container {
+      height: 44rem !important;
+      max-height: 55vh !important;
+    }
+
+    & :has(> .emote-grid-section__header-title) {
+      padding: var(--rs-1) 1.2rem var(--rs-3) !important;
+    }
+
+    & .emote-grid {
+      gap: 0.8rem 0.7rem !important;
+    }
+
+    & .emote-picker__tab-content > div > div:first-child:has(> button) {
+      margin-inline: 1.2rem !important;
+    }
+
+    & .emote-grid-section__header-title {
+      padding: 1rem 0 !important;
+      background: var(--rs-float) !important;
+
+      & strong {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    /* Promoted action above the emotes ("Gigantify an Emote"). */
+    & .emote-picker__tab-content > div > div:first-child:has(> button) {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+
+      & button div {
+        background: transparent !important;
+      }
+    }
+
+    & .emote-button {
+      border-radius: var(--rs-radius-s) !important;
+    }
+
+    & .emote-picker__nav_content {
+      background: transparent !important;
+      border-left: var(--rs-hairline) !important;
+    }
+  }
+
+  /*
+   * Cheer card above the chat field: a floating box whose gradient header
+   * is an inset banner, without the second frame Twitch draws inside it.
+   */
+  /*
+   * Both open from the chat field, which is inset from the chat's edges:
+   * they reach a little further out on each side, to a small even gutter.
+   */
+  & .chat-input div[class*="Attached"]:has(> [data-a-target="emote-picker"]),
+  & .bits-card-wrapper {
+    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    right: calc(var(--rs-2) - var(--rs-4)) !important;
+    width: auto !important;
+  }
+
+  & [data-a-target="emote-picker"] {
+    width: 100% !important;
+  }
+
+  /*
+   * Power-ups & Rewards: the same floating box, on the same gutters. It is
+   * anchored to its button's narrow wrapper, so the width is spelled out
+   * from the chat column's (34rem).
+   */
+  & .chat-input div[class*="Attached"]:has(.reward-center__content) {
+    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    right: auto !important;
+    width: calc(34rem - 2 * var(--rs-2)) !important;
+  }
+
+  & .chat-input div[class*="Attached"]:has(.reward-center__content) > div {
+    width: 100% !important;
+    background: transparent !important;
+  }
+
+  & .reward-center__content {
+    width: 100% !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & .rewards-popover-header {
+      padding: var(--rs-2) var(--rs-2) 0 var(--rs-1) !important;
+    }
+  }
+
+  & .bits-card-wrapper {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [role="dialog"] > div:first-child {
+      /* Full width by default: narrowed so the margin shows on the right too. */
+      width: calc(100% - 2 * var(--rs-1)) !important;
+      margin: var(--rs-1) !important;
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & [role="dialog"] > div:first-child ~ div {
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    /* Rows under the banner: options, amounts, pin toggle. */
+    & [role="dialog"] > div:first-child ~ div > div {
+      padding: var(--rs-1) var(--rs-3) !important;
+    }
+
+    /* The pin row pads its content a second time: one left edge for all rows. */
+    & [role="dialog"] > div:first-child ~ div > div > div:only-child {
+      padding-inline: 0 !important;
+    }
+
+    & [role="dialog"] > div:first-child {
+      padding-top: var(--rs-3) !important;
+      padding-left: var(--rs-3) !important;
+    }
+
+    & .tw-interactable {
+      border-radius: var(--rs-radius-m) !important;
+    }
+  }
+
+  /*
+   * Chat Identity (logged in): the chat settings popover, with badge and
+   * name colour choosers.
+   */
+  /*
+   * The popover is anchored to the badge button inside the chat field:
+   * stretched to the gutters the other chat popups use, and framed.
+   */
+  & .chat-input [role="dialog"]:has(.chat-identity-menu) {
+    left: calc(var(--rs-2) - var(--rs-4) - 5px) !important;
+    width: calc(34rem - 2 * var(--rs-2)) !important;
+    margin-right: 0 !important;
+
+    & .tw-balloon {
+      display: block !important;
+      width: 100% !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-l) !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+    }
+
+    & .chat-settings__popover {
+      width: 100% !important;
+    }
+  }
+
+  & .chat-identity-menu__header {
+    padding: var(--rs-3) var(--rs-3) var(--rs-1) !important;
+  }
+
+  /* One side margin for the preview and the scrolling part. */
+  & .chat-settings__popover > div:has(.name-display__name),
+  & .chat-identity-menu__content {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+  }
+
+  /* Preview of the name as it shows in chat: an inset card. */
+  & .chat-settings__popover div:has(> span > .name-display__name) {
+    margin-top: var(--rs-1) !important;
+    padding: var(--rs-2) var(--rs-3) !important;
+    background: var(--rs-hover) !important;
+    border-radius: var(--rs-radius-m) !important;
+  }
+
+  & .chat-identity-menu__content {
+    /* A hairline: the element has height of its own, so no background. */
+    & [role="separator"] {
+      height: 0 !important;
+      margin-block: var(--rs-3) !important;
+      padding: 0 !important;
+      background: none !important;
+      border: 0 !important;
+      border-top: var(--rs-hairline) !important;
+    }
+
+    /* Twitch frames the campaign card a second time. */
+    & div:has(> [class*="collapsibleHeader"]) {
+      padding: 0 !important;
+      background: none !important;
+      border: 0 !important;
+    }
+
+    /* Badge campaign ("Active Campaigns"): a quiet card. */
+    & [class*="collapsibleHeader"] {
+      padding: var(--rs-2) !important;
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    & [class*="thumbnailBox"] {
+      border-radius: var(--rs-radius-s) !important;
+      overflow: hidden !important;
+    }
+
+    & .tw-progress-bar {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      overflow: hidden !important;
+
+      & > div {
+        background: var(--rs-accent) !important;
+      }
+    }
+
+    & .edit-appearance__badge-chooser {
+      border-color: transparent !important;
+      border-radius: var(--rs-radius-s) !important;
+      transition: background var(--rs-ease) !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & [class*="edit-appearance__badge-chooser--selected"] {
+      background: var(--rs-accent-tint-strong) !important;
+      border-color: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Drops & More (logged in): the same floating box, a small-caps header
+   * per group of drops. Written from a DOM dump.
+   */
+  & .chat-input [role="dialog"][class*="panelContainer"] {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [class*="clickableHeader"] {
+      border-radius: var(--rs-radius-s) !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    & [class*="featuredIconBox"],
+    & [class*="thumbnailBox"] {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-s) !important;
+      overflow: hidden !important;
+    }
+
+    & .tw-progress-bar {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      overflow: hidden !important;
+
+      & > div {
+        background: var(--rs-accent) !important;
+      }
+    }
+  }
+
   & .chat-input {
     padding: var(--rs-3) var(--rs-4) var(--rs-4) !important;
   }
@@ -2514,5 +2919,11 @@ html:not([data-rs="off"]) {
   & [class*="ScTooltip"] {
     box-shadow: none !important;
     filter: none !important;
+  }
+
+  /* Whispers (logged in): the search row is painted a step darker. */
+  & div:has(> div > [data-a-target="whisper-search-input"]) {
+    padding: 0 var(--rs-1) var(--rs-2) !important;
+    background: transparent !important;
   }
 }

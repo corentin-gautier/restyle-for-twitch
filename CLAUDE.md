@@ -14,6 +14,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store. |
 | `docs/` | GitHub Pages site. |
+| `.github/workflows/release.yml` | On a `v*` tag, publishes a GitHub release with the package as `restyle-for-twitch.zip`. |
 
 ## Conventions
 

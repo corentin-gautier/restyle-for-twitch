@@ -1,0 +1,30 @@
+# Publishes a GitHub release for every version tag, with the packaged
+# extension attached under a fixed name so that
+# releases/latest/download/restyle-for-twitch.zip always points to the
+# newest one.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Package the extension
+        run: cp "$(./scripts/package.sh)" restyle-for-twitch.zip
+      - name: Extract this version's notes from the changelog
+        run: |
+          awk '/^##? \[?[0-9]+\.[0-9]+\.[0-9]+/ { if (seen) exit; seen = 1; next } seen' CHANGELOG.md > notes.md
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" restyle-for-twitch.zip --title "$GITHUB_REF_NAME" --notes-file notes.md

@@ -55,11 +55,17 @@ The settings popup is in English or French, following the browser's language.
 
 ## Install
 
-The extension is not on the Chrome Web Store yet. To install it from source:
+The extension is not on the Chrome Web Store yet. To install it by hand:
 
-1. Download or clone this repository.
+1. Download [restyle-for-twitch.zip](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest/download/restyle-for-twitch.zip)
+   from the [latest release](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest)
+   and unzip it.
 2. Open `chrome://extensions` and turn on **Developer mode**.
-3. Click **Load unpacked** and select the repository folder.
+3. Click **Load unpacked** and select the unzipped folder.
+
+Keep that folder: Chrome loads the extension from it. To update, replace its
+contents with a newer release and click the reload button on the extension's
+card.
 
 It needs Chrome 120 or later, and should work in other Chromium browsers of
 the same generation.
@@ -71,7 +77,8 @@ anywhere. Its one permission, `storage`, is used to remember your settings.
 
 ## Development
 
-There is no build step. The extension is made of:
+To work on it, clone the repository and load its folder with **Load
+unpacked**. There is no build step. The extension is made of:
 
 | Path | Role |
 | --- | --- |
@@ -91,6 +98,9 @@ To build the Chrome Web Store package, which leaves the live reload out:
 ```
 
 The zip is written to `dist/`. This script needs Node.js.
+
+Releases are cut with `npm run release` (version bump, changelog, tag).
+Pushing the tag publishes a GitHub release with that zip attached.
 
 ## Known limits
 

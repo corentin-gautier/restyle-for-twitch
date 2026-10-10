@@ -3,7 +3,7 @@
   "name": "Restyle for Twitch",
   "description": "__MSG_extDescription__",
   "default_locale": "en",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "minimum_chrome_version": "120",
   "icons": {
     "16": "icons/icon-16.png",
@@ -11,7 +11,9 @@
     "48": "icons/icon-48.png",
     "128": "icons/icon-128.png"
   },
-  "permissions": ["storage"],
+  "permissions": [
+    "storage"
+  ],
   "action": {
     "default_title": "Restyle for Twitch",
     "default_popup": "popup/popup.html",
@@ -27,10 +29,19 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://*.twitch.tv/*"],
-      "exclude_matches": ["*://dashboard.twitch.tv/*"],
-      "css": ["src/tokens.css", "src/twitch.css"],
-      "js": ["src/content.js"],
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "exclude_matches": [
+        "*://dashboard.twitch.tv/*"
+      ],
+      "css": [
+        "src/tokens.css",
+        "src/twitch.css"
+      ],
+      "js": [
+        "src/content.js"
+      ],
       "run_at": "document_start"
     }
   ]

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.2.0...v1.3.0) (2026-10-10)
+
+
+### Features
+
+* add a plain chat option, without badges or username colours ([7654feb](https://github.com/corentin-gautier/restyle-for-twitch/commit/7654feb7ddfe3b0fb19d16fe271c920069b9b0b0))
+
+
+### Fixes
+
+* about and goals sections ([0fd7e85](https://github.com/corentin-gautier/restyle-for-twitch/commit/0fd7e85f6d2e4cc127a836fa2fd5e48d754ac20c))
+* gift and subscribe modal placement ([88798b9](https://github.com/corentin-gautier/restyle-for-twitch/commit/88798b96a6e05e8d7d81b0fb71018a46998fafc5))
+
 ## [1.2.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.1.0...v1.2.0) (2026-10-10)
 
 

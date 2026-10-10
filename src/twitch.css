@@ -1387,7 +1387,7 @@ html:not([data-rs="off"]) {
     background: transparent !important;
     border: 0 !important;
     padding: 0 !important;
-    margin-top: var(--rs-4) !important;
+    margin-bottom: 0 !important;
   }
 
   & .about-section h3 {
@@ -1437,18 +1437,19 @@ html:not([data-rs="off"]) {
     color: var(--rs-text) !important;
   }
 
+  & .about-section__panel + div {
+    margin-bottom: 0 !important;
+  }
+
   /*
    * Goal beside About ("Plus Goal", sub and follower goals): the same
    * heading-then-card pair. Its heading starts level with About's, and its
    * card, which reads the page colour, gets the About card's surface.
    */
   & .about-section__actions {
-    margin-top: var(--rs-4) !important;
 
     & div:has(> div > h3) {
       /* As tall as About's heading row, so both cards start level. */
-      align-items: center !important;
-      height: 2rem !important;
       margin-bottom: 0 !important;
       padding-bottom: 0 !important;
     }

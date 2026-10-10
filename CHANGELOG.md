@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.2](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.5.1...v1.5.2) (2026-10-10)
+
+
+### Fixes
+
+* restyle the extra line of sidebar rows (Hype Train, Watch Streak) ([554179d](https://github.com/corentin-gautier/restyle-for-twitch/commit/554179dd0d7c5f6b97bf0ef7505f29e55fe281ae))
+
 ### [1.5.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.5.0...v1.5.1) (2026-10-10)
 
 

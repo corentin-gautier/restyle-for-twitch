@@ -991,6 +991,70 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * The same tabs inside popovers (Notifications, Prime): a compact version,
+   * the tabs sharing the width as Twitch lays them out.
+   */
+  & .ReactModal__Content .tw-tabs {
+    border-bottom: var(--rs-hairline) !important;
+    box-shadow: none !important;
+
+    /* Twitch's fixed heights would crop the taller tabs. */
+    &,
+    & > div,
+    & [role="tablist"],
+    & [role="tablist"] > * {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    & [role="tablist"] {
+      padding-inline: var(--rs-3) !important;
+      gap: var(--rs-2) !important;
+    }
+
+    & [role="tablist"] > * {
+      padding: 0 !important;
+    }
+
+    & [class*="ScTabIndicatorLayout"] {
+      display: none !important;
+    }
+
+    & [role="tab"] {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 4rem !important;
+      margin-bottom: -1px !important;
+      padding: 0 var(--rs-1) !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: var(--rs-muted) !important;
+      transition: color var(--rs-ease), box-shadow var(--rs-ease);
+
+      & * {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        line-height: 1.4 !important;
+        color: inherit !important;
+      }
+
+      &:hover {
+        color: var(--rs-text) !important;
+        box-shadow: inset 0 -3px 0 var(--rs-border) !important;
+      }
+
+      &[aria-selected="true"] {
+        color: var(--rs-text) !important;
+        box-shadow: inset 0 -3px 0 var(--rs-accent) !important;
+      }
+    }
+  }
+
+  /*
    * ==== Cards ====
    * Grids. Twitch pads each grid's last row with empty placeholder items so
    * the cards keep their width; when those wrap they form a row of their own.
@@ -2438,8 +2502,12 @@ html:not([data-rs="off"]) {
     min-height: var(--rs-control-height) !important;
   }
 
-  /* Room for the magnifier on the left, for the arrows on the right. */
-  & .tw-input[type="search"]:not(.top-nav *, .chat-input__textarea *) {
+  /*
+   * Fields with an icon on the left (a magnifier, or the category search's
+   * glyph): room for it before the text. Told by the icon's box coming
+   * before the field, whatever the field's type.
+   */
+  & .tw-input__icon:not(:has(button)) ~ .tw-input:not(.top-nav *, .chat-input__textarea *) {
     padding-left: calc(var(--rs-control-pad) + 2.8rem) !important;
   }
 
@@ -2447,21 +2515,18 @@ html:not([data-rs="off"]) {
     padding-right: 3.6rem !important;
   }
 
-  /* The magnifier laid over a search field follows its height. */
-  & :has(> .tw-input[type="search"]):not(.top-nav *, .chat-input__textarea *) > :has(svg):not(.tw-balloon, :has(.tw-balloon, button, a, input, select, ul, [role])) {
+  /*
+   * Twitch pins that icon's box to the field's top-left corner, at its own
+   * shorter height: it follows the field's height, and moves in so the icon
+   * sits on the field's padding, like the text on the other side.
+   */
+  & .tw-input__icon:not(:has(button)):has(~ .tw-input):not(.top-nav *, .chat-input__textarea *) {
     top: 0 !important;
     bottom: 0 !important;
+    left: calc(var(--rs-control-pad) - 0.6rem) !important;
     height: 100% !important;
     display: flex !important;
     align-items: center !important;
-  }
-
-  /*
-   * Twitch pins the magnifier's box to the field's left edge: moved in so
-   * the icon sits on the field's padding, like the text on the other side.
-   */
-  & :has(> .tw-input[type="search"]):not(.top-nav *, .chat-input__textarea *) > .tw-input__icon:not(:has(button)) {
-    left: calc(var(--rs-control-pad) - 0.6rem) !important;
   }
 
   /* A select button pads its label twice inside: the button alone does. */
@@ -2517,6 +2582,11 @@ html:not([data-rs="off"]) {
       padding: 0.6rem 1rem !important;
     }
 
+    /* A row holding bare text ("Sorted by") is a block: its text sat at the top. */
+    & .tw-interactable > div:not(:has(*)) {
+      display: flex !important;
+    }
+
     /* Rows holding a pill ("Top 24h") pad their label a second time. */
     & .tw-interactable > div > div > div:has(.tw-pill) {
       padding: 0 !important;
@@ -2525,6 +2595,26 @@ html:not([data-rs="off"]) {
     /* Checkbox lists scroll and end with a footer: the padding moves inside. */
     &:has(.tw-checkbox) {
       padding: 0 !important;
+    }
+
+    /*
+     * "Language": this element is not the box but a wrapper around it, whose
+     * top padding is the gap to the button. It keeps that gap, as wide as
+     * under "Sort by", and the frame goes to the box inside.
+     */
+    &:has(> div > div > .scrollable-area) {
+      padding: 0.8rem 0 0 !important;
+      background: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      overflow: visible !important;
+
+      & > div {
+        background: var(--rs-float) !important;
+        border: 1px solid var(--rs-float-border) !important;
+        border-radius: var(--rs-radius-l) !important;
+        overflow: hidden !important;
+      }
     }
 
     & .scrollable-area > div {

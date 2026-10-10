@@ -5,6 +5,8 @@ const DEFAULTS = {
   accent: "#8b7cf6",
   // Empty: keep the background of Twitch's current theme.
   background: "",
+  // Chat without badges or username colours.
+  plainChat: false,
 };
 
 // Labels come from _locales, in the browser's language (English otherwise).

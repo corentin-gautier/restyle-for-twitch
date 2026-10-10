@@ -41,6 +41,7 @@ without reloading the page.
 | Enable on Twitch | Turns the whole restyle on or off. |
 | Spacing | Three densities: compact, airy, very airy. |
 | Accent colour | The colour of links, tags and highlights. |
+| Plain chat | Hides chat badges and shows every username in the text colour. |
 | Background colour | The page colour. Sidebars, chat, menus and text colours are derived from it. Reset to follow Twitch's own light or dark theme. |
 
 The settings popup is in English or French, following the browser's language.

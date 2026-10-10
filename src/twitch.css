@@ -2295,6 +2295,23 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * "Plain chat" option of the popup (data-rs-plain-chat on <html>): no
+   * badges, and every username in the text colour instead of its own. Live
+   * chat and chat replay alike.
+   */
+  &[data-rs-plain-chat] {
+    & :is(.chat-line__message, .user-notice-line, .vod-message) :is(.chat-badge, [data-a-target="chat-badge"]) {
+      display: none !important;
+    }
+
+    & :is(.chat-author__display-name, .chat-author__intl-login) {
+      color: var(--rs-text) !important;
+      filter: none !important;
+      opacity: 1 !important;
+    }
+  }
+
   & .chat-input {
     padding: var(--rs-3) var(--rs-4) var(--rs-4) !important;
   }

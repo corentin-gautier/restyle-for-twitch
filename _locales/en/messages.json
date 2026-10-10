@@ -25,5 +25,11 @@
   },
   "reset": {
     "message": "Default"
+  },
+  "plainChat": {
+    "message": "Plain chat"
+  },
+  "plainChatHint": {
+    "message": "No badges, no username colours"
   }
 }

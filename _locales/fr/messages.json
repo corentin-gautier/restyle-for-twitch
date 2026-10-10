@@ -25,5 +25,11 @@
   },
   "reset": {
     "message": "Par défaut"
+  },
+  "plainChat": {
+    "message": "Chat épuré"
+  },
+  "plainChatHint": {
+    "message": "Sans badges ni couleurs de pseudo"
   }
 }

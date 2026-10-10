@@ -7,6 +7,8 @@ const DEFAULTS = {
   accent: "#8b7cf6",
   // Empty: keep the background of Twitch's current theme.
   background: "",
+  // Chat without badges or username colours.
+  plainChat: false,
 };
 
 const root = document.documentElement;
@@ -28,6 +30,7 @@ function apply(settings) {
     root.setAttribute("data-rs", "off");
   }
   root.setAttribute("data-rs-space", String(settings.space));
+  root.toggleAttribute("data-rs-plain-chat", settings.plainChat);
   root.style.setProperty("--rs-accent", settings.accent);
   // tokens.css derives the sidebars and other surfaces from this colour, and
   // picks the text palette from its tone.

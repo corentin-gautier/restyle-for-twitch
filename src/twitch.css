@@ -474,6 +474,46 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * Extra line under a row's category (Hype Train, Watch Streak...): the
+   * third line of the row, in the metadata's size and tone, with its icon
+   * or pill in the accent tint instead of Twitch's purple.
+   */
+  & .side-nav-card__link > div > div:not(:has([data-a-target="side-nav-card-metadata"])) {
+    align-items: center !important;
+    gap: var(--rs-1) !important;
+    margin-top: 0.3rem !important;
+
+    & :is(p, span) {
+      font-size: var(--rs-text-1) !important;
+      font-weight: 500 !important;
+      line-height: 1.4 !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    /* Icons drawn as a mask over a coloured box. */
+    & [role="img"] {
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      margin: 0 !important;
+      background-color: var(--rs-accent-quiet) !important;
+    }
+
+    & svg {
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      fill: var(--rs-accent-quiet) !important;
+    }
+
+    & :is(.tw-pill, .tw-tag, [class*="ScPill"], [class*="ScTag"]) {
+      padding: 0.1rem 0.7rem !important;
+      background: var(--rs-accent-tint) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-pill) !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+  }
+
   /* Same for the sidebar's icon buttons (collapse arrow). */
   & .side-nav [class*="ScButtonIcon"]:hover,
   & .side-nav [class*="ScButtonIcon"]:focus-visible {

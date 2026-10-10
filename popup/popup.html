@@ -26,6 +26,10 @@
         </div>
       </div>
       <div class="row">
+        <span data-i18n="themes">Themes</span>
+        <div class="themes" id="themes"></div>
+      </div>
+      <div class="row">
         <span data-i18n="accent">Accent colour</span>
         <span class="group">
           <button type="button" class="reset" data-reset="accent" data-i18n="reset">Default</button>
@@ -39,6 +43,13 @@
           <input type="color" data-key="background" data-fallback="#0f1012" data-i18n-label="background" aria-label="Background colour" />
         </span>
       </div>
+      <label class="row">
+        <span>
+          <span data-i18n="channelColors">Channel colours</span>
+          <small data-i18n="channelColorsHint">On a channel's pages, when they stay readable</small>
+        </span>
+        <input type="checkbox" class="switch" data-key="channelColors" />
+      </label>
     </section>
 
     <section>

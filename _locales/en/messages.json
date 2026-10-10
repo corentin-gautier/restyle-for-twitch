@@ -31,5 +31,38 @@
   },
   "plainChatHint": {
     "message": "No badges, no username colours"
+  },
+  "themes": {
+    "message": "Themes"
+  },
+  "themeDefault": {
+    "message": "Default"
+  },
+  "themeMidnight": {
+    "message": "Midnight"
+  },
+  "themeForest": {
+    "message": "Forest"
+  },
+  "themeEmber": {
+    "message": "Ember"
+  },
+  "themeRose": {
+    "message": "Rose"
+  },
+  "themeSlate": {
+    "message": "Slate"
+  },
+  "themePaper": {
+    "message": "Paper"
+  },
+  "themeMist": {
+    "message": "Mist"
+  },
+  "channelColors": {
+    "message": "Channel colours"
+  },
+  "channelColorsHint": {
+    "message": "On a channel's pages, when they stay readable"
   }
 }

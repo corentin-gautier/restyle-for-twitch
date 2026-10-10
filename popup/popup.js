@@ -7,6 +7,8 @@ const DEFAULTS = {
   background: "",
   // Chat without badges or username colours.
   plainChat: false,
+  // On channel pages, take the accent and background from the channel's colour.
+  channelColors: false,
 };
 
 // Labels come from _locales, in the browser's language (English otherwise).
@@ -16,6 +18,31 @@ for (const el of document.querySelectorAll("[data-i18n]")) {
 }
 for (const el of document.querySelectorAll("[data-i18n-label]")) {
   el.setAttribute("aria-label", chrome.i18n.getMessage(el.dataset.i18nLabel) || el.getAttribute("aria-label"));
+}
+
+// A background and an accent that go together. An empty background keeps
+// Twitch's own theme. Names are message keys in _locales.
+const THEMES = [
+  { name: "themeDefault", background: "", accent: "#8b7cf6" },
+  { name: "themeMidnight", background: "#0b1220", accent: "#7aa7ff" },
+  { name: "themeForest", background: "#0d1512", accent: "#5ecf9b" },
+  { name: "themeEmber", background: "#181110", accent: "#ff8f66" },
+  { name: "themeRose", background: "#180f15", accent: "#f47fb9" },
+  { name: "themeSlate", background: "#14171c", accent: "#9fb4c8" },
+  { name: "themePaper", background: "#f7f3ea", accent: "#a8501c" },
+  { name: "themeMist", background: "#eef2f7", accent: "#2f5fd0" },
+];
+
+const themes = document.querySelector("#themes");
+for (const theme of THEMES) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.title = chrome.i18n.getMessage(theme.name);
+  button.setAttribute("aria-label", button.title);
+  button.style.setProperty("--swatch-bg", theme.background || "var(--bg)");
+  button.style.setProperty("--swatch-accent", theme.accent);
+  button.addEventListener("click", () => save({ background: theme.background, accent: theme.accent }));
+  themes.append(button);
 }
 
 const inputs = document.querySelectorAll("[data-key]");
@@ -36,6 +63,10 @@ function render(settings) {
   for (const button of spaceButtons) {
     button.setAttribute("aria-pressed", String(Number(button.dataset.value) === settings.space));
   }
+  THEMES.forEach((theme, i) => {
+    const current = theme.background === settings.background && theme.accent === settings.accent;
+    themes.children[i].setAttribute("aria-pressed", String(current));
+  });
   document.documentElement.style.setProperty("--accent", settings.accent);
 }
 

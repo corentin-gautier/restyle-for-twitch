@@ -63,14 +63,19 @@ section + section {
   border-top: 1px solid var(--border);
 }
 
-.row:has(.segmented) {
+.row:has(.segmented, .themes) {
   flex-direction: column;
   align-items: stretch;
   gap: 8px;
   padding-block: 12px;
 }
 
+.row:has(small) {
+  padding-block: 8px;
+}
+
 .switch {
+  flex: none;
   appearance: none;
   width: 36px;
   height: 22px;
@@ -173,4 +178,25 @@ input[type="color"]::-webkit-color-swatch {
   margin-top: 2px;
   color: var(--muted);
   font-size: 11px;
+}
+
+.themes {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+
+/* Each swatch: the theme's background, with a dot of its accent. */
+.themes button {
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--swatch-accent) 0 38%, var(--swatch-bg) 40%);
+  cursor: pointer;
+}
+
+.themes button[aria-pressed="true"] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }

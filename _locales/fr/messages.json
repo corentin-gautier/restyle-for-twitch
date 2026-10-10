@@ -31,5 +31,38 @@
   },
   "plainChatHint": {
     "message": "Sans badges ni couleurs de pseudo"
+  },
+  "themes": {
+    "message": "Thèmes"
+  },
+  "themeDefault": {
+    "message": "Par défaut"
+  },
+  "themeMidnight": {
+    "message": "Minuit"
+  },
+  "themeForest": {
+    "message": "Forêt"
+  },
+  "themeEmber": {
+    "message": "Braise"
+  },
+  "themeRose": {
+    "message": "Rose"
+  },
+  "themeSlate": {
+    "message": "Ardoise"
+  },
+  "themePaper": {
+    "message": "Papier"
+  },
+  "themeMist": {
+    "message": "Brume"
+  },
+  "channelColors": {
+    "message": "Couleurs de la chaîne"
+  },
+  "channelColorsHint": {
+    "message": "Sur les pages d'une chaîne, si elles restent lisibles"
   }
 }

@@ -1948,6 +1948,28 @@ html:not([data-rs="off"]) {
     box-shadow: none !important;
   }
 
+  /*
+   * Logged in, the panel is not a centred dialog but a sheet laid over the
+   * right of the player, as tall as it. It takes the player's inset, so it
+   * sits inside the video's rounded frame instead of touching the top bar
+   * and the chat, with the border and corners of the other floating boxes.
+   */
+  & .support-panel-container {
+    inset: var(--rs-8) var(--rs-8) calc(var(--rs-4) + 2px) auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  /* Bundle offers: the framed group follows the rounding of its cards. */
+  & .support-panel div:has(> .gifting-option):not(:has(> .gifting-option:only-child)) {
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+  }
+
   & .support-panel {
     background: var(--rs-float) !important;
 

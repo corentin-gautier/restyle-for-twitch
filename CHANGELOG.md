@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.5.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.5.0...v1.5.1) (2026-10-10)
+
+
+### Fixes
+
+* align field icons, dropdown rows and the Language menu, restyle popover tabs ([989d4dd](https://github.com/corentin-gautier/restyle-for-twitch/commit/989d4ddae225a520dfcd99684e9eb56fd611c12e))
+
 ## [1.5.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.4.2...v1.5.0) (2026-10-10)
 
 

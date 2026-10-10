@@ -43,7 +43,18 @@
   /* Twitch's own size for the channel avatar under the player. */
   --rs-avatar-channel: 6.4rem;
 
+  /*
+   * Text fields and select menus: the same padding on all four sides, and
+   * the height that gives around one line of text.
+   */
+  --rs-control-pad: 1.2rem;
+  --rs-control-height: calc(2rem + 2 * var(--rs-control-pad));
+
   --rs-ease: 0.15s ease;
+  /* Movement (a picture easing in on hover): slower, and settling gently. */
+  --rs-ease-move: 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* How far the other cards of a grid recede while one is hovered. */
+  --rs-recede: 0.5;
 
   /* Overridden inline by content.js with the colour picked in the popup. */
   --rs-accent: #8b7cf6;

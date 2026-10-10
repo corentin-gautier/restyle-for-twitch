@@ -53,6 +53,86 @@ html:not([data-rs="off"]) {
     --color-border-brand: var(--rs-accent) !important;
     --color-fill-brand: var(--rs-accent) !important;
 
+    /*
+     * The rest of Twitch's purple: every other variable that resolves to a
+     * brand purple, and the raw purple scale some components read directly,
+     * rebuilt as shades of the accent.
+     */
+    --color-text-brand: var(--rs-accent) !important;
+    --color-text-button-text: var(--rs-accent) !important;
+    --color-text-link-active: var(--rs-accent) !important;
+    --color-text-link-focus: var(--rs-accent) !important;
+    --color-text-link-visited: var(--rs-accent) !important;
+    --color-text-tab-active: var(--rs-accent) !important;
+    --color-text-toggle-checked-hover-icon: var(--rs-accent) !important;
+    --color-background-accent: var(--rs-accent) !important;
+    --color-background-brand: var(--rs-accent) !important;
+    --color-background-button: var(--rs-accent) !important;
+    --color-background-button-brand: var(--rs-accent) !important;
+    --color-background-date-picker-day-selected: var(--rs-accent) !important;
+    --color-background-graph-fill: var(--rs-accent) !important;
+    --color-background-input-checked: var(--rs-accent) !important;
+    --color-background-overlay-brand: var(--rs-accent) !important;
+    --color-background-progress-countdown-status: var(--rs-accent) !important;
+    --color-background-range-ms-thumb: var(--rs-accent) !important;
+    --color-background-toggle-handle-checked: var(--rs-accent) !important;
+    --color-border-brand-decorative: var(--rs-accent) !important;
+    --color-border-button-active: var(--rs-accent) !important;
+    --color-border-button-focus: var(--rs-accent) !important;
+    --color-border-button-hover: var(--rs-accent) !important;
+    --color-border-image-selector-mask: var(--rs-accent) !important;
+    --color-border-image-selector-mask-overlay: var(--rs-accent) !important;
+    --color-border-interactable-selected: var(--rs-accent) !important;
+    --color-border-overlay-brand-decorative: var(--rs-accent) !important;
+    --color-border-tab-focus: var(--rs-accent) !important;
+    --color-border-tab-hover: var(--rs-accent) !important;
+    --color-border-toggle-checked-hover: var(--rs-accent) !important;
+    --color-border-whisper-incoming: var(--rs-accent) !important;
+    --color-fill-brand-overlay: var(--rs-accent) !important;
+    --color-background-button-hover: var(--rs-accent-hover) !important;
+    --color-background-button-focus: var(--rs-accent-hover) !important;
+    --color-background-button-brand-hover: var(--rs-accent-hover) !important;
+    --color-background-input-checkbox-checked-hover: var(--rs-accent-hover) !important;
+    --color-background-input-checkbox-checked-active: var(--rs-accent-hover) !important;
+    --color-background-toggle-handle-checked-hover: var(--rs-accent-hover) !important;
+    --color-background-button-active: var(--rs-accent-active) !important;
+    --color-background-button-brand-active: var(--rs-accent-active) !important;
+    --color-background-accent-alt: var(--rs-accent-active) !important;
+    --color-background-accent-alt-2: var(--rs-accent-tint-strong) !important;
+    --color-background-date-picker-range: var(--rs-accent-tint-strong) !important;
+    --color-background-table-selected: var(--rs-accent-tint-strong) !important;
+    --color-text-button-text-active: var(--rs-accent-tint-strong) !important;
+    --color-twitch-purple-1: color-mix(in srgb, var(--rs-accent), black 92%) !important;
+    --color-twitch-purple-2: color-mix(in srgb, var(--rs-accent), black 86%) !important;
+    --color-twitch-purple-3: color-mix(in srgb, var(--rs-accent), black 80%) !important;
+    --color-twitch-purple-4: color-mix(in srgb, var(--rs-accent), black 70%) !important;
+    --color-twitch-purple-5: color-mix(in srgb, var(--rs-accent), black 58%) !important;
+    --color-twitch-purple-6: color-mix(in srgb, var(--rs-accent), black 45%) !important;
+    --color-twitch-purple-7: color-mix(in srgb, var(--rs-accent), black 28%) !important;
+    --color-twitch-purple-8: color-mix(in srgb, var(--rs-accent), black 14%) !important;
+    --color-twitch-purple-9: var(--rs-accent) !important;
+    --color-twitch-purple-10: color-mix(in srgb, var(--rs-accent), white 14%) !important;
+    --color-twitch-purple-11: color-mix(in srgb, var(--rs-accent), white 28%) !important;
+    --color-twitch-purple-12: color-mix(in srgb, var(--rs-accent), white 42%) !important;
+    --color-twitch-purple-13: color-mix(in srgb, var(--rs-accent), white 60%) !important;
+    --color-twitch-purple-14: color-mix(in srgb, var(--rs-accent), white 74%) !important;
+    --color-twitch-purple-15: color-mix(in srgb, var(--rs-accent), white 84%) !important;
+    --color-opac-p-1: color-mix(in srgb, var(--rs-accent) 5%, transparent) !important;
+    --color-opac-p-2: color-mix(in srgb, var(--rs-accent) 10%, transparent) !important;
+    --color-opac-p-3: color-mix(in srgb, var(--rs-accent) 15%, transparent) !important;
+    --color-opac-p-4: color-mix(in srgb, var(--rs-accent) 20%, transparent) !important;
+    --color-opac-p-5: color-mix(in srgb, var(--rs-accent) 25%, transparent) !important;
+    --color-opac-p-6: color-mix(in srgb, var(--rs-accent) 30%, transparent) !important;
+    --color-opac-p-7: color-mix(in srgb, var(--rs-accent) 40%, transparent) !important;
+    --color-opac-p-8: color-mix(in srgb, var(--rs-accent) 50%, transparent) !important;
+    --color-opac-p-9: color-mix(in srgb, var(--rs-accent) 60%, transparent) !important;
+    --color-opac-p-10: color-mix(in srgb, var(--rs-accent) 70%, transparent) !important;
+    --color-opac-p-11: color-mix(in srgb, var(--rs-accent) 75%, transparent) !important;
+    --color-opac-p-12: color-mix(in srgb, var(--rs-accent) 80%, transparent) !important;
+    --color-opac-p-13: color-mix(in srgb, var(--rs-accent) 85%, transparent) !important;
+    --color-opac-p-14: color-mix(in srgb, var(--rs-accent) 90%, transparent) !important;
+    --color-opac-p-15: color-mix(in srgb, var(--rs-accent) 95%, transparent) !important;
+
     --color-text-base: var(--rs-text) !important;
     --color-text-alt: var(--rs-text) !important;
     --color-text-alt-2: var(--rs-muted) !important;
@@ -378,6 +458,7 @@ html:not([data-rs="off"]) {
     padding: var(--rs-2) var(--rs-3) !important;
     margin-inline: 0 !important;
     border-radius: var(--rs-radius-m) !important;
+    transition: background-color var(--rs-ease) !important;
 
     /*
      * Twitch's own row hover is a fixed grey of its theme. Ours follows the
@@ -656,8 +737,8 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Browse: the filter row under the tabs (tag search, "Sort by"). Roomier
-   * controls, the height of the top bar's search field. The section is only
+   * Browse: the filter row under the tabs (tag search, "Sort by"). Its
+   * controls take the shared size (see "Form controls"). The section is only
    * identifiable by its English label.
    */
   & .twilight-main section[aria-label="Filter & Sort Options"] {
@@ -666,25 +747,25 @@ html:not([data-rs="off"]) {
     & button[aria-haspopup],
     & [data-test-selector^="toggle-balloon-wrapper"] > button,
     & [role="combobox"] {
-      height: 4rem !important;
-      min-height: 4rem !important;
+      height: var(--rs-control-height) !important;
+      min-height: var(--rs-control-height) !important;
       border-radius: var(--rs-radius-m) !important;
-      font-size: var(--rs-text-3) !important;
+      font-size: var(--rs-text-4) !important;
     }
 
     /* Left room for the magnifier, right room for the select's arrows. */
     & input {
-      padding-inline: 4rem var(--rs-4) !important;
+      padding-inline: calc(var(--rs-control-pad) + 2.8rem) var(--rs-control-pad) !important;
     }
 
     & select {
-      padding-inline: var(--rs-4) 3.6rem !important;
+      padding-inline: var(--rs-control-pad) 3.6rem !important;
     }
 
     & button[aria-haspopup],
     & [data-test-selector^="toggle-balloon-wrapper"] > button,
     & [role="combobox"]:not(input) {
-      padding-inline: var(--rs-4) !important;
+      padding-inline: var(--rs-control-pad) !important;
     }
 
     /* Wrappers sized for Twitch's shorter menu buttons. */
@@ -711,12 +792,28 @@ html:not([data-rs="off"]) {
      * a large radius crops) and padded rows that light up on hover. Only in
      * the search half of the row: the "Sort by" menu keeps Twitch's layout.
      */
-    & > div > :has(input) .tw-balloon {
+    /*
+     * The positioned wrapper shrinks to its content: at least the field's
+     * width. It also sets the distance to the field, a little past the
+     * focus ring.
+     */
+    & > div > :has(input) [class*="Attached"]:has(> .tw-balloon) {
       min-width: 100% !important;
       margin-top: var(--rs-1) !important;
+    }
+
+    & > div > :has(input) .tw-balloon {
+      min-width: 100% !important;
+      margin-top: 0 !important;
+      /* The list inside is the box: this wrapper would frame it a second time. */
+      padding: 0 !important;
+      background: transparent !important;
       border-radius: var(--rs-radius-m) !important;
 
       & > div {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        margin: 0 !important;
         padding: var(--rs-1) !important;
         border-radius: var(--rs-radius-m) !important;
       }
@@ -966,9 +1063,43 @@ html:not([data-rs="off"]) {
     display: none !important;
   }
 
-  & [data-a-target="preview-card-image-link"]:hover img {
-    opacity: 0.88;
-    transition: opacity var(--rs-ease);
+  /*
+   * Hover: a spotlight. In a grid or a shelf, the cards around the hovered
+   * one recede, so the eye stays on it, and its picture eases in a little
+   * inside the frame. The fade applies to the grid's cells, which touch
+   * side by side: moving along a row never flashes the whole grid back.
+   */
+  & .tw-tower > * {
+    transition: opacity 0.25s ease;
+  }
+
+  & .tw-tower:has(> :hover) > :not(:hover) {
+    opacity: var(--rs-recede);
+  }
+
+  /* Movement only for those who have not asked their system to reduce it. */
+  @media (prefers-reduced-motion: no-preference) {
+    & [data-a-target="preview-card-image-link"] img,
+    & [data-a-target="tw-box-art-card-link"] img,
+    & .tw-box-art-card img,
+    & .vertical-selector img {
+      transition: transform var(--rs-ease-move) !important;
+    }
+
+    & .tw-tower > :hover [data-a-target="preview-card-image-link"] img,
+    & article:hover [data-a-target="preview-card-image-link"] img,
+    & [data-a-target="preview-card-image-link"]:hover img,
+    & .tw-tower > :hover [data-a-target="tw-box-art-card-link"] img,
+    & .game-card:hover img,
+    & [data-a-target="tw-box-art-card-link"]:hover img,
+    & .tw-box-art-card:hover img {
+      transform: scale(1.05) !important;
+    }
+
+    /* Browse's section cards: their illustration, a touch more. */
+    & .vertical-selector:hover img {
+      transform: scale(1.08) !important;
+    }
   }
 
   /*
@@ -1692,20 +1823,101 @@ html:not([data-rs="off"]) {
 
   /*
    * ==== Category page header ====
-   * Box art rounded like every other thumbnail, and the name at the size of
-   * the other pages' titles.
+   * A panel like the others (surface, hairline, large radius) holding the
+   * box art and, beside it, a stack: the name at display size, the figures
+   * as a small-caps line, the tags on a line of their own, the description
+   * in muted text on a readable measure, then the actions.
    */
-  & .directory-header-new__info .tw-aspect {
-    border-radius: var(--rs-radius-m) !important;
-    overflow: hidden !important;
+  /* Doubled class: a page-top rule zeroes the first block's top padding. */
+  & .twilight-main .directory-header-new__banner-cover.directory-header-new__banner-cover {
+    isolation: isolate !important;
+    margin-bottom: var(--rs-4) !important;
+    padding: var(--rs-6) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
   }
 
-  & .directory-header-new__info h1 {
-    font-size: var(--rs-text-display) !important;
-    font-weight: 700 !important;
-    line-height: 1.1 !important;
-    letter-spacing: -0.02em !important;
-    margin-bottom: var(--rs-2) !important;
+  /* Some categories bring a banner picture: a faint wash behind the panel. */
+  & .directory-header-new__banner {
+    inset: 0 !important;
+    opacity: 0.18 !important;
+  }
+
+  /* Box art and text column, centred on each other. */
+  & .directory-header-new__info > div {
+    align-items: center !important;
+  }
+
+  & .directory-header-new__info {
+    padding: 0 !important;
+
+    & .tw-aspect {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    /* The column beside the box art, centred on it. */
+    & > div > div:has(h1) {
+      justify-content: center !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+    }
+
+    & h1 {
+      margin: 0 !important;
+      font-size: var(--rs-text-display) !important;
+      font-weight: 700 !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* Figures, then tags: one wrapping row, the tags pushed to the next line. */
+    & div:has(> div > p[title]) {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: var(--rs-2) 0 !important;
+
+      & p {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & p strong {
+        color: var(--rs-text) !important;
+      }
+
+      & > div:has(.tw-tag) {
+        flex-basis: 100% !important;
+      }
+
+      /* The bullet that led to the tags. */
+      & > div:has(+ div .tw-tag) {
+        display: none !important;
+      }
+    }
+
+    & .directory-header-new__description {
+      max-width: 64rem !important;
+
+      & p {
+        font-size: var(--rs-text-4) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* Actions: a little air above. */
+    & > div > div:has(h1) > div:has([data-a-target="game-directory-follow-button"]) {
+      margin-top: var(--rs-2) !important;
+    }
   }
 
   /*
@@ -2207,13 +2419,85 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * ==== Form controls ====
+   * Text fields, text areas and select menus, wherever they are: one
+   * padding, equal on all four sides, hence one height. Not the top bar's
+   * search field (a pill, with its own proportions) nor the chat field
+   * (which holds buttons).
+   */
+  & :is(.tw-input, .tw-select, .tw-select-button, .tw-textarea):not(.top-nav *, .chat-input__textarea *) {
+    box-sizing: border-box !important;
+    padding: var(--rs-control-pad) !important;
+    border-radius: var(--rs-radius-m) !important;
+    font-size: var(--rs-text-4) !important;
+    line-height: 2rem !important;
+  }
+
+  & :is(.tw-input, .tw-select, .tw-select-button):not(.top-nav *, .chat-input__textarea *) {
+    height: var(--rs-control-height) !important;
+    min-height: var(--rs-control-height) !important;
+  }
+
+  /* Room for the magnifier on the left, for the arrows on the right. */
+  & .tw-input[type="search"]:not(.top-nav *, .chat-input__textarea *) {
+    padding-left: calc(var(--rs-control-pad) + 2.8rem) !important;
+  }
+
+  & select.tw-select {
+    padding-right: 3.6rem !important;
+  }
+
+  /* The magnifier laid over a search field follows its height. */
+  & :has(> .tw-input[type="search"]):not(.top-nav *, .chat-input__textarea *) > :has(svg):not(.tw-balloon, :has(.tw-balloon, button, a, input, select, ul, [role])) {
+    top: 0 !important;
+    bottom: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  /*
+   * Twitch pins the magnifier's box to the field's left edge: moved in so
+   * the icon sits on the field's padding, like the text on the other side.
+   */
+  & :has(> .tw-input[type="search"]):not(.top-nav *, .chat-input__textarea *) > .tw-input__icon:not(:has(button)) {
+    left: calc(var(--rs-control-pad) - 0.6rem) !important;
+  }
+
+  /* A select button pads its label twice inside: the button alone does. */
+  & .tw-select-button {
+    padding-block: 0 !important;
+
+    & > div {
+      padding: 0 !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0.6rem 0 0 !important;
+    }
+  }
+
+  /* A field with a button attached keeps its right side square. */
+  & .tw-combo-input__input .tw-input:not(.top-nav *) {
+    border-radius: var(--rs-radius-m) 0 0 var(--rs-radius-m) !important;
+  }
+
+  /* A button attached to a field (Settings) takes its height. */
+  & .tw-combo-input:not(.top-nav *) button {
+    height: var(--rs-control-height) !important;
+  }
+
+  /*
    * ==== Filter and sort menus ====
    * Twitch builds them in several ways (rows straight in the box or behind
    * padded wrappers, links, buttons or checkboxes), each with its own inner
    * margins. One box padding and one row size for all of them. Dialogs with
-   * headings, pictures or text fields are not menus and are left alone.
+   * headings, pictures or text fields are not menus and are left alone, and
+   * so is the tag search's suggestion list, styled with its field. Nor the
+   * zero-height anchor of a "Sort by" list: padding gives it a height, which
+   * pushes the list that far from its button.
    */
-  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"][class*="Attached"] > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"]))) {
+  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"][class*="Attached"] > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *) {
     padding: 0.6rem !important;
 
     /* Wrappers between the box and its rows. */
@@ -3041,6 +3325,25 @@ html:not([data-rs="off"]) {
       background: var(--rs-hover) !important;
       border-radius: var(--rs-radius-s) !important;
       font-size: var(--rs-text-2) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Regions tinted with a channel's own accent (goals, the highlight above
+   * the chat) redeclare the accent variable: they follow the theme's too.
+   */
+  & [class*="ScAccentRegionCssVars"] {
+    --color-accent: var(--rs-accent) !important;
+  }
+
+  /* Shelf arrows: a white disc with a purple chevron, both set inline. */
+  & .preview-card-carousel__button > div {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    box-shadow: none !important;
+
+    & [style*="color"] {
       color: var(--rs-text) !important;
     }
   }

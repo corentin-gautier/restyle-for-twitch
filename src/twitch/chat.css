@@ -29,6 +29,31 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Chat collapsed: the arrow that brings it back is a bare white glyph
+   * astride the player's right edge. It moves onto the video, 1rem inside
+   * its top right corner (the player's inset is --rs-4), as a floating
+   * disc that reads on any picture. Not in theatre mode, where the video
+   * has no inset.
+   */
+  & .right-column--collapsed:not(.right-column--theatre) .toggle-visibility__right-column {
+    top: calc(var(--rs-4) + 1rem) !important;
+    right: calc(var(--rs-4) + 1rem) !important;
+    left: auto !important;
+
+    & button {
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* "Floating panels": the player has no inset above it (see channel.css). */
+  &[data-rs-floating] .right-column--collapsed:not(.right-column--theatre) .toggle-visibility__right-column {
+    top: 1rem !important;
+  }
+
+  /*
    * "Floating panels" option (see shell.css): the column keeps its slot and
    * goes transparent, and the box inside it becomes the panel, a gap in from
    * the window's right and bottom edges. Twitch gives that box the slot's

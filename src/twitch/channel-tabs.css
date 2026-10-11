@@ -75,6 +75,106 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Live hero: Twitch floats a tall, mostly empty card over the video, with
+   * a black "Mute" block hanging under it. The card shrinks to what it
+   * says and sits in the hero's bottom left corner, as far from the frame's
+   * bottom as from its side, with "Mute" beside it on the same line.
+   */
+  & .home-live-player-overlay--contents {
+    box-sizing: border-box !important;
+    /* The frame's bottom edge (--rs-2), then the 2.2rem the card keeps from its side. */
+    height: calc(100% - var(--rs-2) - 2.2rem) !important;
+    align-items: flex-end !important;
+
+    & > div {
+      display: flex !important;
+      align-items: flex-end !important;
+      gap: var(--rs-2) !important;
+      width: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  & .home-carousel-info--live {
+    flex: 0 1 auto !important;
+    gap: var(--rs-4) !important;
+    max-width: 44rem !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: var(--rs-4) !important;
+    align-items: flex-start !important;
+
+    /* Twitch's wrappers: no margin, no room kept for a taller card. */
+    & div {
+      margin: 0 !important;
+    }
+
+    /* "Live Now": a small-caps pill in the live tint, like the viewer count. */
+    & .channel-status-info {
+      padding: 0.2rem 0.8rem !important;
+      background: var(--rs-live-tint) !important;
+      border-radius: var(--rs-radius-pill) !important;
+
+      & strong {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-live) !important;
+      }
+    }
+
+    & div:has(> h2) {
+      margin-top: var(--rs-2) !important;
+    }
+
+    /* "Watch now with 8K viewers": the card's one action, a filled button. */
+    & [data-a-target="home-live-overlay-button"] {
+      display: inline-flex !important;
+      align-items: center !important;
+      min-height: 3.2rem !important;
+      padding: 0 1.4rem !important;
+      background: var(--rs-accent) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      text-decoration: none !important;
+      /* The count is an element of its own: as flex items, the spaces around it would go. */
+      white-space: pre !important;
+      transition: opacity var(--rs-ease);
+
+      &,
+      & * {
+        font-size: var(--rs-text-3) !important;
+        font-weight: 600 !important;
+        color: var(--rs-on-accent) !important;
+      }
+
+      &:hover {
+        opacity: 0.88 !important;
+      }
+    }
+  }
+
+  /* "Mute": a floating pill, the height of the button beside it. */
+  & .home-carousel-info--live + div > div {
+    margin: 0 !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-pill) !important;
+
+    & button {
+      min-height: 3.2rem !important;
+      padding-inline: 0.4rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
    * The hero's video is the persistent player laid over its panel: no inset
    * there, and only the top corners rounded, to follow the panel's.
    */

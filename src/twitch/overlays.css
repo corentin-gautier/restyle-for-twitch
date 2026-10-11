@@ -1,0 +1,877 @@
+/*
+ * Menus, popovers, dialogs, and the popups built on them.
+ * Part of one cascade with the other files of this folder: see shell.css.
+ */
+html:not([data-rs="off"]) {
+  /*
+   * ==== Menus, popovers, dialogs ====
+   * Floating layers must read as above the page: their own lighter surface
+   * and a firmer edge, no shadow.
+   */
+  & .tw-balloon,
+  & [role="dialog"] > div,
+  & .ReactModal__Content > div {
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /*
+   * Not when it holds a menu: the menu list is then the box (see below), and
+   * this wrapper can be a zero-height anchor whose border shows as a stray
+   * line under the button that opened it.
+   */
+  & .tw-balloon > div:not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  & .tw-balloon > div {
+    box-shadow: none !important;
+  }
+
+  /*
+   * Popovers and dialogs (Bits, whispers, notifications...): Twitch renders
+   * them through ReactModal, and its tooltips too. What tells them apart is
+   * that their content is a labelled dialog. (Not "holds no tooltip": the
+   * notifications panel has tooltips of its own inside.)
+   *
+   * Their box reads the base background token, so it is retinted to the
+   * float surface from here.
+   */
+  & .ReactModal__Content[role="dialog"]:is([aria-label], [aria-labelledby]) {
+    --color-background-base: var(--rs-float);
+    --color-background-body: var(--rs-float);
+
+    /*
+     * The box is the element inside the transition wrapper: it carries the
+     * rounded edge and clips what scrolls inside, which otherwise pokes out
+     * past the corners. Not the outer wrapper: on anchored menus ("Sort by")
+     * that one has no height, and clipping it hides the whole menu. For the
+     * same reason, not when it holds a menu: the menu list is then the box.
+     */
+    & > div > .tw-transition > div:not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-l) !important;
+      overflow: hidden !important;
+    }
+  }
+
+  /*
+   * Menus rendered the same way ("Sort by"...): the list is the box, with
+   * padded rows that light up on hover, like the tag search suggestions.
+   * Found through their ARIA roles, the only stable hook they have.
+   */
+  & .ReactModal__Content :is([role="menu"], [role="listbox"], [role="radiogroup"]) {
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+  }
+
+  & .ReactModal__Content :is([role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="option"], [role="radio"]) {
+    padding: var(--rs-2) var(--rs-3) !important;
+    border-radius: var(--rs-radius-s) !important;
+    color: var(--rs-label) !important;
+    transition: background-color var(--rs-ease), color var(--rs-ease);
+
+    & * {
+      font-size: var(--rs-text-3) !important;
+      color: inherit !important;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &:is([aria-checked="true"], [aria-selected="true"]) {
+      background: var(--rs-hover) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * "Sort by" comes in three builds: a listbox (Browse, a category's live
+   * channels), a button with an attached menu (a category's videos) and a
+   * select button (clips, a channel's tabs). One field and one menu: the
+   * listbox takes the other menus' box and rows, and the two other buttons
+   * take the select button's weight, arrow and open state.
+   */
+  & .ReactModal__Content [role="listbox"] {
+    padding: 0.6rem !important;
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /* Opening upwards, the list touches its button: the gap it has downwards. */
+  & .ReactModal__Content > [data-popper-placement^="top"]:has(> .tw-transition [role="listbox"]) {
+    padding-bottom: 0.8rem !important;
+  }
+
+  & .ReactModal__Content [role="option"] {
+    min-height: 3.6rem !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: var(--rs-radius-m) !important;
+    color: var(--rs-text) !important;
+
+    & * {
+      font-size: var(--rs-text-4) !important;
+    }
+  }
+
+  & .twilight-main :is([role="combobox"]:not(input), [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded]) {
+    font-weight: 400 !important;
+
+    & * {
+      font-weight: 400 !important;
+    }
+  }
+
+  /* The attached-menu button centres its label: on the left, arrow on the right. */
+  & .twilight-main [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded] > div {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  /* It also pads its label twice inside: the button alone does, like the select button. */
+  & .twilight-main [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded] {
+    & > div {
+      padding: 0 !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0.6rem 0 0 !important;
+    }
+  }
+
+  /* The listbox button's double arrow: the single chevron of the others. */
+  & .twilight-main button[role="combobox"] > div:last-child:has(svg) {
+    & svg {
+      display: none !important;
+    }
+
+    &::after {
+      content: "";
+      width: 2rem;
+      height: 2rem;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+    }
+  }
+
+  /* Open or focused: the same accent ring on the three. */
+  & .twilight-main :is(.tw-select-button, button[role="combobox"], [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded]):is([aria-expanded="true"], :focus-visible) {
+    outline: none !important;
+    box-shadow: inset 0 0 0 2px var(--rs-accent) !important;
+  }
+
+  /*
+   * ...and the page dims behind them. The overlay has no area of its own: it
+   * is stretched over the viewport to carry the backdrop.
+   */
+  & .ReactModal__Overlay:has(> .ReactModal__Content[role="dialog"]:is([aria-label], [aria-labelledby])) {
+    position: fixed !important;
+    inset: 0 !important;
+    background: var(--rs-backdrop) !important;
+  }
+
+  /*
+   * No shadow around anything Twitch floats through ReactModal (dialogs and
+   * tooltips alike). The shadow sits on one of the outer wrappers of the
+   * content; controls deeper inside keep theirs, which are focus rings.
+   */
+  & .ReactModal__Content,
+  & .ReactModal__Content > div,
+  & .ReactModal__Content > div > div,
+  & .ReactModal__Content > div > div > div,
+  & .ReactModal__Content > div > div > div > div,
+  & [role="tooltip"],
+  & .tw-tooltip,
+  & [class*="ScTooltip"] {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+
+  /* Whispers (logged in): the search row is painted a step darker. */
+  & div:has(> div > [data-a-target="whisper-search-input"]) {
+    padding: 0 var(--rs-1) var(--rs-2) !important;
+    background: transparent !important;
+  }
+
+  /* Player settings menu: the same floating surface as the other menus. */
+  & .ReactModal__Content div:has(> div > div > [data-a-target="player-settings-menu"]) {
+    background: var(--rs-float) !important;
+    /* An outline: a border would narrow the rows and wrap their labels. */
+    outline: 1px solid var(--rs-float-border) !important;
+    outline-offset: -1px !important;
+    border-radius: var(--rs-radius-l) !important;
+    overflow: hidden !important;
+  }
+
+  /* Its text and controls are painted in fixed light-on-dark colours. */
+  & [data-a-target="player-settings-menu"] {
+    & *:not(.tw-pill, .tw-pill *) {
+      color: var(--rs-text) !important;
+    }
+
+    & [role="separator"] {
+      border-color: var(--rs-border) !important;
+    }
+
+    & .tw-toggle__button {
+      background: var(--rs-raised) !important;
+    }
+
+    & .tw-toggle__input:checked + .tw-toggle__button {
+      border-color: var(--rs-accent) !important;
+
+      &::after {
+        background: var(--rs-accent) !important;
+      }
+
+      & * {
+        color: var(--rs-accent) !important;
+        fill: var(--rs-accent) !important;
+      }
+    }
+
+    & .tw-radio__input:checked + label::before {
+      border-color: var(--rs-accent) !important;
+    }
+
+    & .tw-radio__input:checked + label::after {
+      background: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Keyboard shortcuts, opened from that menu: a table laid over the
+   * player's top-left corner. A floating card set in from the corner, with
+   * a title row and the keys as chips.
+   */
+  & div:has(> #keyboard-shortcuts-overlay) {
+    /* Twitch's fixed width is too narrow once the cells are padded. */
+    width: max-content !important;
+    margin: var(--rs-2) !important;
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+  }
+
+  & #keyboard-shortcuts-overlay {
+    /* The table draws a ring of its own inside the card. */
+    & table {
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & td {
+      padding: 0.6rem 1rem !important;
+      vertical-align: middle !important;
+      white-space: nowrap !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    & td:last-child {
+      padding-left: var(--rs-6) !important;
+      text-align: right !important;
+    }
+
+    & tr:first-child td {
+      padding-bottom: 1rem !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+      border-bottom: var(--rs-hairline) !important;
+    }
+
+    & tr:nth-child(2) td {
+      padding-top: 1rem !important;
+    }
+
+    /* The close button is painted in Twitch's purple. */
+    & button,
+    & button * {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+
+    & td:last-child > span {
+      display: inline-block !important;
+      padding: 0.1rem 0.7rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-s) !important;
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Video Stats and Ad Stats (Settings > Advanced): a table over the
+   * player's top-left corner, under an empty band holding the close button.
+   * The same floating card as the keyboard shortcuts: small-caps column
+   * heads, names toned down beside their values, and the close button moved
+   * into the head row's corner.
+   */
+  & .video-player__overlay .scrollable-area > div:has(> table.tw-table) {
+    position: relative !important;
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+    /* No shadow: the scroll area around the card would cut it off. */
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & > div:first-child {
+      position: absolute !important;
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      z-index: 1 !important;
+    }
+
+    & button,
+    & button * {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+
+    & table {
+      background: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & th {
+      background: none !important;
+      border-radius: 0 !important;
+      border-bottom: var(--rs-hairline) !important;
+
+      & > div {
+        padding: 0.8rem 1rem !important;
+      }
+
+      & strong {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* Room for the close button beside the last column's head. */
+    & th:last-child > div {
+      padding-right: 4.4rem !important;
+    }
+
+    & td {
+      padding: 0.4rem 1rem !important;
+      border: 0 !important;
+      font-size: var(--rs-text-3) !important;
+      line-height: 2rem !important;
+      white-space: nowrap !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    & td p {
+      font-size: inherit !important;
+      line-height: inherit !important;
+      color: inherit !important;
+    }
+
+    & td:last-child {
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-text) !important;
+    }
+
+    & tbody tr:first-child td {
+      padding-top: 0.8rem !important;
+    }
+
+    & tbody tr:last-child td {
+      padding-bottom: 0.6rem !important;
+    }
+  }
+
+  /*
+   * Preview shown while pointing along a video's seek bar. Twitch's is a
+   * picture over a bar holding the timestamp, and the generic balloon rules
+   * frame it twice. Just the picture instead, rounded, under a light ring
+   * and a soft shadow, with the timestamp as a chip laid over its bottom.
+   */
+  & .video-player .player-controls div:has(> div > [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
+    background: none !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.45) !important;
+    /* Clear of the seek bar, now that the timestamp's bar is gone. */
+    transform: translateY(-0.8rem) !important;
+  }
+
+  & .video-player .player-controls div:has(> [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
+    position: relative !important;
+    background: #000 !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+
+    /* The ring, over the picture so that it stays even on a bright frame. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+      pointer-events: none;
+    }
+
+    & > [data-test-selector="vod-seekbar-preview-overlay-preview-image"] + div {
+      position: absolute !important;
+      inset: auto 0 0.6rem !important;
+      display: flex !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      background: none !important;
+    }
+
+    & p {
+      padding: 0.2rem 0.8rem !important;
+      background: rgba(15, 16, 18, 0.72) !important;
+      backdrop-filter: blur(8px);
+      border-radius: var(--rs-radius-pill) !important;
+      font-size: var(--rs-text-2) !important;
+      font-weight: 600 !important;
+      line-height: 1.8rem !important;
+      font-variant-numeric: tabular-nums !important;
+      letter-spacing: 0.02em !important;
+      color: #fff !important;
+    }
+  }
+
+  /*
+   * Chapter list, opened from a video's controls: the same floating card as
+   * the player's settings menu, rows with rounded corners and even padding,
+   * the chapter being played tinted with the accent.
+   */
+  & [role="dialog"][aria-describedby="chapter-select-popover-body"] > div {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden !important;
+  }
+
+  & #chapter-select-popover-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    padding: 0.6rem !important;
+
+    & .media-row button {
+      border-radius: var(--rs-radius-s) !important;
+      background: none !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+
+      & > div {
+        align-items: center !important;
+        padding: 0.6rem !important;
+      }
+    }
+
+    /* The row being played has its play mark always on, without that class. */
+    & .media-row:has(.media-row__image-wrapper > div:last-child:not(.media-row__image-play-overlay)) button {
+      background: color-mix(in srgb, var(--rs-accent) 16%, transparent) !important;
+    }
+
+    & .media-row__image-wrapper {
+      border-radius: 0.6rem !important;
+      overflow: hidden !important;
+    }
+
+    & .media-row__image-wrapper + div {
+      padding: 0 0.4rem 0 1.2rem !important;
+    }
+
+    & .media-row__info-text p {
+      font-size: var(--rs-text-4) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .media-row__info-description p {
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  /*
+   * "Audio for portions of this video has been muted…": Twitch lays a black
+   * slab over the middle of the picture. A small chip in the player's
+   * bottom-left corner instead, on one line; pointing at it unfolds the
+   * whole sentence. It sits on the video, so its ink is fixed, not themed.
+   */
+  & .muted-segments-alert__position-wrapper {
+    align-items: flex-start !important;
+    padding-inline: var(--rs-3) !important;
+  }
+
+  & .muted-segments-alert__scroll-wrapper {
+    width: auto !important;
+    max-width: 32rem !important;
+  }
+
+  & .muted-segments-alert__content {
+    align-items: center !important;
+    padding: 0 0.2rem 0 1rem !important;
+    background: rgba(15, 16, 18, 0.55) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: var(--rs-radius-m) !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    & p {
+      min-width: 0 !important;
+      padding: 0.5rem 0 !important;
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.6rem !important;
+      color: rgba(255, 255, 255, 0.85) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    &:hover p {
+      white-space: normal !important;
+    }
+
+    & button {
+      width: 2.4rem !important;
+      height: 2.4rem !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+  }
+
+  /*
+   * Regions tinted with a channel's own accent (goals, the highlight above
+   * the chat) redeclare the accent variable: they follow the theme's too.
+   */
+  & [class*="ScAccentRegionCssVars"] {
+    --color-accent: var(--rs-accent) !important;
+  }
+
+  /* Shelf arrows: a white disc with a purple chevron, both set inline. */
+  & .preview-card-carousel__button > div {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    box-shadow: none !important;
+
+    & [style*="color"] {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Centred modals (a category's full description...): the box is the
+   * element holding the close button. Framed like the other floating layers,
+   * with room around its content.
+   */
+  & .modal-wrapper__content > div:has(> .modal__close-button) {
+    padding: var(--rs-6) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  & .modal__close-button {
+    top: var(--rs-3) !important;
+    right: var(--rs-3) !important;
+  }
+
+  /*
+   * Clip viewer (a clip opened from a shelf of the home page): a player, the
+   * clip's details and its channel, with close and next/previous buttons
+   * hung outside the box. The box stops clipping so those show, as round
+   * floating buttons; the player is rounded; the details follow the video
+   * page's hierarchy and the channel block is a quiet inset.
+   */
+  & .modal-wrapper__content > div[class*="clips-modal-view"] {
+    overflow: visible !important;
+
+    & .clips-view-modal-content,
+    & .clips-view-modal-content > div {
+      background: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & .video-player,
+    & .video-player__container,
+    & .video-ref,
+    & video,
+    & .clips-view-modal-content > div:first-child,
+    & .clips-view-modal-content > div:first-child .tw-aspect {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & .metadata-layout__split-top {
+      padding: var(--rs-4) 0 0 !important;
+    }
+
+    & .metadata-layout__split-top + div {
+      margin-top: var(--rs-4) !important;
+
+      & > div {
+        background: var(--rs-hover) !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+      }
+    }
+
+    & .modal__close-button {
+      position: absolute !important;
+      top: 0 !important;
+      right: -5.2rem !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    & .clip-carousel-button--right {
+      right: -5.2rem !important;
+    }
+
+    & .clip-carousel-button--left {
+      left: -5.2rem !important;
+    }
+
+    & .modal__close-button button,
+    & .clip-carousel-button button {
+      width: 3.6rem !important;
+      height: 3.6rem !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: 50% !important;
+      color: var(--rs-text) !important;
+
+      &:hover {
+        background: var(--rs-raised) !important;
+      }
+    }
+  }
+
+  & .modal-wrapper__content > div[class*="clips-modal-view"] {
+    position: relative !important;
+  }
+
+  /*
+   * "Just one second…" gate over a player (content intended for certain
+   * audiences): painted in the floating layers' colour, it vanishes into a
+   * modal of that colour and leaves the black player's edge as a stray
+   * outline. A panel of its own, in the surface colour.
+   */
+  & [data-a-target="content-classification-gate-overlay"] {
+    background: var(--rs-surface) !important;
+    border-radius: inherit !important;
+  }
+
+  /*
+   * A dialog box Twitch leaves mounted with nothing in it (on a clip's
+   * page): its border alone showed as a stray line.
+   */
+  & .ReactModal__Content .tw-transition > div:empty {
+    display: none !important;
+  }
+
+  /*
+   * Streamer card (opened from a guest's name under a shared stream or
+   * clip): banner, avatar, name, bio, links, next stream, Follow. Twitch
+   * packs it on 8px gutters, paints its body a step darker than the box and
+   * its links and button in the channel's colour. One floating surface on
+   * the menus' gutters, with the palette's ink and accent. The box has no
+   * hook of its own: it is the one holding a haloed avatar and a name.
+   */
+  & .ReactModal__Content .tw-transition > div:has(.tw-halo):has(h1) {
+    /* The channel-colour strip beside the banner. */
+    & div[style*="background-color"]:not([style*="background-image"]):has(+ div[style*="background-image"]) {
+      display: none !important;
+    }
+
+    & div:has(> div[style*="background-image"]) {
+      height: 8rem !important;
+    }
+
+    /* The body, under the banner. */
+    & > div > div:not(:has(> div[style*="background-image"])) {
+      padding: 0 var(--rs-3) var(--rs-3) !important;
+      background: none !important;
+      white-space: normal !important;
+    }
+
+    /*
+     * Avatar and name: Twitch pulls the row up so the avatar bites into the
+     * banner. Under it instead, the name on the avatar's middle line.
+     */
+    & div[style*="top: -1rem"] {
+      top: 0 !important;
+      align-items: center !important;
+      margin: var(--rs-3) 0 var(--rs-2) !important;
+    }
+
+    & div:has(> h1) {
+      padding: 0 !important;
+    }
+
+    & h1,
+    & h1 a {
+      font-size: var(--rs-text-6) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+      text-decoration: none !important;
+    }
+
+    /* "Streaming <game> with <n> viewers", under the name of a live channel. */
+    & div:has(> h1) + div p {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+      white-space: normal !important;
+
+      & span {
+        font-weight: 500 !important;
+        color: var(--rs-text-soft) !important;
+      }
+    }
+
+    & p[title] {
+      font-size: var(--rs-text-3) !important;
+      line-height: 1.5 !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    /* Follower count. */
+    & div:has(> p[title]) + p {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+
+      & span {
+        font-weight: 600 !important;
+        color: var(--rs-text) !important;
+      }
+    }
+
+    & .streamer-card-body__social-medias {
+      gap: 0.6rem !important;
+      margin-top: var(--rs-2) !important;
+
+      & .social-media-link {
+        max-width: 100% !important;
+        padding: 0.3rem 1rem 0.3rem 0.8rem !important;
+        border-radius: var(--rs-radius-pill) !important;
+        background: var(--rs-hover) !important;
+        transition: background-color var(--rs-ease);
+
+        &:hover {
+          background: var(--rs-raised) !important;
+        }
+      }
+
+      & :has(> .social-media-link) {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+
+      & a {
+        text-decoration: none !important;
+      }
+
+      & p {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: var(--rs-text-2) !important;
+        font-weight: 500 !important;
+        color: var(--rs-label) !important;
+      }
+
+      & div[style*="color"] {
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* "Upcoming stream:", a small-caps label over an inset entry. */
+    & div:has(> p[style*="uppercase"]) {
+      margin: var(--rs-3) 0 var(--rs-1) !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    & div:has(> div > .stream-schedule-segment--vertical-line) {
+      margin: 0 !important;
+      padding: var(--rs-2) var(--rs-3) !important;
+      border-radius: var(--rs-radius-m) !important;
+      background: var(--rs-hover) !important;
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+
+      & p {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 500 !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & > strong {
+        display: block !important;
+        margin-top: var(--rs-1) !important;
+        font-size: var(--rs-text-4) !important;
+        color: var(--rs-text) !important;
+      }
+
+      & > div:last-child {
+        margin-top: var(--rs-2) !important;
+      }
+    }
+
+    & .stream-schedule-segment--vertical-line {
+      border-radius: var(--rs-radius-pill) !important;
+    }
+
+    /* Follow, and the options button beside it. */
+    & div:has(> button[aria-label="More options"]) {
+      align-items: center !important;
+      margin-top: var(--rs-3) !important;
+    }
+
+    & [data-a-target="follow-button"] {
+      background: var(--rs-accent) !important;
+      color: var(--rs-on-accent) !important;
+
+      &:hover {
+        background: var(--rs-accent-hover) !important;
+      }
+    }
+  }
+}
+
+@keyframes rs-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

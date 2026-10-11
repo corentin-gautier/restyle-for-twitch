@@ -26,7 +26,8 @@ trap 'rm -rf "$stage"' EXIT
 mkdir -p dist "$stage/src"
 cp -R _locales icons popup "$stage/"
 cp LICENSE "$stage/"
-cp src/content.js src/tokens.css src/twitch.css "$stage/src/"
+cp src/content.js src/tokens.css "$stage/src/"
+cp -R src/twitch "$stage/src/"
 node -e '
   const manifest = require("./manifest.json");
   delete manifest.background;

@@ -1,0 +1,564 @@
+/*
+ * Chat, chat replay and the popups opened from the chat.
+ * Part of one cascade with the other files of this folder: see shell.css.
+ */
+html:not([data-rs="off"]) {
+  /* ==== Chat: same surface as the left sidebar ==== */
+  & .channel-root__right-column,
+  & .right-column,
+  & .chat-shell {
+    --color-background-base: var(--rs-surface);
+    --color-background-body: var(--rs-surface);
+  }
+
+  & .channel-root__right-column,
+  & .right-column,
+  & .chat-shell,
+  & .chat-room,
+  & .stream-chat,
+  & .stream-chat-header,
+  & .chat-input {
+    background: var(--rs-surface) !important;
+  }
+
+  & .stream-chat-header {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /*
+   * Gifter / cheerer leaderboard pinned above the messages: drop the whole
+   * top slot of the chat room when that is what it holds. Pinned messages,
+   * predictions and hype trains (community highlights) are left alone.
+   */
+  & .chat-room__content > div:has([class*="Leaderboard" i]):not(:has([class*="community-highlight"])) {
+    display: none !important;
+  }
+
+  /*
+   * Progress bar of a highlight card (drops, hype train goals...): Twitch
+   * hangs it under the card, where it crosses the rounded border. It becomes
+   * a thin line inside the card, clipped by the card's own corners.
+   */
+  /* Positions the bar against a box inside the card's clipping wrapper. */
+  & .community-highlight div:has(> .highlight__progress-bar) {
+    position: relative !important;
+  }
+
+  & .community-highlight .highlight__progress-bar {
+    inset: auto 0 0 !important;
+    z-index: 1 !important;
+    width: auto !important;
+    height: 0.3rem !important;
+    border-radius: 0 !important;
+
+    & .tw-progress-bar {
+      height: 100% !important;
+      background: var(--rs-border) !important;
+    }
+
+    & [data-a-target="tw-progress-bar-animation"] {
+      height: 100% !important;
+      background: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Older messages fade out at the top instead of being cut by the header.
+   * The mask sits on the scroll viewport, so it stays put while lines scroll.
+   */
+  & .chat-list--default [data-a-target="chat-scroller"] {
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--rs-12)) !important;
+  }
+
+  & .chat-line__message,
+  & .chat-line__status,
+  & .user-notice-line {
+    padding: var(--rs-2) var(--rs-4) !important;
+    line-height: 1.55 !important;
+  }
+
+  /*
+   * Messages are quiet until hovered: body text a step below full contrast,
+   * user colours kept but desaturated (they are inline styles, hence the
+   * filter), badges and timestamps pushed back. The hovered message comes
+   * back to full strength.
+   *
+   * One hover only: Twitch already paints its own on the inset
+   * .chat-line__message-highlight overlay (the one the reply button hangs
+   * from), so that overlay is restyled instead of adding a second background
+   * on the row.
+   */
+  & .chat-line__message {
+    & [data-a-target="chat-line-message-body"],
+    & .text-fragment {
+      color: var(--rs-text-soft) !important;
+      transition: color var(--rs-ease);
+    }
+
+    & .chat-badge {
+      opacity: 0.6 !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    &:hover {
+      background: transparent !important;
+
+      & .chat-line__message-highlight {
+        background: var(--rs-hover) !important;
+        border-radius: var(--rs-radius-m) !important;
+      }
+
+      & [data-a-target="chat-line-message-body"],
+      & .text-fragment {
+        color: var(--rs-text) !important;
+      }
+
+      & .chat-author__display-name {
+        filter: none !important;
+        opacity: 1 !important;
+      }
+
+      & .chat-badge {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  & .chat-line__username,
+  & .chat-author__display-name {
+    font-weight: 600 !important;
+  }
+
+  & .chat-author__display-name {
+    filter: saturate(0.55) !important;
+    opacity: 0.9 !important;
+    transition: opacity var(--rs-ease), filter var(--rs-ease);
+  }
+
+  /* No extra hover box on the username: the message hover is enough. */
+  & .chat-line__username-container,
+  & .chat-line__username:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+  }
+
+  & .chat-line__timestamp {
+    font-size: var(--rs-text-1) !important;
+    font-variant-numeric: tabular-nums !important;
+    color: var(--rs-faint) !important;
+  }
+
+  /*
+   * Chat replay on videos: built from other components than the live chat
+   * (.video-chat, .vod-message), and given the same treatment: surface,
+   * spacing, quiet messages that come back on hover, fade at the top.
+   */
+  & .video-chat,
+  & .video-chat__header {
+    background: var(--rs-surface) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  & .video-chat__header span {
+    font-weight: 600 !important;
+  }
+
+  & .video-chat__message-list-wrapper {
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--rs-12)) !important;
+  }
+
+  & .video-chat__message-list-wrapper li {
+    padding-inline: var(--rs-2) !important;
+  }
+
+  & .vod-message {
+    padding: var(--rs-2) !important;
+    border-radius: var(--rs-radius-m) !important;
+    line-height: 1.55 !important;
+    transition: background var(--rs-ease);
+
+    & .video-chat__message,
+    & .text-fragment {
+      color: var(--rs-text-soft) !important;
+      transition: color var(--rs-ease);
+    }
+
+    & .chat-badge {
+      opacity: 0.6 !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    & .video-chat__message-author {
+      font-weight: 600 !important;
+      text-decoration: none !important;
+    }
+
+    /* The timestamp is a button that seeks the video: no box of its own. */
+    & .vod-message__header button {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    & .vod-message__header p {
+      font-size: var(--rs-text-1) !important;
+      font-variant-numeric: tabular-nums !important;
+      line-height: 2.2rem !important;
+      color: var(--rs-faint) !important;
+    }
+
+    &:hover {
+      background: var(--rs-hover) !important;
+
+      & .video-chat__message,
+      & .text-fragment {
+        color: var(--rs-text) !important;
+      }
+
+      & .chat-author__display-name {
+        filter: none !important;
+        opacity: 1 !important;
+      }
+
+      & .chat-badge {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  /*
+   * "Plain chat" option of the popup (data-rs-plain-chat on <html>): no
+   * badges, and every username in the text colour instead of its own. Live
+   * chat and chat replay alike.
+   */
+  &[data-rs-plain-chat] {
+    & :is(.chat-line__message, .user-notice-line, .vod-message) :is(.chat-badge, [data-a-target="chat-badge"]) {
+      display: none !important;
+    }
+
+    & :is(.chat-author__display-name, .chat-author__intl-login) {
+      color: var(--rs-text) !important;
+      filter: none !important;
+      opacity: 1 !important;
+    }
+  }
+
+  /*
+   * Emote picker: one floating surface. Twitch paints the search row, the
+   * section headers and the tab column in a darker step that the palette
+   * turns into mismatched bands.
+   */
+  & .emote-picker {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [class*="emote-picker__search-content"] {
+      padding: var(--rs-3) 0 var(--rs-2) var(--rs-3) !important;
+      background: transparent !important;
+    }
+
+    & .tw-input {
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    /* Section headers stay opaque: they stick while the emotes scroll under them. */
+    /* Taller than Twitch's, to show more emotes at once. */
+    & .emote-picker__scroll-container {
+      height: 44rem !important;
+      max-height: 55vh !important;
+    }
+
+    & :has(> .emote-grid-section__header-title) {
+      padding: var(--rs-1) 1.2rem var(--rs-3) !important;
+    }
+
+    & .emote-grid {
+      gap: 0.8rem 0.7rem !important;
+    }
+
+    & .emote-picker__tab-content > div > div:first-child:has(> button) {
+      margin-inline: 1.2rem !important;
+    }
+
+    & .emote-grid-section__header-title {
+      padding: 1rem 0 !important;
+      background: var(--rs-float) !important;
+
+      & strong {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    /* Promoted action above the emotes ("Gigantify an Emote"). */
+    & .emote-picker__tab-content > div > div:first-child:has(> button) {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+
+      & button div {
+        background: transparent !important;
+      }
+    }
+
+    & .emote-button {
+      border-radius: var(--rs-radius-s) !important;
+    }
+
+    & .emote-picker__nav_content {
+      background: transparent !important;
+      border-left: var(--rs-hairline) !important;
+    }
+  }
+
+  /*
+   * Cheer card above the chat field: a floating box whose gradient header
+   * is an inset banner, without the second frame Twitch draws inside it.
+   */
+  /*
+   * Both open from the chat field, which is inset from the chat's edges:
+   * they reach a little further out on each side, to a small even gutter.
+   */
+  & .chat-input div[class*="Attached"]:has(> [data-a-target="emote-picker"]),
+  & .bits-card-wrapper {
+    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    right: calc(var(--rs-2) - var(--rs-4)) !important;
+    width: auto !important;
+  }
+
+  & [data-a-target="emote-picker"] {
+    width: 100% !important;
+  }
+
+  /*
+   * Power-ups & Rewards: the same floating box, on the same gutters. It is
+   * anchored to its button's narrow wrapper, so the width is spelled out
+   * from the chat column's (34rem).
+   */
+  & .chat-input div[class*="Attached"]:has(.reward-center__content) {
+    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    right: auto !important;
+    width: calc(34rem - 2 * var(--rs-2)) !important;
+  }
+
+  & .chat-input div[class*="Attached"]:has(.reward-center__content) > div {
+    width: 100% !important;
+    background: transparent !important;
+  }
+
+  & .reward-center__content {
+    width: 100% !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & .rewards-popover-header {
+      padding: var(--rs-2) var(--rs-2) 0 var(--rs-1) !important;
+    }
+  }
+
+  & .bits-card-wrapper {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [role="dialog"] > div:first-child {
+      /* Full width by default: narrowed so the margin shows on the right too. */
+      width: calc(100% - 2 * var(--rs-1)) !important;
+      margin: var(--rs-1) !important;
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & [role="dialog"] > div:first-child ~ div {
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    /* Rows under the banner: options, amounts, pin toggle. */
+    & [role="dialog"] > div:first-child ~ div > div {
+      padding: var(--rs-1) var(--rs-3) !important;
+    }
+
+    /* The pin row pads its content a second time: one left edge for all rows. */
+    & [role="dialog"] > div:first-child ~ div > div > div:only-child {
+      padding-inline: 0 !important;
+    }
+
+    & [role="dialog"] > div:first-child {
+      padding-top: var(--rs-3) !important;
+      padding-left: var(--rs-3) !important;
+    }
+
+    & .tw-interactable {
+      border-radius: var(--rs-radius-m) !important;
+    }
+  }
+
+  /*
+   * Chat Identity (logged in): the chat settings popover, with badge and
+   * name colour choosers.
+   */
+  /*
+   * The popover is anchored to the badge button inside the chat field:
+   * stretched to the gutters the other chat popups use, and framed.
+   */
+  & .chat-input [role="dialog"]:has(.chat-identity-menu) {
+    left: calc(var(--rs-2) - var(--rs-4) - 5px) !important;
+    width: calc(34rem - 2 * var(--rs-2)) !important;
+    margin-right: 0 !important;
+
+    & .tw-balloon {
+      display: block !important;
+      width: 100% !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-l) !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+    }
+
+    & .chat-settings__popover {
+      width: 100% !important;
+    }
+  }
+
+  & .chat-identity-menu__header {
+    padding: var(--rs-3) var(--rs-3) var(--rs-1) !important;
+  }
+
+  /* One side margin for the preview and the scrolling part. */
+  & .chat-settings__popover > div:has(.name-display__name),
+  & .chat-identity-menu__content {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+  }
+
+  /* Preview of the name as it shows in chat: an inset card. */
+  & .chat-settings__popover div:has(> span > .name-display__name) {
+    margin-top: var(--rs-1) !important;
+    padding: var(--rs-2) var(--rs-3) !important;
+    background: var(--rs-hover) !important;
+    border-radius: var(--rs-radius-m) !important;
+  }
+
+  & .chat-identity-menu__content {
+    /* A hairline: the element has height of its own, so no background. */
+    & [role="separator"] {
+      height: 0 !important;
+      margin-block: var(--rs-3) !important;
+      padding: 0 !important;
+      background: none !important;
+      border: 0 !important;
+      border-top: var(--rs-hairline) !important;
+    }
+
+    /* Twitch frames the campaign card a second time. */
+    & div:has(> [class*="collapsibleHeader"]) {
+      padding: 0 !important;
+      background: none !important;
+      border: 0 !important;
+    }
+
+    /* Badge campaign ("Active Campaigns"): a quiet card. */
+    & [class*="collapsibleHeader"] {
+      padding: var(--rs-2) !important;
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    & [class*="thumbnailBox"] {
+      border-radius: var(--rs-radius-s) !important;
+      overflow: hidden !important;
+    }
+
+    & .tw-progress-bar {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      overflow: hidden !important;
+
+      & > div {
+        background: var(--rs-accent) !important;
+      }
+    }
+
+    & .edit-appearance__badge-chooser {
+      border-color: transparent !important;
+      border-radius: var(--rs-radius-s) !important;
+      transition: background var(--rs-ease) !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & [class*="edit-appearance__badge-chooser--selected"] {
+      background: var(--rs-accent-tint-strong) !important;
+      border-color: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Drops & More (logged in): the same floating box, a small-caps header
+   * per group of drops. Written from a DOM dump.
+   */
+  & .chat-input [role="dialog"][class*="panelContainer"] {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [class*="clickableHeader"] {
+      border-radius: var(--rs-radius-s) !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    & [class*="featuredIconBox"],
+    & [class*="thumbnailBox"] {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-s) !important;
+      overflow: hidden !important;
+    }
+
+    & .tw-progress-bar {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      overflow: hidden !important;
+
+      & > div {
+        background: var(--rs-accent) !important;
+      }
+    }
+  }
+
+  & .chat-input {
+    padding: var(--rs-3) var(--rs-4) var(--rs-4) !important;
+  }
+
+  & .chat-wysiwyg-input__box,
+  & [data-a-target="chat-input"] {
+    border-radius: var(--rs-radius-l) !important;
+  }
+}

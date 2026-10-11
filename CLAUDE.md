@@ -8,7 +8,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | Path | Role |
 | --- | --- |
 | `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), radii, type scale, palette. |
-| `src/twitch.css` | All the rules, scoped under `html:not([data-rs="off"])`, in the sections listed below. |
+| `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
 | `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. |
 | `popup/` | Settings popup. Texts come from `_locales/` (en, fr). |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
@@ -30,12 +30,34 @@ The user is French-speaking: reply in French, write code and docs in English.
 - On a rounded element, a border goes all round or not at all: never on one
   side only.
 - After an edit, check that the file still parses:
-  `npx --yes lightningcss-cli@1.27.0 src/twitch.css -o /tmp/out.css`
+  `npx --yes lightningcss-cli@1.27.0 src/twitch/<file>.css -o /tmp/out.css`
+
+## Stylesheets
+
+`manifest.json` loads these in this order, after `src/tokens.css`. They are
+one cascade split by area, not independent sheets: rules of equal weight are
+settled by order, so a new file goes where its rules belong in the sequence,
+and a rule that must beat another goes in the same file or a later one.
+
+| File | Sections |
+| --- | --- |
+| `shell.css` | Theme remap; Top bar; Left sidebar |
+| `pages.css` | Pages: home, Following, Browse (also Settings, account pages, tabs) |
+| `cards.css` | Cards (grids, thumbnails, hover, loading) |
+| `channel.css` | Channel page |
+| `directory.css` | Category page header; Search results |
+| `channel-tabs.css` | Offline channel page |
+| `shelves.css` | Shelf rhythm (also empty states, filter rows, the Following tabs) |
+| `video.css` | Video (VOD) page (also the clip page) |
+| `subscribe.css` | Subscribe and Gift a Sub panels |
+| `forms.css` | Form controls; Filter and sort menus |
+| `chat.css` | Chat |
+| `overlays.css` | Menus, popovers, dialogs (also the clip viewer, the streamer card, `@keyframes`) |
 
 ## Pages
 
-Each page type, an address to test it on, and where its rules live in
-`src/twitch.css`. "Public" pages can be opened logged out, so they can be
+Each page type, an address to test it on, and the section its rules live in
+(see the table above for the section's file). "Public" pages can be opened logged out, so they can be
 checked in a headless Chrome; the others need the user's session.
 
 ### Shell, on every page
@@ -109,7 +131,7 @@ checked in a headless Chrome; the others need the user's session.
 
 There is no test suite. For public pages, drive a headless Chrome (for example
 with `puppeteer-core` and the system Chrome), inject `src/tokens.css` and
-`src/twitch.css` at document start, set `data-rs-space="2"` on `<html>`, and
+the files of `src/twitch/` in the manifest's order at document start, set `data-rs-space="2"` on `<html>`, and
 screenshot. Take a capture without the stylesheet too when unsure whether a
 defect comes from Twitch or from the extension. Keep such scripts out of the
 repository.

@@ -1,0 +1,278 @@
+/*
+ * Category and event headers, search results.
+ * Part of one cascade with the other files of this folder: see shell.css.
+ */
+html:not([data-rs="off"]) {
+  /*
+   * ==== Category page header ====
+   * A panel like the others (surface, hairline, large radius) holding the
+   * box art and, beside it, a stack: the name at display size, the figures
+   * as a small-caps line, the tags on a line of their own, the description
+   * in muted text on a readable measure, then the actions.
+   */
+  /* Doubled class: a page-top rule zeroes the first block's top padding. */
+  & .twilight-main .directory-header-new__banner-cover.directory-header-new__banner-cover {
+    isolation: isolate !important;
+    margin-bottom: var(--rs-4) !important;
+    padding: var(--rs-6) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /* Some categories bring a banner picture: a faint wash behind the panel. */
+  & .directory-header-new__banner {
+    inset: 0 !important;
+    opacity: 0.18 !important;
+  }
+
+  /* Box art and text column, centred on each other. */
+  & .directory-header-new__info > div {
+    align-items: center !important;
+  }
+
+  & .directory-header-new__info {
+    padding: 0 !important;
+
+    & .tw-aspect {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    /* The column beside the box art, centred on it. */
+    & > div > div:has(h1) {
+      justify-content: center !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+    }
+
+    & h1 {
+      margin: 0 !important;
+      font-size: var(--rs-text-display) !important;
+      font-weight: 700 !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* Figures, then tags: one wrapping row, the tags pushed to the next line. */
+    & div:has(> div > p[title]) {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: var(--rs-2) 0 !important;
+
+      & p {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & p strong {
+        color: var(--rs-text) !important;
+      }
+
+      & > div:has(.tw-tag) {
+        flex-basis: 100% !important;
+      }
+
+      /* The bullet that led to the tags. */
+      & > div:has(+ div .tw-tag) {
+        display: none !important;
+      }
+    }
+
+    & .directory-header-new__description {
+      max-width: 64rem !important;
+
+      & p {
+        font-size: var(--rs-text-4) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* Actions: a little air above. */
+    & > div > div:has(h1) > div:has([data-a-target="game-directory-follow-button"]) {
+      margin-top: var(--rs-2) !important;
+    }
+  }
+
+  /*
+   * Event pages (/directory/event/…) have the same header without the
+   * category header's class names: a picture and, beside it, name, viewer
+   * count, tags and a sentence. The same panel, found by its description.
+   */
+  & .common-centered-column > div:has(.directory-header-new__description):not(:has(.tw-tower, .directory-header-new__info)) {
+    margin: calc(var(--rs-8) + 3rem - 1rem) 0 0 !important;
+    padding: var(--rs-6) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    & > div {
+      padding: 0 !important;
+    }
+
+    /* Picture and text column, centred on each other. */
+    & > div > div {
+      align-items: center !important;
+    }
+
+    & .tw-aspect {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & div:has(> div > h1) {
+      justify-content: center !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+    }
+
+    & h1 {
+      margin: 0 !important;
+      font-size: var(--rs-text-display) !important;
+      font-weight: 700 !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* Viewer count, then tags: one wrapping row, the tags on the next line. */
+    & div:has(> div > p > strong) {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: var(--rs-2) 0 !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+
+      & > div > p {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & p strong {
+        color: var(--rs-text) !important;
+      }
+
+      & > div:has(.tw-tag) {
+        flex-basis: 100% !important;
+      }
+
+      /* The bullet that led to the tags. */
+      & > div:has(+ div .tw-tag) {
+        display: none !important;
+      }
+    }
+
+    & .directory-header-new__description {
+      max-width: 64rem !important;
+      margin: 0 !important;
+
+      & p {
+        font-size: var(--rs-text-4) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+  }
+
+  /*
+   * Notice above a page's content ("Content Hidden: some content has been
+   * removed based on your content preference settings"): Twitch sets a
+   * large title run into a sentence, on a black slab narrower than the
+   * column. A quiet bar on the column's edges instead: title and sentence
+   * at text size, the sentence toned down. Only on the directory pages'
+   * column: a channel page's callouts float over the stream info.
+   */
+  & .twilight-main .common-centered-column div:has(> article .tw-callout-message) {
+    margin: 0 0 var(--rs-4) !important;
+  }
+
+  & .twilight-main .common-centered-column article:has(.tw-callout-message) {
+    padding: var(--rs-2) var(--rs-3) var(--rs-2) var(--rs-4) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: none !important;
+
+    & > div > div {
+      align-items: center !important;
+    }
+
+    & .tw-callout-message {
+      margin: 0 !important;
+      font-size: var(--rs-text-3) !important;
+      line-height: 2rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & .tw-callout-message__title {
+      margin-right: var(--rs-2) !important;
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      letter-spacing: 0 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & button,
+    & a {
+      font-size: var(--rs-text-2) !important;
+    }
+  }
+
+  /*
+   * ==== Search results ====
+   * Same distance from the sidebar as the other pages, rounded thumbnails,
+   * and one text hierarchy per result.
+   */
+  & .search-results {
+    padding-inline: var(--rs-page-inset) !important;
+
+    /* One result: name, then quieter lines for category, viewers and title. */
+    & .search-result-card {
+      gap: var(--rs-2) !important;
+    }
+
+    & .search-result-card__img,
+    & .search-result-card__img-wrapper:not(:has(.tw-avatar)) {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & strong a {
+      font-size: var(--rs-text-5) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & p:not(.tw-title),
+    & p:not(.tw-title) a {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & p[data-test-selector$="__title"] {
+      color: var(--rs-text-soft) !important;
+    }
+
+    & .tw-aspect:not(.tw-avatar *) {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+  }
+}

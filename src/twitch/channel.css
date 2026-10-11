@@ -1,0 +1,414 @@
+/*
+ * A live channel: player, stream information, About, panels.
+ * Part of one cascade with the other files of this folder: see shell.css.
+ */
+html:not([data-rs="off"]) {
+  /*
+   * ==== Channel page ====
+   * Main player: inset from the sidebar, top bar and chat, with rounded
+   * corners. The inset shows what is behind the player, which becomes the
+   * page background. Theatre and fullscreen stay edge to edge.
+   */
+  & .persistent-player:not(.persistent-player--theatre) {
+    /*
+     * No inset below: the block under the player starts where Twitch's
+     * script puts it, at the height of an unpadded player, and brings its
+     * own top padding.
+     */
+    padding: var(--rs-4) var(--rs-4) 0 !important;
+    background: var(--rs-bg) !important;
+
+    /*
+     * In a short window Twitch caps the player's height, inset included:
+     * the video takes what is left, or its bottom is cut off flush against
+     * the block below.
+     */
+    & .video-player__container {
+      max-height: calc(100vh - 16rem - var(--rs-4)) !important;
+    }
+
+    & .video-player {
+      background: var(--rs-bg) !important;
+    }
+
+    & .video-player,
+    & .video-player__container,
+    & .video-ref,
+    & video {
+      border-radius: var(--rs-radius-l) !important;
+      overflow: hidden !important;
+    }
+  }
+
+  & [class*="channel-root__player"],
+  & .channel-root__upper-watch {
+    background: var(--rs-bg) !important;
+  }
+
+  & :fullscreen,
+  & :fullscreen .video-player__container,
+  & :fullscreen .video-ref,
+  & :fullscreen video {
+    border-radius: 0 !important;
+  }
+
+  /*
+   * Everything under the player (stream info, About, panels) is one centred
+   * column of --rs-measure. Inside it, Twitch's layout wrappers give up their
+   * own inline padding and margin so every block starts and ends on the
+   * column's edges. Those wrappers are matched by what they contain.
+   */
+  & .channel-info-content {
+    background: var(--rs-bg) !important;
+    padding-inline: var(--rs-4) !important;
+
+    & > * {
+      max-width: var(--rs-measure) !important;
+      margin-inline: auto !important;
+      padding-inline: 0 !important;
+    }
+
+    & > * :has([data-a-target="stream-title"]):has(img),
+    & > * :has(.about-section__panel) {
+      padding-inline: 0 !important;
+      margin-inline: 0 !important;
+      max-width: none !important;
+    }
+
+    & > * :has(.about-section__panel) {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+  }
+
+  /*
+   * Vertical rhythm under the player, in one place: the column starts one
+   * step under the video, its blocks are one large
+   * step apart, and none of them, nor the wrappers inside the stream info,
+   * adds padding or margin of its own. A channel's Home tab lays its column
+   * out differently and keeps its blocks' padding.
+   */
+  & .channel-root__info:not(.channel-root__info--home) .channel-info-content {
+    padding-block: var(--rs-shelf-head) var(--rs-8) !important;
+
+    & > * {
+      padding-block: 0 !important;
+      margin-block: 0 !important;
+    }
+
+    & > * + * {
+      margin-top: var(--rs-8) !important;
+    }
+  }
+
+  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) div:has(.metadata-layout__support) {
+    padding-block: 0 !important;
+    margin-block: 0 !important;
+  }
+
+  & .metadata-layout__split-top {
+    padding-block: 0 !important;
+  }
+
+  & .channel-root__info--home .channel-info-content > div,
+  & .channel-root__info--home #live-channel-stream-information {
+    padding-block: var(--rs-4) !important;
+  }
+
+  /*
+   * Divider above the stream info. Added by hand on a generated class name:
+   * it will stop matching whenever Twitch rebuilds its styles.
+   */
+  & .dhOkSg {
+    border: none !important;
+  }
+
+  /* Avatar flush with the column's left edge. */
+  & #live-channel-stream-information div:has(> a .tw-avatar) {
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /*
+   * The info block is two rows beside the avatar: name + buttons
+   * (.metadata-layout__support), then title + viewer count. Both end on the
+   * column's right edge.
+   */
+  & #live-channel-stream-information div:has(> .metadata-layout__support),
+  & .metadata-layout__support,
+  & .metadata-layout__support + div {
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  & #live-channel-stream-information div:has(> .metadata-layout__support) {
+    padding-left: var(--rs-4) !important;
+  }
+
+  /* First row: as tall as the avatar, so the name and buttons sit on its middle line. */
+  & .metadata-layout__support {
+    /* min-height: var(--rs-avatar-channel) !important; */
+    align-items: center !important;
+  }
+
+  /* The gap goes between the rows, so the title and the viewer count stay level. */
+  & .metadata-layout__support + div {
+    margin-top: var(--rs-1) !important;
+  }
+
+  /* Empty spacer after the buttons: without it they end where the viewer count does. */
+  & .metadata-layout__secondary-button-spacing {
+    display: none !important;
+  }
+
+  /*
+   * Stream info hierarchy: the title leads, the channel name is a smaller
+   * label, and the rest (game, uptime) is one quiet metadata level.
+   */
+  & .channel-info-content h1 {
+    font-size: var(--rs-text-5) !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
+    color: var(--rs-text) !important;
+  }
+
+  & [data-a-target="stream-title"] {
+    font-size: var(--rs-text-title) !important;
+    font-weight: 600 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--rs-text) !important;
+    /* Breathing room from the viewer count beside it. */
+    padding-right: var(--rs-8) !important;
+  }
+
+  /* Air between the title and the row of chips (category, tags) under it. */
+  & div:has(> [data-a-target="stream-title"]) + div {
+    margin-top: var(--rs-2) !important;
+  }
+
+  /* The category under the title is a chip like the tags beside it. */
+  & [data-a-target="stream-game-link"],
+  & [data-a-target="video-info-game-boxart-link"] {
+    display: inline-flex !important;
+    align-items: center !important;
+    min-height: 2rem !important;
+    padding: 0 0.8rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-accent-tint) !important;
+    text-decoration: none !important;
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  & [data-a-target="stream-game-link"],
+  & [data-a-target="stream-game-link"] *,
+  & [data-a-target="video-info-game-boxart-link"],
+  & [data-a-target="video-info-game-boxart-link"] * {
+    font-size: var(--rs-text-1) !important;
+    font-weight: 500 !important;
+    color: var(--rs-accent-quiet) !important;
+    text-decoration: none !important;
+  }
+
+  & .live-time,
+  & .live-time * {
+    font-size: var(--rs-text-3) !important;
+    font-weight: 500 !important;
+    font-variant-numeric: tabular-nums !important;
+    color: var(--rs-muted) !important;
+  }
+
+  /*
+   * Viewer count: icon and number share Twitch's live colour inside a pill
+   * tinted with it. The colour is set once on the pill and inherited.
+   */
+  & #live-channel-stream-information div:has(> [data-a-target="animated-channel-viewers-count"]) {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.4rem !important;
+    padding: 0.2rem 1rem 0.2rem 0.8rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+    color: var(--rs-live) !important;
+    background: var(--rs-live-tint) !important;
+
+    & > div {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    & svg {
+      fill: currentColor !important;
+    }
+  }
+
+  & [data-a-target="animated-channel-viewers-count"],
+  & [data-a-target="animated-channel-viewers-count"] * {
+    font-size: var(--rs-text-2) !important;
+    font-weight: 600 !important;
+    font-variant-numeric: tabular-nums !important;
+    color: inherit !important;
+  }
+
+  /*
+   * About: heading, then one card. The panel is a header row followed by
+   * .about-section__panel--content, which Twitch already boxes. The panel
+   * itself stays bare, so the heading lines up with the avatar above, and
+   * the content box is the card.
+   */
+  & .about-section__panel {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  & .about-section h3 {
+    font-size: var(--rs-text-6) !important;
+    font-weight: 600 !important;
+    color: var(--rs-text) !important;
+  }
+
+  & .about-section__panel--content {
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+    padding: var(--rs-4) var(--rs-6) !important;
+    margin-top: var(--rs-2) !important;
+
+    /* Text on the left, links on the right, both starting on the same line. */
+    & > div {
+      align-items: flex-start !important;
+    }
+
+    & > div > div:last-child,
+    & :has(> .social-media-link),
+    & :has(> div > .social-media-link) {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+  }
+
+  & .about-section__panel--content,
+  & .about-section__panel--content p,
+  & .about-section__panel--content span {
+    font-size: var(--rs-text-4) !important;
+    line-height: 1.6 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  & .about-section .social-media-link,
+  & .about-section .social-media-link * {
+    font-size: var(--rs-text-3) !important;
+    font-weight: 500 !important;
+    color: var(--rs-muted) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & .about-section .social-media-link:hover,
+  & .about-section .social-media-link:hover * {
+    color: var(--rs-text) !important;
+  }
+
+  & .about-section__panel + div {
+    margin-bottom: 0 !important;
+  }
+
+  /*
+   * Goal beside About ("Plus Goal", sub and follower goals): the same
+   * heading-then-card pair. Its heading starts level with About's, and its
+   * card, which reads the page colour, gets the About card's surface.
+   */
+  & .about-section__actions {
+
+    & div:has(> div > h3) {
+      /* As tall as About's heading row, so both cards start level. */
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    & div:has(> h3) {
+      margin: 0 !important;
+    }
+
+    & [role="region"] {
+      margin-top: var(--rs-2) !important;
+    }
+
+    & [role="region"] > div {
+      background: var(--rs-surface) !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+      padding: var(--rs-3) var(--rs-4) !important;
+    }
+
+    /* The backing Twitch puts under the progress track is the card's now. */
+    & div:has(> * > * > [role="progressbar"]) {
+      background: transparent !important;
+    }
+  }
+
+  /*
+   * Callout over the stream info ("Thanks for following!" next to the Follow
+   * button): its box reads the page colour and vanishes into the page while
+   * still covering the title. It becomes a floating layer like the menus.
+   */
+  & .channel-info-content article:has(.tw-callout-message) > div {
+    --color-background-base: var(--rs-float) !important;
+    --color-background-body: var(--rs-float) !important;
+    --color-background-alt: var(--rs-float) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    overflow: hidden !important;
+  }
+
+  /*
+   * Panels: Twitch lays them out as a JS masonry, absolutely positioned and
+   * centred on its own, which never lines up with the column. Its inline
+   * positioning is neutralised and CSS columns take over, edge to edge.
+   */
+  & .channel-panels {
+    padding-block: var(--rs-6) !important;
+  }
+
+  & .channel-panels-container {
+    width: auto !important;
+    height: auto !important;
+    columns: 28rem 3 !important;
+    column-gap: var(--rs-4) !important;
+
+    & > div {
+      position: static !important;
+      transform: none !important;
+      width: auto !important;
+      margin: 0 0 var(--rs-4) !important;
+      break-inside: avoid !important;
+    }
+  }
+
+  & .default-panel {
+    box-sizing: border-box !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+    padding: var(--rs-4) !important;
+
+    /* Twitch gives the panel's blocks a fixed 320px layout: they follow the column instead. */
+    & > *,
+    & img {
+      max-width: 100% !important;
+    }
+
+    & img {
+      height: auto !important;
+    }
+  }
+}

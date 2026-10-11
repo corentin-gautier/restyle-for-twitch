@@ -131,9 +131,9 @@ setInterval(() => {
   if (settings.channelColors && String(channelColor()) !== applied) apply();
 }, 1000);
 
-// Home: twitch.css hides the featured carousel, but a hidden video keeps
+// Home: twitch/pages.css hides the featured carousel, but a hidden video keeps
 // autoplaying and streaming. Pause it whenever Twitch (re)starts it.
-// Keep these selectors in sync with the carousel rule in twitch.css.
+// Keep these selectors in sync with the carousel rule in twitch/pages.css.
 const CAROUSEL_VIDEOS = [
   '[class*="front-page-carousel"] video',
   '[data-a-target*="front-page-carousel"] video',

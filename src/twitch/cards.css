@@ -1,0 +1,546 @@
+/*
+ * Grids and cards (streams, videos, clips, categories), loading.
+ * Part of one cascade with the other files of this folder: see shell.css.
+ */
+html:not([data-rs="off"]) {
+  /*
+   * ==== Cards ====
+   * Grids. Twitch pads each grid's last row with empty placeholder items so
+   * the cards keep their width; when those wrap they form a row of their own.
+   * Row spacing therefore lives on the real cards as a bottom margin, never
+   * as a row gap, and placeholders take no height at all, otherwise every
+   * grid ends with a band of dead space.
+   */
+  & .tw-tower {
+    gap: 0 !important;
+    margin-inline: calc(var(--rs-4) / -2) !important;
+
+    /*
+     * Column spacing is padding on the items, as Twitch does it, not a gap:
+     * Twitch gives a shelf as many cards as its width holds with no gap, and
+     * a gap would push the last one onto a row of its own.
+     */
+    & > * {
+      padding-inline: calc(var(--rs-4) / 2) !important;
+    }
+
+    & > div {
+      margin-bottom: var(--rs-8) !important;
+    }
+
+    & > :empty,
+    & > [class*="placeholder" i] {
+      height: 0 !important;
+      min-height: 0 !important;
+      margin-block: 0 !important;
+      padding-block: 0 !important;
+      border: 0 !important;
+    }
+  }
+
+  /*
+   * Loading. Twitch draws "ghosts" while content loads: grey, pulsing
+   * blocks in the shape of what is coming (cards, titles, a streamer card).
+   * They are kept as invisible boxes, so nothing jumps when the content
+   * arrives, and a spinner stands in for each group of them: one at the
+   * start of a run of ghost cards in a grid, one in a list of search
+   * results, one in a popup.
+   *
+   * A ghost item is told from a card that is still loading its picture by
+   * having no link. Per group rather than per page: grids keep ghosts at
+   * their end for as long as there is more to load on scroll.
+   */
+  & .tw-placeholder {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+
+  & .tw-tower,
+  & .search-results {
+    position: relative !important;
+  }
+
+  /* The spinner is centred on the grid, not on the ghost card it hangs from. */
+  & .tw-tower > :has(.tw-placeholder):not(:has(a)) {
+    position: static !important;
+  }
+
+  /*
+   * Except in a sideways shelf, which is wider than what shows of it and
+   * keeps ghosts past its edge: there the spinner stays on its card.
+   */
+  & .preview-card-carousel .tw-tower > :has(.tw-placeholder):not(:has(a)) {
+    position: relative !important;
+  }
+
+  & .tw-tower > :first-child:has(.tw-placeholder):not(:has(a))::before,
+  & .tw-tower > :has(a) + :has(.tw-placeholder):not(:has(a))::before,
+  & .search-results [data-test-selector="placeholder-result"]:not([data-test-selector="placeholder-result"] ~ *)::before,
+  & .ReactModal__Content .tw-transition > div:has(> div > .tw-placeholder-wrapper)::after {
+    content: "";
+    position: absolute;
+    left: calc(50% - 1.4rem);
+    z-index: 1;
+    box-sizing: border-box;
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-top: var(--rs-8);
+    border: 0.3rem solid var(--rs-border);
+    border-top-color: var(--rs-accent);
+    border-radius: 50%;
+    animation: rs-spin 0.8s linear infinite;
+  }
+
+  /* In a popup the box is the frame: the spinner sits in its middle. */
+  & .ReactModal__Content .tw-transition > div:has(> div > .tw-placeholder-wrapper) {
+    position: relative !important;
+
+    &::after {
+      top: calc(50% - 1.4rem);
+      margin-top: 0;
+    }
+  }
+
+  /*
+   * Thumbnails: one rounded shape. The image sits inside several wrappers
+   * (link, aspect box, Twitch's hover-accent frame); all of them take the
+   * radius and clip, and none keeps a fill of its own, otherwise square or
+   * accent-coloured corners show behind the rounded image.
+   */
+  & [data-a-target="preview-card-image-link"],
+  & [data-a-target="preview-card-image-link"] > div,
+  & [data-a-target="preview-card-image-link"] img,
+  & [data-a-target="preview-card-image-link"] .tw-aspect,
+  & [data-a-target="tw-box-art-card-link"],
+  & [data-a-target="tw-box-art-card-link"] > div,
+  & [data-a-target="tw-box-art-card-link"] img,
+  & [data-a-target="tw-box-art-card-link"] .tw-aspect,
+  & .tw-box-art-card,
+  & .tw-box-art-card img,
+  & .tw-card-image,
+  & .tw-card-image img,
+  & .preview-card-thumbnail__image,
+  & .preview-card-thumbnail__image img,
+  & .tw-hover-accent-effect,
+  & .tw-hover-accent-effect > div {
+    border-radius: var(--rs-radius-l) !important;
+    overflow: hidden !important;
+  }
+
+  /* Drop the coloured "lifted card" hover effect, keep a quiet fade. */
+  & .tw-hover-accent-effect,
+  & .tw-hover-accent-effect > div {
+    transform: none !important;
+    background-color: transparent !important;
+  }
+
+  /* Its corner and edge pieces are the empty siblings of the thumbnail wrapper. */
+  /*
+   * Shared streams ("guest star") frame their thumbnail with a gradient: the
+   * picture is cut out of it by a square inset. The cut-out follows the
+   * rounded corners instead, for a frame of even width all around.
+   */
+  & .guest-star-live-card-clip-edge {
+    clip-path: inset(3px round calc(var(--rs-radius-l) - 3px)) !important;
+  }
+
+  & .tw-hover-accent-effect > div:empty {
+    display: none !important;
+  }
+
+  /*
+   * Hover: a spotlight. In a grid or a shelf, the cards around the hovered
+   * one recede, so the eye stays on it, and its picture eases in a little
+   * inside the frame. The fade applies to the grid's cells, which touch
+   * side by side: moving along a row never flashes the whole grid back.
+   */
+  & .tw-tower > * {
+    transition: opacity 0.25s ease;
+  }
+
+  & .tw-tower:has(> :hover) > :not(:hover) {
+    opacity: var(--rs-recede);
+  }
+
+  /* Movement only for those who have not asked their system to reduce it. */
+  @media (prefers-reduced-motion: no-preference) {
+    & [data-a-target="preview-card-image-link"] img,
+    & [data-a-target="tw-box-art-card-link"] img,
+    & .tw-box-art-card img,
+    & .vertical-selector img {
+      transition: transform var(--rs-ease-move) !important;
+    }
+
+    /*
+     * Not the animated preview a video card plays on hover: it replaces the
+     * still picture at its own size, and scaling it makes the swap jump.
+     */
+    & .tw-tower > :hover [data-a-target="preview-card-image-link"] img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
+    & article:hover [data-a-target="preview-card-image-link"] img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
+    & [data-a-target="preview-card-image-link"]:hover img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
+    & .tw-tower > :hover [data-a-target="tw-box-art-card-link"] img,
+    & .game-card:hover img,
+    & [data-a-target="tw-box-art-card-link"]:hover img,
+    & .tw-box-art-card:hover img {
+      transform: scale(1.05) !important;
+    }
+
+    /* Browse's section cards: their illustration, a touch more. */
+    & .vertical-selector:hover img {
+      transform: scale(1.08) !important;
+    }
+  }
+
+  /*
+   * Stats over thumbnails (viewers, duration, views, date): dark pills. On
+   * live cards the viewer count is led by the same red dot as the sidebar.
+   */
+  & article .tw-media-card-stat {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 0.2rem 0.8rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-scrim) !important;
+    color: var(--rs-on-scrim) !important;
+    font-size: var(--rs-text-2) !important;
+    font-weight: 500 !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  & article:has(.tw-channel-status-text-indicator) .tw-media-card-stat::before {
+    content: "";
+    flex: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--rs-live-dot);
+  }
+
+  /*
+   * Watch progress on thumbnails: a floating pill-shaped bar, inset from the
+   * edges so it never meets the rounded corners. The views / date pills in
+   * the bottom corners move up to sit above it; they are the corner overlays
+   * that follow the first one (the duration, top left).
+   */
+  & [data-a-target="preview-card-image-link"] .tw-progress-bar,
+  & [data-a-target="preview-card-image-link"] [role="progressbar"],
+  & .tw-card-image .tw-progress-bar {
+    height: 0.4rem !important;
+    margin: 0 1rem 1rem !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: auto !important;
+    border-radius: var(--rs-radius-pill) !important;
+    overflow: hidden !important;
+    background: var(--rs-scrim) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14) !important;
+  }
+
+  & [data-a-target="preview-card-image-link"] [data-a-target="tw-progress-bar-animation"],
+  & [data-a-target="preview-card-image-link"] .tw-progress-bar > div {
+    height: 100% !important;
+    background: var(--rs-accent) !important;
+    border-radius: var(--rs-radius-pill) !important;
+  }
+
+  & [data-a-target="preview-card-image-link"]:has(.tw-progress-bar, [role="progressbar"])
+    [class*="ScPositionCorner"] ~ [class*="ScPositionCorner"] {
+    transform: translateY(-1.2rem) !important;
+  }
+
+  /*
+   * Stream and video cards, under the thumbnail: a small avatar with the
+   * channel name centred on it, then the title, then the category.
+   * Twitch puts the title first, and builds the text block in three ways:
+   *  - live cards: one link (carrying the channel-link target) wraps a title
+   *    block then a name block;
+   *  - video cards: title, name and category are separate children;
+   *  - some video cards: name and category share one wrapper.
+   * In all three the text block (and the wrapping link) becomes a column and
+   * the name is ordered first, as tall as the avatar.
+   */
+  & article > div:has([class*="ScTextWrapper"]) {
+    margin-top: var(--rs-3) !important;
+  }
+
+  & article [class*="ScImageWrapper"]:has(.preview-card-avatar, [data-test-selector="preview-card-avatar"], [data-test-selector="preview-card-box-art"]) {
+    flex: 0 0 var(--rs-avatar-card) !important;
+    width: var(--rs-avatar-card) !important;
+    min-width: var(--rs-avatar-card) !important;
+    margin-top: 0 !important;
+    align-self: flex-start !important;
+  }
+
+  /*
+   * Video and clip cards on channel pages put the category's box art, or a
+   * larger avatar, in that slot: both are brought to the avatar's width so
+   * the text starts on the same line as on every other card.
+   */
+  & article [data-test-selector="preview-card-box-art"] {
+    display: block !important;
+    width: 100% !important;
+    border-radius: 0.6rem !important;
+    overflow: hidden !important;
+  }
+
+  & article [data-test-selector="preview-card-avatar"] .tw-avatar:not([class*="mini-avatar"] *) {
+    width: var(--rs-avatar-card) !important;
+    height: var(--rs-avatar-card) !important;
+  }
+
+  /*
+   * "Chapters" under a video's title: a small button in the tags' accent
+   * tint, but taller and squarer than a tag, since it opens a menu. Its
+   * count loses its own pill and joins the label.
+   */
+  & article [class*="ScTextWrapper"] button:has(.tw-pill) {
+    height: 2.8rem !important;
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    padding: 0 1rem !important;
+    border-radius: var(--rs-radius-s) !important;
+    background: var(--rs-accent-tint) !important;
+    color: var(--rs-accent-quiet) !important;
+    transition: background-color var(--rs-ease);
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+
+    & p,
+    & .tw-pill {
+      font-size: var(--rs-text-2) !important;
+      font-weight: 600 !important;
+      line-height: 2.8rem !important;
+      color: inherit !important;
+    }
+
+    & .tw-pill {
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    & svg {
+      width: 1.6rem !important;
+      height: 1.6rem !important;
+      fill: currentColor !important;
+    }
+
+    & .tw-core-button-icon,
+    & :has(> .tw-core-button-icon) {
+      display: flex !important;
+      width: auto !important;
+      height: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Twitch's paddings between icon, label and count, replaced by one small gap. */
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0 0 0.4rem !important;
+    }
+
+    & :has(> .tw-pill) {
+      margin: 0 0 0 0.4rem !important;
+      padding: 0 !important;
+    }
+  }
+
+  /*
+   * Its popup, the list of chapters: a small-caps heading, then padded rows
+   * that light up on hover, each with a small rounded box art.
+   */
+  & .tw-balloon:has(.preview-card-game-balloon__content) {
+    & > div {
+      padding: var(--rs-1) !important;
+    }
+
+    & > div > :not(.preview-card-game-balloon__content) {
+      padding: var(--rs-2) var(--rs-2) var(--rs-1) !important;
+      border: 0 !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    & .media-row > a {
+      border-radius: var(--rs-radius-s) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--rs-hover) !important;
+      }
+
+      & > div {
+        align-items: center !important;
+        padding: var(--rs-1) var(--rs-2) !important;
+      }
+    }
+
+    & .media-row__image-wrapper {
+      flex: 0 0 var(--rs-avatar-card) !important;
+      width: var(--rs-avatar-card) !important;
+      border-radius: 0.6rem !important;
+      overflow: hidden !important;
+    }
+
+    & :has(> .media-row__info-text) {
+      padding: 0 0 0 var(--rs-2) !important;
+    }
+
+    & .media-row__info-text p {
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .media-row__info-description p {
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  & article [class*="ScTextWrapper"] {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+
+    /*
+     * Shared wrapper: dissolved so name and category become items of the
+     * column. On clips the second line is the "Clipped by" link instead.
+     */
+    & > :has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
+      display: contents !important;
+
+      & > :is([data-a-target="preview-card-game-link"], :has([data-a-target="preview-card-game-link"])),
+      & > :has([data-a-target="preview-card-clip-curator-link"]) {
+        order: 1 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+      }
+    }
+  }
+
+  & article a[data-a-target="preview-card-channel-link"]:has(h3, h4, [data-a-target="preview-card-title-link"]) {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* The name, in each of the three builds. */
+  & article a[data-a-target="preview-card-channel-link"] > div:has(> p[data-a-target="preview-card-channel-link"]),
+  & article [class*="ScTextWrapper"] > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
+  & article [class*="ScTextWrapper"] > :has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])) {
+    order: -1 !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: var(--rs-avatar-card) !important;
+  }
+
+  /*
+   * Card text: the title is the strongest line; the channel name is medium in
+   * the label colour, the category smaller and faded. On live cards the link
+   * carrying the channel-link target also wraps the title, so the name is
+   * reached through its <p>, or through the link only when it holds no title.
+   */
+  & article h3,
+  & article h4,
+  & [data-a-target="preview-card-title-link"],
+  & [data-a-target="preview-card-title-link"] * {
+    font-size: var(--rs-text-5) !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.005em !important;
+    color: var(--rs-text) !important;
+  }
+
+  & article p[data-a-target="preview-card-channel-link"],
+  & article [data-a-target="preview-card-channel-link"] p,
+  & article a[data-a-target="preview-card-channel-link"]:not(:has(h3, h4, [data-a-target="preview-card-title-link"])),
+  & article a[data-a-target="preview-card-channel-link"]:not(:has(h3, h4, [data-a-target="preview-card-title-link"])) :not(.tw-svg, .tw-svg *) {
+    font-size: var(--rs-text-3) !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & [data-a-target="preview-card-game-link"],
+  & [data-a-target="preview-card-game-link"] *,
+  & [data-a-target="preview-card-clip-curator-link"] {
+    font-size: var(--rs-text-2) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0 !important;
+    color: var(--rs-faint) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & article p[data-a-target="preview-card-channel-link"]:hover,
+  & article p[data-a-target="preview-card-channel-link"]:hover p,
+  & article a[data-a-target="preview-card-channel-link"]:not(:has([data-a-target="preview-card-title-link"])):hover p,
+  & [data-a-target="preview-card-clip-curator-link"]:hover,
+  & [data-a-target="preview-card-game-link"]:hover,
+  & [data-a-target="preview-card-game-link"]:hover * {
+    color: var(--rs-text) !important;
+  }
+
+  /*
+   * Category cards: their name is an <h2>, kept out of the shelf-title rule
+   * and given the same weight as a stream title.
+   */
+  & .twilight-main h2:is(.tw-tower *, .game-card *, [class*="card" i] *, a *),
+  & .twilight-main h2:is(.tw-tower *, .game-card *, [class*="card" i] *, a *) * {
+    font-size: var(--rs-text-5) !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+    letter-spacing: -0.005em !important;
+    color: var(--rs-text) !important;
+  }
+
+  /*
+   * Category cards: the options button sits at the end of the name's row and
+   * covers its last letters. It is shifted from there onto the box art's
+   * bottom right corner, on a dark disc so it reads over any image. Stream
+   * and video cards (articles with a preview thumbnail) keep theirs in place.
+   */
+  & .feedback-card:not(article:has([data-a-target="preview-card-image-link"]) *) {
+    position: relative !important;
+    z-index: 2 !important;
+    transform: translate(-1.1rem, -3.8rem) !important;
+
+    & button {
+      background: var(--rs-scrim) !important;
+      color: var(--rs-on-scrim) !important;
+      border-radius: var(--rs-radius-pill) !important;
+    }
+  }
+
+  /* Tags, everywhere: small accent-tinted chips instead of bold grey pills. */
+  & .tw-tag {
+    background: var(--rs-accent-tint) !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-pill) !important;
+    box-shadow: none !important;
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  & .tw-tag,
+  & .tw-tag * {
+    font-size: var(--rs-text-1) !important;
+    font-weight: 500 !important;
+    color: var(--rs-accent-quiet) !important;
+  }
+}

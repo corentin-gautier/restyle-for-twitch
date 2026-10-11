@@ -1,6 +1,6 @@
 /*
- * Design tokens. twitch.css maps Twitch's own variables and components onto
- * these: change a value here and it moves everywhere.
+ * Design tokens. The files of twitch/ map Twitch's own variables and
+ * components onto these: change a value here and it moves everywhere.
  * Sizes that sit next to Twitch's own are in rem (Twitch sets 1rem = 10px).
  */
 :root {

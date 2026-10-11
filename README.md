@@ -96,7 +96,7 @@ unpacked**. There is no build step. The extension is made of:
 | Path | Role |
 | --- | --- |
 | `src/tokens.css` | Design tokens: spacing, radii, type scale, palette. |
-| `src/twitch.css` | The rules that map Twitch's interface onto those tokens. |
+| `src/twitch/` | The rules that map Twitch's interface onto those tokens, one file per area. |
 | `src/content.js` | Applies the settings and pauses the hidden carousel's video. |
 | `popup/` | The settings popup. |
 | `src/dev-reload.js` | Live reload, for unpacked installs only. |

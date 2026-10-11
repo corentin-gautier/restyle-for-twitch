@@ -1,0 +1,770 @@
+/*
+ * Everything is scoped so the popup toggle can switch the whole sheet off.
+ *
+ * Twitch's layout classes are generated (Layout-sc-…, hashed suffixes) and
+ * change between builds. Rules therefore hang on its stable hooks: BEM-style
+ * classes, data-a-target, ARIA roles, or what an element contains (:has).
+ * Twitch often sets type on an inner <p> or <span>, hence the `*` selectors.
+ *
+ * The sheet is split by area into the files of this folder. They are one
+ * cascade: manifest.json loads them in the order the rules were written in,
+ * and later files rely on coming after earlier ones.
+ *
+ * This file: theme remap, top bar and left sidebar, what every page shows.
+ */
+html:not([data-rs="off"]) {
+  /*
+   * Theme: Twitch declares its palette on the element carrying the theme
+   * class, so the remap has to sit on that same element to win.
+   */
+  /*
+   * The player's settings menu (the gear) is always dark, whatever the
+   * theme: its palette comes from a generated class on one of its wrappers,
+   * so the three of them are named too.
+   */
+  &.tw-root--theme-dark,
+  &.tw-root--theme-light,
+  & .tw-root--theme-dark,
+  & .tw-root--theme-light,
+  & .ReactModal__Content div:has(> [data-a-target="player-settings-menu"]),
+  & .ReactModal__Content div:has(> div > [data-a-target="player-settings-menu"]),
+  & .ReactModal__Content div:has(> div > div > [data-a-target="player-settings-menu"]) {
+    --color-background-body: var(--rs-bg) !important;
+    --color-background-base: var(--rs-bg) !important;
+    --color-background-alt: var(--rs-surface) !important;
+    --color-background-alt-2: var(--rs-raised) !important;
+    --color-background-float: var(--rs-float) !important;
+    --color-background-input: var(--rs-raised) !important;
+    --color-background-input-focus: var(--rs-surface) !important;
+    --color-background-button-secondary-default: var(--rs-raised) !important;
+    --color-background-button-secondary-hover: var(--rs-hover) !important;
+    --color-background-button-text-hover: var(--rs-hover) !important;
+    --color-background-interactable-hover: var(--rs-hover) !important;
+    --color-background-interactable-alpha-hover: var(--rs-hover) !important;
+    --color-background-interactable-active: var(--rs-hover) !important;
+    --color-background-interactable-alpha-active: var(--rs-hover) !important;
+    --color-background-interactable-selected: var(--rs-hover) !important;
+    --color-background-button-text-active: var(--rs-hover) !important;
+    --color-background-button-secondary-active: var(--rs-hover) !important;
+
+    --color-background-button-primary-default: var(--rs-accent) !important;
+    --color-background-button-primary-hover: var(--rs-accent-hover) !important;
+    --color-background-button-primary-active: var(--rs-accent-active) !important;
+    --color-text-button-primary: var(--rs-on-accent) !important;
+    --color-accent: var(--rs-accent) !important;
+    --color-twitch-purple: var(--rs-accent) !important;
+    --color-text-link: var(--rs-accent) !important;
+    --color-text-link-hover: var(--rs-accent) !important;
+    --color-border-input-focus: var(--rs-accent) !important;
+    --color-border-brand: var(--rs-accent) !important;
+    --color-fill-brand: var(--rs-accent) !important;
+
+    /*
+     * The rest of Twitch's purple: every other variable that resolves to a
+     * brand purple, and the raw purple scale some components read directly,
+     * rebuilt as shades of the accent.
+     */
+    --color-text-brand: var(--rs-accent) !important;
+    --color-text-button-text: var(--rs-accent) !important;
+    --color-text-link-active: var(--rs-accent) !important;
+    --color-text-link-focus: var(--rs-accent) !important;
+    --color-text-link-visited: var(--rs-accent) !important;
+    --color-text-tab-active: var(--rs-accent) !important;
+    --color-text-toggle-checked-hover-icon: var(--rs-accent) !important;
+    --color-background-accent: var(--rs-accent) !important;
+    --color-background-brand: var(--rs-accent) !important;
+    --color-background-button: var(--rs-accent) !important;
+    --color-background-button-brand: var(--rs-accent) !important;
+    --color-background-date-picker-day-selected: var(--rs-accent) !important;
+    --color-background-graph-fill: var(--rs-accent) !important;
+    --color-background-input-checked: var(--rs-accent) !important;
+    --color-background-overlay-brand: var(--rs-accent) !important;
+    --color-background-progress-countdown-status: var(--rs-accent) !important;
+    --color-background-range-ms-thumb: var(--rs-accent) !important;
+    --color-background-toggle-handle-checked: var(--rs-accent) !important;
+    --color-border-brand-decorative: var(--rs-accent) !important;
+    --color-border-button-active: var(--rs-accent) !important;
+    --color-border-button-focus: var(--rs-accent) !important;
+    --color-border-button-hover: var(--rs-accent) !important;
+    --color-border-image-selector-mask: var(--rs-accent) !important;
+    --color-border-image-selector-mask-overlay: var(--rs-accent) !important;
+    --color-border-interactable-selected: var(--rs-accent) !important;
+    --color-border-overlay-brand-decorative: var(--rs-accent) !important;
+    --color-border-tab-focus: var(--rs-accent) !important;
+    --color-border-tab-hover: var(--rs-accent) !important;
+    --color-border-toggle-checked-hover: var(--rs-accent) !important;
+    --color-border-whisper-incoming: var(--rs-accent) !important;
+    --color-fill-brand-overlay: var(--rs-accent) !important;
+    --color-background-button-hover: var(--rs-accent-hover) !important;
+    --color-background-button-focus: var(--rs-accent-hover) !important;
+    --color-background-button-brand-hover: var(--rs-accent-hover) !important;
+    --color-background-input-checkbox-checked-hover: var(--rs-accent-hover) !important;
+    --color-background-input-checkbox-checked-active: var(--rs-accent-hover) !important;
+    --color-background-toggle-handle-checked-hover: var(--rs-accent-hover) !important;
+    --color-background-button-active: var(--rs-accent-active) !important;
+    --color-background-button-brand-active: var(--rs-accent-active) !important;
+    --color-background-accent-alt: var(--rs-accent-active) !important;
+    --color-background-accent-alt-2: var(--rs-accent-tint-strong) !important;
+    --color-background-date-picker-range: var(--rs-accent-tint-strong) !important;
+    --color-background-table-selected: var(--rs-accent-tint-strong) !important;
+    --color-text-button-text-active: var(--rs-accent-tint-strong) !important;
+    --color-twitch-purple-1: color-mix(in srgb, var(--rs-accent), black 92%) !important;
+    --color-twitch-purple-2: color-mix(in srgb, var(--rs-accent), black 86%) !important;
+    --color-twitch-purple-3: color-mix(in srgb, var(--rs-accent), black 80%) !important;
+    --color-twitch-purple-4: color-mix(in srgb, var(--rs-accent), black 70%) !important;
+    --color-twitch-purple-5: color-mix(in srgb, var(--rs-accent), black 58%) !important;
+    --color-twitch-purple-6: color-mix(in srgb, var(--rs-accent), black 45%) !important;
+    --color-twitch-purple-7: color-mix(in srgb, var(--rs-accent), black 28%) !important;
+    --color-twitch-purple-8: color-mix(in srgb, var(--rs-accent), black 14%) !important;
+    --color-twitch-purple-9: var(--rs-accent) !important;
+    --color-twitch-purple-10: color-mix(in srgb, var(--rs-accent), white 14%) !important;
+    --color-twitch-purple-11: color-mix(in srgb, var(--rs-accent), white 28%) !important;
+    --color-twitch-purple-12: color-mix(in srgb, var(--rs-accent), white 42%) !important;
+    --color-twitch-purple-13: color-mix(in srgb, var(--rs-accent), white 60%) !important;
+    --color-twitch-purple-14: color-mix(in srgb, var(--rs-accent), white 74%) !important;
+    --color-twitch-purple-15: color-mix(in srgb, var(--rs-accent), white 84%) !important;
+    --color-opac-p-1: color-mix(in srgb, var(--rs-accent) 5%, transparent) !important;
+    --color-opac-p-2: color-mix(in srgb, var(--rs-accent) 10%, transparent) !important;
+    --color-opac-p-3: color-mix(in srgb, var(--rs-accent) 15%, transparent) !important;
+    --color-opac-p-4: color-mix(in srgb, var(--rs-accent) 20%, transparent) !important;
+    --color-opac-p-5: color-mix(in srgb, var(--rs-accent) 25%, transparent) !important;
+    --color-opac-p-6: color-mix(in srgb, var(--rs-accent) 30%, transparent) !important;
+    --color-opac-p-7: color-mix(in srgb, var(--rs-accent) 40%, transparent) !important;
+    --color-opac-p-8: color-mix(in srgb, var(--rs-accent) 50%, transparent) !important;
+    --color-opac-p-9: color-mix(in srgb, var(--rs-accent) 60%, transparent) !important;
+    --color-opac-p-10: color-mix(in srgb, var(--rs-accent) 70%, transparent) !important;
+    --color-opac-p-11: color-mix(in srgb, var(--rs-accent) 75%, transparent) !important;
+    --color-opac-p-12: color-mix(in srgb, var(--rs-accent) 80%, transparent) !important;
+    --color-opac-p-13: color-mix(in srgb, var(--rs-accent) 85%, transparent) !important;
+    --color-opac-p-14: color-mix(in srgb, var(--rs-accent) 90%, transparent) !important;
+    --color-opac-p-15: color-mix(in srgb, var(--rs-accent) 95%, transparent) !important;
+
+    --color-text-base: var(--rs-text) !important;
+    --color-text-alt: var(--rs-text) !important;
+    --color-text-alt-2: var(--rs-muted) !important;
+    --color-text-input: var(--rs-text) !important;
+
+    --color-border-base: var(--rs-border) !important;
+    --color-border-input: transparent !important;
+    --color-border-button: var(--rs-border) !important;
+
+    --border-radius-small: var(--rs-radius-s) !important;
+    --border-radius-medium: var(--rs-radius-m) !important;
+    --border-radius-large: var(--rs-radius-l) !important;
+    --input-border-radius-default: var(--rs-radius-m) !important;
+
+    --font-base: var(--rs-font) !important;
+    --font-display: var(--rs-font) !important;
+
+    /* Flat: no elevation shadows under menus, popovers, dialogs or tooltips. */
+    --shadow-elevation-1: none !important;
+    --shadow-elevation-2: none !important;
+    --shadow-elevation-3: none !important;
+    --shadow-elevation-4: none !important;
+    --shadow-elevation-5: none !important;
+  }
+
+  & body {
+    background: var(--rs-bg) !important;
+    font-family: var(--rs-font) !important;
+  }
+
+  /*
+   * ==== Top bar ====
+   * Same surface as the sidebar and the chat, so the chrome reads as one frame
+   * around the content. Taller and flat.
+   */
+  & .top-nav,
+  & .top-nav__menu {
+    height: calc(4rem + var(--rs-4)) !important;
+  }
+
+  & .top-nav__menu {
+    background: var(--rs-surface) !important;
+    box-shadow: none !important;
+    /*
+     * Logo on the sidebar's text edge, user avatar on the chat's right edge.
+     * Both sit inside Twitch buttons with their own inset (about 1.1rem for
+     * the logo, 0.8rem for the avatar), which is taken off the bar's padding.
+     */
+    padding-inline: calc(var(--rs-2) + 0.75rem - 1.1rem) calc(var(--rs-4) - 0.8rem) !important;
+    border-bottom: var(--rs-hairline) !important;
+  }
+
+  /* Following / Browse: same small caps as the sidebar section headers. */
+  & .top-nav .navigation-link,
+  & .top-nav .navigation-link *,
+  & .top-nav [data-a-target="following-link"],
+  & .top-nav [data-a-target="following-link"] *,
+  & .top-nav [data-a-target="browse-link"],
+  & .top-nav [data-a-target="browse-link"] * {
+    font-size: var(--rs-text-2) !important;
+    font-weight: 600 !important;
+    letter-spacing: var(--rs-caps-tracking) !important;
+    text-transform: uppercase !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & .top-nav .navigation-link:hover,
+  & .top-nav .navigation-link:hover *,
+  & .top-nav .navigation-link[aria-current="page"],
+  & .top-nav .navigation-link[aria-current="page"] *,
+  & .top-nav [data-a-target="following-link"]:hover *,
+  & .top-nav [data-a-target="browse-link"]:hover * {
+    color: var(--rs-text) !important;
+  }
+
+  /* Icon buttons (notifications, whispers, bits...): dimmed until hovered. */
+  & .top-nav__menu [class*="ScButtonIcon"] {
+    color: var(--rs-muted) !important;
+    transition: color var(--rs-ease);
+
+    &:hover {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Search: the input and its attached button share one fill and split the
+   * pill between them, so the pair reads as a single field.
+   */
+  & .top-nav__search-container {
+    max-width: 48rem !important;
+
+    /* Only the attached search button: the tray under the field has buttons too. */
+    & input,
+    & .tw-combo-input__button-icon {
+      height: 4rem !important;
+      background-color: var(--rs-raised) !important;
+      border: 0 !important;
+    }
+
+    & input {
+      border-radius: var(--rs-radius-pill) 0 0 var(--rs-radius-pill) !important;
+      padding-inline: var(--rs-4) var(--rs-2) !important;
+      font-size: var(--rs-text-3) !important;
+    }
+
+    & input::placeholder {
+      color: var(--rs-muted) !important;
+    }
+
+    & .tw-combo-input__button-icon {
+      border-radius: 0 var(--rs-radius-pill) var(--rs-radius-pill) 0 !important;
+      padding-inline: var(--rs-2) var(--rs-3) !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & .tw-combo-input__button-icon:hover {
+      color: var(--rs-text) !important;
+    }
+
+    /* "Remove from search history", at the end of a tray row: a quiet round button. */
+    & .search-item__history button {
+      width: 3.2rem !important;
+      height: 3.2rem !important;
+      border-radius: 50% !important;
+      color: var(--rs-muted) !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+        color: var(--rs-text) !important;
+      }
+    }
+
+    /*
+     * Focus: Twitch rings the input alone, which stops dead at the button.
+     * The ring is drawn around the pair instead, each half carrying its three
+     * outer sides, whichever of the two has the focus.
+     */
+    & input:focus {
+      outline: none !important;
+    }
+
+    &:focus-within input {
+      box-shadow: inset 2px 0 0 var(--rs-accent), inset 0 2px 0 var(--rs-accent), inset 0 -2px 0 var(--rs-accent) !important;
+    }
+
+    &:focus-within .tw-combo-input__button-icon {
+      box-shadow: inset -2px 0 0 var(--rs-accent), inset 0 2px 0 var(--rs-accent), inset 0 -2px 0 var(--rs-accent) !important;
+      outline: none !important;
+    }
+  }
+
+  /*
+   * Search suggestions. The tray is a box laid over the field (it holds a
+   * hidden copy of it, then the results): a floating layer like the menus,
+   * with roomier rows that light up on hover.
+   */
+  & .top-nav div:has(> div > div > .search-tray) {
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    /* Concentric with the pill-shaped field it wraps: half its height, plus the padding around it. */
+    border-radius: calc(2rem + var(--rs-1)) !important;
+    box-shadow: none !important;
+    /* The border must not shift the hidden field off the real one. */
+    margin: -2px !important;
+    /* Fix width */
+    width: calc(100% + 4px) !important;
+  }
+
+  & .search-tray {
+    padding-top: var(--rs-1) !important;
+
+    & a {
+      border-radius: var(--rs-radius-l) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & .search-item {
+      align-items: center !important;
+      min-height: 5.2rem !important;
+      padding: 1rem 1.6rem !important;
+    }
+
+    /* The magnifier of "Search for…" sits in the middle of the icon column, like the avatars. */
+    & [class*="search-item__icon"] {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+
+    & [class*="search-item__icon"],
+    & [class*="search-item__icon"] .tw-avatar {
+      width: var(--rs-avatar-card) !important;
+      height: var(--rs-avatar-card) !important;
+    }
+
+    /* One icon column for every row, even the last one which has no icon, so the text lines up. */
+    & .search-item > :first-child:not(:has(strong, p)) {
+      box-sizing: border-box !important;
+      flex: 0 0 calc(var(--rs-avatar-card) + 1rem) !important;
+      width: calc(var(--rs-avatar-card) + 1rem) !important;
+      padding: 0 1rem 0 0 !important;
+      margin: 0 !important;
+    }
+
+    & .search-item > :first-child:not(:has(strong, p)) + * {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+
+    /* Name, then a quieter line (category and title, or "Channel"). */
+    & strong,
+    & strong span {
+      font-size: var(--rs-text-3) !important;
+    }
+
+    & p {
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /* Viewer count, as in the sidebar. */
+    & [aria-label$="viewers"] {
+      font-size: var(--rs-text-2) !important;
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  /* ==== Left sidebar ==== */
+  & .side-nav,
+  & .side-nav__scrollable_content {
+    background: var(--rs-surface) !important;
+  }
+
+  & .side-nav {
+    border-right: var(--rs-hairline) !important;
+  }
+
+  & .side-bar-contents {
+    padding: var(--rs-2) !important;
+  }
+
+  /* "For You" row above the channel lists: gone, text and space. */
+  & .side-nav__title {
+    display: none !important;
+  }
+
+  /*
+   * Stories. Their classes are generated in camelCase, hence the
+   * case-insensitive matches; kept away from a bare "stories" match outside
+   * the sidebar so a channel avatar with a story ring survives.
+   */
+  & .side-nav [class*="stories" i],
+  & .side-nav-section[aria-label*="stories" i],
+  & [class*="storiesLeftNav" i],
+  & [class*="stories-left-nav" i],
+  & [class*="storiesShelf" i],
+  & [class*="stories-shelf" i],
+  & [aria-label="Stories" i] {
+    display: none !important;
+  }
+
+  /*
+   * Hover cards on channel rows (stream title preview). They are rendered
+   * outside the sidebar, so they are caught by their content's class and the
+   * balloon around it is dropped with them. Only while the sidebar is
+   * expanded: collapsed, these popups are where the names are (see
+   * "Collapsed sidebar").
+   */
+  &:not(:has(.side-nav--collapsed)) [class*="side-nav-channel-tooltip"],
+  &:not(:has(.side-nav--collapsed)) [class*="side-nav-guest-star-tooltip"],
+  &:not(:has(.side-nav--collapsed)) :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
+  &:not(:has(.side-nav--collapsed)) div:has(> [class*="side-nav-channel-tooltip"]),
+  &:not(:has(.side-nav--collapsed)) div:has(> [class*="side-nav-guest-star-tooltip"]) {
+    display: none !important;
+  }
+
+  /*
+   * Offline rows have their own hover popup, a lone "See all recent videos"
+   * link. It carries no class of its own: told by opening to the right of
+   * its row and holding nothing but a link to a channel's videos.
+   */
+  &:not(:has(.side-nav--collapsed)) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
+    display: none !important;
+  }
+
+  /*
+   * Recommended categories repeat their name in a tooltip beside the row.
+   * No class either: a popup opening to the right that holds one unwrapped
+   * line and nothing else. Kept when the sidebar is collapsed, where the
+   * name is not on screen.
+   */
+  &:not(:has(.side-nav--collapsed)) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] [style*="nowrap"] > div[tabindex] p:only-child):not(:has(a, button, img)) {
+    display: none !important;
+  }
+
+  & .side-nav-section {
+    padding-block: var(--rs-3) !important;
+  }
+
+  /* Section headers: "Followed Channels", "Live Channels"... */
+  & .side-nav-header h3,
+  & .followed-side-nav-header h3 {
+    font-size: var(--rs-text-1) !important;
+    font-weight: 600 !important;
+    letter-spacing: var(--rs-caps-tracking) !important;
+    text-transform: uppercase !important;
+    color: var(--rs-label) !important;
+  }
+
+  /*
+   * "Followed Channels" is a sort dropdown in disguise: a button holding the
+   * title, a "Viewers (High to Low)" subtitle and a sort icon. It is reduced
+   * to a plain title like the other section headers. This also leaves its
+   * right end free for the sidebar's collapse arrow, which sits over it.
+   */
+  & .followed-side-nav-header p,
+  & .followed-side-nav-header__dropdown-trigger > div:last-child {
+    display: none !important;
+  }
+
+  & .followed-side-nav-header button {
+    pointer-events: none !important;
+    cursor: default !important;
+    background: transparent !important;
+  }
+
+  /*
+   * Channel rows. Sidebar text sits a step below chat and the main column:
+   * smaller and dimmer, back to full contrast on the hovered row only. Within
+   * a row the channel name leads (semibold, label colour) and the category
+   * under it recedes (regular, faded). The name is the first block of the
+   * row's metadata, whatever wraps it (plain rows and guest-star rows differ).
+   */
+  & [data-a-target="side-nav-card-metadata"] > :first-child p {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+  }
+
+  /* Offline channels stay a step back. */
+  & .side-nav-card__link--offline .side-nav-card__title p {
+    font-weight: 500 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  & .side-nav-card__link {
+    padding: var(--rs-2) var(--rs-3) !important;
+    margin-inline: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    transition: background-color var(--rs-ease) !important;
+
+    /*
+     * Twitch's own row hover is a fixed grey of its theme. Ours follows the
+     * tone of the background, including one picked in the popup.
+     */
+    &:hover,
+    &:focus-visible {
+      background-color: var(--rs-hover) !important;
+    }
+
+    &:hover [data-a-target="side-nav-card-metadata"] > :first-child p {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Extra line under a row's category (Hype Train, Watch Streak...): the
+   * third line of the row, in the metadata's size and tone, with its icon
+   * or pill in the accent tint instead of Twitch's purple.
+   */
+  & .side-nav-card__link > div > div:not(:has([data-a-target="side-nav-card-metadata"])) {
+    align-items: center !important;
+    gap: var(--rs-1) !important;
+    margin-top: 0.3rem !important;
+
+    & :is(p, span) {
+      font-size: var(--rs-text-1) !important;
+      font-weight: 500 !important;
+      line-height: 1.4 !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    /* Icons drawn as a mask over a coloured box. */
+    & [role="img"] {
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      margin: 0 !important;
+      background-color: var(--rs-accent-quiet) !important;
+    }
+
+    & svg {
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      fill: var(--rs-accent-quiet) !important;
+    }
+
+    & :is(.tw-pill, .tw-tag, [class*="ScPill"], [class*="ScTag"]) {
+      padding: 0.1rem 0.7rem !important;
+      background: var(--rs-accent-tint) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-pill) !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+  }
+
+  /* Same for the sidebar's icon buttons (collapse arrow). */
+  & .side-nav [class*="ScButtonIcon"]:hover,
+  & .side-nav [class*="ScButtonIcon"]:focus-visible {
+    background-color: var(--rs-hover) !important;
+  }
+
+  & .side-nav-card__avatar,
+  & .side-nav-card__avatar img {
+    border-radius: var(--rs-radius-pill) !important;
+  }
+
+  /* Categories show box art, taller than wide: a small radius, not a pill. */
+  & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar,
+  & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar img {
+    border-radius: 0.6rem !important;
+  }
+
+  & .side-nav-card__metadata p,
+  & .side-nav-card__live-status p,
+  & .side-nav-card__live-status span {
+    font-size: var(--rs-text-1) !important;
+    font-weight: 400 !important;
+    color: var(--rs-faint) !important;
+  }
+
+  & .side-nav-card__metadata {
+    margin-top: 0.2rem !important;
+  }
+
+  /* Viewer counts (and "Offline") end on the row's right edge. */
+  & .side-nav-card__live-status {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums !important;
+
+    & > div {
+      justify-content: flex-end !important;
+    }
+  }
+
+  /* Show more / show less. */
+  & .side-nav-show-more-toggle__button *,
+  & [data-a-target^="side-nav-show-"],
+  & [data-a-target^="side-nav-show-"] * {
+    font-size: var(--rs-text-1) !important;
+    font-weight: 500 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  /*
+   * Sign-up banner shown at the bottom to logged-out visitors: a rounded
+   * bar inset from the window's edges instead of a full-width band.
+   */
+  & #twilight-sticky-footer-root:has(.upsell-bottom-banner__coolcat) {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+    background: var(--rs-surface) !important;
+
+    & article {
+      border-radius: var(--rs-radius-l) !important;
+    }
+  }
+
+  /*
+   * Collapsed sidebar: a rail of avatars. Twitch pads the links more than
+   * the rail is wide, which pushes the avatars off the axis of the icons
+   * above them. Everything is centred on the rail, sections are parted by
+   * a hairline, and pointing at an avatar rings it with the accent.
+   */
+  & .side-nav--collapsed {
+    & .collapse-toggle {
+      justify-content: center !important;
+      margin: 0 !important;
+      padding: var(--rs-2) 0 !important;
+    }
+
+    & .side-bar-contents {
+      padding: 0 !important;
+    }
+
+    & .side-nav-section {
+      align-items: center !important;
+      padding: var(--rs-2) 0 !important;
+      border-top: var(--rs-hairline) !important;
+    }
+
+    & .side-nav-section > div {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+
+    & .side-nav-header {
+      justify-content: center !important;
+      padding: 0.6rem 0 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & a.side-nav-card {
+      justify-content: center !important;
+      width: 100% !important;
+      padding: 0.5rem 0 !important;
+      background: none !important;
+    }
+
+    & .side-nav-card__avatar {
+      margin: 0 auto !important;
+      border-radius: 50% !important;
+      transition: box-shadow var(--rs-ease);
+    }
+
+    /* A zero-width tooltip anchor after the avatar, whose negative margin shifts the centring. */
+    & .side-nav-card__link__tooltip-arrow {
+      margin: 0 !important;
+    }
+
+    & a.side-nav-card:hover .side-nav-card__avatar {
+      box-shadow: 0 0 0 2px var(--rs-surface), 0 0 0 4px var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Its popups. Twitch has three, each built and padded its own way: a live
+   * channel's (name and category, title, viewers), an offline channel's (a
+   * link to its videos) and a category's (its name). One box for all: the
+   * same frame, padding and type, a strong first line and quiet ones under.
+   */
+  &:has(.side-nav--collapsed) .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
+    /* The wrappers keep the generic popups' large radius and clip the box with it. */
+    border-radius: 0 !important;
+
+    & > .tw-transition > div {
+      padding: 0 0 0 0.8rem !important;
+      background: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+    }
+
+    /* Doubled class: the menu rules pad a box that holds a link their own way. */
+    & > .tw-transition.tw-transition.tw-transition > div > div {
+      display: block !important;
+      box-sizing: border-box !important;
+      width: max-content !important;
+      min-width: 0 !important;
+      max-width: 26rem !important;
+      padding: 0.8rem 1.2rem !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-m) !important;
+      box-shadow: none !important;
+      white-space: normal !important;
+    }
+
+    & div[tabindex] div:not(.tw-channel-status-indicator),
+    & div[tabindex] a {
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: none !important;
+      border-radius: 0 !important;
+    }
+
+    & p,
+    & span {
+      margin: 0 !important;
+      font-size: var(--rs-text-2) !important;
+      font-weight: 400 !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /* The first line: a channel and its category, a category, or the link. */
+    & div[tabindex] > div > p:first-child,
+    & div[tabindex] > div > div > p,
+    & a p {
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-channel-status-indicator {
+      margin-right: 0.6rem !important;
+    }
+  }
+
+  /*
+   * The section icons of the collapsed sidebar ("Followed Channels", "Live
+   * Channels") have a tooltip of another kind, white with an arrow: the
+   * same box as the popups above.
+   */
+  &:has(.side-nav--collapsed) .ReactModal__Content[role="tooltip"] > [data-popper-placement^="right"] {
+    & .tw-tooltip-popper-arrow {
+      display: none !important;
+    }
+
+    & .tw-tooltip-wrapper {
+      /* On the same line as the popups: 8px from the rail. */
+      margin-left: -0.2rem !important;
+      padding: 0.8rem 1.2rem !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-m) !important;
+      box-shadow: none !important;
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+  }
+}

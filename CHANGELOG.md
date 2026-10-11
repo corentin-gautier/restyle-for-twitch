@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.6.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.6.0...v1.6.1) (2026-10-11)
+
+
+### Fixes
+
+* home shelves and light themes ([7137d4c](https://github.com/corentin-gautier/restyle-for-twitch/commit/7137d4c3d095035ddeeba37681d2343d6709bb8f))
+
+
+### Documentation
+
+* add a license (MIT with the Commons Clause) ([6c00efb](https://github.com/corentin-gautier/restyle-for-twitch/commit/6c00efb8682a3b882c3ee4d0b02b63f676d3f59b))
+* retake the store screenshots and add two showing the themes ([93ec65c](https://github.com/corentin-gautier/restyle-for-twitch/commit/93ec65cb41e0edc1ba7c74aa51067296d8ab9ccf))
+* switch the license to GNU AGPLv3 ([133811a](https://github.com/corentin-gautier/restyle-for-twitch/commit/133811a78c685a6d0b50c63ca6e1e4204b819827))
+
 ## [1.6.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.5.2...v1.6.0) (2026-10-11)
 
 

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.9.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.9.0...v1.9.1) (2026-10-11)
+
+
+### Documentation
+
+* bring the site up to 1.9.0 and retake its captures ([347cd07](https://github.com/corentin-gautier/restyle-for-twitch/commit/347cd070b6f296dc1377466e6097c067294bbe06))
+
+
+### Fixes
+
+* avoid too much browser repaint on chat message hover ([dd106ff](https://github.com/corentin-gautier/restyle-for-twitch/commit/dd106ffc5f302b17d6396b76ed54035daa0feece))
+* better looking live channel header infos ([3f6c651](https://github.com/corentin-gautier/restyle-for-twitch/commit/3f6c6516dcbef30d7f298bc9b90ff864f44546f1))
+
 ## [1.9.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.8.1...v1.9.0) (2026-10-11)
 
 

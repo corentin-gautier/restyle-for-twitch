@@ -546,11 +546,55 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * One left edge and one right edge for everything in the expanded
+   * sidebar: the rows' own inset (--rs-3 inside their hover box). Twitch
+   * starts the section headers and "Show more" 0.8rem in instead, short of
+   * the avatars.
+   */
+  & .side-nav--expanded {
+    & [data-a-target="side-nav-header-expanded"] {
+      margin-inline: var(--rs-3) !important;
+    }
+
+    /* The same step under every header: this one adds a margin of its own. */
+    & .followed-side-nav-header {
+      margin-bottom: 0 !important;
+    }
+
+    & .side-nav-show-more-toggle__button {
+      padding-inline: var(--rs-3) !important;
+    }
+
+    /*
+     * The collapse arrow sits in its panel where the chat's does in its own:
+     * a 3.2rem button 1rem from the top and 1rem from the edge on the page's
+     * side. (Twitch centres it in a wider box, further in and lower down.)
+     * The sidebar's hairline is on that side, and counts in the 1rem.
+     */
+    & .collapse-toggle {
+      top: 1rem !important;
+      right: calc(1rem - 1px) !important;
+      left: auto !important;
+      width: auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  /*
+   * The avatar sits level with the name and category: Twitch centres it on
+   * the whole row, extra line included.
+   */
+  & .side-nav-card__avatar {
+    align-self: flex-start !important;
+  }
+
+  /*
    * Extra line under a row's category (Hype Train, Watch Streak...): the
    * third line of the row, in the metadata's size and tone, with its icon
    * or pill in the accent tint instead of Twitch's purple.
    */
-  & .side-nav-card__link > div > div:not(:has([data-a-target="side-nav-card-metadata"])) {
+  & .side-nav-card__link > div:not(.side-nav-card__avatar) > div:not(:has([data-a-target="side-nav-card-metadata"])) {
     align-items: center !important;
     gap: var(--rs-1) !important;
     margin-top: 0.3rem !important;
@@ -585,6 +629,52 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * "Save your Streak" (logged in): a row above the channel lists, for a
+   * followed channel whose watch streak is about to lapse. Twitch gives it
+   * its own padding, an underlined purple link and a square grey hover. It
+   * becomes a row like the channels': its avatar on their axis (inside its
+   * ring, 0.4rem wide), its label as far from the ring as a channel's name
+   * is from its avatar, the same hover box.
+   * The box stops 0.4rem short of the collapse arrow (1rem from the panel's
+   * edge, 3.2rem wide), which sits over the row's right end.
+   */
+  & .side-nav [class*="saveYourStreakSideNavRow"] {
+    margin-right: calc(4.6rem - var(--rs-2)) !important;
+    border-radius: var(--rs-radius-m) !important;
+    text-decoration: none !important;
+    transition: background-color var(--rs-ease);
+    will-change: background-color;
+
+    & > div {
+      gap: var(--rs-2) !important;
+      /* Less on the right: the label needs the room, and the box ends there anyway. */
+      padding: calc(var(--rs-2) - 0.4rem) 0.4rem calc(var(--rs-2) - 0.4rem) calc(var(--rs-3) - 0.4rem) !important;
+      background: transparent !important;
+    }
+
+    & > div > div:has(> p) {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    & p {
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      color: var(--rs-accent-quiet) !important;
+      text-decoration: none !important;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--rs-hover) !important;
+    }
+  }
+
+  & .side-nav div:has(> [class*="saveYourStreakSideNavRow"]) {
+    margin-top: 0 !important;
+  }
+
   /* Same for the sidebar's icon buttons (collapse arrow). */
   & .side-nav [class*="ScButtonIcon"]:hover,
   & .side-nav [class*="ScButtonIcon"]:focus-visible {
@@ -603,6 +693,7 @@ html:not([data-rs="off"]) {
   }
 
   & .side-nav-card__metadata p,
+  & .side-nav-card__metadata span,
   & .side-nav-card__live-status p,
   & .side-nav-card__live-status span {
     font-size: var(--rs-text-1) !important;
@@ -870,6 +961,11 @@ html:not([data-rs="off"]) {
       box-sizing: border-box !important;
       border: var(--rs-hairline) !important;
       border-radius: var(--rs-radius-l) !important;
+    }
+
+    /* The hairline is on top too: the collapse arrow keeps its 1rem from the panel's edge. */
+    & .side-nav--expanded .collapse-toggle {
+      top: calc(1rem - 1px) !important;
     }
 
     & .side-nav__scrollable_content {

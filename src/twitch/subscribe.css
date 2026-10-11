@@ -82,6 +82,6 @@ html:not([data-rs="off"]) {
 
   /* Checkboxes stay square: only radio buttons are round. */
   & .tw-checkbox__label::before {
-    border-radius: 0.4rem !important;
+    border-radius: calc(0.4rem * var(--rs-round)) !important;
   }
 }

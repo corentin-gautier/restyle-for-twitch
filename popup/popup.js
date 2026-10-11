@@ -2,6 +2,8 @@
 const DEFAULTS = {
   twitch: true,
   space: 2,
+  // Corner rounding: 0 square, 1 soft, 2 round.
+  round: 2,
   accent: "#8b7cf6",
   // Empty: keep the background of Twitch's current theme.
   background: "",
@@ -46,7 +48,8 @@ for (const theme of THEMES) {
 }
 
 const inputs = document.querySelectorAll("[data-key]");
-const spaceButtons = document.querySelectorAll("#space button");
+// Segmented controls: one button per value of the setting named by data-segment.
+const segmentButtons = document.querySelectorAll("[data-segment] button");
 const resetButtons = document.querySelectorAll("[data-reset]");
 
 function render(settings) {
@@ -60,8 +63,9 @@ function render(settings) {
     // Only offered once the setting differs from its default.
     button.hidden = settings[button.dataset.reset] === DEFAULTS[button.dataset.reset];
   }
-  for (const button of spaceButtons) {
-    button.setAttribute("aria-pressed", String(Number(button.dataset.value) === settings.space));
+  for (const button of segmentButtons) {
+    const key = button.parentElement.dataset.segment;
+    button.setAttribute("aria-pressed", String(Number(button.dataset.value) === settings[key]));
   }
   THEMES.forEach((theme, i) => {
     const current = theme.background === settings.background && theme.accent === settings.accent;
@@ -80,8 +84,8 @@ for (const input of inputs) {
   });
 }
 
-for (const button of spaceButtons) {
-  button.addEventListener("click", () => save({ space: Number(button.dataset.value) }));
+for (const button of segmentButtons) {
+  button.addEventListener("click", () => save({ [button.parentElement.dataset.segment]: Number(button.dataset.value) }));
 }
 
 for (const button of resetButtons) {

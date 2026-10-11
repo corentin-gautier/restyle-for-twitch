@@ -22,10 +22,14 @@
   --rs-shelf-head: var(--rs-6);
   --rs-shelf-gap: var(--rs-12);
 
-  --rs-radius-s: 8px;
-  --rs-radius-m: 12px;
-  --rs-radius-l: 18px;
-  --rs-radius-pill: 999px;
+  /* Corner rounding multiplier, driven by the popup (data-rs-round="0|1|2"). */
+  --rs-round: 1;
+  --rs-radius-xs: calc(6px * var(--rs-round)); /* box art, small pictures */
+  --rs-radius-s: calc(8px * var(--rs-round));
+  --rs-radius-m: calc(12px * var(--rs-round));
+  --rs-radius-l: calc(18px * var(--rs-round));
+  /* Halved, it still rounds a control's whole end: pills only go square at 0. */
+  --rs-radius-pill: calc(999px * var(--rs-round));
 
   /* Type scale. */
   --rs-text-1: 1.1rem; /* metadata, section headers, tags */
@@ -82,6 +86,9 @@
 
 :root[data-rs-space="1"] { --rs-scale: 1; }
 :root[data-rs-space="3"] { --rs-scale: 1.6; }
+
+:root[data-rs-round="0"] { --rs-round: 0; }
+:root[data-rs-round="1"] { --rs-round: 0.5; }
 
 /*
  * Palette, in two layers.

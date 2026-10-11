@@ -490,7 +490,7 @@ html:not([data-rs="off"]) {
     }
 
     & .media-row__image-wrapper {
-      border-radius: 0.6rem !important;
+      border-radius: var(--rs-radius-xs) !important;
       overflow: hidden !important;
     }
 

@@ -155,6 +155,18 @@ html:not([data-rs="off"]) {
     --border-radius-medium: var(--rs-radius-m) !important;
     --border-radius-large: var(--rs-radius-l) !important;
     --input-border-radius-default: var(--rs-radius-m) !important;
+    /*
+     * The radii left at Twitch's values still follow the popup's corner
+     * setting. --border-radius-rounded is not touched: it also makes the
+     * avatars round.
+     */
+    --border-radius-extra-large: calc(1rem * var(--rs-round)) !important;
+    --border-radius-extra-extra-large: calc(1.6rem * var(--rs-round)) !important;
+    --input-border-radius-small: calc(6px * var(--rs-round)) !important;
+    --input-border-radius-large: calc(8px * var(--rs-round)) !important;
+    --button-border-radius-small: var(--rs-radius-pill) !important;
+    --button-border-radius-default: var(--rs-radius-pill) !important;
+    --button-border-radius-large: var(--rs-radius-pill) !important;
 
     --font-base: var(--rs-font) !important;
     --font-display: var(--rs-font) !important;
@@ -170,6 +182,17 @@ html:not([data-rs="off"]) {
   & body {
     background: var(--rs-bg) !important;
     font-family: var(--rs-font) !important;
+  }
+
+  /*
+   * Square corners: some buttons, and the boxes that clip them, take their
+   * shape from --border-radius-rounded, which cannot be remapped (see above).
+   */
+  &[data-rs-round="0"] button[class*="ScCoreButton"],
+  &[data-rs-round="0"] div:has(> button[class*="ScCoreButton"]),
+  /* A channel's Follow button sits in a second, outer clip. */
+  &[data-rs-round="0"] div:has(> div > div[style] > div > div > button[data-a-target="follow-button"]) {
+    border-radius: 0 !important;
   }
 
   /*
@@ -306,8 +329,8 @@ html:not([data-rs="off"]) {
     padding: var(--rs-1) !important;
     background: var(--rs-float) !important;
     border: 1px solid var(--rs-float-border) !important;
-    /* Concentric with the pill-shaped field it wraps: half its height, plus the padding around it. */
-    border-radius: calc(2rem + var(--rs-1)) !important;
+    /* Concentric with the pill-shaped field it wraps: half its height, plus the padding around it. Square when the field is. */
+    border-radius: min(calc(2rem + var(--rs-1)), var(--rs-radius-pill)) !important;
     box-shadow: none !important;
     /* The border must not shift the hidden field off the real one. */
     margin: -2px !important;
@@ -576,7 +599,7 @@ html:not([data-rs="off"]) {
   /* Categories show box art, taller than wide: a small radius, not a pill. */
   & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar,
   & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar img {
-    border-radius: 0.6rem !important;
+    border-radius: var(--rs-radius-xs) !important;
   }
 
   & .side-nav-card__metadata p,

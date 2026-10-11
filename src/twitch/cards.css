@@ -360,7 +360,7 @@ html:not([data-rs="off"]) {
   & article [data-test-selector="preview-card-box-art"] {
     display: block !important;
     width: 100% !important;
-    border-radius: 0.6rem !important;
+    border-radius: var(--rs-radius-xs) !important;
     overflow: hidden !important;
   }
 
@@ -469,7 +469,7 @@ html:not([data-rs="off"]) {
     & .media-row__image-wrapper {
       flex: 0 0 var(--rs-avatar-card) !important;
       width: var(--rs-avatar-card) !important;
-      border-radius: 0.6rem !important;
+      border-radius: var(--rs-radius-xs) !important;
       overflow: hidden !important;
     }
 

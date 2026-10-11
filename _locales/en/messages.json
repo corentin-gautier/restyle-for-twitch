@@ -17,6 +17,18 @@
   "spacingVeryAiry": {
     "message": "Very airy"
   },
+  "corners": {
+    "message": "Corners"
+  },
+  "cornersSquare": {
+    "message": "Square"
+  },
+  "cornersSoft": {
+    "message": "Soft"
+  },
+  "cornersRound": {
+    "message": "Round"
+  },
   "accent": {
     "message": "Accent colour"
   },

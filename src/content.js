@@ -4,6 +4,8 @@
 const DEFAULTS = {
   twitch: true,
   space: 2,
+  // Corner rounding: 0 square, 1 soft, 2 round.
+  round: 2,
   accent: "#8b7cf6",
   // Empty: keep the background of Twitch's current theme.
   background: "",
@@ -88,6 +90,7 @@ function apply() {
     root.setAttribute("data-rs", "off");
   }
   root.setAttribute("data-rs-space", String(settings.space));
+  root.setAttribute("data-rs-round", String(settings.round));
   root.toggleAttribute("data-rs-plain-chat", settings.plainChat);
 
   let { accent, background } = settings;

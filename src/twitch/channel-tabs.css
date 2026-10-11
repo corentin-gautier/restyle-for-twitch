@@ -115,7 +115,7 @@ html:not([data-rs="off"]) {
     height: 468px;
     box-sizing: border-box;
     border: var(--rs-2) solid var(--rs-bg);
-    border-radius: calc(var(--rs-radius-l) + var(--rs-2));
+    border-radius: calc(var(--rs-radius-l) + min(var(--rs-2), var(--rs-radius-pill)));
     box-shadow: 0 0 0 100px var(--rs-bg);
     clip-path: inset(0);
     pointer-events: none;

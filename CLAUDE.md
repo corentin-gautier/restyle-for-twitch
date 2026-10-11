@@ -7,7 +7,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 
 | Path | Role |
 | --- | --- |
-| `src/tokens.css` | Design tokens (`--rs-*`): spacing, radii, type scale, palette. |
+| `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), radii, type scale, palette. |
 | `src/twitch.css` | All the rules, scoped under `html:not([data-rs="off"])`, in the sections listed below. |
 | `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. |
 | `popup/` | Settings popup. Texts come from `_locales/` (en, fr). |
@@ -27,6 +27,8 @@ The user is French-speaking: reply in French, write code and docs in English.
 - Firefox (128+) loads the same files: stick to CSS both engines support, and
   add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
 - Nest only under single-selector parents; `:has()` inside `:has()` is invalid.
+- On a rounded element, a border goes all round or not at all: never on one
+  side only.
 - After an edit, check that the file still parses:
   `npx --yes lightningcss-cli@1.27.0 src/twitch.css -o /tmp/out.css`
 
@@ -51,7 +53,8 @@ checked in a headless Chrome; the others need the user's session.
 | Page | Address | Access | Section | Main hooks |
 | --- | --- | --- | --- | --- |
 | Home | `/` | Public | Pages; Cards | shelves of `.tw-tower`, carousel hidden |
-| Following | `/directory/following` | Logged in | Pages | `.common-centered-column`, tabs |
+| Following | `/directory/following` | Logged in | Pages; Shelf rhythm | `.common-centered-column`, tabs, `.channel-follow-listing--card` on the Channels tab |
+| Event | `/directory/event/<slug>` | Public | Category page header | `.directory-header-new__description` without `.directory-header-new__info` |
 | Browse | `/directory` | Public | Pages | `.vertical-selector`, `section[aria-label="Filter & Sort Options"]` |
 | Browse section | `/directory/gaming` | Public | Pages | `.vertical-directory-home-header` |
 | All live channels | `/directory/all` | Public | Pages; Cards | `.tw-tower` |
@@ -72,8 +75,9 @@ checked in a headless Chrome; the others need the user's session.
 | About tab | `/<channel>/about` | Public | Offline channel page; Channel page | `.about-section__panel`, `.channel-panels-container` |
 | Clips tab | `/<channel>/clips?range=7d` | Public | Offline channel page; Cards | "Filter By" row, `.tw-tower` |
 | Videos tab | `/<channel>/videos` | Public | Offline channel page; Video page (shelf headers) | `.preview-card-carousel` |
-| Schedule tab | `/<channel>/schedule` | Public | Offline channel page (caption only) | `[data-test-selector="schedule-caption"]` |
+| Schedule tab | `/<channel>/schedule` | Public | Offline channel page | `.stream-schedule__header`, `.stream-schedule-times`, `.stream-schedule-segment--element` |
 | Video (VOD) | `/videos/<id>` | Public | Video (VOD) page; Chat (replay) | `.metadata-layout__split-top`, `.video-chat`, `.vod-message` |
+| Clip | `/<channel>/clip/<slug>` | Public | Video (VOD) page | `.metadata-layout__split-top` holding `.reedit-clip-button`; guests open the streamer card |
 | Subscribe / Gift a Sub | buttons on a channel | Public (logged-out variant) | Subscribe and Gift a Sub panels | `.sub-modal`, `.support-panel` |
 | Creator Dashboard | `dashboard.twitch.tv` | | excluded in `manifest.json` | |
 
@@ -86,6 +90,11 @@ checked in a headless Chrome; the others need the user's session.
 | Shelf titles | Pages; Offline channel page | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
 | Tags and category chips | Cards; Channel page | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
 | Live chat | Chat | `.chat-line__message`, leaderboard hidden, highlight cards. |
+| Shelves | Shelf rhythm | A title, a grid, sometimes "Show more": all spacing sits on the title, `--rs-shelf-gap` above and `--rs-shelf-head` under. Same on home, Following, a channel's Home tab and under a video. |
+| Empty states | Shelf rhythm | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found." and "No Clips Found". |
+| Loading | Cards | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
+| Streamer card | Menus, popovers, dialogs (end of file) | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
+| Clip viewer | Menus, popovers, dialogs (end of file) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
 | Chat popups | Chat | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 
 ## Not covered yet
@@ -93,7 +102,7 @@ checked in a headless Chrome; the others need the user's session.
 - The chat settings popover is positioned by Twitch's script and overhangs
   the chat's left edge; left as is.
 - Light theme and a custom background colour, beyond the token layer.
-- Theatre mode, narrow windows, the clip page (`/<channel>/clip/<slug>`).
+- Theatre mode, narrow windows.
 - Twitch in another language: a few rules match English `aria-label`s.
 
 ## Checking a change

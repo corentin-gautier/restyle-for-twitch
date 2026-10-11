@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.7.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.6.1...v1.7.0) (2026-10-11)
+
+
+### Features
+
+* restyle the player popups, shelves, Following, channel tabs and clips ([8fe497a](https://github.com/corentin-gautier/restyle-for-twitch/commit/8fe497ae4858c9b3edffaca0782aefae6c026b48))
+
+
+### Documentation
+
+* list the newly covered pages and components ([824764c](https://github.com/corentin-gautier/restyle-for-twitch/commit/824764c74be23c733a08edd839a88820520e4120))
+
 ### [1.6.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.6.0...v1.6.1) (2026-10-11)
 
 

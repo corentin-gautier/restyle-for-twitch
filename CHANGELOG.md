@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.11.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.10.1...v1.11.0) (2026-10-11)
+
+
+### Features
+
+* redesign the offline hero's text panel (status pill, suggested channel, action button) ([88ffa1e](https://github.com/corentin-gautier/restyle-for-twitch/commit/88ffa1ee578d6544d8bde6d00aecd992fd876964))
+
+
+### Performance
+
+* drop will-change on colours and backgrounds, which the compositor does not animate ([77d9d4e](https://github.com/corentin-gautier/restyle-for-twitch/commit/77d9d4e5e3c6b6568ed03cc489c74efc6aec1772))
+
 ### [1.10.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.10.0...v1.10.1) (2026-10-11)
 
 

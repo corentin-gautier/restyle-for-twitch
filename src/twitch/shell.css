@@ -143,6 +143,9 @@ html:not([data-rs="off"]) {
     --color-text-alt: var(--rs-text) !important;
     --color-text-alt-2: var(--rs-muted) !important;
     --color-text-input: var(--rs-text) !important;
+    /* White under Twitch's dark theme, lost on a light custom background. */
+    --color-text-input-placeholder: var(--rs-muted) !important;
+    --color-text-label: var(--rs-text) !important;
 
     --color-border-base: var(--rs-border) !important;
     --color-border-input: transparent !important;
@@ -676,12 +679,13 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Its popups. Twitch has three, each built and padded its own way: a live
-   * channel's (name and category, title, viewers), an offline channel's (a
-   * link to its videos) and a category's (its name). One box for all: the
-   * same frame, padding and type, a strong first line and quiet ones under.
+   * Its popups. Twitch has four, each built and padded its own way: a live
+   * channel's (name and category, title, viewers), a shared stream's (the
+   * same, over the list of who is on it), an offline channel's (a link to
+   * its videos) and a category's (its name). One box for all: the same
+   * frame, padding and type, a strong first line and quiet ones under.
    */
-  &[data-rs-nav="collapsed"] .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
+  &[data-rs-nav="collapsed"] .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has([class*="side-nav-guest-star-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
     /* The wrappers keep the generic popups' large radius and clip the box with it. */
     border-radius: 0 !important;
 
@@ -709,7 +713,7 @@ html:not([data-rs="off"]) {
       white-space: normal !important;
     }
 
-    & div[tabindex] div:not(.tw-channel-status-indicator),
+    & div[tabindex] div:not(.tw-channel-status-indicator, .tw-avatar),
     & div[tabindex] a {
       height: auto !important;
       min-height: 0 !important;
@@ -740,6 +744,42 @@ html:not([data-rs="off"]) {
 
     & .tw-channel-status-indicator {
       margin-right: 0.6rem !important;
+    }
+
+    /*
+     * A shared stream's list: a row per channel, avatar and name on one
+     * side, viewers on the other, under a quiet "Live with:".
+     */
+    & div[tabindex] div:has(> div > .tw-avatar) {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: var(--rs-4) !important;
+      margin-top: 0.6rem !important;
+    }
+
+    & div[tabindex] div:has(> .tw-avatar) {
+      display: flex !important;
+      align-items: center !important;
+      gap: 0.8rem !important;
+      min-width: 0 !important;
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-avatar {
+      flex: none !important;
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+
+    & div[tabindex] div:has(.tw-avatar) + div > p:only-child {
+      margin-top: 0.8rem !important;
+      font-size: var(--rs-text-2) !important;
+      font-weight: 400 !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
     }
   }
 

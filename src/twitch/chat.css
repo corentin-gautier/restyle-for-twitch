@@ -568,4 +568,15 @@ html:not([data-rs="off"]) {
   & [data-a-target="chat-input"] {
     border-radius: var(--rs-radius-l) !important;
   }
+
+  /*
+   * Chat Identity's button, left of the field, shows a star when no badge
+   * is chosen: an image file drawn for Twitch's theme, white under the dark
+   * one. Turned over when a custom background is of the other tone. Real
+   * badges come from another host and are left alone.
+   */
+  &[data-rs-bg="light"].tw-root--theme-dark .chat-input img.chat-badge[src*="assets.twitch.tv"][src$=".svg"],
+  &[data-rs-bg="dark"].tw-root--theme-light .chat-input img.chat-badge[src*="assets.twitch.tv"][src$=".svg"] {
+    filter: invert(1) !important;
+  }
 }

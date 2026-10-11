@@ -62,13 +62,35 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * A sideways shelf is one row too, but as long as it takes, and Twitch
-   * scrolls it a card at a time: columns keep the pitch of its items.
+   * A sideways shelf is one row too, but as long as it takes. Twitch scrolls
+   * it by whole cards, measuring one card's own width: the gap is therefore
+   * part of each card, as padding, so that a step lands on a card's edge
+   * and only the right end of the shelf ever shows part of a card.
    */
   & .preview-card-carousel .tw-tower {
     grid-template-columns: none !important;
     grid-auto-flow: column !important;
-    grid-auto-columns: calc(30rem - var(--rs-tower-gap)) !important;
+    grid-auto-columns: 30rem !important;
+    column-gap: 0 !important;
+
+    & > * {
+      box-sizing: border-box !important;
+      padding-right: var(--rs-tower-gap) !important;
+    }
+  }
+
+  /*
+   * The card cut off by the shelf's right edge fades out instead of ending
+   * on a straight cut. The fade starts where that card does: at the last
+   * multiple of the cards' pitch (30rem) that fits in the shelf's width.
+   * Nothing fades when the edge falls in a gap.
+   */
+  & .preview-card-carousel {
+    container-type: inline-size !important;
+  }
+
+  & .preview-card-carousel__child-container {
+    mask-image: linear-gradient(to right, #000 calc(100% - mod(100cqw + var(--rs-6), 30rem) + var(--rs-6)), transparent) !important;
   }
 
   /*

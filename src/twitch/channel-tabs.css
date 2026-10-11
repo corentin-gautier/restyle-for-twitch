@@ -122,6 +122,21 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Shelf arrows on a channel's tabs: outside the shelf, a step from its
+   * edges, rather than over the first and last cards. The column has the
+   * page's margin on both sides to hold them. (Twitch pulls each one 3rem
+   * over the cards, and shifts the left one further.)
+   */
+  & .channel-root__info--home .preview-card-carousel__button--next {
+    margin: 0 0 0 var(--rs-2) !important;
+  }
+
+  & .channel-root__info--home .preview-card-carousel__button--previous {
+    margin: 0 !important;
+    transform: translateX(calc(-100% - var(--rs-2))) !important;
+  }
+
+  /*
    * "Floating panels" option (see shell.css): the hero lines up with the
    * panels instead of sitting in an even inset. Its top is the sidebar's,
    * its sides are a panel gap from the sidebar and from the window, where

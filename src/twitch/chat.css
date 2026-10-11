@@ -3,6 +3,8 @@
  * Part of one cascade with the other files of this folder: see shell.css.
  */
 html:not([data-rs="off"]) {
+  --message-opacity: 0.8;
+
   /* ==== Chat: same surface as the left sidebar ==== */
   & .channel-root__right-column,
   & .right-column,
@@ -79,22 +81,31 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Messages are quiet until hovered: body text a step below full contrast,
-   * user colours kept but desaturated (they are inline styles, hence the
-   * filter), badges and timestamps pushed back. The hovered message comes
-   * back to full strength.
+   * Messages are quiet until hovered: body text and usernames a step below
+   * full strength, badges and timestamps pushed back. The hovered message
+   * comes back to full strength.
+   *
+   * Hovering changes opacity and nothing else: a colour, background or filter
+   * change repaints the chat on every row the pointer crosses, while opacity
+   * is left to the compositor. So the colours are the same in both states,
+   * and what fades is the element.
    *
    * One hover only: Twitch already paints its own on the inset
    * .chat-line__message-highlight overlay (the one the reply button hangs
-   * from), so that overlay is restyled instead of adding a second background
-   * on the row.
+   * from), so that overlay is restyled, and faded in, instead of adding a
+   * second background on the row.
    */
   & .chat-line__message {
     & [data-a-target="chat-line-message-body"],
     & .text-fragment {
-      color: var(--rs-text-soft) !important;
-      transition: color var(--rs-ease);
-      will-change: color;
+      color: var(--rs-text) !important;
+    }
+
+    /* On the body alone: on the fragments inside it too, the two would multiply. */
+    & [data-a-target="chat-line-message-body"] {
+      opacity: var(--message-opacity) !important;
+      transition: opacity var(--rs-ease);
+      will-change: opacity;
     }
 
     & .chat-badge {
@@ -103,21 +114,47 @@ html:not([data-rs="off"]) {
       will-change: opacity;
     }
 
+    & .chat-line__message-highlight {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+      opacity: 0 !important;
+      transition: opacity var(--rs-ease);
+      will-change: opacity;
+    }
+
+    /*
+     * Reply button: always laid out, and shown by opacity like the rest.
+     * It takes no clicks while invisible, or it would catch those meant for
+     * the end of the line under it.
+     */
+    & .chat-line__reply-icon {
+      display: block !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity var(--rs-ease);
+      will-change: opacity;
+    }
+
+    /* Reached with the keyboard, it shows without the pointer on the row. */
+    & .chat-line__reply-icon:focus-within {
+      opacity: 1 !important;
+      pointer-events: auto !important;
+    }
+
     &:hover {
       background: transparent !important;
 
       & .chat-line__message-highlight {
-        background: var(--rs-hover) !important;
-        border-radius: var(--rs-radius-m) !important;
+        opacity: 1 !important;
+      }
+
+      & .chat-line__reply-icon {
+        opacity: 1 !important;
+        pointer-events: auto !important;
       }
 
       & [data-a-target="chat-line-message-body"],
-      & .text-fragment {
-        color: var(--rs-text) !important;
-      }
-
       & .chat-author__display-name {
-        filter: none !important;
         opacity: 1 !important;
       }
 
@@ -133,10 +170,9 @@ html:not([data-rs="off"]) {
   }
 
   & .chat-author__display-name {
-    filter: saturate(0.55) !important;
-    opacity: 0.9 !important;
-    transition: opacity var(--rs-ease), filter var(--rs-ease);
-    will-change: opacity, filter;
+    opacity: var(--message-opacity) !important;
+    transition: opacity var(--rs-ease);
+    will-change: opacity;
   }
 
   /* No extra hover box on the username: the message hover is enough. */
@@ -179,16 +215,38 @@ html:not([data-rs="off"]) {
 
   & .vod-message {
     padding: var(--rs-2) !important;
-    border-radius: var(--rs-radius-m) !important;
     line-height: 1.55 !important;
-    transition: background var(--rs-ease);
-    will-change: background;
+    /* For the hover box below, kept behind the row's content. */
+    position: relative !important;
+    isolation: isolate !important;
+
+    /*
+     * The row's hover box. The replay has no overlay like the live chat's,
+     * so it gets one, faded in like it (see "Messages are quiet until
+     * hovered").
+     */
+    &::before {
+      content: "" !important;
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: -1 !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity var(--rs-ease);
+      will-change: opacity;
+    }
 
     & .video-chat__message,
     & .text-fragment {
-      color: var(--rs-text-soft) !important;
-      transition: color var(--rs-ease);
-      will-change: color;
+      color: var(--rs-text) !important;
+    }
+
+    & .video-chat__message {
+      opacity: var(--message-opacity) !important;
+      transition: opacity var(--rs-ease);
+      will-change: opacity;
     }
 
     & .chat-badge {
@@ -216,15 +274,9 @@ html:not([data-rs="off"]) {
     }
 
     &:hover {
-      background: var(--rs-hover) !important;
-
+      &::before,
       & .video-chat__message,
-      & .text-fragment {
-        color: var(--rs-text) !important;
-      }
-
       & .chat-author__display-name {
-        filter: none !important;
         opacity: 1 !important;
       }
 
@@ -246,7 +298,6 @@ html:not([data-rs="off"]) {
 
     & :is(.chat-author__display-name, .chat-author__intl-login) {
       color: var(--rs-text) !important;
-      filter: none !important;
       opacity: 1 !important;
     }
   }

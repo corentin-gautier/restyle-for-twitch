@@ -156,11 +156,6 @@ html:not([data-rs="off"]) {
     padding-left: var(--rs-4) !important;
   }
 
-  /* The gap goes between the rows, so the title and the viewer count stay level. */
-  & .metadata-layout__support + div {
-    margin-top: var(--rs-1) !important;
-  }
-
   /* Empty spacer after the buttons: without it they end where the viewer count does. */
   & .metadata-layout__secondary-button-spacing {
     display: none !important;
@@ -185,6 +180,26 @@ html:not([data-rs="off"]) {
     color: var(--rs-text) !important;
     /* Breathing room from the viewer count beside it. */
     padding-right: var(--rs-8) !important;
+  }
+
+  /* Remove margin above the stream title */
+  & div:has(> [data-a-target="stream-title"]) {
+    margin-top: 0 !important;
+  }
+
+  /* Add spacing above the stream information */
+  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) {
+    margin-top: var(--rs-6) !important;
+  }
+
+  /* On live channel view, move the buttons up */
+  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) [data-target="channel-header-right"] {
+    margin-top: -50px !important;
+  }
+
+  /* Hide the report and share buttons */
+  & [data-a-target="report-button-more-button"], & [data-a-target="share-button"] {
+    display: none !important;
   }
 
   /* Air between the title and the row of chips (category, tags) under it. */
@@ -269,6 +284,10 @@ html:not([data-rs="off"]) {
     margin-bottom: 0 !important;
   }
 
+  & .about-section__panel > div:first-child {
+    display: none !important;
+  }
+
   & .about-section h3 {
     font-size: var(--rs-text-6) !important;
     font-weight: 600 !important;
@@ -280,7 +299,7 @@ html:not([data-rs="off"]) {
     border: var(--rs-hairline) !important;
     border-radius: var(--rs-radius-l) !important;
     padding: var(--rs-4) var(--rs-6) !important;
-    margin-top: var(--rs-2) !important;
+    margin-top: 0 !important;
 
     /* Text on the left, links on the right, both starting on the same line. */
     & > div {

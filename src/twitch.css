@@ -226,8 +226,9 @@ html:not([data-rs="off"]) {
   & .top-nav__search-container {
     max-width: 48rem !important;
 
+    /* Only the attached search button: the tray under the field has buttons too. */
     & input,
-    & button {
+    & .tw-combo-input__button-icon {
       height: 4rem !important;
       background-color: var(--rs-raised) !important;
       border: 0 !important;
@@ -243,14 +244,27 @@ html:not([data-rs="off"]) {
       color: var(--rs-muted) !important;
     }
 
-    & button {
+    & .tw-combo-input__button-icon {
       border-radius: 0 var(--rs-radius-pill) var(--rs-radius-pill) 0 !important;
       padding-inline: var(--rs-2) var(--rs-3) !important;
       color: var(--rs-muted) !important;
     }
 
-    & button:hover {
+    & .tw-combo-input__button-icon:hover {
       color: var(--rs-text) !important;
+    }
+
+    /* "Remove from search history", at the end of a tray row: a quiet round button. */
+    & .search-item__history button {
+      width: 3.2rem !important;
+      height: 3.2rem !important;
+      border-radius: 50% !important;
+      color: var(--rs-muted) !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+        color: var(--rs-text) !important;
+      }
     }
 
     /*
@@ -266,8 +280,7 @@ html:not([data-rs="off"]) {
       box-shadow: inset 2px 0 0 var(--rs-accent), inset 0 2px 0 var(--rs-accent), inset 0 -2px 0 var(--rs-accent) !important;
     }
 
-    /* The icon-only search button, not the rows of the results tray. */
-    &:focus-within button:not(:has(p, img)) {
+    &:focus-within .tw-combo-input__button-icon {
       box-shadow: inset -2px 0 0 var(--rs-accent), inset 0 2px 0 var(--rs-accent), inset 0 -2px 0 var(--rs-accent) !important;
       outline: none !important;
     }
@@ -393,13 +406,15 @@ html:not([data-rs="off"]) {
   /*
    * Hover cards on channel rows (stream title preview). They are rendered
    * outside the sidebar, so they are caught by their content's class and the
-   * balloon around it is dropped with them.
+   * balloon around it is dropped with them. Only while the sidebar is
+   * expanded: collapsed, these popups are where the names are (see
+   * "Collapsed sidebar").
    */
-  & [class*="side-nav-channel-tooltip"],
-  & [class*="side-nav-guest-star-tooltip"],
-  & :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
-  & div:has(> [class*="side-nav-channel-tooltip"]),
-  & div:has(> [class*="side-nav-guest-star-tooltip"]) {
+  &:not(:has(.side-nav--collapsed)) [class*="side-nav-channel-tooltip"],
+  &:not(:has(.side-nav--collapsed)) [class*="side-nav-guest-star-tooltip"],
+  &:not(:has(.side-nav--collapsed)) :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
+  &:not(:has(.side-nav--collapsed)) div:has(> [class*="side-nav-channel-tooltip"]),
+  &:not(:has(.side-nav--collapsed)) div:has(> [class*="side-nav-guest-star-tooltip"]) {
     display: none !important;
   }
 
@@ -408,7 +423,17 @@ html:not([data-rs="off"]) {
    * link. It carries no class of its own: told by opening to the right of
    * its row and holding nothing but a link to a channel's videos.
    */
-  & .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
+  &:not(:has(.side-nav--collapsed)) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
+    display: none !important;
+  }
+
+  /*
+   * Recommended categories repeat their name in a tooltip beside the row.
+   * No class either: a popup opening to the right that holds one unwrapped
+   * line and nothing else. Kept when the sidebar is collapsed, where the
+   * name is not on screen.
+   */
+  &:not(:has(.side-nav--collapsed)) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] [style*="nowrap"] > div[tabindex] p:only-child):not(:has(a, button, img)) {
     display: none !important;
   }
 
@@ -534,6 +559,12 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-pill) !important;
   }
 
+  /* Categories show box art, taller than wide: a small radius, not a pill. */
+  & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar,
+  & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar img {
+    border-radius: 0.6rem !important;
+  }
+
   & .side-nav-card__metadata p,
   & .side-nav-card__live-status p,
   & .side-nav-card__live-status span {
@@ -581,17 +612,183 @@ html:not([data-rs="off"]) {
     }
   }
 
-  /* ==== Pages: home, Following, Browse ==== */
-  & .common-centered-column,
-  & [data-a-target="front-page-main-content"] {
-    max-width: 1760px;
-    margin-inline: auto !important;
-    padding-inline: var(--rs-8) !important;
+  /*
+   * Collapsed sidebar: a rail of avatars. Twitch pads the links more than
+   * the rail is wide, which pushes the avatars off the axis of the icons
+   * above them. Everything is centred on the rail, sections are parted by
+   * a hairline, and pointing at an avatar rings it with the accent.
+   */
+  & .side-nav--collapsed {
+    & .collapse-toggle {
+      justify-content: center !important;
+      margin: 0 !important;
+      padding: var(--rs-2) 0 !important;
+    }
+
+    & .side-bar-contents {
+      padding: 0 !important;
+    }
+
+    & .side-nav-section {
+      align-items: center !important;
+      padding: var(--rs-2) 0 !important;
+      border-top: var(--rs-hairline) !important;
+    }
+
+    & .side-nav-section > div {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+
+    & .side-nav-header {
+      justify-content: center !important;
+      padding: 0.6rem 0 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & a.side-nav-card {
+      justify-content: center !important;
+      width: 100% !important;
+      padding: 0.5rem 0 !important;
+      background: none !important;
+    }
+
+    & .side-nav-card__avatar {
+      margin: 0 auto !important;
+      border-radius: 50% !important;
+      transition: box-shadow var(--rs-ease);
+    }
+
+    /* A zero-width tooltip anchor after the avatar, whose negative margin shifts the centring. */
+    & .side-nav-card__link__tooltip-arrow {
+      margin: 0 !important;
+    }
+
+    & a.side-nav-card:hover .side-nav-card__avatar {
+      box-shadow: 0 0 0 2px var(--rs-surface), 0 0 0 4px var(--rs-accent) !important;
+    }
   }
 
-  /* Home sits in one more padded wrapper than the other pages: same left edge as Browse. */
-  & [data-a-target="front-page-main-content"] {
-    padding-inline: 3rem !important;
+  /*
+   * Its popups. Twitch has three, each built and padded its own way: a live
+   * channel's (name and category, title, viewers), an offline channel's (a
+   * link to its videos) and a category's (its name). One box for all: the
+   * same frame, padding and type, a strong first line and quiet ones under.
+   */
+  &:has(.side-nav--collapsed) .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
+    /* The wrappers keep the generic popups' large radius and clip the box with it. */
+    border-radius: 0 !important;
+
+    & > .tw-transition > div {
+      padding: 0 0 0 0.8rem !important;
+      background: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+    }
+
+    /* Doubled class: the menu rules pad a box that holds a link their own way. */
+    & > .tw-transition.tw-transition.tw-transition > div > div {
+      display: block !important;
+      box-sizing: border-box !important;
+      width: max-content !important;
+      min-width: 0 !important;
+      max-width: 26rem !important;
+      padding: 0.8rem 1.2rem !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-m) !important;
+      box-shadow: none !important;
+      white-space: normal !important;
+    }
+
+    & div[tabindex] div:not(.tw-channel-status-indicator),
+    & div[tabindex] a {
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      background: none !important;
+      border-radius: 0 !important;
+    }
+
+    & p,
+    & span {
+      margin: 0 !important;
+      font-size: var(--rs-text-2) !important;
+      font-weight: 400 !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /* The first line: a channel and its category, a category, or the link. */
+    & div[tabindex] > div > p:first-child,
+    & div[tabindex] > div > div > p,
+    & a p {
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-channel-status-indicator {
+      margin-right: 0.6rem !important;
+    }
+  }
+
+  /*
+   * The section icons of the collapsed sidebar ("Followed Channels", "Live
+   * Channels") have a tooltip of another kind, white with an arrow: the
+   * same box as the popups above.
+   */
+  &:has(.side-nav--collapsed) .ReactModal__Content[role="tooltip"] > [data-popper-placement^="right"] {
+    & .tw-tooltip-popper-arrow {
+      display: none !important;
+    }
+
+    & .tw-tooltip-wrapper {
+      /* On the same line as the popups: 8px from the rail. */
+      margin-left: -0.2rem !important;
+      padding: 0.8rem 1.2rem !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-m) !important;
+      box-shadow: none !important;
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* ==== Pages: home, Following, Browse ==== */
+  /*
+   * The page's side gutters are set once, on the centred column. Twitch
+   * builds them from a margin on the wrapper around the column, the
+   * column's padding and a padding on the block inside it: the first and
+   * the last are zeroed.
+   */
+  & .common-centered-column {
+    max-width: 1760px;
+    margin-inline: auto !important;
+    padding-inline: var(--rs-page-inset) !important;
+  }
+
+  & div:has(> .common-centered-column),
+  & div:has(> .search-results) {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  /* Search results start on the left gutter, not centred in the window. */
+  & div:has(> .search-results) {
+    justify-content: flex-start !important;
+  }
+
+  & .common-centered-column > :is(div, section) {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
   }
 
   /*
@@ -623,8 +820,7 @@ html:not([data-rs="off"]) {
    * Page header ("Following", "Browse", a category group like "Games"...).
    * The block of the column that holds the title sets the page's margins,
    * however deep the title sits in it (the nesting differs on every page):
-   *  - 3rem more on each side, on top of the column's padding and of the
-   *    3rem Twitch already puts inside it;
+   *  - no side padding: the column alone sets the gutters;
    *  - one top offset, every other one on the way down to the title being
    *    cleared (the 1rem taken off is the blank leading above the capitals).
    */
@@ -633,8 +829,7 @@ html:not([data-rs="off"]) {
 
     & > :has(h1) {
       margin-top: 0 !important;
-      padding-top: calc(var(--rs-8) + 3rem - 1rem) !important;
-      padding-inline: 3rem !important;
+      padding-block: calc(var(--rs-8) + 3rem - 1rem) !important;
     }
 
     & > * :has(h1) {
@@ -962,7 +1157,13 @@ html:not([data-rs="off"]) {
     width: 100% !important;
     height: auto !important;
     overflow: visible !important;
-    border-bottom: var(--rs-hairline) !important;
+    /*
+     * The rule under the tabs is an inset shadow, not a border: the list
+     * clips what sticks out of it, so a tab cannot hang over a border, but
+     * its own accent bar paints over this line.
+     */
+    border-bottom: 0 !important;
+    box-shadow: inset 0 -1px 0 var(--rs-border) !important;
     /* The next title brings its own gap. */
     margin-bottom: 0 !important;
 
@@ -1010,7 +1211,7 @@ html:not([data-rs="off"]) {
     align-items: center !important;
     height: auto !important;
     min-height: 5.2rem !important;
-    margin-bottom: -1px !important;
+    margin-bottom: 0 !important;
     padding: 0 var(--rs-1) !important;
     border: 0 !important;
     border-radius: 0 !important;
@@ -1146,6 +1347,69 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Loading. Twitch draws "ghosts" while content loads: grey, pulsing
+   * blocks in the shape of what is coming (cards, titles, a streamer card).
+   * They are kept as invisible boxes, so nothing jumps when the content
+   * arrives, and a spinner stands in for each group of them: one at the
+   * start of a run of ghost cards in a grid, one in a list of search
+   * results, one in a popup.
+   *
+   * A ghost item is told from a card that is still loading its picture by
+   * having no link. Per group rather than per page: grids keep ghosts at
+   * their end for as long as there is more to load on scroll.
+   */
+  & .tw-placeholder {
+    opacity: 0 !important;
+    animation: none !important;
+  }
+
+  & .tw-tower,
+  & .search-results {
+    position: relative !important;
+  }
+
+  /* The spinner is centred on the grid, not on the ghost card it hangs from. */
+  & .tw-tower > :has(.tw-placeholder):not(:has(a)) {
+    position: static !important;
+  }
+
+  /*
+   * Except in a sideways shelf, which is wider than what shows of it and
+   * keeps ghosts past its edge: there the spinner stays on its card.
+   */
+  & .preview-card-carousel .tw-tower > :has(.tw-placeholder):not(:has(a)) {
+    position: relative !important;
+  }
+
+  & .tw-tower > :first-child:has(.tw-placeholder):not(:has(a))::before,
+  & .tw-tower > :has(a) + :has(.tw-placeholder):not(:has(a))::before,
+  & .search-results [data-test-selector="placeholder-result"]:not([data-test-selector="placeholder-result"] ~ *)::before,
+  & .ReactModal__Content .tw-transition > div:has(> div > .tw-placeholder-wrapper)::after {
+    content: "";
+    position: absolute;
+    left: calc(50% - 1.4rem);
+    z-index: 1;
+    box-sizing: border-box;
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-top: var(--rs-8);
+    border: 0.3rem solid var(--rs-border);
+    border-top-color: var(--rs-accent);
+    border-radius: 50%;
+    animation: rs-spin 0.8s linear infinite;
+  }
+
+  /* In a popup the box is the frame: the spinner sits in its middle. */
+  & .ReactModal__Content .tw-transition > div:has(> div > .tw-placeholder-wrapper) {
+    position: relative !important;
+
+    &::after {
+      top: calc(50% - 1.4rem);
+      margin-top: 0;
+    }
+  }
+
+  /*
    * Thumbnails: one rounded shape. The image sits inside several wrappers
    * (link, aspect box, Twitch's hover-accent frame); all of them take the
    * radius and clip, and none keeps a fill of its own, otherwise square or
@@ -1215,9 +1479,13 @@ html:not([data-rs="off"]) {
       transition: transform var(--rs-ease-move) !important;
     }
 
-    & .tw-tower > :hover [data-a-target="preview-card-image-link"] img,
-    & article:hover [data-a-target="preview-card-image-link"] img,
-    & [data-a-target="preview-card-image-link"]:hover img,
+    /*
+     * Not the animated preview a video card plays on hover: it replaces the
+     * still picture at its own size, and scaling it makes the swap jump.
+     */
+    & .tw-tower > :hover [data-a-target="preview-card-image-link"] img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
+    & article:hover [data-a-target="preview-card-image-link"] img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
+    & [data-a-target="preview-card-image-link"]:hover img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
     & .tw-tower > :hover [data-a-target="tw-box-art-card-link"] img,
     & .game-card:hover img,
     & [data-a-target="tw-box-art-card-link"]:hover img,
@@ -1338,7 +1606,7 @@ html:not([data-rs="off"]) {
   & article [class*="ScTextWrapper"] button:has(.tw-pill) {
     height: 2.8rem !important;
     min-height: 0 !important;
-    margin-top: var(--rs-2) !important;
+    margin-top: 0 !important;
     padding: 0 1rem !important;
     border-radius: var(--rs-radius-s) !important;
     background: var(--rs-accent-tint) !important;
@@ -1591,8 +1859,22 @@ html:not([data-rs="off"]) {
    * page background. Theatre and fullscreen stay edge to edge.
    */
   & .persistent-player:not(.persistent-player--theatre) {
-    padding: var(--rs-4) !important;
+    /*
+     * No inset below: the block under the player starts where Twitch's
+     * script puts it, at the height of an unpadded player, and brings its
+     * own top padding.
+     */
+    padding: var(--rs-4) var(--rs-4) 0 !important;
     background: var(--rs-bg) !important;
+
+    /*
+     * In a short window Twitch caps the player's height, inset included:
+     * the video takes what is left, or its bottom is cut off flush against
+     * the block below.
+     */
+    & .video-player__container {
+      max-height: calc(100vh - 16rem - var(--rs-4)) !important;
+    }
 
     & .video-player {
       background: var(--rs-bg) !important;
@@ -1648,8 +1930,37 @@ html:not([data-rs="off"]) {
     }
   }
 
-  & .channel-info-content > div,
-  & #live-channel-stream-information {
+  /*
+   * Vertical rhythm under the player, in one place: the column starts one
+   * step under the video, its blocks are one large
+   * step apart, and none of them, nor the wrappers inside the stream info,
+   * adds padding or margin of its own. A channel's Home tab lays its column
+   * out differently and keeps its blocks' padding.
+   */
+  & .channel-root__info:not(.channel-root__info--home) .channel-info-content {
+    padding-block: var(--rs-shelf-head) var(--rs-8) !important;
+
+    & > * {
+      padding-block: 0 !important;
+      margin-block: 0 !important;
+    }
+
+    & > * + * {
+      margin-top: var(--rs-8) !important;
+    }
+  }
+
+  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) div:has(.metadata-layout__support) {
+    padding-block: 0 !important;
+    margin-block: 0 !important;
+  }
+
+  & .metadata-layout__split-top {
+    padding-block: 0 !important;
+  }
+
+  & .channel-root__info--home .channel-info-content > div,
+  & .channel-root__info--home #live-channel-stream-information {
     padding-block: var(--rs-4) !important;
   }
 
@@ -2050,12 +2361,145 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Event pages (/directory/event/…) have the same header without the
+   * category header's class names: a picture and, beside it, name, viewer
+   * count, tags and a sentence. The same panel, found by its description.
+   */
+  & .common-centered-column > div:has(.directory-header-new__description):not(:has(.tw-tower, .directory-header-new__info)) {
+    margin: calc(var(--rs-8) + 3rem - 1rem) 0 0 !important;
+    padding: var(--rs-6) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    & > div {
+      padding: 0 !important;
+    }
+
+    /* Picture and text column, centred on each other. */
+    & > div > div {
+      align-items: center !important;
+    }
+
+    & .tw-aspect {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & div:has(> div > h1) {
+      justify-content: center !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+    }
+
+    & h1 {
+      margin: 0 !important;
+      font-size: var(--rs-text-display) !important;
+      font-weight: 700 !important;
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* Viewer count, then tags: one wrapping row, the tags on the next line. */
+    & div:has(> div > p > strong) {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: var(--rs-2) 0 !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+
+      & > div > p {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & p strong {
+        color: var(--rs-text) !important;
+      }
+
+      & > div:has(.tw-tag) {
+        flex-basis: 100% !important;
+      }
+
+      /* The bullet that led to the tags. */
+      & > div:has(+ div .tw-tag) {
+        display: none !important;
+      }
+    }
+
+    & .directory-header-new__description {
+      max-width: 64rem !important;
+      margin: 0 !important;
+
+      & p {
+        font-size: var(--rs-text-4) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+  }
+
+  /*
+   * Notice above a page's content ("Content Hidden: some content has been
+   * removed based on your content preference settings"): Twitch sets a
+   * large title run into a sentence, on a black slab narrower than the
+   * column. A quiet bar on the column's edges instead: title and sentence
+   * at text size, the sentence toned down. Only on the directory pages'
+   * column: a channel page's callouts float over the stream info.
+   */
+  & .twilight-main .common-centered-column div:has(> article .tw-callout-message) {
+    margin: 0 0 var(--rs-4) !important;
+  }
+
+  & .twilight-main .common-centered-column article:has(.tw-callout-message) {
+    padding: var(--rs-2) var(--rs-3) var(--rs-2) var(--rs-4) !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: none !important;
+
+    & > div > div {
+      align-items: center !important;
+    }
+
+    & .tw-callout-message {
+      margin: 0 !important;
+      font-size: var(--rs-text-3) !important;
+      line-height: 2rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & .tw-callout-message__title {
+      margin-right: var(--rs-2) !important;
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      letter-spacing: 0 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & button,
+    & a {
+      font-size: var(--rs-text-2) !important;
+    }
+  }
+
+  /*
    * ==== Search results ====
    * Same distance from the sidebar as the other pages, rounded thumbnails,
    * and one text hierarchy per result.
    */
   & .search-results {
-    padding-inline: calc(var(--rs-page-inset) - 4.6rem) !important;
+    padding-inline: var(--rs-page-inset) !important;
 
     /* One result: name, then quieter lines for category, viewers and title. */
     & .search-result-card {
@@ -2169,11 +2613,15 @@ html:not([data-rs="off"]) {
     padding: 0 !important;
     background: transparent !important;
 
+    & .video-player__container {
+      max-height: calc(100vh - 16rem) !important;
+    }
+
     & .video-player,
     & .video-player__container,
     & .video-ref,
     & video {
-      border-radius: var(--rs-radius-m) var(--rs-radius-m) 0 0 !important;
+      border-radius: var(--rs-radius-m) !important;
     }
   }
 
@@ -2215,7 +2663,15 @@ html:not([data-rs="off"]) {
    */
   & .channel-root__info--home .channel-info-content .home__lower-content:has(.about-section__panel) {
     padding-inline: 3.2rem !important;
-    padding-block-start: var(--rs-4) !important;
+  }
+
+  /*
+   * Under a channel's tabs: one step down to the tab's content, set here for
+   * every tab. Twitch gives each tab its own (none, 16px, 20px, 30px).
+   */
+  & .home__lower-content,
+  & .channel-root__info--home .channel-info-content .home__lower-content:has(.about-section__panel) {
+    padding-block-start: var(--rs-shelf-head) !important;
   }
 
   /* Schedule tab: its caption is a sentence about the last stream, not a shelf title. */
@@ -2226,46 +2682,223 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * "Featured Clips" card heading the clips shelf: Twitch paints it in the
-   * channel's colour, with white text and a white button. It becomes a card
-   * like the others, and its button a quiet one.
+   * Its header stacks the caption, the week's navigation and the hours with
+   * 0 and 8px between them: a step under the caption, a larger one under
+   * the navigation, and room between the buttons and the week's dates.
    */
-  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) {
-    justify-content: space-between !important;
-    padding: var(--rs-3) !important;
-    background: var(--rs-surface) !important;
-    border: var(--rs-hairline) !important;
-    border-radius: var(--rs-radius-l) !important;
+  /* (Tripled class: the shelf rhythm below zeroes any block holding a title.) */
+  & .home__lower-content .stream-schedule__header.stream-schedule__header.stream-schedule__header > div:has(> [data-test-selector="schedule-caption"]) {
+    margin-bottom: var(--rs-3) !important;
+  }
 
-    /* The avatars hang over the top edge by an inline negative margin. */
+  & .stream-schedule__header > div:has([data-test-selector="schedule-traversal__today-button"]) {
+    margin-bottom: var(--rs-4) !important;
+
+    & > div:has(> p.tw-title) {
+      margin-left: var(--rs-3) !important;
+    }
+  }
+
+  /*
+   * The week's grid is drawn in three pieces (the hours, the day names, the
+   * days), each with some of the frame's borders and corners, which do not
+   * meet. One frame instead: the hours carry its top, the block under them
+   * its sides and bottom, and both clip what they hold.
+   */
+  & .stream-schedule-times {
+    overflow: hidden !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) var(--rs-radius-l) 0 0 !important;
+  }
+
+  & .home__lower-content div:has(> .stream-schedule-week):not(.stream-schedule-times) {
+    overflow: hidden !important;
+    border: var(--rs-hairline) !important;
+    border-top: 0 !important;
+    border-radius: 0 0 var(--rs-radius-l) var(--rs-radius-l) !important;
+
     & > div {
-      margin: 0 !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+  }
+
+  /*
+   * Events. Twitch outlines a box on the grid's own colour, with the
+   * category in the channel's colour, a bar of that colour before the date
+   * and a square-cornered picture at the end. A card like the others: a
+   * raised surface with a hairline all round that lights up on hover, the
+   * title leading over one quiet line of metadata, and the picture clipped
+   * to the card's corners. The bar goes.
+   */
+  & .stream-schedule-day div:has(> .stream-schedule-segment--element) {
+    overflow: hidden !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-m) !important;
+    background: var(--rs-raised) !important;
+    transition: background-color var(--rs-ease);
+  }
+
+  & .stream-schedule-day button:hover > div:has(> .stream-schedule-segment--element) {
+    background: var(--rs-float) !important;
+  }
+
+  & .stream-schedule-segment--element {
+    align-items: center !important;
+    padding-left: var(--rs-3) !important;
+    background: none !important;
+    /* It clips the picture to a larger radius than the card's: the card alone clips. */
+    border-radius: 0 !important;
+
+    /*
+     * Long titles fade out before the picture. Twitch lays a gradient in
+     * the page's colour over them; a mask instead, right on any surface.
+     */
+    & .stream-schedule-segment--fade {
+      -webkit-mask-image: linear-gradient(to left, transparent, #000 4rem);
+      mask-image: linear-gradient(to left, transparent, #000 4rem);
+
+      &::after {
+        display: none !important;
+      }
     }
 
-    & img {
-      border-radius: 50% !important;
+    & .stream-schedule-segment--text,
+    & .stream-schedule-segment--text *,
+    & .stream-schedule-segment--text-wrapper * {
+      font-size: var(--rs-text-2) !important;
+      font-weight: 500 !important;
+      line-height: 1.4 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & [data-test-selector="segment-title"] {
+      font-size: var(--rs-text-3) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .stream-schedule-segment--text a {
+      color: var(--rs-accent-quiet) !important;
+      text-decoration: none !important;
+    }
+
+    & .stream-schedule-segment--vertical-line {
+      display: none !important;
+    }
+
+    & div:has(> [data-test-selector="segment-title"]),
+    & .stream-schedule-segment--text-wrapper {
+      margin-bottom: 0.2rem !important;
+    }
+
+    /* The picture has corners of its own: square, the card clips it to its own. */
+    & .stream-schedule-segment--boxart,
+    & div:has(> .stream-schedule-segment--boxart) {
+      display: block !important;
+      border-radius: 0 !important;
+    }
+  }
+
+  /* Today's marker beside the day's name: the accent, not the channel's colour. */
+  & .stream-schedule-day-name__is-today {
+    border-color: var(--rs-accent) !important;
+  }
+
+  & [data-test-selector="schedule-traversal__today-button"] {
+    background: var(--rs-accent) !important;
+    color: var(--rs-on-accent) !important;
+
+    &:hover {
+      background: var(--rs-accent-hover) !important;
+    }
+  }
+
+  /*
+   * "Featured Clips" on a channel's Home tab: Twitch sets a coloured card
+   * holding the title and a button to the left of the clips. It becomes a
+   * shelf like the others: the title above the clips, at the shelf size,
+   * and its button a small-caps link on the right edge.
+   */
+  & .home__lower-content div:has(> div[style*="background-color"]):has(a[href*="featured=true"]) {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) {
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: var(--rs-shelf-gap) 0 var(--rs-shelf-head) !important;
+    padding: 0 !important;
+    background: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+
+    /* The row of emotes above the title. */
+    & > div:has(img):not(:has(p, a)) {
+      display: none !important;
+    }
+
+    & > div {
+      width: auto !important;
+      max-width: none !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Twitch clamps the title to the card's two short lines. */
+    & div:has(> p.tw-title),
+    & div:has(> div > p.tw-title) {
+      width: auto !important;
+      max-width: none !important;
     }
 
     & p.tw-title {
-      font-size: var(--rs-text-6) !important;
-      font-weight: 600 !important;
-      line-height: 1.3 !important;
+      display: block !important;
+      overflow: visible !important;
+      white-space: nowrap !important;
+      -webkit-line-clamp: unset !important;
+      font-size: var(--rs-text-display) !important;
+      font-weight: 700 !important;
+      line-height: 1.2 !important;
+      letter-spacing: -0.02em !important;
       color: var(--rs-text) !important;
     }
 
     & a {
-      background: var(--rs-hover) !important;
-      transition: background-color var(--rs-ease);
+      height: auto !important;
+      padding: 0 !important;
+      background: none !important;
+      color: var(--rs-label) !important;
+      transition: color var(--rs-ease);
 
       &:hover {
-        background: var(--rs-accent-tint-strong) !important;
+        color: var(--rs-text) !important;
       }
 
       & * {
-        font-size: var(--rs-text-3) !important;
-        color: var(--rs-text) !important;
+        padding: 0 !important;
+        font-size: var(--rs-text-2) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: inherit !important;
       }
     }
+  }
+
+  /* The clips take the row the card shared with them. */
+  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) + div {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   /* Offline, the channel name is the page's title, not a label above one. */
@@ -2310,12 +2943,454 @@ html:not([data-rs="off"]) {
     padding-block: var(--rs-8) var(--rs-3) !important;
   }
 
+  /* Shelves of videos space themselves (see "Shelves of other videos"). */
+  & .channel-info-content :has(> .preview-card-carousel) p.tw-title {
+    padding-block: 0 !important;
+  }
+
   & .home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"]) *,
   & .channel-info-content :has(> .preview-card-carousel) p.tw-title > span {
     font-size: inherit !important;
     font-weight: inherit !important;
     line-height: inherit !important;
     letter-spacing: inherit !important;
+  }
+
+  /*
+   * ==== Shelf rhythm ====
+   * The home page, Following and a channel's Home tab are stacks of shelves:
+   * a title, a grid of cards, sometimes a "Show more" row. Twitch and the
+   * rules above spread the space between them over the title, two or three
+   * wrappers around it, the shelf, the cards and that row. Here all of those
+   * give theirs up and two steps remain, both on the title:
+   * --rs-shelf-gap above it and --rs-shelf-head under it.
+   */
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) div:has(:is(h2, h3, h4, h5).tw-title):not(:has(.tw-tower, article, .tw-tabs, .about-section, .default-panel)) {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) :is(h2, h3, h4, h5).tw-title:not(article *, .tw-tower *, .game-card *, .about-section *, .default-panel *, [data-test-selector="schedule-caption"]) {
+    margin: var(--rs-shelf-gap) 0 var(--rs-shelf-head) !important;
+    padding-block: 0 !important;
+  }
+
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) :is(.find-me, [data-a-target^="home-shelf-title"]) {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  /*
+   * Cards keep their bottom margin as the space between rows; the grid
+   * takes the last row's back, so a shelf ends where its cards do.
+   */
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) .tw-tower:not(.preview-card-carousel *) {
+    margin-bottom: calc(var(--rs-8) * -1) !important;
+  }
+
+  /* Shelf cards carry a second bottom spacing, as padding on their wrapper. */
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) .shelf-card__impression-wrapper > div {
+    padding-bottom: 0 !important;
+  }
+
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) .show-more__move-up {
+    margin: var(--rs-4) 0 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Twitch insets the Home tab's column once more at the top. */
+  & .home__lower-content > div,
+  & .home__lower-content > div > div > div:first-child {
+    margin-top: 0 !important;
+  }
+
+  /*
+   * Empty shelf on Following ("No Channels Live"): Twitch centres an italic
+   * line in a tall blank band. A panel instead: a moon in an accent-tinted
+   * disc over the line, on a surface that fades out towards its edges.
+   */
+  & .common-centered-column header + div:has(> em:only-child),
+  & .home__lower-content div:has(> div > [data-test-selector="no-videos"]),
+  & .home__lower-content div:has(> img.tw-image + div strong:only-child) {
+    position: relative !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--rs-3) !important;
+    padding: var(--rs-8) var(--rs-4) !important;
+    background: radial-gradient(ellipse 60% 140% at 50% 0%, var(--rs-accent-tint), transparent 70%), var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+    text-align: center !important;
+
+    &::before {
+      content: "";
+      width: 5.6rem;
+      height: 5.6rem;
+      border-radius: 50%;
+      background: var(--rs-accent-tint-strong);
+    }
+
+    /* The moon, drawn as a mask so it takes the accent colour. */
+    &::after {
+      content: "";
+      position: absolute;
+      top: calc(var(--rs-8) + 1.6rem);
+      left: calc(50% - 1.2rem);
+      width: 2.4rem;
+      height: 2.4rem;
+      background: var(--rs-accent);
+      -webkit-mask: var(--rs-empty-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E")) center / contain no-repeat;
+      mask: var(--rs-empty-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E")) center / contain no-repeat;
+    }
+
+    & > em {
+      font-size: var(--rs-text-5) !important;
+      font-style: normal !important;
+      font-weight: 600 !important;
+      color: var(--rs-label) !important;
+    }
+  }
+
+  /*
+   * The same panel for a channel's empty Videos and Clips tabs ("No videos
+   * found." in italics on the bare page; a clapperboard drawing over "No
+   * Clips Found"), with a film frame for the moon and one step under the
+   * filter row.
+   */
+  & .home__lower-content div:has(> div > [data-test-selector="no-videos"]),
+  & .home__lower-content div:has(> img.tw-image + div strong:only-child) {
+    --rs-empty-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm6 3.5v7l6-3.5z'/%3E%3C/svg%3E");
+    margin: var(--rs-shelf-head) 0 0 !important;
+
+    & > img {
+      display: none !important;
+    }
+
+    & div {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    & :is(h4, strong) {
+      font-size: var(--rs-text-5) !important;
+      font-style: normal !important;
+      font-weight: 600 !important;
+      color: var(--rs-label) !important;
+    }
+  }
+
+  /* "No Clips Found" sits in the middle column of three: the whole row. */
+  & .home__lower-content .tw-grid:has(> .tw-col img.tw-image + div strong:only-child) {
+    margin: 0 !important;
+
+    & > .tw-col:empty {
+      display: none !important;
+    }
+
+    & > .tw-col {
+      flex: 1 1 100% !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+    }
+
+    & > .tw-col > div {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  /*
+   * Filter row of Browse and of a category: one step down to the cards.
+   * Twitch leaves 16px, set somewhere under the row.
+   */
+  & .twilight-main section[aria-label="Filter & Sort Options"] {
+    margin-bottom: calc(var(--rs-shelf-head) - 1.6rem) !important;
+  }
+
+  /* A category's live tab has no such 16px under its row. */
+  & .twilight-main .directory-header__filters {
+    margin-bottom: var(--rs-shelf-head) !important;
+  }
+
+  /*
+   * "Filter By" and "Sort by" labels: clear of the menu they name.
+   */
+  & .twilight-main div:has(> strong:only-child):has(+ div .tw-select-button):not(article *) {
+    padding-right: 1.2rem !important;
+  }
+
+  & .twilight-main strong:has(+ .tw-select-button) {
+    margin-right: 1.2rem !important;
+  }
+
+  & .twilight-main div:has(> .tw-form-label:only-child):has(+ div :is(button, select)) {
+    padding-right: 0.8rem !important;
+  }
+
+  /*
+   * Clips tab of a channel: the shelf's whole gap sat between the filter
+   * row and the title. One step under the row.
+   */
+  & .home__lower-content div:has(> div > strong:only-child):has(.top-clips-time-filter) {
+    margin: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  & .home__lower-content div:has(> div > strong:only-child):has(.top-clips-time-filter) + div h2.tw-title {
+    margin-top: var(--rs-shelf-head) !important;
+  }
+
+  /* Videos tab: the same step between the tabs and its filter row. */
+  & .home__lower-content > .tw-transition > div {
+    margin-top: 0 !important;
+  }
+
+  & .home__lower-content div:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel) {
+    margin-top: 0 !important;
+  }
+
+  /* The selected period is ticked twice, once in its label and once at the row's end. */
+  & [data-a-target^="time-filter-option"] div:has(> div > .tw-pill) + div:has(> .tw-svg) {
+    display: none !important;
+  }
+
+  /* Its menu opens flush against the button: the same gap as the other menus. */
+  & .ReactModal__Content [data-popper-placement^="bottom"]:has([data-a-target^="time-filter-option"]) {
+    padding-top: 1rem !important;
+  }
+
+  & .ReactModal__Content [data-popper-placement^="top"]:has([data-a-target^="time-filter-option"]) {
+    padding-bottom: 1rem !important;
+  }
+
+  /*
+   * Following, "Upcoming Streams": two columns of schedule entries, bare
+   * text on the page in a tall empty box, with a reminder button in the
+   * channel's colour. Cards like the others: surface, hairline, large
+   * radius, as tall as their text, and a quiet button.
+   */
+  & .common-centered-column header:has([data-a-target="upcoming-streams-header"]) + div {
+    margin: 0 !important;
+
+    & .tw-grid {
+      margin: 0 calc(var(--rs-4) / -2) !important;
+    }
+
+    & .tw-col {
+      padding: 0 calc(var(--rs-4) / 2) !important;
+    }
+
+    & .tw-col div:not(:has(> .tw-halo, > .tw-avatar, > .tw-aspect)) {
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 !important;
+    }
+
+    /* The card: the box holding the entry's text and its button. */
+    & div:has(> div > div > strong > a):has(button) {
+      align-items: stretch !important;
+      padding: var(--rs-4) !important;
+      background: var(--rs-surface) !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+
+      /* Channel line, then the stream's title and category, then its time. */
+      & > div:first-child,
+      & > div:first-child > div:last-child {
+        gap: var(--rs-3) !important;
+      }
+
+      /* Avatar and name; colour bar and time. */
+      & div:has(> strong) {
+        align-items: center !important;
+        gap: 0.8rem !important;
+      }
+
+      & a {
+        color: inherit !important;
+        text-decoration: none !important;
+      }
+
+      & strong {
+        font-size: var(--rs-text-3) !important;
+        font-weight: 600 !important;
+        color: var(--rs-text) !important;
+      }
+
+      & p.tw-title {
+        font-size: var(--rs-text-6) !important;
+        font-weight: 600 !important;
+        line-height: 1.3 !important;
+        color: var(--rs-text) !important;
+      }
+
+      & p:not(.tw-title) {
+        font-size: var(--rs-text-3) !important;
+        color: var(--rs-muted) !important;
+      }
+
+      /* The bar in the channel's colour before the time. */
+      /* Doubled attribute: the reset above would win and flatten it. */
+      & div[style*="background-color"][style] {
+        flex: none !important;
+        width: 0.3rem !important;
+        height: 1.6rem !important;
+        border-radius: var(--rs-radius-pill) !important;
+      }
+
+      & button {
+        height: 3rem !important;
+        padding: 0 0.4rem !important;
+        background: var(--rs-raised) !important;
+        border-radius: var(--rs-radius-pill) !important;
+        color: var(--rs-text) !important;
+        transition: background-color var(--rs-ease);
+
+        &:hover {
+          background: var(--rs-accent-tint-strong) !important;
+        }
+
+        & * {
+          color: inherit !important;
+          fill: currentColor !important;
+        }
+      }
+    }
+  }
+
+  /*
+   * Following, "You can now follow your favorite games!": a grey slab with
+   * square corners. The same panel as an empty shelf.
+   */
+  & [data-target="following__follow-games-cta"] {
+    gap: var(--rs-3) !important;
+    margin: var(--rs-shelf-gap) 0 0 !important;
+    padding: var(--rs-8) var(--rs-4) !important;
+    background: radial-gradient(ellipse 60% 140% at 50% 0%, var(--rs-accent-tint), transparent 70%), var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    & > div {
+      margin: 0 !important;
+    }
+
+    & p {
+      font-size: var(--rs-text-5) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* Alone under the tabs (Categories tab): the step the other tabs' content has. */
+  & section > [data-target="following__follow-games-cta"]:first-child {
+    margin-top: var(--rs-shelf-head) !important;
+  }
+
+  /*
+   * Following, Live and Channels tabs: the title under the tabs repeats the
+   * tab's name. It goes, with what wraps it, and the content starts one
+   * step under the tabs.
+   */
+  & .common-centered-column:has([data-a-target="following-live-tab"][aria-selected="true"]) :is(header, div):has(> div > [data-a-target="live-channels-header"], > [data-a-target="live-channels-header"]),
+  & .common-centered-column:has([data-a-target="following-channels-tab"][aria-selected="true"]) :is(header, div):has(> div > [data-a-target="following-channels-header"], > [data-a-target="following-channels-header"]) {
+    display: none !important;
+  }
+
+  & .common-centered-column:has(:is([data-a-target="following-live-tab"], [data-a-target="following-channels-tab"])[aria-selected="true"]) #following-page-main-content {
+    padding-top: calc(var(--rs-shelf-head) - 1.6rem) !important;
+  }
+
+  /*
+   * Following, Channels tab: each channel is its banner under a dark veil,
+   * with a small avatar and name lost in the middle. A card instead: the
+   * banner fades into the card's surface, and a larger, ringed avatar and
+   * the name sit on that surface, with the buttons under them.
+   */
+  & .channel-follow-listing--card .user-card {
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+    overflow: hidden !important;
+    transition: border-color var(--rs-ease);
+
+    &:hover {
+      border-color: var(--rs-float-border) !important;
+    }
+
+    & [data-a-target="user-card-modal"] {
+      padding: var(--rs-3) !important;
+      background: linear-gradient(to top, var(--rs-surface) 18%, color-mix(in srgb, var(--rs-surface) 50%, transparent)) !important;
+    }
+
+    /* Avatar and name, centred in the room left above the buttons. */
+    & .info {
+      flex: 1 1 auto !important;
+      justify-content: center !important;
+      /* Counts the card's top padding in, so the gaps above and under are equal. */
+      margin-top: calc(var(--rs-3) * -1) !important;
+      padding: 0 !important;
+    }
+
+    & .info a {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: var(--rs-2) !important;
+      text-decoration: none !important;
+    }
+
+    & .info a > div {
+      padding: 0 !important;
+    }
+
+    & .tw-avatar {
+      width: 7.2rem !important;
+      height: 7.2rem !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 0 3px var(--rs-surface) !important;
+    }
+
+    & .info strong {
+      font-size: var(--rs-text-6) !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.01em !important;
+      color: var(--rs-text) !important;
+    }
+
+    /*
+     * The card keeps the banner's 16:9 shape, too short for its content
+     * once a wide window fits five in a row: a floor under its height.
+     */
+    & > .tw-aspect > div:first-child {
+      padding-bottom: max(56.25%, 21rem) !important;
+    }
+
+    /*
+     * Twitch shows the buttons on hover only. Always there, but quiet:
+     * neutral fills instead of the accent, which comes back as a tint when
+     * one is pointed at.
+     */
+    & .user-card__buttons-container {
+      opacity: 1 !important;
+    }
+
+    & .user-card__buttons-container button {
+      background: var(--rs-hover) !important;
+      color: var(--rs-label) !important;
+      transition: background-color var(--rs-ease), color var(--rs-ease);
+
+      & * {
+        color: inherit !important;
+        fill: currentColor !important;
+      }
+
+      &:hover {
+        background: var(--rs-accent-tint-strong) !important;
+        color: var(--rs-text) !important;
+      }
+    }
   }
 
   /*
@@ -2374,7 +3449,7 @@ html:not([data-rs="off"]) {
 
   & .metadata-layout__split-top + div {
     padding: 0 !important;
-    margin: var(--rs-4) 0 0 !important;
+    margin: var(--rs-6) 0 0 !important;
 
     & > div {
       margin: 0 !important;
@@ -2398,6 +3473,138 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * A clip's own block, on its page and in the clip viewer: the same
+   * hierarchy as a video (date, title, then one quiet line of metadata).
+   * Twitch strings together a "Streaming Together" link, the category, "with"
+   * and the guests in their chat colours, then "Clipped by" and the views.
+   * Here the category is the chip it is elsewhere, the guests are neutral
+   * pills, and the rest is one muted level. The "Streaming Together" link
+   * (to the creator dashboard) goes: the guests say as much.
+   */
+  & .metadata-layout__split-top:has(.reedit-clip-button, [data-test-selector="clips-watch-full-button"]) {
+    & div:has(+ div > [data-a-target="stream-title"]) {
+      margin: 0 !important;
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+        font-weight: 500 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    & div:has(> [data-a-target="stream-title"]) {
+      margin-top: var(--rs-1) !important;
+    }
+
+    & > div[style*="width"] {
+      margin-top: var(--rs-2) !important;
+
+      & > div,
+      & > div > div {
+        margin: 0 !important;
+      }
+
+      & > div > div {
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: var(--rs-1) var(--rs-2) !important;
+      }
+
+      & > div > div + div {
+        margin-top: var(--rs-2) !important;
+        gap: 0 !important;
+      }
+
+      & p {
+        margin: 0 !important;
+        font-size: var(--rs-text-3) !important;
+        font-weight: 500 !important;
+        font-variant-numeric: tabular-nums !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & p a {
+        color: var(--rs-text-soft) !important;
+        text-decoration: none !important;
+
+        &:hover {
+          color: var(--rs-text) !important;
+        }
+      }
+
+      & div:has(> p:only-child) {
+        margin: 0 !important;
+      }
+    }
+
+    & div:has(> div > a[href*="/guest-star"]),
+    & div:has(> div > a[href*="/guest-star"]) + span,
+    & div:has(> a[href*="/directory/category/"]) + span {
+      display: none !important;
+    }
+
+    & a[href*="/directory/category/"] {
+      display: inline-flex !important;
+      align-items: center !important;
+      min-height: 2rem !important;
+      padding: 0 0.8rem !important;
+      border-radius: var(--rs-radius-pill) !important;
+      background: var(--rs-accent-tint) !important;
+      text-decoration: none !important;
+
+      &:hover {
+        background: var(--rs-accent-tint-strong) !important;
+      }
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        color: var(--rs-accent-quiet) !important;
+      }
+    }
+
+    /* Guests: avatar and name in one pill, which opens the streamer's card. */
+    & div:has(> div > span > button[aria-haspopup="dialog"]) {
+      margin: 0 !important;
+    }
+
+    & div:has(> div > div > span > button[aria-haspopup="dialog"]) {
+      flex-wrap: wrap !important;
+      gap: var(--rs-1) !important;
+    }
+
+    & div:has(> span > button[aria-haspopup="dialog"]) {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.6rem !important;
+      min-height: 2.4rem !important;
+      margin: 0 !important;
+      padding: 0.2rem 1rem 0.2rem 0.2rem !important;
+      border-radius: var(--rs-radius-pill) !important;
+      background: var(--rs-hover) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-raised) !important;
+      }
+
+      & > div {
+        margin: 0 !important;
+      }
+
+      & > span {
+        color: inherit !important;
+      }
+
+      & button {
+        font-size: var(--rs-text-3) !important;
+        font-weight: 500 !important;
+        color: var(--rs-text) !important;
+        text-decoration: none !important;
+      }
+    }
+  }
+
+  /*
    * "Filter By" above a channel's videos and clips: label and menu sit at
    * the right edge of the column, like "Sort by" on the directory pages.
    * The row has no hook of its own; it is the one holding a lone <strong>
@@ -2412,10 +3619,41 @@ html:not([data-rs="off"]) {
     flex-grow: 0 !important;
   }
 
-  /* Shelves of other videos: on the column's edges, with titled rows. */
+  /*
+   * Shelves of other videos: on the column's edges, with titled rows.
+   *
+   * Their vertical spacing is set here and nowhere else. Twitch spreads it
+   * over the shelf, its header, its title, the carousel's body and the
+   * cards; all of those are zeroed, and three steps remain: under the
+   * "Filter By" row, under a shelf's header, and between two shelves.
+   */
   & .channel-info-content > div:has(.preview-card-carousel) > div {
-    margin-inline: 0 !important;
+    margin: 0 !important;
     padding-inline: 0 !important;
+  }
+
+  & .channel-info-content div:has(> .preview-card-carousel) {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  & .channel-info-content div:has(> .preview-card-carousel) + div:has(> .preview-card-carousel) {
+    margin-top: var(--rs-shelf-gap) !important;
+  }
+
+  /* Whatever comes right before the first shelf: the "Filter By" row. */
+  & .channel-info-content div:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel) {
+    margin-bottom: var(--rs-6) !important;
+  }
+
+  & .channel-info-content .preview-card-carousel__body {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  /* One row of cards: no row spacing to leave under it. */
+  & .channel-info-content .preview-card-carousel .tw-tower > * {
+    margin-bottom: 0 !important;
   }
 
   /*
@@ -2426,7 +3664,7 @@ html:not([data-rs="off"]) {
   & .channel-info-content div:has(> p.tw-title > [data-test-selector="title"]) {
     align-items: baseline !important;
     justify-content: space-between !important;
-    margin: 0 0 var(--rs-3) !important;
+    margin: 0 0 var(--rs-shelf-head) !important;
 
     &:has(+ [data-test-selector="subtitle"]) {
       margin-bottom: 0 !important;
@@ -2434,7 +3672,8 @@ html:not([data-rs="off"]) {
   }
 
   & .channel-info-content [data-test-selector="subtitle"] {
-    margin-bottom: var(--rs-3) !important;
+    margin: 0 0 var(--rs-shelf-head) !important;
+    padding: 0 !important;
     font-size: var(--rs-text-3) !important;
     color: var(--rs-muted) !important;
   }
@@ -2642,6 +3881,13 @@ html:not([data-rs="off"]) {
    */
   & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"][class*="Attached"] > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *) {
     padding: 0.6rem !important;
+    /* The variant attached to its button comes without a frame. */
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    /* As wide as its longest row, which then never wraps. */
+    width: max-content !important;
+    min-width: 100% !important;
+    white-space: nowrap !important;
 
     /* Wrappers between the box and its rows. */
     & div:has(> div > .tw-interactable),
@@ -3355,6 +4601,81 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * "Sort by" comes in three builds: a listbox (Browse, a category's live
+   * channels), a button with an attached menu (a category's videos) and a
+   * select button (clips, a channel's tabs). One field and one menu: the
+   * listbox takes the other menus' box and rows, and the two other buttons
+   * take the select button's weight, arrow and open state.
+   */
+  & .ReactModal__Content [role="listbox"] {
+    padding: 0.6rem !important;
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /* Opening upwards, the list touches its button: the gap it has downwards. */
+  & .ReactModal__Content > [data-popper-placement^="top"]:has(> .tw-transition [role="listbox"]) {
+    padding-bottom: 0.8rem !important;
+  }
+
+  & .ReactModal__Content [role="option"] {
+    min-height: 3.6rem !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: var(--rs-radius-m) !important;
+    color: var(--rs-text) !important;
+
+    & * {
+      font-size: var(--rs-text-4) !important;
+    }
+  }
+
+  & .twilight-main :is([role="combobox"]:not(input), [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded]) {
+    font-weight: 400 !important;
+
+    & * {
+      font-weight: 400 !important;
+    }
+  }
+
+  /* The attached-menu button centres its label: on the left, arrow on the right. */
+  & .twilight-main [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded] > div {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  /* It also pads its label twice inside: the button alone does, like the select button. */
+  & .twilight-main [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded] {
+    & > div {
+      padding: 0 !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0.6rem 0 0 !important;
+    }
+  }
+
+  /* The listbox button's double arrow: the single chevron of the others. */
+  & .twilight-main button[role="combobox"] > div:last-child:has(svg) {
+    & svg {
+      display: none !important;
+    }
+
+    &::after {
+      content: "";
+      width: 2rem;
+      height: 2rem;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+    }
+  }
+
+  /* Open or focused: the same accent ring on the three. */
+  & .twilight-main :is(.tw-select-button, button[role="combobox"], [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded]):is([aria-expanded="true"], :focus-visible) {
+    outline: none !important;
+    box-shadow: inset 0 0 0 2px var(--rs-accent) !important;
+  }
+
+  /*
    * ...and the page dims behind them. The overlay has no area of its own: it
    * is stretched over the viewport to carry the backdrop.
    */
@@ -3498,6 +4819,263 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Video Stats and Ad Stats (Settings > Advanced): a table over the
+   * player's top-left corner, under an empty band holding the close button.
+   * The same floating card as the keyboard shortcuts: small-caps column
+   * heads, names toned down beside their values, and the close button moved
+   * into the head row's corner.
+   */
+  & .video-player__overlay .scrollable-area > div:has(> table.tw-table) {
+    position: relative !important;
+    padding: var(--rs-1) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+    /* No shadow: the scroll area around the card would cut it off. */
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & > div:first-child {
+      position: absolute !important;
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      z-index: 1 !important;
+    }
+
+    & button,
+    & button * {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+
+    & table {
+      background: none !important;
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & th {
+      background: none !important;
+      border-radius: 0 !important;
+      border-bottom: var(--rs-hairline) !important;
+
+      & > div {
+        padding: 0.8rem 1rem !important;
+      }
+
+      & strong {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* Room for the close button beside the last column's head. */
+    & th:last-child > div {
+      padding-right: 4.4rem !important;
+    }
+
+    & td {
+      padding: 0.4rem 1rem !important;
+      border: 0 !important;
+      font-size: var(--rs-text-3) !important;
+      line-height: 2rem !important;
+      white-space: nowrap !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    & td p {
+      font-size: inherit !important;
+      line-height: inherit !important;
+      color: inherit !important;
+    }
+
+    & td:last-child {
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-text) !important;
+    }
+
+    & tbody tr:first-child td {
+      padding-top: 0.8rem !important;
+    }
+
+    & tbody tr:last-child td {
+      padding-bottom: 0.6rem !important;
+    }
+  }
+
+  /*
+   * Preview shown while pointing along a video's seek bar. Twitch's is a
+   * picture over a bar holding the timestamp, and the generic balloon rules
+   * frame it twice. Just the picture instead, rounded, under a light ring
+   * and a soft shadow, with the timestamp as a chip laid over its bottom.
+   */
+  & .video-player .player-controls div:has(> div > [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
+    background: none !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.45) !important;
+    /* Clear of the seek bar, now that the timestamp's bar is gone. */
+    transform: translateY(-0.8rem) !important;
+  }
+
+  & .video-player .player-controls div:has(> [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
+    position: relative !important;
+    background: #000 !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    overflow: hidden !important;
+
+    /* The ring, over the picture so that it stays even on a bright frame. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+      pointer-events: none;
+    }
+
+    & > [data-test-selector="vod-seekbar-preview-overlay-preview-image"] + div {
+      position: absolute !important;
+      inset: auto 0 0.6rem !important;
+      display: flex !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      background: none !important;
+    }
+
+    & p {
+      padding: 0.2rem 0.8rem !important;
+      background: rgba(15, 16, 18, 0.72) !important;
+      backdrop-filter: blur(8px);
+      border-radius: var(--rs-radius-pill) !important;
+      font-size: var(--rs-text-2) !important;
+      font-weight: 600 !important;
+      line-height: 1.8rem !important;
+      font-variant-numeric: tabular-nums !important;
+      letter-spacing: 0.02em !important;
+      color: #fff !important;
+    }
+  }
+
+  /*
+   * Chapter list, opened from a video's controls: the same floating card as
+   * the player's settings menu, rows with rounded corners and even padding,
+   * the chapter being played tinted with the accent.
+   */
+  & [role="dialog"][aria-describedby="chapter-select-popover-body"] > div {
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden !important;
+  }
+
+  & #chapter-select-popover-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.2rem !important;
+    padding: 0.6rem !important;
+
+    & .media-row button {
+      border-radius: var(--rs-radius-s) !important;
+      background: none !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+
+      & > div {
+        align-items: center !important;
+        padding: 0.6rem !important;
+      }
+    }
+
+    /* The row being played has its play mark always on, without that class. */
+    & .media-row:has(.media-row__image-wrapper > div:last-child:not(.media-row__image-play-overlay)) button {
+      background: color-mix(in srgb, var(--rs-accent) 16%, transparent) !important;
+    }
+
+    & .media-row__image-wrapper {
+      border-radius: 0.6rem !important;
+      overflow: hidden !important;
+    }
+
+    & .media-row__image-wrapper + div {
+      padding: 0 0.4rem 0 1.2rem !important;
+    }
+
+    & .media-row__info-text p {
+      font-size: var(--rs-text-4) !important;
+      font-weight: 600 !important;
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .media-row__info-description p {
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  /*
+   * "Audio for portions of this video has been muted…": Twitch lays a black
+   * slab over the middle of the picture. A small chip in the player's
+   * bottom-left corner instead, on one line; pointing at it unfolds the
+   * whole sentence. It sits on the video, so its ink is fixed, not themed.
+   */
+  & .muted-segments-alert__position-wrapper {
+    align-items: flex-start !important;
+    padding-inline: var(--rs-3) !important;
+  }
+
+  & .muted-segments-alert__scroll-wrapper {
+    width: auto !important;
+    max-width: 32rem !important;
+  }
+
+  & .muted-segments-alert__content {
+    align-items: center !important;
+    padding: 0 0.2rem 0 1rem !important;
+    background: rgba(15, 16, 18, 0.55) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: var(--rs-radius-m) !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    & p {
+      min-width: 0 !important;
+      padding: 0.5rem 0 !important;
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.6rem !important;
+      color: rgba(255, 255, 255, 0.85) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    &:hover p {
+      white-space: normal !important;
+    }
+
+    & button {
+      width: 2.4rem !important;
+      height: 2.4rem !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+  }
+
+  /*
    * Regions tinted with a channel's own accent (goals, the highlight above
    * the chat) redeclare the accent variable: they follow the theme's too.
    */
@@ -3533,5 +5111,279 @@ html:not([data-rs="off"]) {
   & .modal__close-button {
     top: var(--rs-3) !important;
     right: var(--rs-3) !important;
+  }
+
+  /*
+   * Clip viewer (a clip opened from a shelf of the home page): a player, the
+   * clip's details and its channel, with close and next/previous buttons
+   * hung outside the box. The box stops clipping so those show, as round
+   * floating buttons; the player is rounded; the details follow the video
+   * page's hierarchy and the channel block is a quiet inset.
+   */
+  & .modal-wrapper__content > div[class*="clips-modal-view"] {
+    overflow: visible !important;
+
+    & .clips-view-modal-content,
+    & .clips-view-modal-content > div {
+      background: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & .video-player,
+    & .video-player__container,
+    & .video-ref,
+    & video,
+    & .clips-view-modal-content > div:first-child,
+    & .clips-view-modal-content > div:first-child .tw-aspect {
+      border-radius: var(--rs-radius-m) !important;
+      overflow: hidden !important;
+    }
+
+    & .metadata-layout__split-top {
+      padding: var(--rs-4) 0 0 !important;
+    }
+
+    & .metadata-layout__split-top + div {
+      margin-top: var(--rs-4) !important;
+
+      & > div {
+        background: var(--rs-hover) !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+      }
+    }
+
+    & .modal__close-button {
+      position: absolute !important;
+      top: 0 !important;
+      right: -5.2rem !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    & .clip-carousel-button--right {
+      right: -5.2rem !important;
+    }
+
+    & .clip-carousel-button--left {
+      left: -5.2rem !important;
+    }
+
+    & .modal__close-button button,
+    & .clip-carousel-button button {
+      width: 3.6rem !important;
+      height: 3.6rem !important;
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: 50% !important;
+      color: var(--rs-text) !important;
+
+      &:hover {
+        background: var(--rs-raised) !important;
+      }
+    }
+  }
+
+  & .modal-wrapper__content > div[class*="clips-modal-view"] {
+    position: relative !important;
+  }
+
+  /*
+   * "Just one second…" gate over a player (content intended for certain
+   * audiences): painted in the floating layers' colour, it vanishes into a
+   * modal of that colour and leaves the black player's edge as a stray
+   * outline. A panel of its own, in the surface colour.
+   */
+  & [data-a-target="content-classification-gate-overlay"] {
+    background: var(--rs-surface) !important;
+    border-radius: inherit !important;
+  }
+
+  /*
+   * A dialog box Twitch leaves mounted with nothing in it (on a clip's
+   * page): its border alone showed as a stray line.
+   */
+  & .ReactModal__Content .tw-transition > div:empty {
+    display: none !important;
+  }
+
+  /*
+   * Streamer card (opened from a guest's name under a shared stream or
+   * clip): banner, avatar, name, bio, links, next stream, Follow. Twitch
+   * packs it on 8px gutters, paints its body a step darker than the box and
+   * its links and button in the channel's colour. One floating surface on
+   * the menus' gutters, with the palette's ink and accent. The box has no
+   * hook of its own: it is the one holding a haloed avatar and a name.
+   */
+  & .ReactModal__Content .tw-transition > div:has(.tw-halo):has(h1) {
+    /* The channel-colour strip beside the banner. */
+    & div[style*="background-color"]:not([style*="background-image"]):has(+ div[style*="background-image"]) {
+      display: none !important;
+    }
+
+    & div:has(> div[style*="background-image"]) {
+      height: 8rem !important;
+    }
+
+    /* The body, under the banner. */
+    & > div > div:not(:has(> div[style*="background-image"])) {
+      padding: 0 var(--rs-3) var(--rs-3) !important;
+      background: none !important;
+      white-space: normal !important;
+    }
+
+    /*
+     * Avatar and name: Twitch pulls the row up so the avatar bites into the
+     * banner. Under it instead, the name on the avatar's middle line.
+     */
+    & div[style*="top: -1rem"] {
+      top: 0 !important;
+      align-items: center !important;
+      margin: var(--rs-3) 0 var(--rs-2) !important;
+    }
+
+    & div:has(> h1) {
+      padding: 0 !important;
+    }
+
+    & h1,
+    & h1 a {
+      font-size: var(--rs-text-6) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+      text-decoration: none !important;
+    }
+
+    /* "Streaming <game> with <n> viewers", under the name of a live channel. */
+    & div:has(> h1) + div p {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+      white-space: normal !important;
+
+      & span {
+        font-weight: 500 !important;
+        color: var(--rs-text-soft) !important;
+      }
+    }
+
+    & p[title] {
+      font-size: var(--rs-text-3) !important;
+      line-height: 1.5 !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    /* Follower count. */
+    & div:has(> p[title]) + p {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+
+      & span {
+        font-weight: 600 !important;
+        color: var(--rs-text) !important;
+      }
+    }
+
+    & .streamer-card-body__social-medias {
+      gap: 0.6rem !important;
+      margin-top: var(--rs-2) !important;
+
+      & .social-media-link {
+        max-width: 100% !important;
+        padding: 0.3rem 1rem 0.3rem 0.8rem !important;
+        border-radius: var(--rs-radius-pill) !important;
+        background: var(--rs-hover) !important;
+        transition: background-color var(--rs-ease);
+
+        &:hover {
+          background: var(--rs-raised) !important;
+        }
+      }
+
+      & :has(> .social-media-link) {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+
+      & a {
+        text-decoration: none !important;
+      }
+
+      & p {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        font-size: var(--rs-text-2) !important;
+        font-weight: 500 !important;
+        color: var(--rs-label) !important;
+      }
+
+      & div[style*="color"] {
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* "Upcoming stream:", a small-caps label over an inset entry. */
+    & div:has(> p[style*="uppercase"]) {
+      margin: var(--rs-3) 0 var(--rs-1) !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    & div:has(> div > .stream-schedule-segment--vertical-line) {
+      margin: 0 !important;
+      padding: var(--rs-2) var(--rs-3) !important;
+      border-radius: var(--rs-radius-m) !important;
+      background: var(--rs-hover) !important;
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+
+      & p {
+        font-size: var(--rs-text-2) !important;
+        font-weight: 500 !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & > strong {
+        display: block !important;
+        margin-top: var(--rs-1) !important;
+        font-size: var(--rs-text-4) !important;
+        color: var(--rs-text) !important;
+      }
+
+      & > div:last-child {
+        margin-top: var(--rs-2) !important;
+      }
+    }
+
+    & .stream-schedule-segment--vertical-line {
+      border-radius: var(--rs-radius-pill) !important;
+    }
+
+    /* Follow, and the options button beside it. */
+    & div:has(> button[aria-label="More options"]) {
+      align-items: center !important;
+      margin-top: var(--rs-3) !important;
+    }
+
+    & [data-a-target="follow-button"] {
+      background: var(--rs-accent) !important;
+      color: var(--rs-on-accent) !important;
+
+      &:hover {
+        background: var(--rs-accent-hover) !important;
+      }
+    }
+  }
+}
+
+@keyframes rs-spin {
+  to {
+    transform: rotate(360deg);
   }
 }

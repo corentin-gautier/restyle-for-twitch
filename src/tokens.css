@@ -14,6 +14,14 @@
   --rs-8: calc(32px * var(--rs-scale));
   --rs-12: calc(48px * var(--rs-scale));
 
+  /*
+   * Vertical rhythm of titled rows of cards ("shelves"), wherever they are:
+   * from a shelf's title to its cards, and from a shelf's end to the next
+   * title. Also the step from a channel's player to what is under it.
+   */
+  --rs-shelf-head: var(--rs-6);
+  --rs-shelf-gap: var(--rs-12);
+
   --rs-radius-s: 8px;
   --rs-radius-m: 12px;
   --rs-radius-l: 18px;
@@ -34,9 +42,9 @@
   /* Max width of the content column under a player (three 320px panels + gaps). */
   --rs-measure: 1000px;
   /*
-   * Distance from the sidebar to a page's content: what Following ends up
-   * with (column padding + 3rem of ours + 3rem of Twitch's), for the pages
-   * that are not built on that column.
+   * Distance from the sidebar (and from the right edge) to a page's
+   * content, on home, Following, Browse, a category and search. Set once per
+   * page, on its column.
    */
   --rs-page-inset: calc(var(--rs-8) + 6rem);
   --rs-avatar-card: 3.2rem;

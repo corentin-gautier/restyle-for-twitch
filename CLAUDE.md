@@ -7,10 +7,10 @@ The user is French-speaking: reply in French, write code and docs in English.
 
 | Path | Role |
 | --- | --- |
-| `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), radii, type scale, palette. |
+| `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
 | `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
 | `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Also sets the page state the stylesheet reads (`data-rs-nav`, `data-rs-channel` on `<html>`, `data-rs-tower` on each card grid) and stops the hover events that start a video card's animated preview. |
-| `popup/` | Settings popup. Texts come from `_locales/` (en, fr). |
+| `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
 | `docs/` | GitHub Pages site. |
@@ -23,6 +23,9 @@ The user is French-speaking: reply in French, write code and docs in English.
   (`.channel-info-content`), `data-a-target`, `data-test-selector`, ARIA
   roles, or structure with `:has()`.
 - Use the `--rs-*` tokens rather than raw values. Twitch sets `1rem = 10px`.
+- A radius is a `--rs-radius-*` token, or a raw value times `--rs-round`, so
+  that it follows the popup's corner setting (`data-rs-round="0|1|2"`: square,
+  soft, round). Circles (`50%`) stay as they are.
 - Almost every declaration needs `!important` to beat Twitch's styles.
 - Firefox (128+) loads the same files: stick to CSS both engines support, and
   add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
@@ -49,6 +52,7 @@ and a rule that must beat another goes in the same file or a later one.
 | `channel-tabs.css` | Offline channel page |
 | `shelves.css` | Shelf rhythm (also empty states, filter rows, the Following tabs) |
 | `video.css` | Video (VOD) page (also the clip page) |
+| `team.css` | Team page |
 | `subscribe.css` | Subscribe and Gift a Sub panels |
 | `forms.css` | Form controls; Filter and sort menus |
 | `chat.css` | Chat |
@@ -101,6 +105,7 @@ checked in a headless Chrome; the others need the user's session.
 | Video (VOD) | `/videos/<id>` | Public | Video (VOD) page; Chat (replay) | `.metadata-layout__split-top`, `.video-chat`, `.vod-message` |
 | Clip | `/<channel>/clip/<slug>` | Public | Video (VOD) page | `.metadata-layout__split-top` holding `.reedit-clip-button`; guests open the streamer card |
 | Subscribe / Gift a Sub | buttons on a channel | Public (logged-out variant) | Subscribe and Gift a Sub panels | `.sub-modal`, `.support-panel` |
+| Team | `/team/<name>` | Public | Team page | `.teams-page-body__inner-container` (its two columns dissolved into one grid), `.teams-page-body__banner`, `.teams-player`, `.member-list__scrollable-container`; no left sidebar on this page |
 | Creator Dashboard | `dashboard.twitch.tv` | | excluded in `manifest.json` | |
 
 ### Shared components
@@ -132,7 +137,7 @@ checked in a headless Chrome; the others need the user's session.
 
 There is no test suite. For public pages, drive a headless Chrome (for example
 with `puppeteer-core` and the system Chrome), inject `src/tokens.css` and
-the files of `src/twitch/` in the manifest's order at document start, set `data-rs-space="2"` on `<html>`, and
+the files of `src/twitch/` in the manifest's order at document start (in the top frame only: styled too, the player's extension iframe paints over the video), set `data-rs-space="2"` on `<html>`, and
 screenshot. Take a capture without the stylesheet too when unsure whether a
 defect comes from Twitch or from the extension. Keep such scripts out of the
 repository.

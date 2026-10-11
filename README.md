@@ -24,6 +24,9 @@ It is an unofficial project, not affiliated with or endorsed by Twitch.
   small accent-coloured chips.
 - **Channel page**: a rounded, inset player and a centred column for the stream
   information and panels.
+- **Team page**: the full-page photo and the white sheet are gone. A header
+  panel with the team's logo, name and banner, the player with the stream's
+  information under it, and the members in a panel on the right.
 - **Chat**: muted messages that return to full contrast on hover, a fade at the
   top, and no leaderboard above it. Its popups (emotes, cheers, rewards, drops,
   chat identity) share one framed style.
@@ -43,6 +46,7 @@ without reloading the page.
 | --- | --- |
 | Enable on Twitch | Turns the whole restyle on or off. |
 | Spacing | Three densities: compact, airy, very airy. |
+| Corners | How rounded cards, panels, fields and buttons are: square, soft or round. |
 | Themes | Eight ready-made pairs of background and accent colours, dark and light. |
 | Accent colour | The colour of links, tags and highlights. |
 | Plain chat | Hides chat badges and shows every username in the text colour. |
@@ -51,7 +55,9 @@ without reloading the page.
 
 <img src="docs/popup.png" width="300" alt="The settings popup, with the Midnight theme selected" />
 
-The settings popup is in English or French, following the browser's language.
+The settings popup follows the browser's language: English, French, Spanish,
+Portuguese, German, Italian, Dutch, Polish, Turkish, Russian, Japanese, Korean
+and Chinese (simplified and traditional). Other languages get English.
 
 ## Install
 

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.10.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.10.0...v1.10.1) (2026-10-11)
+
+
+### Documentation
+
+* document the floating panels option ([8818142](https://github.com/corentin-gautier/restyle-for-twitch/commit/8818142d748354a237a4ca70a13e715463eddc58))
+
+
+### Fixes
+
+* align the left sidebar's rows, headers and collapse arrow, and restyle "Save your Streak" ([eeeb6a9](https://github.com/corentin-gautier/restyle-for-twitch/commit/eeeb6a945ea74b313685416732ebc4f277b11e2b))
+* put the collapsed chat's expand button on the video's corner ([b22a532](https://github.com/corentin-gautier/restyle-for-twitch/commit/b22a5327d793a47f73a8321cdf8467e49f66341e))
+
 ## [1.10.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.9.1...v1.10.0) (2026-10-11)
 
 

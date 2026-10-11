@@ -403,6 +403,15 @@ html:not([data-rs="off"]) {
     display: none !important;
   }
 
+  /*
+   * Offline rows have their own hover popup, a lone "See all recent videos"
+   * link. It carries no class of its own: told by opening to the right of
+   * its row and holding nothing but a link to a channel's videos.
+   */
+  & .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
+    display: none !important;
+  }
+
   & .side-nav-section {
     padding-block: var(--rs-3) !important;
   }
@@ -3476,5 +3485,24 @@ html:not([data-rs="off"]) {
     & [style*="color"] {
       color: var(--rs-text) !important;
     }
+  }
+
+  /*
+   * Centred modals (a category's full description...): the box is the
+   * element holding the close button. Framed like the other floating layers,
+   * with room around its content.
+   */
+  & .modal-wrapper__content > div:has(> .modal__close-button) {
+    padding: var(--rs-6) !important;
+    background: var(--rs-float) !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  & .modal__close-button {
+    top: var(--rs-3) !important;
+    right: var(--rs-3) !important;
   }
 }

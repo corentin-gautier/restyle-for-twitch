@@ -372,6 +372,7 @@ html:not([data-rs="off"]) {
     min-width: var(--rs-avatar-card) !important;
     margin-top: 0 !important;
     align-self: flex-start !important;
+    margin-inline-end: var(--rs-4) !important;
   }
 
   /*

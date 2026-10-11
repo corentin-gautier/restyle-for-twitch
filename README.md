@@ -130,7 +130,10 @@ displayed in another language.
 
 ## License
 
-[MIT with the Commons Clause](LICENSE), © Corentin Gautier. You may use,
-modify and share it for free, as long as the copyright notice and the license
-stay with every copy. You may not sell it, alone or as the substance of a
-paid product or service.
+Copyright © 2026 Corentin Gautier.
+
+Restyle for Twitch is free software, released under the
+[GNU Affero General Public License, version 3](LICENSE). You may use, modify
+and share it, provided that copies and modified versions keep the copyright
+notices, stay under the same license, and come with their source code. It is
+provided without any warranty.

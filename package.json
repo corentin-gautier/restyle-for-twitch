@@ -2,7 +2,7 @@
   "name": "restyle-for-twitch",
   "version": "1.6.0",
   "private": true,
-  "license": "SEE LICENSE IN LICENSE",
+  "license": "AGPL-3.0-only",
   "description": "A calmer, more coherent interface for Twitch, as a Chrome and Firefox extension.",
   "scripts": {
     "release": "standard-version",

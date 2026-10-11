@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.9.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.8.1...v1.9.0) (2026-10-11)
+
+
+### Features
+
+* add a corner rounding setting (square, soft, round) ([0e0f656](https://github.com/corentin-gautier/restyle-for-twitch/commit/0e0f6567e3c38f8665a5ed573267bfbb7bca0023))
+* restyle team pages ([edd353d](https://github.com/corentin-gautier/restyle-for-twitch/commit/edd353dc549a60845fc138ccdcbd3b366da56c45))
+* translate the popup into thirteen more languages ([fa0bc85](https://github.com/corentin-gautier/restyle-for-twitch/commit/fa0bc859f28187784f5685c3568ab61dcbce872a))
+
+
+### Documentation
+
+* list the new languages, the corner setting and the team page ([6b3e771](https://github.com/corentin-gautier/restyle-for-twitch/commit/6b3e7715e873ff8eb0a0064864d92d6735d8ba8c))
+
 ### [1.8.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.8.0...v1.8.1) (2026-10-11)
 
 

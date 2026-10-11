@@ -597,11 +597,18 @@ html:not([data-rs="off"]) {
   /*
    * Home: no featured carousel. Hiding it does not stop its stream:
    * content.js pauses the video inside (keep its selectors in sync).
+   * Collapsed rather than `display: none`: with no box at all, the first
+   * shelf under it keeps a loading card in place of its second stream.
    */
   & [class*="front-page-carousel"],
   & [data-a-target*="front-page-carousel"],
   & [class*="featured-content-carousel"] {
-    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    visibility: hidden !important;
   }
 
   /*
@@ -1112,8 +1119,17 @@ html:not([data-rs="off"]) {
    * grid ends with a band of dead space.
    */
   & .tw-tower {
-    column-gap: var(--rs-4) !important;
-    row-gap: 0 !important;
+    gap: 0 !important;
+    margin-inline: calc(var(--rs-4) / -2) !important;
+
+    /*
+     * Column spacing is padding on the items, as Twitch does it, not a gap:
+     * Twitch gives a shelf as many cards as its width holds with no gap, and
+     * a gap would push the last one onto a row of its own.
+     */
+    & > * {
+      padding-inline: calc(var(--rs-4) / 2) !important;
+    }
 
     & > div {
       margin-bottom: var(--rs-8) !important;
@@ -2549,6 +2565,19 @@ html:not([data-rs="off"]) {
   & :is(.tw-input, .tw-select, .tw-select-button):not(.top-nav *, .chat-input__textarea *) {
     height: var(--rs-control-height) !important;
     min-height: var(--rs-control-height) !important;
+  }
+
+  /*
+   * Placeholders and field labels take the palette's ink: Twitch's own
+   * follows its theme, unreadable on a custom background of the other tone.
+   */
+  & :is(.tw-input, .tw-textarea)::placeholder {
+    color: var(--rs-muted) !important;
+    opacity: 1 !important;
+  }
+
+  & .tw-form-label {
+    color: var(--rs-text) !important;
   }
 
   /*

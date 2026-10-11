@@ -21,7 +21,8 @@ It is an unofficial project, not affiliated with or endorsed by Twitch.
 - **Top bar**: more breathing room, a pill-shaped search field, dimmed icons.
 - **Home, Following and Browse**: no autoplaying carousel, large shelf titles,
   rounded thumbnails, and cards that put the streamer's name first. Tags become
-  small accent-coloured chips.
+  small accent-coloured chips. Hovering a card dims the ones around it, and
+  video cards no longer play an animated preview.
 - **Channel page**: a rounded, inset player and a centred column for the stream
   information and panels.
 - **Team page**: the full-page photo and the white sheet are gone. A header
@@ -103,7 +104,7 @@ unpacked**. There is no build step. The extension is made of:
 | --- | --- |
 | `src/tokens.css` | Design tokens: spacing, radii, type scale, palette. |
 | `src/twitch/` | The rules that map Twitch's interface onto those tokens, one file per area. |
-| `src/content.js` | Applies the settings and pauses the hidden carousel's video. |
+| `src/content.js` | Applies the settings, pauses the hidden carousel's video and stops the video cards' animated previews. |
 | `popup/` | The settings popup. |
 | `src/dev-reload.js` | Live reload, for unpacked installs only. |
 

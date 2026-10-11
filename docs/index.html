@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Restyle for Twitch: a calmer interface for twitch.tv</title>
-<meta name="description" content="Free Chrome extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
+<meta name="description" content="Free Chrome and Firefox extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
 <meta name="author" content="Corentin Gautier">
 <link rel="canonical" href="https://corentin-gautier.github.io/restyle-for-twitch/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Restyle for Twitch">
 <meta property="og:title" content="Restyle for Twitch: a calmer interface for twitch.tv">
-<meta property="og:description" content="Free Chrome extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
+<meta property="og:description" content="Free Chrome and Firefox extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
 <meta property="og:url" content="https://corentin-gautier.github.io/restyle-for-twitch/">
 <meta property="og:image" content="https://corentin-gautier.github.io/restyle-for-twitch/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -24,11 +24,11 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Restyle for Twitch",
-  "description": "Free Chrome extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.",
+  "description": "Free Chrome and Firefox extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.",
   "url": "https://corentin-gautier.github.io/restyle-for-twitch/",
   "image": "https://corentin-gautier.github.io/restyle-for-twitch/og-image.png",
   "applicationCategory": "BrowserApplication",
-  "operatingSystem": "Chrome 120 or later",
+  "operatingSystem": "Chrome 120 or later, Firefox 128 or later",
   "codeRepository": "https://github.com/corentin-gautier/restyle-for-twitch",
   "author": { "@type": "Person", "name": "Corentin Gautier", "url": "https://github.com/corentin-gautier" },
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
@@ -36,9 +36,10 @@
     "Quieter sidebar and top bar",
     "Home page without the autoplaying carousel",
     "Inset, rounded player and centred channel column",
+    "Team pages rebuilt around the player",
     "Muted chat that returns to full contrast on hover",
     "Flat menus and dialogs",
-    "Accent colour, background colour and spacing settings"
+    "Themes, accent and background colours, spacing and corner settings"
   ]
 }
 </script>
@@ -165,6 +166,7 @@
   .compare__label--after { right: 12px; }
   .compare input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: ew-resize; touch-action: pan-y; }
   .compare__frame:has(input:focus-visible) { outline: 2px solid var(--text); outline-offset: 3px; }
+  .themes { margin: 32px 0 0; max-width: none; }
   .shot figcaption { margin-top: 10px; font: 13px/1.5 var(--mono); color: var(--muted); }
   table { width: 100%; margin: 32px 0 0; border-collapse: collapse; border-top: var(--rule) solid var(--text); }
   th, td { padding: 14px 16px 14px 0; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; }
@@ -210,7 +212,7 @@
 
     <div class="hero">
       <h1>Twitch, with the noise turned <em>down</em></h1>
-      <p>Restyle for Twitch is a free Chrome extension that quiets the busy parts of twitch.tv and gives the content more room. Nothing is added, and nothing works differently.</p>
+      <p>Restyle for Twitch is a free Chrome and Firefox extension that quiets the busy parts of twitch.tv and gives the content more room. Nothing is added, and nothing works differently.</p>
       <div class="actions">
         <a class="btn primary" href="#install">Install the extension</a>
         <a class="btn" href="https://github.com/corentin-gautier/restyle-for-twitch">View on GitHub</a>
@@ -225,14 +227,14 @@
         <button type="button" aria-pressed="false" data-page="video" data-label="a video and its chat replay">Video</button>
       </div>
       <div class="compare__frame">
-        <img data-after src="home-after.webp" width="1600" height="900" alt="Twitch with the extension: the home page">
-        <img data-before class="compare__before" src="home-before.webp" width="1600" height="900" alt="Twitch without the extension: the home page">
+        <img data-after src="home-after.webp" width="1700" height="956" alt="Twitch with the extension: the home page">
+        <img data-before class="compare__before" src="home-before.webp" width="1700" height="956" alt="Twitch without the extension: the home page">
         <span class="compare__label compare__label--before" aria-hidden="true">Before</span>
         <span class="compare__label compare__label--after" aria-hidden="true">After</span>
         <span class="compare__handle" aria-hidden="true"></span>
         <input type="range" min="0" max="100" value="50" step="any" aria-label="Share of the image showing Twitch without the extension">
       </div>
-      <figcaption>Twitch without and with the extension. Pick a page, then drag the divider or use the arrow keys.</figcaption>
+      <figcaption>Twitch without and with the extension, each page in a different theme. Pick a page, then drag the divider or use the arrow keys.</figcaption>
     </figure>
 
     <section id="features">
@@ -245,7 +247,7 @@
         <li><a href="#channel"><strong>Channel pages</strong><span>Framed player, one column</span></a></li>
         <li><a href="#chat"><strong>Chat</strong><span>Muted until hovered</span></a></li>
         <li><a href="#menus"><strong>Menus and dialogs</strong><span>Flat, with borders</span></a></li>
-        <li><a href="#settings"><strong>Your colours</strong><span>Accent, background, spacing</span></a></li>
+        <li><a href="#settings"><strong>Your settings</strong><span>Themes, colours, spacing, corners</span></a></li>
       </ul>
 
       <article class="feature text-only" id="sidebar">
@@ -268,6 +270,7 @@
             <li>Large shelf titles, the same on the home page, channel pages and under a video.</li>
             <li>Rounded thumbnails, and cards that put the streamer's name first.</li>
             <li>Tags and categories become small chips in your accent colour.</li>
+            <li>Hovering a card dims the ones around it, and video cards no longer play an animated preview.</li>
           </ul>
         </div>
       </article>
@@ -279,6 +282,7 @@
             <li>The player is inset and rounded, with the stream information in a centred column below it.</li>
             <li>Offline channels, videos and clips follow the same column and the same cards.</li>
             <li>Panels line up on the column instead of floating in the middle.</li>
+            <li>Team pages lose the full-page photo: a header with the team's logo, name and banner, the player, and the members in a panel on the right.</li>
           </ul>
         </div>
       </article>
@@ -290,6 +294,7 @@
             <li>Muted messages that return to full contrast on hover, and a soft fade at the top.</li>
             <li>The gifter leaderboard above the messages is hidden.</li>
             <li>Chat replay on videos gets the same treatment as the live chat.</li>
+            <li>Its popups (emotes, cheers, rewards, drops, chat identity) share one framed style.</li>
           </ul>
         </div>
       </article>
@@ -321,10 +326,15 @@
         <tr><th scope="row">Channel colours</th><td>On a channel's pages, takes the accent and a tinted background from the channel's own colour, adjusted until text stays readable.</td></tr>
       </table>
       <figure class="popup-shot">
-        <img src="popup.png" width="300" height="560" loading="lazy" alt="The settings popup, with the Midnight theme selected among eight colour swatches." />
+        <img src="popup.png" width="300" height="627" loading="lazy" alt="The settings popup, with the Midnight theme selected among eight colour swatches." />
         <figcaption>The settings popup, here with the Midnight theme.</figcaption>
       </figure>
       </div>
+      <figure class="shot themes">
+        <img src="themes.jpg" width="1280" height="800" loading="lazy" alt="The Browse page cut into diagonal bands, each in a different theme, from dark blue on the left to a light cream on the right.">
+        <figcaption>One page, several themes: each band shows the same Browse page in a different one.</figcaption>
+      </figure>
+      <p>The popup follows the browser's language: English, French, Spanish, Portuguese, German, Italian, Dutch, Polish, Turkish, Russian, Japanese, Korean and Chinese (simplified and traditional). Other languages get English.</p>
     </section>
 
     <section id="install">

@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Spokojniejszy, bardziej spójny interfejs Twitcha."
+  },
+  "enable": {
+    "message": "Włącz na Twitchu"
+  },
+  "spacing": {
+    "message": "Odstępy"
+  },
+  "spacingCompact": {
+    "message": "Małe"
+  },
+  "spacingAiry": {
+    "message": "Średnie"
+  },
+  "spacingVeryAiry": {
+    "message": "Duże"
+  },
+  "corners": {
+    "message": "Rogi"
+  },
+  "cornersSquare": {
+    "message": "Ostre"
+  },
+  "cornersSoft": {
+    "message": "Łagodne"
+  },
+  "cornersRound": {
+    "message": "Okrągłe"
+  },
+  "accent": {
+    "message": "Kolor akcentu"
+  },
+  "background": {
+    "message": "Kolor tła"
+  },
+  "reset": {
+    "message": "Domyślny"
+  },
+  "plainChat": {
+    "message": "Prosty czat"
+  },
+  "plainChatHint": {
+    "message": "Bez odznak i kolorów nazw"
+  },
+  "themes": {
+    "message": "Motywy"
+  },
+  "themeDefault": {
+    "message": "Domyślny"
+  },
+  "themeMidnight": {
+    "message": "Północ"
+  },
+  "themeForest": {
+    "message": "Las"
+  },
+  "themeEmber": {
+    "message": "Żar"
+  },
+  "themeRose": {
+    "message": "Róż"
+  },
+  "themeSlate": {
+    "message": "Łupek"
+  },
+  "themePaper": {
+    "message": "Papier"
+  },
+  "themeMist": {
+    "message": "Mgła"
+  },
+  "channelColors": {
+    "message": "Kolory kanału"
+  },
+  "channelColorsHint": {
+    "message": "Na stronach kanału, jeśli pozostają czytelne"
+  }
+}

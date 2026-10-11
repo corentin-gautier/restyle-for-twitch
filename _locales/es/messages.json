@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Una interfaz más tranquila y coherente para Twitch."
+  },
+  "enable": {
+    "message": "Activar en Twitch"
+  },
+  "spacing": {
+    "message": "Espaciado"
+  },
+  "spacingCompact": {
+    "message": "Compacto"
+  },
+  "spacingAiry": {
+    "message": "Amplio"
+  },
+  "spacingVeryAiry": {
+    "message": "Máximo"
+  },
+  "corners": {
+    "message": "Esquinas"
+  },
+  "cornersSquare": {
+    "message": "Rectas"
+  },
+  "cornersSoft": {
+    "message": "Suaves"
+  },
+  "cornersRound": {
+    "message": "Redondas"
+  },
+  "accent": {
+    "message": "Color de acento"
+  },
+  "background": {
+    "message": "Color de fondo"
+  },
+  "reset": {
+    "message": "Predeterminado"
+  },
+  "plainChat": {
+    "message": "Chat sencillo"
+  },
+  "plainChatHint": {
+    "message": "Sin insignias ni colores de nombre"
+  },
+  "themes": {
+    "message": "Temas"
+  },
+  "themeDefault": {
+    "message": "Predeterminado"
+  },
+  "themeMidnight": {
+    "message": "Medianoche"
+  },
+  "themeForest": {
+    "message": "Bosque"
+  },
+  "themeEmber": {
+    "message": "Brasa"
+  },
+  "themeRose": {
+    "message": "Rosa"
+  },
+  "themeSlate": {
+    "message": "Pizarra"
+  },
+  "themePaper": {
+    "message": "Papel"
+  },
+  "themeMist": {
+    "message": "Niebla"
+  },
+  "channelColors": {
+    "message": "Colores del canal"
+  },
+  "channelColorsHint": {
+    "message": "En las páginas de un canal, si siguen siendo legibles"
+  }
+}

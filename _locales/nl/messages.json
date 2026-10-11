@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Een rustigere, samenhangendere interface voor Twitch."
+  },
+  "enable": {
+    "message": "Inschakelen op Twitch"
+  },
+  "spacing": {
+    "message": "Ruimte"
+  },
+  "spacingCompact": {
+    "message": "Compact"
+  },
+  "spacingAiry": {
+    "message": "Ruim"
+  },
+  "spacingVeryAiry": {
+    "message": "Zeer ruim"
+  },
+  "corners": {
+    "message": "Hoeken"
+  },
+  "cornersSquare": {
+    "message": "Recht"
+  },
+  "cornersSoft": {
+    "message": "Zacht"
+  },
+  "cornersRound": {
+    "message": "Rond"
+  },
+  "accent": {
+    "message": "Accentkleur"
+  },
+  "background": {
+    "message": "Achtergrondkleur"
+  },
+  "reset": {
+    "message": "Standaard"
+  },
+  "plainChat": {
+    "message": "Sobere chat"
+  },
+  "plainChatHint": {
+    "message": "Geen badges, geen naamkleuren"
+  },
+  "themes": {
+    "message": "Thema's"
+  },
+  "themeDefault": {
+    "message": "Standaard"
+  },
+  "themeMidnight": {
+    "message": "Middernacht"
+  },
+  "themeForest": {
+    "message": "Bos"
+  },
+  "themeEmber": {
+    "message": "Gloed"
+  },
+  "themeRose": {
+    "message": "Roze"
+  },
+  "themeSlate": {
+    "message": "Leisteen"
+  },
+  "themePaper": {
+    "message": "Papier"
+  },
+  "themeMist": {
+    "message": "Mist"
+  },
+  "channelColors": {
+    "message": "Kanaalkleuren"
+  },
+  "channelColorsHint": {
+    "message": "Op de pagina's van een kanaal, als ze leesbaar blijven"
+  }
+}

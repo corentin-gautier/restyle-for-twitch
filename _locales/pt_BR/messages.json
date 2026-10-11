@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Uma interface mais calma e coerente para a Twitch."
+  },
+  "enable": {
+    "message": "Ativar na Twitch"
+  },
+  "spacing": {
+    "message": "Espaçamento"
+  },
+  "spacingCompact": {
+    "message": "Compacto"
+  },
+  "spacingAiry": {
+    "message": "Arejado"
+  },
+  "spacingVeryAiry": {
+    "message": "Máximo"
+  },
+  "corners": {
+    "message": "Cantos"
+  },
+  "cornersSquare": {
+    "message": "Retos"
+  },
+  "cornersSoft": {
+    "message": "Suaves"
+  },
+  "cornersRound": {
+    "message": "Redondos"
+  },
+  "accent": {
+    "message": "Cor de destaque"
+  },
+  "background": {
+    "message": "Cor de fundo"
+  },
+  "reset": {
+    "message": "Padrão"
+  },
+  "plainChat": {
+    "message": "Chat simples"
+  },
+  "plainChatHint": {
+    "message": "Sem insígnias nem cores de nome"
+  },
+  "themes": {
+    "message": "Temas"
+  },
+  "themeDefault": {
+    "message": "Padrão"
+  },
+  "themeMidnight": {
+    "message": "Meia-noite"
+  },
+  "themeForest": {
+    "message": "Floresta"
+  },
+  "themeEmber": {
+    "message": "Brasa"
+  },
+  "themeRose": {
+    "message": "Rosa"
+  },
+  "themeSlate": {
+    "message": "Ardósia"
+  },
+  "themePaper": {
+    "message": "Papel"
+  },
+  "themeMist": {
+    "message": "Névoa"
+  },
+  "channelColors": {
+    "message": "Cores do canal"
+  },
+  "channelColorsHint": {
+    "message": "Nas páginas de um canal, se continuarem legíveis"
+  }
+}

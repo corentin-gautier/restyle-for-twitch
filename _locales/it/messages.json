@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Un'interfaccia più calma e coerente per Twitch."
+  },
+  "enable": {
+    "message": "Attiva su Twitch"
+  },
+  "spacing": {
+    "message": "Spaziatura"
+  },
+  "spacingCompact": {
+    "message": "Compatta"
+  },
+  "spacingAiry": {
+    "message": "Ariosa"
+  },
+  "spacingVeryAiry": {
+    "message": "Massima"
+  },
+  "corners": {
+    "message": "Angoli"
+  },
+  "cornersSquare": {
+    "message": "Squadrati"
+  },
+  "cornersSoft": {
+    "message": "Morbidi"
+  },
+  "cornersRound": {
+    "message": "Rotondi"
+  },
+  "accent": {
+    "message": "Colore d'accento"
+  },
+  "background": {
+    "message": "Colore di sfondo"
+  },
+  "reset": {
+    "message": "Predefinito"
+  },
+  "plainChat": {
+    "message": "Chat semplice"
+  },
+  "plainChatHint": {
+    "message": "Senza badge né colori dei nomi"
+  },
+  "themes": {
+    "message": "Temi"
+  },
+  "themeDefault": {
+    "message": "Predefinito"
+  },
+  "themeMidnight": {
+    "message": "Mezzanotte"
+  },
+  "themeForest": {
+    "message": "Foresta"
+  },
+  "themeEmber": {
+    "message": "Brace"
+  },
+  "themeRose": {
+    "message": "Rosa"
+  },
+  "themeSlate": {
+    "message": "Ardesia"
+  },
+  "themePaper": {
+    "message": "Carta"
+  },
+  "themeMist": {
+    "message": "Nebbia"
+  },
+  "channelColors": {
+    "message": "Colori del canale"
+  },
+  "channelColorsHint": {
+    "message": "Nelle pagine di un canale, se restano leggibili"
+  }
+}

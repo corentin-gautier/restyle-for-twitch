@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Eine ruhigere, stimmigere Oberfläche für Twitch."
+  },
+  "enable": {
+    "message": "Auf Twitch aktivieren"
+  },
+  "spacing": {
+    "message": "Abstände"
+  },
+  "spacingCompact": {
+    "message": "Kompakt"
+  },
+  "spacingAiry": {
+    "message": "Luftig"
+  },
+  "spacingVeryAiry": {
+    "message": "Sehr luftig"
+  },
+  "corners": {
+    "message": "Ecken"
+  },
+  "cornersSquare": {
+    "message": "Eckig"
+  },
+  "cornersSoft": {
+    "message": "Weich"
+  },
+  "cornersRound": {
+    "message": "Rund"
+  },
+  "accent": {
+    "message": "Akzentfarbe"
+  },
+  "background": {
+    "message": "Hintergrundfarbe"
+  },
+  "reset": {
+    "message": "Standard"
+  },
+  "plainChat": {
+    "message": "Schlichter Chat"
+  },
+  "plainChatHint": {
+    "message": "Ohne Abzeichen und Namensfarben"
+  },
+  "themes": {
+    "message": "Designs"
+  },
+  "themeDefault": {
+    "message": "Standard"
+  },
+  "themeMidnight": {
+    "message": "Mitternacht"
+  },
+  "themeForest": {
+    "message": "Wald"
+  },
+  "themeEmber": {
+    "message": "Glut"
+  },
+  "themeRose": {
+    "message": "Rosa"
+  },
+  "themeSlate": {
+    "message": "Schiefer"
+  },
+  "themePaper": {
+    "message": "Papier"
+  },
+  "themeMist": {
+    "message": "Nebel"
+  },
+  "channelColors": {
+    "message": "Kanalfarben"
+  },
+  "channelColorsHint": {
+    "message": "Auf den Seiten eines Kanals, sofern sie lesbar bleiben"
+  }
+}

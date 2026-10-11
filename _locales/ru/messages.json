@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Более спокойный и цельный интерфейс для Twitch."
+  },
+  "enable": {
+    "message": "Включить на Twitch"
+  },
+  "spacing": {
+    "message": "Отступы"
+  },
+  "spacingCompact": {
+    "message": "Плотно"
+  },
+  "spacingAiry": {
+    "message": "Свободно"
+  },
+  "spacingVeryAiry": {
+    "message": "Просторно"
+  },
+  "corners": {
+    "message": "Углы"
+  },
+  "cornersSquare": {
+    "message": "Прямые"
+  },
+  "cornersSoft": {
+    "message": "Мягкие"
+  },
+  "cornersRound": {
+    "message": "Круглые"
+  },
+  "accent": {
+    "message": "Акцентный цвет"
+  },
+  "background": {
+    "message": "Цвет фона"
+  },
+  "reset": {
+    "message": "По умолчанию"
+  },
+  "plainChat": {
+    "message": "Простой чат"
+  },
+  "plainChatHint": {
+    "message": "Без значков и цветных ников"
+  },
+  "themes": {
+    "message": "Темы"
+  },
+  "themeDefault": {
+    "message": "По умолчанию"
+  },
+  "themeMidnight": {
+    "message": "Полночь"
+  },
+  "themeForest": {
+    "message": "Лес"
+  },
+  "themeEmber": {
+    "message": "Угли"
+  },
+  "themeRose": {
+    "message": "Роза"
+  },
+  "themeSlate": {
+    "message": "Сланец"
+  },
+  "themePaper": {
+    "message": "Бумага"
+  },
+  "themeMist": {
+    "message": "Туман"
+  },
+  "channelColors": {
+    "message": "Цвета канала"
+  },
+  "channelColorsHint": {
+    "message": "На страницах канала, если они остаются читаемыми"
+  }
+}

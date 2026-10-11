@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Twitch を、より落ち着いた統一感のある見た目に。"
+  },
+  "enable": {
+    "message": "Twitch で有効にする"
+  },
+  "spacing": {
+    "message": "余白"
+  },
+  "spacingCompact": {
+    "message": "狭め"
+  },
+  "spacingAiry": {
+    "message": "広め"
+  },
+  "spacingVeryAiry": {
+    "message": "とても広め"
+  },
+  "corners": {
+    "message": "角"
+  },
+  "cornersSquare": {
+    "message": "四角"
+  },
+  "cornersSoft": {
+    "message": "やや丸め"
+  },
+  "cornersRound": {
+    "message": "丸め"
+  },
+  "accent": {
+    "message": "アクセントカラー"
+  },
+  "background": {
+    "message": "背景色"
+  },
+  "reset": {
+    "message": "既定"
+  },
+  "plainChat": {
+    "message": "シンプルチャット"
+  },
+  "plainChatHint": {
+    "message": "バッジとユーザー名の色を非表示"
+  },
+  "themes": {
+    "message": "テーマ"
+  },
+  "themeDefault": {
+    "message": "既定"
+  },
+  "themeMidnight": {
+    "message": "ミッドナイト"
+  },
+  "themeForest": {
+    "message": "フォレスト"
+  },
+  "themeEmber": {
+    "message": "エンバー"
+  },
+  "themeRose": {
+    "message": "ローズ"
+  },
+  "themeSlate": {
+    "message": "スレート"
+  },
+  "themePaper": {
+    "message": "ペーパー"
+  },
+  "themeMist": {
+    "message": "ミスト"
+  },
+  "channelColors": {
+    "message": "チャンネルカラー"
+  },
+  "channelColorsHint": {
+    "message": "チャンネルのページで、読みやすさを保てる場合"
+  }
+}

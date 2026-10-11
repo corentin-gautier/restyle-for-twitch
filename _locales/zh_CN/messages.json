@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "让 Twitch 界面更清爽、更统一。"
+  },
+  "enable": {
+    "message": "在 Twitch 上启用"
+  },
+  "spacing": {
+    "message": "间距"
+  },
+  "spacingCompact": {
+    "message": "紧凑"
+  },
+  "spacingAiry": {
+    "message": "宽松"
+  },
+  "spacingVeryAiry": {
+    "message": "更宽松"
+  },
+  "corners": {
+    "message": "圆角"
+  },
+  "cornersSquare": {
+    "message": "无"
+  },
+  "cornersSoft": {
+    "message": "小"
+  },
+  "cornersRound": {
+    "message": "大"
+  },
+  "accent": {
+    "message": "强调色"
+  },
+  "background": {
+    "message": "背景色"
+  },
+  "reset": {
+    "message": "默认"
+  },
+  "plainChat": {
+    "message": "简洁聊天"
+  },
+  "plainChatHint": {
+    "message": "隐藏徽章和用户名颜色"
+  },
+  "themes": {
+    "message": "主题"
+  },
+  "themeDefault": {
+    "message": "默认"
+  },
+  "themeMidnight": {
+    "message": "午夜"
+  },
+  "themeForest": {
+    "message": "森林"
+  },
+  "themeEmber": {
+    "message": "余烬"
+  },
+  "themeRose": {
+    "message": "玫瑰"
+  },
+  "themeSlate": {
+    "message": "石板"
+  },
+  "themePaper": {
+    "message": "纸张"
+  },
+  "themeMist": {
+    "message": "薄雾"
+  },
+  "channelColors": {
+    "message": "频道配色"
+  },
+  "channelColorsHint": {
+    "message": "在频道页面上使用，前提是保持清晰可读"
+  }
+}

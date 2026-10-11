@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "더 차분하고 일관된 Twitch 인터페이스."
+  },
+  "enable": {
+    "message": "Twitch에서 사용"
+  },
+  "spacing": {
+    "message": "간격"
+  },
+  "spacingCompact": {
+    "message": "좁게"
+  },
+  "spacingAiry": {
+    "message": "넓게"
+  },
+  "spacingVeryAiry": {
+    "message": "아주 넓게"
+  },
+  "corners": {
+    "message": "모서리"
+  },
+  "cornersSquare": {
+    "message": "각지게"
+  },
+  "cornersSoft": {
+    "message": "살짝 둥글게"
+  },
+  "cornersRound": {
+    "message": "둥글게"
+  },
+  "accent": {
+    "message": "강조 색"
+  },
+  "background": {
+    "message": "배경 색"
+  },
+  "reset": {
+    "message": "기본값"
+  },
+  "plainChat": {
+    "message": "단순한 채팅"
+  },
+  "plainChatHint": {
+    "message": "배지와 닉네임 색상 숨김"
+  },
+  "themes": {
+    "message": "테마"
+  },
+  "themeDefault": {
+    "message": "기본"
+  },
+  "themeMidnight": {
+    "message": "미드나이트"
+  },
+  "themeForest": {
+    "message": "포레스트"
+  },
+  "themeEmber": {
+    "message": "엠버"
+  },
+  "themeRose": {
+    "message": "로즈"
+  },
+  "themeSlate": {
+    "message": "슬레이트"
+  },
+  "themePaper": {
+    "message": "페이퍼"
+  },
+  "themeMist": {
+    "message": "미스트"
+  },
+  "channelColors": {
+    "message": "채널 색상"
+  },
+  "channelColorsHint": {
+    "message": "채널 페이지에서, 가독성이 유지될 때"
+  }
+}

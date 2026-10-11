@@ -1,0 +1,80 @@
+{
+  "extDescription": {
+    "message": "Twitch için daha sakin, daha tutarlı bir arayüz."
+  },
+  "enable": {
+    "message": "Twitch'te etkinleştir"
+  },
+  "spacing": {
+    "message": "Boşluk"
+  },
+  "spacingCompact": {
+    "message": "Sıkı"
+  },
+  "spacingAiry": {
+    "message": "Ferah"
+  },
+  "spacingVeryAiry": {
+    "message": "Çok ferah"
+  },
+  "corners": {
+    "message": "Köşeler"
+  },
+  "cornersSquare": {
+    "message": "Keskin"
+  },
+  "cornersSoft": {
+    "message": "Yumuşak"
+  },
+  "cornersRound": {
+    "message": "Yuvarlak"
+  },
+  "accent": {
+    "message": "Vurgu rengi"
+  },
+  "background": {
+    "message": "Arka plan rengi"
+  },
+  "reset": {
+    "message": "Varsayılan"
+  },
+  "plainChat": {
+    "message": "Sade sohbet"
+  },
+  "plainChatHint": {
+    "message": "Rozet ve kullanıcı adı rengi yok"
+  },
+  "themes": {
+    "message": "Temalar"
+  },
+  "themeDefault": {
+    "message": "Varsayılan"
+  },
+  "themeMidnight": {
+    "message": "Gece yarısı"
+  },
+  "themeForest": {
+    "message": "Orman"
+  },
+  "themeEmber": {
+    "message": "Kor"
+  },
+  "themeRose": {
+    "message": "Gül"
+  },
+  "themeSlate": {
+    "message": "Arduvaz"
+  },
+  "themePaper": {
+    "message": "Kâğıt"
+  },
+  "themeMist": {
+    "message": "Sis"
+  },
+  "channelColors": {
+    "message": "Kanal renkleri"
+  },
+  "channelColorsHint": {
+    "message": "Kanal sayfalarında, okunaklı kaldıkları sürece"
+  }
+}

@@ -75,6 +75,94 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * Offline hero's text panel ("Offline", or "Suggested Channels" when
+   * Twitch shows another channel's stream there). Twitch centres a status
+   * badge and a title in it and leaves a bare link at the bottom. It reads
+   * from the top instead: a quiet small-caps pill, the title, the suggested
+   * channel as a name over a muted line, and its one action as a button on
+   * the bottom edge, like the live hero's.
+   */
+  & .home-carousel-info:not(.home-carousel-info--live) {
+    padding: var(--rs-6) !important;
+
+    /* Twitch's wrappers: no margin, and nothing centred. */
+    & div {
+      margin: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    & .channel-status-info {
+      padding: 0.2rem 0.8rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+
+      & strong {
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: var(--rs-caps-tracking) !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    & div:has(> h2) {
+      margin: var(--rs-3) 0 var(--rs-4) !important;
+    }
+
+    & h2 {
+      color: var(--rs-text) !important;
+    }
+
+    /* The suggested channel's category and viewers: bare text in the wrapper. */
+    & > div:first-child > div {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & .home-carousel-info--subtitle p {
+      font-size: var(--rs-text-5) !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    /* "Watch <channel> with 551 viewers": a filled button. */
+    & strong > a.tw-link {
+      display: inline-flex !important;
+      align-items: center !important;
+      min-height: 3.2rem !important;
+      padding: 0 1.4rem !important;
+      background: var(--rs-accent) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      text-decoration: none !important;
+      transition: opacity var(--rs-ease);
+
+      &,
+      & * {
+        font-size: var(--rs-text-3) !important;
+        font-weight: 600 !important;
+        color: var(--rs-on-accent) !important;
+      }
+
+      &:hover {
+        opacity: 0.88 !important;
+      }
+    }
+
+    /* "Turn on Notifications": a quieter button, in the hover tint. */
+    & .home-notify-cta button {
+      min-height: 3.2rem !important;
+      padding-inline: 0.6rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+
+      &,
+      & [data-a-target="tw-core-button-label-text"] {
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+
+  /*
    * Live hero: Twitch floats a tall, mostly empty card over the video, with
    * a black "Mute" block hanging under it. The card shrinks to what it
    * says and sits in the hero's bottom left corner, as far from the frame's

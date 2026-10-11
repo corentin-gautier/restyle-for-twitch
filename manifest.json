@@ -45,6 +45,7 @@
         "src/twitch/channel-tabs.css",
         "src/twitch/shelves.css",
         "src/twitch/video.css",
+        "src/twitch/team.css",
         "src/twitch/subscribe.css",
         "src/twitch/forms.css",
         "src/twitch/chat.css",

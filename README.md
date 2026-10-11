@@ -48,6 +48,7 @@ without reloading the page.
 | Enable on Twitch | Turns the whole restyle on or off. |
 | Spacing | Three densities: compact, airy, very airy. |
 | Corners | How rounded cards, panels, fields and buttons are: square, soft or round. |
+| Floating panels | Takes the top bar, the sidebar and the chat off the window's edges, as rounded panels. |
 | Themes | Eight ready-made pairs of background and accent colours, dark and light. |
 | Accent colour | The colour of links, tags and highlights. |
 | Plain chat | Hides chat badges and shows every username in the text colour. |

@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Круглые"
   },
+  "floating": {
+    "message": "Плавающие панели"
+  },
+  "floatingHint": {
+    "message": "Верхняя панель, боковая панель и чат с отступом от краёв"
+  },
   "accent": {
     "message": "Акцентный цвет"
   },

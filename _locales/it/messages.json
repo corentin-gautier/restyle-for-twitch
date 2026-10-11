@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Rotondi"
   },
+  "floating": {
+    "message": "Pannelli flottanti"
+  },
+  "floatingHint": {
+    "message": "Barra in alto, barra laterale e chat staccate dai bordi"
+  },
   "accent": {
     "message": "Colore d'accento"
   },

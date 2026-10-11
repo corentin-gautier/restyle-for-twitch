@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Round"
   },
+  "floating": {
+    "message": "Floating panels"
+  },
+  "floatingHint": {
+    "message": "Top bar, sidebar and chat off the edges"
+  },
   "accent": {
     "message": "Accent colour"
   },

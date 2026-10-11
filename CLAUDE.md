@@ -7,7 +7,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 
 | Path | Role |
 | --- | --- |
-| `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
+| `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
 | `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
 | `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Also sets the page state the stylesheet reads (`data-rs-nav`, `data-rs-channel` on `<html>`, `data-rs-tower` on each card grid) and stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
@@ -44,7 +44,7 @@ and a rule that must beat another goes in the same file or a later one.
 
 | File | Sections |
 | --- | --- |
-| `shell.css` | Theme remap; Top bar; Left sidebar |
+| `shell.css` | Theme remap; Top bar; Left sidebar; Floating panels |
 | `pages.css` | Pages: home, Following, Browse (also Settings, account pages, tabs) |
 | `cards.css` | Cards (grids, thumbnails, hover, loading) |
 | `channel.css` | Channel page |
@@ -73,6 +73,7 @@ checked in a headless Chrome; the others need the user's session.
 | Sign-up banner (logged out only) | Left sidebar (at its end) | `#twilight-sticky-footer-root` |
 | Menus, popovers, dialogs | Menus, popovers, dialogs | `.tw-balloon`, `.ReactModal__Content[role="dialog"]` |
 | Filter and sort menus | Filter and sort menus | `.tw-interactable` rows, `.tw-checkbox` |
+| Floating panels (popup option, `data-rs-floating` on `<html>`) | Floating panels; Chat (at its start) | `.top-nav`, `div:has(> .side-nav)`, `.right-column:not(.right-column--theatre) .channel-root__right-column > div` |
 
 ### Directory pages
 

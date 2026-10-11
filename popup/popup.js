@@ -4,6 +4,8 @@ const DEFAULTS = {
   space: 2,
   // Corner rounding: 0 square, 1 soft, 2 round.
   round: 2,
+  // Top bar, sidebar and chat as rounded panels off the window's edges.
+  floating: false,
   accent: "#8b7cf6",
   // Empty: keep the background of Twitch's current theme.
   background: "",

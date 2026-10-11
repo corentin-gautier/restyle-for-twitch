@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "丸め"
   },
+  "floating": {
+    "message": "フローティングパネル"
+  },
+  "floatingHint": {
+    "message": "上部バー、サイドバー、チャットを端から離す"
+  },
   "accent": {
     "message": "アクセントカラー"
   },

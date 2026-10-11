@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Yuvarlak"
   },
+  "floating": {
+    "message": "Yüzen paneller"
+  },
+  "floatingHint": {
+    "message": "Üst çubuk, kenar çubuğu ve sohbet kenarlardan ayrık"
+  },
   "accent": {
     "message": "Vurgu rengi"
   },

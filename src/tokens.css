@@ -55,6 +55,8 @@
    * page, on its column.
    */
   --rs-page-inset: calc(var(--rs-8) + 6rem);
+  /* "Floating panels" option: the gap around the top bar, the sidebar and the chat. */
+  --rs-panel-gap: var(--rs-4);
   --rs-avatar-card: 3.2rem;
   /* Twitch's own size for the channel avatar under the player. */
   --rs-avatar-channel: 6.4rem;

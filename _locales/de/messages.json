@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Rund"
   },
+  "floating": {
+    "message": "Schwebende Leisten"
+  },
+  "floatingHint": {
+    "message": "Obere Leiste, Seitenleiste und Chat mit Abstand zum Rand"
+  },
   "accent": {
     "message": "Akzentfarbe"
   },

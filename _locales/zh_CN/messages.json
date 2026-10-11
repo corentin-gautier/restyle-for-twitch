@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "大"
   },
+  "floating": {
+    "message": "悬浮面板"
+  },
+  "floatingHint": {
+    "message": "顶栏、侧边栏和聊天与窗口边缘留出间距"
+  },
   "accent": {
     "message": "强调色"
   },

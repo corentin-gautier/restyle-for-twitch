@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Rond"
   },
+  "floating": {
+    "message": "Zwevende panelen"
+  },
+  "floatingHint": {
+    "message": "Bovenbalk, zijbalk en chat los van de randen"
+  },
   "accent": {
     "message": "Accentkleur"
   },

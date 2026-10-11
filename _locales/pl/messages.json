@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "Okrągłe"
   },
+  "floating": {
+    "message": "Pływające panele"
+  },
+  "floatingHint": {
+    "message": "Górny pasek, pasek boczny i czat odsunięte od krawędzi"
+  },
   "accent": {
     "message": "Kolor akcentu"
   },

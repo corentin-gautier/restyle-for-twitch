@@ -121,6 +121,31 @@ html:not([data-rs="off"]) {
     pointer-events: none;
   }
 
+  /*
+   * "Floating panels" option (see shell.css): the hero lines up with the
+   * panels instead of sitting in an even inset. Its top is the sidebar's,
+   * its sides are a panel gap from the sidebar and from the window, where
+   * the top bar ends. The live frame is redrawn for that: a rounded hole,
+   * the page colour spread around it and cut off at the band's edges.
+   */
+  &[data-rs-floating] .channel-root__player--offline > div:has(> .home) {
+    clip-path: inset(0 var(--rs-panel-gap) var(--rs-2) round var(--rs-radius-l));
+  }
+
+  &[data-rs-floating] .channel-root--live.channel-root--home .channel-root__info--home::before {
+    left: var(--rs-panel-gap);
+    right: var(--rs-panel-gap);
+    height: calc(468px - var(--rs-2));
+    border: 0;
+    border-radius: var(--rs-radius-l);
+    clip-path: inset(0 calc(-1 * var(--rs-panel-gap)) calc(-1 * var(--rs-2)));
+  }
+
+  /* What sits on the live hero (the info card, Mute) keeps its distance from the frame's side. */
+  &[data-rs-floating] .home-live-player-overlay--contents {
+    padding-inline: calc(3.2rem + var(--rs-panel-gap) - var(--rs-2)) !important;
+  }
+
   /* The chat column waits off to the right there, and would add a sideways scroll. */
   & .root-scrollable:has(.channel-root--home) {
     overflow-x: hidden !important;

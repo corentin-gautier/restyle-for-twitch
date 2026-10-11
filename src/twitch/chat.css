@@ -29,6 +29,45 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * "Floating panels" option (see shell.css): the column keeps its slot and
+   * goes transparent, and the box inside it becomes the panel, a gap in from
+   * the window's right and bottom edges. Twitch gives that box the slot's
+   * width, so the gap is taken off it. Not in theatre mode, where the chat
+   * stays edge to edge beside the video.
+   */
+  &[data-rs-floating] .right-column:not(.right-column--theatre) {
+    &,
+    & .channel-root__right-column,
+    & .chat-shell,
+    & .chat-room,
+    & .stream-chat,
+    & .stream-chat-header,
+    & .chat-input,
+    & .video-chat,
+    & .video-chat__header {
+      background: transparent !important;
+    }
+
+    & .channel-root__right-column > div {
+      width: calc(100% - var(--rs-panel-gap)) !important;
+      height: calc(100% - var(--rs-panel-gap)) !important;
+      box-sizing: border-box !important;
+      background: var(--rs-surface) !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+    }
+
+    /* What Twitch pins to the slot's width inside it: the chat, the replay. */
+    & .chat-shell {
+      min-width: 0 !important;
+    }
+
+    & .video-chat {
+      flex-basis: 100% !important;
+    }
+  }
+
+  /*
    * Gifter / cheerer leaderboard pinned above the messages: drop the whole
    * top slot of the chat room when that is what it holds. Pinned messages,
    * predictions and hype trains (community highlights) are left alone.

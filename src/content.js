@@ -6,6 +6,8 @@ const DEFAULTS = {
   space: 2,
   // Corner rounding: 0 square, 1 soft, 2 round.
   round: 2,
+  // Top bar, sidebar and chat as rounded panels off the window's edges.
+  floating: false,
   accent: "#8b7cf6",
   // Empty: keep the background of Twitch's current theme.
   background: "",
@@ -92,6 +94,7 @@ function apply() {
   root.setAttribute("data-rs-space", String(settings.space));
   root.setAttribute("data-rs-round", String(settings.round));
   root.toggleAttribute("data-rs-plain-chat", settings.plainChat);
+  root.toggleAttribute("data-rs-floating", settings.floating);
 
   let { accent, background } = settings;
   const rgb = settings.channelColors && channelColor();

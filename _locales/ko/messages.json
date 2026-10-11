@@ -29,6 +29,12 @@
   "cornersRound": {
     "message": "둥글게"
   },
+  "floating": {
+    "message": "플로팅 패널"
+  },
+  "floatingHint": {
+    "message": "상단 바, 사이드바, 채팅을 가장자리에서 띄움"
+  },
   "accent": {
     "message": "강조 색"
   },

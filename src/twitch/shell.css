@@ -836,4 +836,53 @@ html:not([data-rs="off"]) {
       color: var(--rs-text) !important;
     }
   }
+
+  /*
+   * ==== Floating panels ====
+   * Option of the popup (data-rs-floating on <html>): the top bar and the
+   * sidebar come off the window's edges, as rounded panels on the page
+   * background, --rs-panel-gap from the edges and from each other. The chat
+   * column does the same in chat.css.
+   *
+   * Nothing is clipped to get the corners: each panel's background sits on
+   * one rounded box, and what Twitch stacks inside it goes transparent, so
+   * menus and popups still overflow freely. The hairline that parted a
+   * panel from the page now goes all round it. The page itself needs no gap
+   * of its own, its content is already inset from both panels.
+   */
+  &[data-rs-floating] {
+    & .top-nav {
+      margin: var(--rs-panel-gap) !important;
+    }
+
+    & .top-nav__menu {
+      box-sizing: border-box !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+    }
+
+    /* The sidebar's slot in the row under the top bar: the gap is its padding. */
+    & div:has(> .side-nav) {
+      padding: 0 0 var(--rs-panel-gap) var(--rs-panel-gap) !important;
+    }
+
+    & .side-nav {
+      box-sizing: border-box !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+    }
+
+    & .side-nav__scrollable_content {
+      background: transparent !important;
+    }
+
+    /*
+     * Sign-up banner (logged out): on the panels' gutter, without the band
+     * behind it. The panels above already end a gap before it.
+     */
+    & #twilight-sticky-footer-root:has(.upsell-bottom-banner__coolcat) {
+      padding: 0 var(--rs-panel-gap) var(--rs-panel-gap) !important;
+      background: transparent !important;
+    }
+  }
 }

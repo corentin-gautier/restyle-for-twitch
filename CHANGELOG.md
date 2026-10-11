@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.8.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.8.0...v1.8.1) (2026-10-11)
+
+
+### Fixes
+
+* increase grid list gap & add grayscale hover effect ([341e6bb](https://github.com/corentin-gautier/restyle-for-twitch/commit/341e6bbd8682df4742514e999ce80c0b90e7a8db))
+
 ## [1.8.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.7.0...v1.8.0) (2026-10-11)
 
 

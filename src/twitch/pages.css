@@ -98,6 +98,7 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-l) !important;
     box-shadow: none !important;
     transition: background-color var(--rs-ease), border-color var(--rs-ease);
+    will-change: background-color, border-color;
 
     /*
      * An inner wrapper has a fill of its own on hover, which showed as a
@@ -292,6 +293,7 @@ html:not([data-rs="off"]) {
         border-radius: var(--rs-radius-s) !important;
         color: var(--rs-label) !important;
         transition: background-color var(--rs-ease), color var(--rs-ease);
+        will-change: background-color, color;
 
         & * {
           font-size: var(--rs-text-3) !important;
@@ -428,6 +430,7 @@ html:not([data-rs="off"]) {
     text-transform: uppercase !important;
     white-space: nowrap !important;
     transition: color var(--rs-ease), box-shadow var(--rs-ease);
+    will-change: color, box-shadow;
 
     & * {
       height: auto !important;
@@ -494,6 +497,7 @@ html:not([data-rs="off"]) {
       background: transparent !important;
       color: var(--rs-muted) !important;
       transition: color var(--rs-ease), box-shadow var(--rs-ease);
+      will-change: color, box-shadow;
 
       & * {
         font-size: var(--rs-text-2) !important;

@@ -186,6 +186,7 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-pill) !important;
       background: var(--rs-hover) !important;
       transition: background-color var(--rs-ease);
+      will-change: background-color;
 
       &:hover {
         background: var(--rs-raised) !important;
@@ -281,6 +282,7 @@ html:not([data-rs="off"]) {
     text-decoration: none !important;
     color: var(--rs-label) !important;
     transition: color var(--rs-ease);
+    will-change: color;
 
     & > div {
       gap: 0.4rem !important;

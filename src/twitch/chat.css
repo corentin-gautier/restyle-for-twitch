@@ -94,11 +94,13 @@ html:not([data-rs="off"]) {
     & .text-fragment {
       color: var(--rs-text-soft) !important;
       transition: color var(--rs-ease);
+      will-change: color;
     }
 
     & .chat-badge {
       opacity: 0.6 !important;
       transition: opacity var(--rs-ease);
+      will-change: opacity;
     }
 
     &:hover {
@@ -134,6 +136,7 @@ html:not([data-rs="off"]) {
     filter: saturate(0.55) !important;
     opacity: 0.9 !important;
     transition: opacity var(--rs-ease), filter var(--rs-ease);
+    will-change: opacity, filter;
   }
 
   /* No extra hover box on the username: the message hover is enough. */
@@ -179,16 +182,19 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-m) !important;
     line-height: 1.55 !important;
     transition: background var(--rs-ease);
+    will-change: background;
 
     & .video-chat__message,
     & .text-fragment {
       color: var(--rs-text-soft) !important;
       transition: color var(--rs-ease);
+      will-change: color;
     }
 
     & .chat-badge {
       opacity: 0.6 !important;
       transition: opacity var(--rs-ease);
+      will-change: opacity;
     }
 
     & .video-chat__message-author {
@@ -499,6 +505,7 @@ html:not([data-rs="off"]) {
       border-color: transparent !important;
       border-radius: var(--rs-radius-s) !important;
       transition: background var(--rs-ease) !important;
+      will-change: background;
 
       &:hover {
         background: var(--rs-hover) !important;

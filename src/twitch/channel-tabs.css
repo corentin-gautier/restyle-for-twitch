@@ -206,6 +206,7 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-m) !important;
     background: var(--rs-raised) !important;
     transition: background-color var(--rs-ease);
+    will-change: background-color;
   }
 
   & .stream-schedule-day button:hover > div:has(> .stream-schedule-segment--element) {
@@ -345,6 +346,7 @@ html:not([data-rs="off"]) {
       background: none !important;
       color: var(--rs-label) !important;
       transition: color var(--rs-ease);
+      will-change: color;
 
       &:hover {
         color: var(--rs-text) !important;

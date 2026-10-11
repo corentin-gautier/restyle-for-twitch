@@ -49,6 +49,7 @@ html:not([data-rs="off"]) {
 
     & .gifting-option {
       transition: background-color var(--rs-ease);
+      will-change: background-color;
 
       &:hover {
         background: var(--rs-accent-tint) !important;

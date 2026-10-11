@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.5.2...v1.6.0) (2026-10-11)
+
+
+### Features
+
+* add a Firefox package ([cb72f90](https://github.com/corentin-gautier/restyle-for-twitch/commit/cb72f90536b86cd18c73dc62f316ba83d455c051))
+
+
+### Fixes
+
+* drop the offline rows' hover popup and frame centred modals ([f5c81e2](https://github.com/corentin-gautier/restyle-for-twitch/commit/f5c81e2c5361e23b23c60dbcd84ecbd85606c161))
+
 ### [1.5.2](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.5.1...v1.5.2) (2026-10-10)
 
 

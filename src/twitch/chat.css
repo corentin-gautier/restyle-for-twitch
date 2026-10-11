@@ -350,7 +350,7 @@ html:not([data-rs="off"]) {
     width: calc(34rem - 2 * var(--rs-2)) !important;
   }
 
-  & .chat-input div[class*="Attached"]:has(.reward-center__content) > div {
+  & .chat-input [role="dialog"]:has(.reward-center__content) > div {
     width: 100% !important;
     background: transparent !important;
   }
@@ -521,7 +521,14 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-l) !important;
     box-shadow: none !important;
     overflow: hidden !important;
+  }
 
+  /*
+   * What it holds. Not nested under the rule above: a class-substring test
+   * on an ancestor makes every class change on the page (Twitch flips one
+   * on <body> each time a popup opens) restyle everything under it.
+   */
+  & .chat-input [role="dialog"]:not(:has(.chat-identity-menu, .reward-center__content)) {
     & [class*="clickableHeader"] {
       border-radius: var(--rs-radius-s) !important;
 
@@ -547,7 +554,7 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-pill) !important;
       overflow: hidden !important;
 
-      & > div {
+      & [data-a-target="tw-progress-bar-animation"] {
         background: var(--rs-accent) !important;
       }
     }

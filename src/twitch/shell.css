@@ -416,11 +416,11 @@ html:not([data-rs="off"]) {
    * expanded: collapsed, these popups are where the names are (see
    * "Collapsed sidebar").
    */
-  &:not(:has(.side-nav--collapsed)) [class*="side-nav-channel-tooltip"],
-  &:not(:has(.side-nav--collapsed)) [class*="side-nav-guest-star-tooltip"],
-  &:not(:has(.side-nav--collapsed)) :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
-  &:not(:has(.side-nav--collapsed)) div:has(> [class*="side-nav-channel-tooltip"]),
-  &:not(:has(.side-nav--collapsed)) div:has(> [class*="side-nav-guest-star-tooltip"]) {
+  &:not([data-rs-nav="collapsed"]) [class*="side-nav-channel-tooltip"],
+  &:not([data-rs-nav="collapsed"]) [class*="side-nav-guest-star-tooltip"],
+  &:not([data-rs-nav="collapsed"]) :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
+  &:not([data-rs-nav="collapsed"]) div:has(> [class*="side-nav-channel-tooltip"]),
+  &:not([data-rs-nav="collapsed"]) div:has(> [class*="side-nav-guest-star-tooltip"]) {
     display: none !important;
   }
 
@@ -429,7 +429,7 @@ html:not([data-rs="off"]) {
    * link. It carries no class of its own: told by opening to the right of
    * its row and holding nothing but a link to a channel's videos.
    */
-  &:not(:has(.side-nav--collapsed)) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
+  &:not([data-rs-nav="collapsed"]) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
     display: none !important;
   }
 
@@ -439,7 +439,7 @@ html:not([data-rs="off"]) {
    * line and nothing else. Kept when the sidebar is collapsed, where the
    * name is not on screen.
    */
-  &:not(:has(.side-nav--collapsed)) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] [style*="nowrap"] > div[tabindex] p:only-child):not(:has(a, button, img)) {
+  &:not([data-rs-nav="collapsed"]) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] [style*="nowrap"] > div[tabindex] p:only-child):not(:has(a, button, img)) {
     display: none !important;
   }
 
@@ -681,7 +681,7 @@ html:not([data-rs="off"]) {
    * link to its videos) and a category's (its name). One box for all: the
    * same frame, padding and type, a strong first line and quiet ones under.
    */
-  &:has(.side-nav--collapsed) .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
+  &[data-rs-nav="collapsed"] .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
     /* The wrappers keep the generic popups' large radius and clip the box with it. */
     border-radius: 0 !important;
 
@@ -748,7 +748,7 @@ html:not([data-rs="off"]) {
    * Channels") have a tooltip of another kind, white with an arrow: the
    * same box as the popups above.
    */
-  &:has(.side-nav--collapsed) .ReactModal__Content[role="tooltip"] > [data-popper-placement^="right"] {
+  &[data-rs-nav="collapsed"] .ReactModal__Content[role="tooltip"] > [data-popper-placement^="right"] {
     & .tw-tooltip-popper-arrow {
       display: none !important;
     }

@@ -131,6 +131,82 @@ setInterval(() => {
   if (settings.channelColors && String(channelColor()) !== applied) apply();
 }, 1000);
 
+// Page state the stylesheet needs to know from the root: whether the sidebar
+// is collapsed (its popups are rendered outside it) and whether a channel's
+// Home tab is showing (the player lives outside the channel's block).
+// CSS could test both with html:has(...), but a :has() on the root is
+// re-evaluated on every DOM change and restyles the whole page each time,
+// so they are kept as attributes instead. Keep in sync with twitch/shell.css
+// and twitch/channel-tabs.css.
+function pageState() {
+  const nav = document.querySelector(".side-nav--collapsed") ? "collapsed" : null;
+  const home = document.querySelector(".channel-root--home");
+  const channel = home ? (home.classList.contains("channel-root--live") ? "live-home" : "home") : null;
+  for (const [name, value] of [["data-rs-nav", nav], ["data-rs-channel", channel]]) {
+    if (value === null) root.removeAttribute(name);
+    else if (root.getAttribute(name) !== value) root.setAttribute(name, value);
+  }
+}
+
+// Card grids (twitch/cards.css). Twitch has two kinds under one stable class:
+// grids that wrap, and shelves that hold one row whatever their width. Only
+// its generated classes tell them apart, so each grid is marked once with
+// what its own rule says.
+function towers() {
+  for (const tower of document.querySelectorAll(".tw-tower:not([data-rs-tower])")) {
+    tower.setAttribute("data-rs-tower", getComputedStyle(tower).flexWrap === "nowrap" ? "row" : "grid");
+  }
+}
+
+// Twitch is a single-page app: all of this changes without a page load. One
+// check per frame at most, however many mutations it took.
+let stateQueued = false;
+new MutationObserver(() => {
+  if (stateQueued) return;
+  stateQueued = true;
+  requestAnimationFrame(() => {
+    stateQueued = false;
+    pageState();
+    towers();
+  });
+}).observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+pageState();
+towers();
+
+// Video cards replace their thumbnail with an animated storyboard while
+// hovered: a sprite sheet downloaded and stepped through for every card the
+// pointer crosses. Twitch's script never learns that the pointer is on a
+// thumbnail: the events it reads hover from are stopped on their way down.
+// CSS :hover is not affected, and clicks go through.
+const THUMBNAIL = '[data-a-target="preview-card-image-link"]';
+const onThumbnail = (node) => node instanceof Element && node.closest(THUMBNAIL) !== null;
+
+for (const type of ["mouseover", "mouseout", "pointerover", "pointerout"]) {
+  window.addEventListener(
+    type,
+    (event) => {
+      if (!event.isTrusted || root.getAttribute("data-rs") === "off") return;
+      const target = onThumbnail(event.target);
+      const related = onThumbnail(event.relatedTarget);
+      if (!target && !related) return;
+      event.stopPropagation();
+      if (!type.endsWith("out") || target === related) return;
+      // The pointer crossed the thumbnail's edge. Twitch reads both sides of
+      // a move from this one event, so the side outside the thumbnail is
+      // told separately, as a move from or to nowhere: without it, what the
+      // pointer left would stay hovered, and what it enters would not be.
+      const Event = type.startsWith("pointer") ? PointerEvent : MouseEvent;
+      const init = { bubbles: true, cancelable: true, composed: true, view: window };
+      if (related) {
+        event.target.dispatchEvent(new Event(type, init));
+      } else if (event.relatedTarget instanceof Element) {
+        event.relatedTarget.dispatchEvent(new Event(type.replace("out", "over"), init));
+      }
+    },
+    true,
+  );
+}
+
 // Home: twitch/pages.css hides the featured carousel, but a hidden video keeps
 // autoplaying and streaming. Pause it whenever Twitch (re)starts it.
 // Keep these selectors in sync with the carousel rule in twitch/pages.css.

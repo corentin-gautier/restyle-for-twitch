@@ -45,6 +45,15 @@ html:not([data-rs="off"]) {
     background: var(--rs-bg) !important;
   }
 
+  /*
+   * A video's progress bar: the played part is painted inline in Twitch's
+   * purple, out of reach of the palette's variables. Told by that colour,
+   * the only thing that sets it apart from the buffered part.
+   */
+  & .seekbar-segment:is([style*="169, 112, 255"], [style*="a970ff" i]) {
+    background-color: var(--rs-accent) !important;
+  }
+
   & :fullscreen,
   & :fullscreen .video-player__container,
   & :fullscreen .video-ref,
@@ -147,12 +156,6 @@ html:not([data-rs="off"]) {
     padding-left: var(--rs-4) !important;
   }
 
-  /* First row: as tall as the avatar, so the name and buttons sit on its middle line. */
-  & .metadata-layout__support {
-    /* min-height: var(--rs-avatar-channel) !important; */
-    align-items: center !important;
-  }
-
   /* The gap goes between the rows, so the title and the viewer count stay level. */
   & .metadata-layout__support + div {
     margin-top: var(--rs-1) !important;
@@ -198,7 +201,6 @@ html:not([data-rs="off"]) {
     padding: 0 0.8rem !important;
     border-radius: var(--rs-radius-pill) !important;
     background: var(--rs-accent-tint) !important;
-    text-decoration: none !important;
 
     &:hover {
       background: var(--rs-accent-tint-strong) !important;

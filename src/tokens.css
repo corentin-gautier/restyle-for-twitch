@@ -41,6 +41,10 @@
 
   /* Max width of the content column under a player (three 320px panels + gaps). */
   --rs-measure: 1000px;
+
+  /* Width of each card in the grid. */
+  --rs-card-width: 320px;
+
   /*
    * Distance from the sidebar (and from the right edge) to a page's
    * content, on home, Following, Browse, a category and search. Set once per

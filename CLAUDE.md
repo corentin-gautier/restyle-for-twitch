@@ -9,7 +9,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | --- | --- |
 | `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), radii, type scale, palette. |
 | `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
-| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. |
+| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Also sets the page state the stylesheet reads (`data-rs-nav`, `data-rs-channel` on `<html>`, `data-rs-tower` on each card grid) and stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/` (en, fr). |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
@@ -108,6 +108,7 @@ checked in a headless Chrome; the others need the user's session.
 | Component | Section | Notes |
 | --- | --- | --- |
 | Stream, video and clip cards | Cards | `article`, three text layouts; name first, then title, then category or "Clipped by". |
+| Card grids | Cards | `.tw-tower`: a CSS grid with one gap, at most four cards (eight categories) to a row. Twitch decides how many cards a shelf gets, one per 30rem of the grid's width; the columns follow that count. `data-rs-tower="row"` marks the shelves Twitch keeps on one row. |
 | Category cards | Cards | `.game-card`, `.tw-box-art-card`. |
 | Shelf titles | Pages; Offline channel page | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
 | Tags and category chips | Cards; Channel page | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
@@ -135,6 +136,12 @@ the files of `src/twitch/` in the manifest's order at document start, set `data-
 screenshot. Take a capture without the stylesheet too when unsure whether a
 defect comes from Twitch or from the extension. Keep such scripts out of the
 repository.
+
+For a refactor that must change nothing, compare instead of eyeballing: save
+pages as MHTML (`Page.captureSnapshot` over CDP, popups open), then load each
+file offline, inject the sheet before and after the change, and diff every
+element's box and computed styles. Freeze transitions and animations first,
+or two runs of the same sheet differ.
 
 Logged-in pages need the user's session: a Chrome started by puppeteer is
 refused by Twitch's login. Start a normal Chrome on a separate profile with

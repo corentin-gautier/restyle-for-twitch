@@ -78,7 +78,7 @@ html:not([data-rs="off"]) {
    * The hero's video is the persistent player laid over its panel: no inset
    * there, and only the top corners rounded, to follow the panel's.
    */
-  &:has(.channel-root--home) .persistent-player:not(.persistent-player--theatre) {
+  &[data-rs-channel] .persistent-player:not(.persistent-player--theatre) {
     padding: 0 !important;
     background: transparent !important;
 
@@ -101,7 +101,7 @@ html:not([data-rs="off"]) {
    * outside, rounded inside, like the offline banner's inset. The band's
    * height is Twitch's constant, also set inline on the block below it.
    */
-  &:has(.channel-root--live.channel-root--home) .persistent-player:not(.persistent-player--theatre) :is(.video-player, .video-player__container, .video-ref, video) {
+  &[data-rs-channel="live-home"] .persistent-player:not(.persistent-player--theatre) :is(.video-player, .video-player__container, .video-ref, video) {
     border-radius: 0 !important;
   }
 
@@ -262,8 +262,7 @@ html:not([data-rs="off"]) {
     }
 
     /* The picture has corners of its own: square, the card clips it to its own. */
-    & .stream-schedule-segment--boxart,
-    & div:has(> .stream-schedule-segment--boxart) {
+    & .stream-schedule-segment--boxart {
       display: block !important;
       border-radius: 0 !important;
     }
@@ -391,10 +390,10 @@ html:not([data-rs="off"]) {
    * Shelves of categories and suggested channels: Twitch sizes their items
    * for its own, wider column. They share the row instead.
    */
-  & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower > * {
-    flex: 1 1 0 !important;
-    width: auto !important;
-    min-width: 0 !important;
+  & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower {
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(0, 1fr) !important;
   }
 
   /*

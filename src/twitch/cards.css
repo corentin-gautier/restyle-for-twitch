@@ -5,36 +5,100 @@
 html:not([data-rs="off"]) {
   /*
    * ==== Cards ====
-   * Grids. Twitch pads each grid's last row with empty placeholder items so
-   * the cards keep their width; when those wrap they form a row of their own.
-   * Row spacing therefore lives on the real cards as a bottom margin, never
-   * as a row gap, and placeholders take no height at all, otherwise every
-   * grid ends with a band of dead space.
+   * Grids: a CSS grid with one gap, for card grids and one-row shelves alike.
+   *
+   * Twitch lays them out as a wrapping flex row of fixed-width items that
+   * grow, spaced by padding on each item, and pads the last row with empty
+   * placeholder items so its cards keep their width. A grid needs neither:
+   * the items lose their padding and the placeholders go.
+   *
+   * The column count has to be Twitch's, though: it fills a shelf with as
+   * many cards as fit, one per 30rem of the grid's width (two category
+   * cards in the same room), and a row with one column more or less would
+   * end on a hole or wrap its last card. Columns are therefore 30rem wide
+   * at least, gap included, counted over the grid's full width: the grid
+   * runs one gap past its last column, in padding that a negative margin
+   * takes back, since n columns only have n - 1 gaps between them.
+   *
+   * Up to a limit: four stream or video cards to a row, eight categories.
+   * On wider screens the cards grow instead.
    */
   & .tw-tower {
-    gap: 0 !important;
-    margin-inline: calc(var(--rs-4) / -2) !important;
+    --rs-tower-gap: var(--rs-4);
+    --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
 
-    /*
-     * Column spacing is padding on the items, as Twitch does it, not a gap:
-     * Twitch gives a shelf as many cards as its width holds with no gap, and
-     * a gap would push the last one onto a row of its own.
-     */
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, var(--rs-tower-column)) !important;
+    gap: var(--rs-8) var(--rs-tower-gap) !important;
+    margin-inline: 0 calc(var(--rs-tower-gap) * -1) !important;
+    padding-inline: 0 var(--rs-tower-gap) !important;
+
     & > * {
-      padding-inline: calc(var(--rs-4) / 2) !important;
-    }
-
-    & > div {
-      margin-bottom: var(--rs-8) !important;
+      width: auto !important;
+      min-width: 0 !important;
+      padding-inline: 0 !important;
     }
 
     & > :empty,
     & > [class*="placeholder" i] {
-      height: 0 !important;
-      min-height: 0 !important;
-      margin-block: 0 !important;
-      padding-block: 0 !important;
-      border: 0 !important;
+      display: none !important;
+    }
+  }
+
+  /* Category cards: two columns in the room of one stream card. */
+  & .tw-tower:has(.game-card) {
+    --rs-tower-half: minmax(max(calc(15rem - var(--rs-tower-gap)), calc((100% - 7 * var(--rs-tower-gap)) / 8)), 1fr);
+    --rs-tower-column: var(--rs-tower-half) var(--rs-tower-half);
+  }
+
+  /*
+   * Shelves that Twitch keeps on one row whatever their width (content.js
+   * marks them): a column per card, sharing the row.
+   */
+  & .tw-tower[data-rs-tower="row"] {
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(0, 1fr) !important;
+  }
+
+  /*
+   * A sideways shelf is one row too, but as long as it takes, and Twitch
+   * scrolls it a card at a time: columns keep the pitch of its items.
+   */
+  & .preview-card-carousel .tw-tower {
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: calc(30rem - var(--rs-tower-gap)) !important;
+  }
+
+  /*
+   * Past the limit, Twitch still hands a shelf one card per 30rem: five,
+   * six or seven where four columns show, and twice that once "Show more"
+   * has added a row. The cards over a full row are dropped, or the shelf
+   * would end on a row of one or two.
+   *
+   * A one-row shelf (not a sideways one, which scrolls) drops whatever is
+   * past its fourth card, or its eighth category. A shelf that wraps is recognised by its number of cards: 5,
+   * 7, 10 or 14 only happen past the limit (they are no multiple of the
+   * two, three or four columns of a narrower grid).
+   */
+  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :nth-child(n + 5):has([data-a-target="preview-card-image-link"]),
+  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :nth-child(n + 9),
+  & .tw-tower[data-rs-tower="grid"] > :first-child:is(:nth-last-child(5), :nth-last-child(7)) ~ :nth-child(n + 5),
+  & .tw-tower[data-rs-tower="grid"] > :first-child:nth-last-child(10) ~ :nth-child(n + 9),
+  & .tw-tower[data-rs-tower="grid"] > :first-child:nth-last-child(14) ~ :nth-child(n + 13),
+  & .tw-tower[data-rs-tower="grid"]:has(.game-card) > :first-child:nth-last-child(14) ~ :nth-child(n + 9) {
+    display: none !important;
+  }
+
+  /*
+   * Six cards, or twelve categories, are also three columns after "Show
+   * more": they only mean six columns on a screen wide enough for them.
+   */
+  @media (min-width: 1850px) {
+    & .tw-tower[data-rs-tower="grid"]:not(:has(.game-card)) > :first-child:nth-last-child(6) ~ :nth-child(n + 5),
+    & .tw-tower[data-rs-tower="grid"]:has(.game-card) > :first-child:nth-last-child(12) ~ :nth-child(n + 9) {
+      display: none !important;
     }
   }
 
@@ -151,20 +215,28 @@ html:not([data-rs="off"]) {
   /*
    * Hover: a spotlight. In a grid or a shelf, the cards around the hovered
    * one recede, so the eye stays on it, and its picture eases in a little
-   * inside the frame. The fade applies to the grid's cells, which touch
-   * side by side: moving along a row never flashes the whole grid back.
+   * inside the frame. Between two cards the pointer is on none: they all
+   * stay receded, so moving along a row never flashes the grid back.
+   *
+   * Written with the grid's own :hover, not `:has(> :hover)`: a :hover
+   * inside :has() makes every pointer move re-evaluate every :has() anchor
+   * above it, up to the whole page.
    */
   & .tw-tower > * {
     transition: opacity 0.25s ease;
+    will-change: opacity;
   }
 
-  & .tw-tower:has(> :hover) > :not(:hover) {
+  & .tw-tower:hover > * {
     opacity: var(--rs-recede);
+  }
+
+  & .tw-tower:hover > :hover {
+    opacity: 1;
   }
 
   /* Movement only for those who have not asked their system to reduce it. */
   @media (prefers-reduced-motion: no-preference) {
-    & [data-a-target="preview-card-image-link"] img,
     & [data-a-target="tw-box-art-card-link"] img,
     & .tw-box-art-card img,
     & .vertical-selector img {
@@ -175,9 +247,6 @@ html:not([data-rs="off"]) {
      * Not the animated preview a video card plays on hover: it replaces the
      * still picture at its own size, and scaling it makes the swap jump.
      */
-    & .tw-tower > :hover [data-a-target="preview-card-image-link"] img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
-    & article:hover [data-a-target="preview-card-image-link"] img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
-    & [data-a-target="preview-card-image-link"]:hover img:not(.preview-card-thumbnail__image--animated, .preview-card-thumbnail__image--animated *),
     & .tw-tower > :hover [data-a-target="tw-box-art-card-link"] img,
     & .game-card:hover img,
     & [data-a-target="tw-box-art-card-link"]:hover img,
@@ -188,6 +257,13 @@ html:not([data-rs="off"]) {
     /* Browse's section cards: their illustration, a touch more. */
     & .vertical-selector:hover img {
       transform: scale(1.08) !important;
+    }
+    
+
+    /* Animated preview images: no scaling. */
+    & .preview-card-thumbnail__image--animated img {
+      transition: none !important;
+      transform: none !important;
     }
   }
 
@@ -285,7 +361,7 @@ html:not([data-rs="off"]) {
     overflow: hidden !important;
   }
 
-  & article [data-test-selector="preview-card-avatar"] .tw-avatar:not([class*="mini-avatar"] *) {
+  & article [data-test-selector="preview-card-avatar"] .tw-avatar:not(.primary-with-small-avatar__mini-avatar *, .primary-with-small-avatar__preview-card-mini-avatar *) {
     width: var(--rs-avatar-card) !important;
     height: var(--rs-avatar-card) !important;
   }
@@ -295,7 +371,7 @@ html:not([data-rs="off"]) {
    * tint, but taller and squarer than a tag, since it opens a menu. Its
    * count loses its own pill and joins the label.
    */
-  & article [class*="ScTextWrapper"] button:has(.tw-pill) {
+  & article button:has(.tw-pill) {
     height: 2.8rem !important;
     min-height: 0 !important;
     margin-top: 0 !important;
@@ -414,21 +490,21 @@ html:not([data-rs="off"]) {
     min-width: 0 !important;
     margin-top: 0 !important;
     padding-top: 0 !important;
+  }
 
-    /*
-     * Shared wrapper: dissolved so name and category become items of the
-     * column. On clips the second line is the "Clipped by" link instead.
-     */
-    & > :has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
-      display: contents !important;
+  /*
+   * Shared wrapper: dissolved so name and category become items of the
+   * column. On clips the second line is the "Clipped by" link instead.
+   */
+  & article > div:first-child > div:only-child > div:first-child > :has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
+    display: contents !important;
 
-      & > :is([data-a-target="preview-card-game-link"], :has([data-a-target="preview-card-game-link"])),
-      & > :has([data-a-target="preview-card-clip-curator-link"]) {
-        order: 1 !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        white-space: nowrap !important;
-      }
+    & > :is([data-a-target="preview-card-game-link"], :has([data-a-target="preview-card-game-link"])),
+    & > :has([data-a-target="preview-card-clip-curator-link"]) {
+      order: 1 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
     }
   }
 
@@ -439,8 +515,8 @@ html:not([data-rs="off"]) {
 
   /* The name, in each of the three builds. */
   & article a[data-a-target="preview-card-channel-link"] > div:has(> p[data-a-target="preview-card-channel-link"]),
-  & article [class*="ScTextWrapper"] > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
-  & article [class*="ScTextWrapper"] > :has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])) {
+  & article > div:first-child > div:only-child > div:first-child > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
+  & article > div:first-child > div:only-child > div:first-child > :has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])) {
     order: -1 !important;
     display: flex !important;
     align-items: center !important;
@@ -498,13 +574,26 @@ html:not([data-rs="off"]) {
    * Category cards: their name is an <h2>, kept out of the shelf-title rule
    * and given the same weight as a stream title.
    */
-  & .twilight-main h2:is(.tw-tower *, .game-card *, [class*="card" i] *, a *),
-  & .twilight-main h2:is(.tw-tower *, .game-card *, [class*="card" i] *, a *) * {
+  & .twilight-main h2:is(.tw-tower *, .game-card *, a *),
+  & .twilight-main h2:is(.tw-tower *, .game-card *, a *) * {
     font-size: var(--rs-text-5) !important;
     font-weight: 600 !important;
     line-height: 1.35 !important;
     letter-spacing: -0.005em !important;
     color: var(--rs-text) !important;
+  }
+
+  /*
+   * Category cards: the same air between the box art and the name as
+   * between a thumbnail and its text on stream cards. Twitch leaves 4px,
+   * as a margin on the name.
+   */
+  & .game-card .tw-card-body {
+    margin-top: var(--rs-3) !important;
+
+    & [data-a-target="tw-card-title"] {
+      margin-top: 0 !important;
+    }
   }
 
   /*
@@ -516,7 +605,8 @@ html:not([data-rs="off"]) {
   & .feedback-card:not(article:has([data-a-target="preview-card-image-link"]) *) {
     position: relative !important;
     z-index: 2 !important;
-    transform: translate(-1.1rem, -3.8rem) !important;
+    /* Up past the gap above the name (see the rule before this one). */
+    transform: translate(-1.1rem, calc(-3.4rem - var(--rs-3))) !important;
 
     & button {
       background: var(--rs-scrim) !important;

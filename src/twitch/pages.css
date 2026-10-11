@@ -14,6 +14,7 @@ html:not([data-rs="off"]) {
     max-width: 1760px;
     margin-inline: auto !important;
     padding-inline: var(--rs-page-inset) !important;
+    padding-top: 0 !important;
   }
 
   & div:has(> .common-centered-column),
@@ -66,8 +67,6 @@ html:not([data-rs="off"]) {
    *    cleared (the 1rem taken off is the blank leading above the capitals).
    */
   & .common-centered-column {
-    padding-top: 0 !important;
-
     & > :has(h1) {
       margin-top: 0 !important;
       padding-block: calc(var(--rs-8) + 3rem - 1rem) !important;
@@ -90,17 +89,20 @@ html:not([data-rs="off"]) {
    * saturated brand-purple pills; here they are roomy cards like the About
    * box and the panels (surface, hairline, large radius) with a large label,
    * and the accent only shows on hover. The illustrations stay. The extra
-   * room is padding on the card itself, whatever Twitch nests inside it.
+   * room is padding on the card's link.
    */
   & .vertical-selector {
-    padding: var(--rs-3) var(--rs-2) !important;
+    padding: 0 !important;
     background: var(--rs-surface) !important;
     border: var(--rs-hairline) !important;
     border-radius: var(--rs-radius-l) !important;
     box-shadow: none !important;
     transition: background-color var(--rs-ease), border-color var(--rs-ease);
 
-    /* Whichever inner wrapper carried the purple. */
+    /*
+     * An inner wrapper has a fill of its own on hover, which showed as a
+     * second, smaller hover inside the card's.
+     */
     & * {
       background-color: transparent !important;
       box-shadow: none !important;
@@ -117,16 +119,21 @@ html:not([data-rs="off"]) {
       background: var(--rs-raised) !important;
       border-color: var(--rs-accent) !important;
     }
+
+    /* On the link, so the whole card is the target, not just its middle. */
+    & > a {
+      display: block !important;
+      padding: var(--rs-3) var(--rs-2) !important;
+      border-radius: inherit !important;
+    }
   }
 
   /*
-   * The selector of the current page: Twitch rings it in white. The ring
-   * goes (whichever of border, outline or shadow draws it, on the wrapper or
-   * around the card) and the card takes the accent border instead. Focus
+   * The selector of the current page: Twitch rings its wrapper in white.
+   * The ring goes and the card takes the accent border instead. Focus
    * outlines stay, in the accent colour.
    */
-  & .vertical-selector__wrapper,
-  & .vertical-selector__wrapper > :not(.vertical-selector) {
+  & .vertical-selector__wrapper {
     border-color: transparent !important;
     box-shadow: none !important;
   }
@@ -140,16 +147,18 @@ html:not([data-rs="off"]) {
     outline-style: none !important;
   }
 
-  & .vertical-selector[class*="selected" i],
-  & .vertical-selector__wrapper[class*="selected" i] .vertical-selector,
-  & .vertical-selector:has([aria-current], [aria-selected="true"], [class*="selected" i]) {
+  & .vertical-selector__wrapper[class*="selected" i] .vertical-selector {
     background: var(--rs-raised) !important;
     border-color: var(--rs-accent) !important;
   }
 
-  /* Each selector has a 0.5rem gutter on both sides: pull the row back onto the page's edges. */
+  /*
+   * Each selector has a 0.5rem gutter on both sides: pull the row back onto
+   * the page's edges. Twitch leaves 8px between two of them: the grids' step.
+   */
   & .vertical-selector-card__container {
     margin-inline: -0.5rem !important;
+    column-gap: calc(var(--rs-4) - 0.8rem) !important;
   }
 
   /*
@@ -217,11 +226,6 @@ html:not([data-rs="off"]) {
     }
   }
 
-  /* Eight tabs: a tighter gap lets them fit in a common window. */
-  & .settings-tabs [role="tablist"] {
-    gap: var(--rs-4) !important;
-  }
-
   /* Settings, Wallet, Subscriptions: the page title, as large as Following's. */
   & .settings-tabs h2,
   & .twilight-main div:has(> div > .tw-tabs, > [role="tablist"]) > h2 {
@@ -230,12 +234,12 @@ html:not([data-rs="off"]) {
 
   /*
    * Browse: the filter row under the tabs (tag search, "Sort by"). Its
-   * controls take the shared size (see "Form controls"). The section is only
-   * identifiable by its English label.
+   * controls take the shared size, and the tag search its magnifier's room
+   * (see "Form controls"). The section is only identifiable by its English
+   * label.
    */
   & .twilight-main section[aria-label="Filter & Sort Options"] {
     & input,
-    & select,
     & button[aria-haspopup],
     & [data-test-selector^="toggle-balloon-wrapper"] > button,
     & [role="combobox"] {
@@ -245,37 +249,10 @@ html:not([data-rs="off"]) {
       font-size: var(--rs-text-4) !important;
     }
 
-    /* Left room for the magnifier, right room for the select's arrows. */
-    & input {
-      padding-inline: calc(var(--rs-control-pad) + 2.8rem) var(--rs-control-pad) !important;
-    }
-
-    & select {
-      padding-inline: var(--rs-control-pad) 3.6rem !important;
-    }
-
     & button[aria-haspopup],
     & [data-test-selector^="toggle-balloon-wrapper"] > button,
     & [role="combobox"]:not(input) {
       padding-inline: var(--rs-control-pad) !important;
-    }
-
-    /* Wrappers sized for Twitch's shorter menu buttons. */
-    & :has(> [data-test-selector^="toggle-balloon-wrapper"]) {
-      height: auto !important;
-    }
-
-    /*
-     * The magnifier laid over the search field follows its new height. Kept
-     * to bare icon holders: a dropdown sitting next to a field also contains
-     * icons, and must not be squeezed into the field's height.
-     */
-    & :has(> input) > :has(svg):not(.tw-balloon, :has(.tw-balloon, button, a, input, select, ul, [role])) {
-      top: 0 !important;
-      bottom: 0 !important;
-      height: 100% !important;
-      display: flex !important;
-      align-items: center !important;
     }
 
     /*
@@ -355,7 +332,7 @@ html:not([data-rs="off"]) {
    * Only on pages that show cards: Settings and the like use the same
    * headings for form sections and field labels.
    */
-  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, [class*="card" i] *, a *),
+  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *),
   & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *),
   & .twilight-main [data-a-target="following-channels-header"] {
     font-size: var(--rs-text-display) !important;
@@ -366,7 +343,7 @@ html:not([data-rs="off"]) {
     padding-block: var(--rs-8) var(--rs-3) !important;
   }
 
-  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, [class*="card" i] *, a *) *,
+  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *) *,
   & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) * {
     font-size: inherit !important;
     font-weight: inherit !important;
@@ -397,7 +374,9 @@ html:not([data-rs="off"]) {
     gap: var(--rs-6) !important;
     width: 100% !important;
     height: auto !important;
-    overflow: visible !important;
+    /* Tabs never wrap or shrink: a list that is too long scrolls sideways. */
+    overflow: auto hidden !important;
+    scrollbar-width: none !important;
     /*
      * The rule under the tabs is an inset shadow, not a border: the list
      * clips what sticks out of it, so a tab cannot hang over a border, but
@@ -410,6 +389,7 @@ html:not([data-rs="off"]) {
 
     & > * {
       display: flex !important;
+      flex: none !important;
       height: auto !important;
       margin: 0 !important;
       padding: 0 !important;
@@ -426,25 +406,8 @@ html:not([data-rs="off"]) {
    * and after the list; laid out as blocks they stack above and below it.
    * The list scrolls sideways on its own instead.
    */
-  & .twilight-main .tw-tabs:has(> div > button) {
-    & > div:has(> button) {
-      display: none !important;
-    }
-
-  }
-
-  /* Tabs never wrap or shrink: a list that is too long scrolls sideways. */
-  & .twilight-main [role="tablist"] {
-    overflow: auto hidden !important;
-    scrollbar-width: none !important;
-
-    & > * {
-      flex: none !important;
-    }
-
-    & [role="tab"] {
-      white-space: nowrap !important;
-    }
+  & .twilight-main .tw-tabs > div:has(> button) {
+    display: none !important;
   }
 
   & .twilight-main [role="tab"] {
@@ -463,6 +426,7 @@ html:not([data-rs="off"]) {
     font-weight: 600 !important;
     letter-spacing: var(--rs-caps-tracking) !important;
     text-transform: uppercase !important;
+    white-space: nowrap !important;
     transition: color var(--rs-ease), box-shadow var(--rs-ease);
 
     & * {

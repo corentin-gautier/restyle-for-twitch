@@ -65,8 +65,6 @@ html:not([data-rs="off"]) {
 
   /* A select button pads its label twice inside: the button alone does. */
   & .tw-select-button {
-    padding-block: 0 !important;
-
     & > div {
       padding: 0 !important;
     }
@@ -96,7 +94,7 @@ html:not([data-rs="off"]) {
    * zero-height anchor of a "Sort by" list: padding gives it a height, which
    * pushes the list that far from its button.
    */
-  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"][class*="Attached"] > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *) {
+  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *) {
     padding: 0.6rem !important;
     /* The variant attached to its button comes without a frame. */
     border: 1px solid var(--rs-float-border) !important;

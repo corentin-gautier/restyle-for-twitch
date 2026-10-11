@@ -80,6 +80,14 @@ html:not([data-rs="off"]) {
       font-size: var(--rs-text-3) !important;
       color: var(--rs-muted) !important;
     }
+
+    /* Not the "LIVE" tag that line starts with while the channel is live: white on its red. */
+    & .metadata-layout__support + div .tw-channel-status-text-indicator,
+    & .metadata-layout__support + div .tw-channel-status-text-indicator * {
+      font-size: var(--rs-text-2) !important;
+      font-weight: 600 !important;
+      color: var(--rs-on-scrim) !important;
+    }
   }
 
   /*
@@ -94,16 +102,6 @@ html:not([data-rs="off"]) {
   & .metadata-layout__split-top:has(.reedit-clip-button, [data-test-selector="clips-watch-full-button"]) {
     & div:has(+ div > [data-a-target="stream-title"]) {
       margin: 0 !important;
-
-      & p {
-        font-size: var(--rs-text-3) !important;
-        font-weight: 500 !important;
-        color: var(--rs-muted) !important;
-      }
-    }
-
-    & div:has(> [data-a-target="stream-title"]) {
-      margin-top: var(--rs-1) !important;
     }
 
     & > div[style*="width"] {
@@ -173,10 +171,6 @@ html:not([data-rs="off"]) {
     }
 
     /* Guests: avatar and name in one pill, which opens the streamer's card. */
-    & div:has(> div > span > button[aria-haspopup="dialog"]) {
-      margin: 0 !important;
-    }
-
     & div:has(> div > div > span > button[aria-haspopup="dialog"]) {
       flex-wrap: wrap !important;
       gap: var(--rs-1) !important;
@@ -259,11 +253,6 @@ html:not([data-rs="off"]) {
   & .channel-info-content .preview-card-carousel__body {
     margin-block: 0 !important;
     padding-block: 0 !important;
-  }
-
-  /* One row of cards: no row spacing to leave under it. */
-  & .channel-info-content .preview-card-carousel .tw-tower > * {
-    margin-bottom: 0 !important;
   }
 
   /*

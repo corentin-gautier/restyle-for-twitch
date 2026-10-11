@@ -12,37 +12,31 @@ html:not([data-rs="off"]) {
    * give theirs up and two steps remain, both on the title:
    * --rs-shelf-gap above it and --rs-shelf-head under it.
    */
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) div:has(:is(h2, h3, h4, h5).tw-title):not(:has(.tw-tower, article, .tw-tabs, .about-section, .default-panel)) {
-    margin-block: 0 !important;
-    padding-block: 0 !important;
-  }
+  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) {
+    & div:has(:is(h2, h3, h4, h5).tw-title):not(:has(.tw-tower, article, .tw-tabs, .about-section, .default-panel)) {
+      margin-block: 0 !important;
+      padding-block: 0 !important;
+    }
 
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) :is(h2, h3, h4, h5).tw-title:not(article *, .tw-tower *, .game-card *, .about-section *, .default-panel *, [data-test-selector="schedule-caption"]) {
-    margin: var(--rs-shelf-gap) 0 var(--rs-shelf-head) !important;
-    padding-block: 0 !important;
-  }
+    & :is(h2, h3, h4, h5).tw-title:not(article *, .tw-tower *, .game-card *, .about-section *, .default-panel *, [data-test-selector="schedule-caption"]) {
+      margin: var(--rs-shelf-gap) 0 var(--rs-shelf-head) !important;
+      padding-block: 0 !important;
+    }
 
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) :is(.find-me, [data-a-target^="home-shelf-title"]) {
-    margin-block: 0 !important;
-    padding-block: 0 !important;
-  }
+    & :is(.find-me, [data-a-target^="home-shelf-title"]) {
+      margin-block: 0 !important;
+      padding-block: 0 !important;
+    }
 
-  /*
-   * Cards keep their bottom margin as the space between rows; the grid
-   * takes the last row's back, so a shelf ends where its cards do.
-   */
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) .tw-tower:not(.preview-card-carousel *) {
-    margin-bottom: calc(var(--rs-8) * -1) !important;
-  }
+    /* Shelf cards carry a second bottom spacing, as padding on their wrapper. */
+    & .shelf-card__impression-wrapper > div {
+      padding-bottom: 0 !important;
+    }
 
-  /* Shelf cards carry a second bottom spacing, as padding on their wrapper. */
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) .shelf-card__impression-wrapper > div {
-    padding-bottom: 0 !important;
-  }
-
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) .show-more__move-up {
-    margin: var(--rs-4) 0 0 !important;
-    padding: 0 !important;
+    & .show-more__move-up {
+      margin: var(--rs-4) 0 0 !important;
+      padding: 0 !important;
+    }
   }
 
   /* Twitch insets the Home tab's column once more at the top. */
@@ -141,11 +135,6 @@ html:not([data-rs="off"]) {
       max-width: 100% !important;
       padding: 0 !important;
     }
-
-    & > .tw-col > div {
-      margin: 0 !important;
-      padding: 0 !important;
-    }
   }
 
   /*
@@ -166,10 +155,6 @@ html:not([data-rs="off"]) {
    */
   & .twilight-main div:has(> strong:only-child):has(+ div .tw-select-button):not(article *) {
     padding-right: 1.2rem !important;
-  }
-
-  & .twilight-main strong:has(+ .tw-select-button) {
-    margin-right: 1.2rem !important;
   }
 
   & .twilight-main div:has(> .tw-form-label:only-child):has(+ div :is(button, select)) {
@@ -303,6 +288,23 @@ html:not([data-rs="off"]) {
           color: inherit !important;
           fill: currentColor !important;
         }
+      }
+    }
+
+    /*
+     * Some entries end with the channel's banner, a square block set
+     * against the card. The row holding both becomes the card and clips it.
+     */
+    & div:has(> div[style*="url("]) {
+      overflow: hidden !important;
+      background: var(--rs-surface) !important;
+      border: var(--rs-hairline) !important;
+      border-radius: var(--rs-radius-l) !important;
+
+      & > div:has(button) {
+        background: none !important;
+        border: 0 !important;
+        border-radius: 0 !important;
       }
     }
   }

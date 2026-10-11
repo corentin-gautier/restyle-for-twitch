@@ -536,6 +536,7 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-m) !important;
     opacity: 0.8;
     transition: opacity 0.2s ease;
+    will-change: opacity;
 
     &:hover {
       opacity: 1;
@@ -608,7 +609,8 @@ html:not([data-rs="off"]) {
    * floating buttons; the player is rounded; the details follow the video
    * page's hierarchy and the channel block is a quiet inset.
    */
-  & .modal-wrapper__content > div[class*="clips-modal-view"] {
+  & .modal-wrapper__content:has(.clips-view-modal-content) > div {
+    position: relative !important;
     overflow: visible !important;
 
     & .clips-view-modal-content,
@@ -671,10 +673,6 @@ html:not([data-rs="off"]) {
         background: var(--rs-raised) !important;
       }
     }
-  }
-
-  & .modal-wrapper__content > div[class*="clips-modal-view"] {
-    position: relative !important;
   }
 
   /*

@@ -620,7 +620,6 @@ html:not([data-rs="off"]) {
       border-color: transparent !important;
       border-radius: var(--rs-radius-s) !important;
       transition: background var(--rs-ease) !important;
-      will-change: background;
 
       &:hover {
         background: var(--rs-hover) !important;

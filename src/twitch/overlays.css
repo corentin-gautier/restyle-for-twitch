@@ -74,7 +74,6 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-s) !important;
     color: var(--rs-label) !important;
     transition: background-color var(--rs-ease), color var(--rs-ease);
-    will-change: background-color, color;
 
     & * {
       font-size: var(--rs-text-3) !important;
@@ -781,7 +780,6 @@ html:not([data-rs="off"]) {
         border-radius: var(--rs-radius-pill) !important;
         background: var(--rs-hover) !important;
         transition: background-color var(--rs-ease);
-        will-change: background-color;
 
         &:hover {
           background: var(--rs-raised) !important;

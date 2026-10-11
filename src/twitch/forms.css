@@ -164,7 +164,6 @@ html:not([data-rs="off"]) {
       display: flex !important;
       border-radius: var(--rs-radius-m) !important;
       transition: background-color var(--rs-ease);
-      will-change: background-color;
 
       &:hover {
         background: var(--rs-hover) !important;

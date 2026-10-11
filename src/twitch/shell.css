@@ -230,7 +230,6 @@ html:not([data-rs="off"]) {
     text-transform: uppercase !important;
     color: var(--rs-label) !important;
     transition: color var(--rs-ease);
-    will-change: color;
   }
 
   & .top-nav .navigation-link:hover,
@@ -246,7 +245,6 @@ html:not([data-rs="off"]) {
   & .top-nav__menu [class*="ScButtonIcon"] {
     color: var(--rs-muted) !important;
     transition: color var(--rs-ease);
-    will-change: color;
 
     &:hover {
       color: var(--rs-text) !important;
@@ -344,7 +342,6 @@ html:not([data-rs="off"]) {
     & a {
       border-radius: var(--rs-radius-l) !important;
       transition: background-color var(--rs-ease);
-      will-change: background-color;
 
       &:hover,
       &:focus-visible {
@@ -515,7 +512,6 @@ html:not([data-rs="off"]) {
     font-weight: 600 !important;
     color: var(--rs-label) !important;
     transition: color var(--rs-ease);
-    will-change: color;
   }
 
   /* Offline channels stay a step back. */
@@ -529,7 +525,6 @@ html:not([data-rs="off"]) {
     margin-inline: 0 !important;
     border-radius: var(--rs-radius-m) !important;
     transition: background-color var(--rs-ease) !important;
-    will-change: background-color;
 
     /*
      * Twitch's own row hover is a fixed grey of its theme. Ours follows the
@@ -644,7 +639,6 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-m) !important;
     text-decoration: none !important;
     transition: background-color var(--rs-ease);
-    will-change: background-color;
 
     & > div {
       gap: var(--rs-2) !important;
@@ -785,7 +779,6 @@ html:not([data-rs="off"]) {
       margin: 0 auto !important;
       border-radius: 50% !important;
       transition: box-shadow var(--rs-ease);
-      will-change: box-shadow;
     }
 
     /* A zero-width tooltip anchor after the avatar, whose negative margin shifts the centring. */

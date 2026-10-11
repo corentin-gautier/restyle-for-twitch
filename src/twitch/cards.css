@@ -406,7 +406,6 @@ html:not([data-rs="off"]) {
     background: var(--rs-accent-tint) !important;
     color: var(--rs-accent-quiet) !important;
     transition: background-color var(--rs-ease);
-    will-change: background-color;
 
     &:hover {
       background: var(--rs-accent-tint-strong) !important;
@@ -476,7 +475,6 @@ html:not([data-rs="off"]) {
     & .media-row > a {
       border-radius: var(--rs-radius-s) !important;
       transition: background-color var(--rs-ease);
-      will-change: background-color;
 
       &:hover,
       &:focus-visible {
@@ -577,7 +575,6 @@ html:not([data-rs="off"]) {
     letter-spacing: 0 !important;
     color: var(--rs-label) !important;
     transition: color var(--rs-ease);
-    will-change: color;
   }
 
   & [data-a-target="preview-card-game-link"],
@@ -588,7 +585,6 @@ html:not([data-rs="off"]) {
     letter-spacing: 0 !important;
     color: var(--rs-faint) !important;
     transition: color var(--rs-ease);
-    will-change: color;
   }
 
   & article p[data-a-target="preview-card-channel-link"]:hover,

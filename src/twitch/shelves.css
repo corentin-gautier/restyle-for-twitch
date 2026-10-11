@@ -279,7 +279,6 @@ html:not([data-rs="off"]) {
         border-radius: var(--rs-radius-pill) !important;
         color: var(--rs-text) !important;
         transition: background-color var(--rs-ease);
-        will-change: background-color;
 
         &:hover {
           background: var(--rs-accent-tint-strong) !important;
@@ -364,7 +363,6 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-l) !important;
     overflow: hidden !important;
     transition: border-color var(--rs-ease);
-    will-change: border-color;
 
     &:hover {
       border-color: var(--rs-float-border) !important;
@@ -431,7 +429,6 @@ html:not([data-rs="off"]) {
       background: var(--rs-hover) !important;
       color: var(--rs-label) !important;
       transition: background-color var(--rs-ease), color var(--rs-ease);
-      will-change: background-color, color;
 
       & * {
         color: inherit !important;

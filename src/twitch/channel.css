@@ -352,7 +352,6 @@ html:not([data-rs="off"]) {
     font-weight: 500 !important;
     color: var(--rs-muted) !important;
     transition: color var(--rs-ease);
-    will-change: color;
   }
 
   & .about-section .social-media-link:hover,

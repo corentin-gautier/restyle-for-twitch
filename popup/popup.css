@@ -85,7 +85,6 @@ section + section {
   position: relative;
   cursor: pointer;
   transition: background 0.15s ease;
-  will-change: background;
 }
 
 .switch::after {

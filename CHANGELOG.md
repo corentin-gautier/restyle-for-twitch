@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.8.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.7.0...v1.8.0) (2026-10-11)
+
+
+### Features
+
+* lay card grids out as a CSS grid and lighten the stylesheet's selectors ([7e8d2c0](https://github.com/corentin-gautier/restyle-for-twitch/commit/7e8d2c01a7f0bb30a322c91d1caca12e762dde52))
+
+
+### Fixes
+
+* shared-stream popup in the collapsed sidebar, chat field on a light background ([ab75b28](https://github.com/corentin-gautier/restyle-for-twitch/commit/ab75b28990e5f687c1642a4d83dd1c8792230fe8))
+
+
+### Performance
+
+* hint every transitioned property with will-change ([2455f83](https://github.com/corentin-gautier/restyle-for-twitch/commit/2455f8335aabdddfb03273c0c2b62e308db52707))
+
 ## [1.7.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.6.1...v1.7.0) (2026-10-11)
 
 

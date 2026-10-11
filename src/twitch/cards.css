@@ -24,14 +24,14 @@ html:not([data-rs="off"]) {
    * On wider screens the cards grow instead.
    */
   & .tw-tower {
-    --rs-tower-gap: var(--rs-4);
+    --rs-tower-gap: var(--rs-6);
     --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
 
     display: grid !important;
     grid-template-columns: repeat(auto-fill, var(--rs-tower-column)) !important;
     gap: var(--rs-8) var(--rs-tower-gap) !important;
-    margin-inline: 0 calc(var(--rs-tower-gap) * -1) !important;
-    padding-inline: 0 var(--rs-tower-gap) !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
 
     & > * {
       width: auto !important;
@@ -223,16 +223,18 @@ html:not([data-rs="off"]) {
    * above it, up to the whole page.
    */
   & .tw-tower > * {
-    transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease, filter 0.25s ease;
     will-change: opacity;
   }
 
   & .tw-tower:hover > * {
     opacity: var(--rs-recede);
+    filter: grayscale(1);
   }
-
+  
   & .tw-tower:hover > :hover {
     opacity: 1;
+    filter: none;
   }
 
   /* Movement only for those who have not asked their system to reduce it. */

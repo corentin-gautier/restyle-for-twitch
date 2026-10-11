@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.10.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.9.1...v1.10.0) (2026-10-11)
+
+
+### Features
+
+* add a floating panels option (top bar, sidebar and chat off the edges) ([e85260b](https://github.com/corentin-gautier/restyle-for-twitch/commit/e85260b2eb4d34bbfd22c696d2fb5cb395bbe03d))
+* fade the cut-off card of a channel's carousels and move their arrows outside ([ecc69f9](https://github.com/corentin-gautier/restyle-for-twitch/commit/ecc69f90e224680661ad6b5abac8d7814f812dd2))
+* redesign the live card on a channel's home tab ([9198552](https://github.com/corentin-gautier/restyle-for-twitch/commit/9198552b6bc67d491d3d195deb4b7ae874340c4e))
+
+
+### Fixes
+
+* more room between a card's avatar or box art and its text ([30f81f2](https://github.com/corentin-gautier/restyle-for-twitch/commit/30f81f270331559455e5e590dc2949f6cf2c0050))
+
 ### [1.9.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.9.0...v1.9.1) (2026-10-11)
 
 

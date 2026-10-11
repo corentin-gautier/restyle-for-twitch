@@ -127,3 +127,10 @@ issue with a screenshot and the page's address.
 
 Some rules match English labels, so a few details may be missing when Twitch is
 displayed in another language.
+
+## License
+
+[MIT with the Commons Clause](LICENSE), © Corentin Gautier. You may use,
+modify and share it for free, as long as the copyright notice and the license
+stay with every copy. You may not sell it, alone or as the substance of a
+paid product or service.

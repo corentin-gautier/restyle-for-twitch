@@ -173,6 +173,16 @@ input[type="color"]::-webkit-color-swatch {
   border: 0;
 }
 
+/* Firefox draws the swatch as a framed, padded box. */
+input[type="color"]::-moz-color-swatch {
+  border: 0;
+}
+
+input[type="color"]::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+
 .row small {
   display: block;
   margin-top: 2px;

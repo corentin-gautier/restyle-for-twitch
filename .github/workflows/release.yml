@@ -1,7 +1,7 @@
-# Publishes a GitHub release for every version tag, with the packaged
-# extension attached under a fixed name so that
-# releases/latest/download/restyle-for-twitch.zip always points to the
-# newest one.
+# Publishes a GitHub release for every version tag, with the Chrome and
+# Firefox packages attached under fixed names so that
+# releases/latest/download/restyle-for-twitch.zip (and -firefox.zip) always
+# point to the newest ones.
 name: Release
 
 on:
@@ -20,7 +20,9 @@ jobs:
         with:
           node-version: 22
       - name: Package the extension
-        run: cp "$(./scripts/package.sh)" restyle-for-twitch.zip
+        run: |
+          cp "$(./scripts/package.sh)" restyle-for-twitch.zip
+          cp "$(./scripts/package.sh firefox)" restyle-for-twitch-firefox.zip
       # Minor versions are "## [x.y.0]" in the changelog, patches "### [x.y.z]".
       - name: Extract this version's notes from the changelog
         run: |
@@ -28,4 +30,4 @@ jobs:
       - name: Create the release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" restyle-for-twitch.zip --title "$GITHUB_REF_NAME" --notes-file notes.md
+        run: gh release create "$GITHUB_REF_NAME" restyle-for-twitch.zip restyle-for-twitch-firefox.zip --title "$GITHUB_REF_NAME" --notes-file notes.md

@@ -1,6 +1,6 @@
 # Restyle for Twitch
 
-Chrome MV3 extension that restyles twitch.tv with a stylesheet. No build step.
+Chrome and Firefox MV3 extension that restyles twitch.tv with a stylesheet. No build step.
 The user is French-speaking: reply in French, write code and docs in English.
 
 ## Files
@@ -12,9 +12,9 @@ The user is French-speaking: reply in French, write code and docs in English.
 | `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. |
 | `popup/` | Settings popup. Texts come from `_locales/` (en, fr). |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
-| `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store. |
+| `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
 | `docs/` | GitHub Pages site. |
-| `.github/workflows/release.yml` | On a `v*` tag, publishes a GitHub release with the package as `restyle-for-twitch.zip`. |
+| `.github/workflows/release.yml` | On a `v*` tag, publishes a GitHub release with the package as `restyle-for-twitch.zip`, and the Firefox one as `restyle-for-twitch-firefox.zip`. |
 
 ## Conventions
 
@@ -24,6 +24,8 @@ The user is French-speaking: reply in French, write code and docs in English.
   roles, or structure with `:has()`.
 - Use the `--rs-*` tokens rather than raw values. Twitch sets `1rem = 10px`.
 - Almost every declaration needs `!important` to beat Twitch's styles.
+- Firefox (128+) loads the same files: stick to CSS both engines support, and
+  add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
 - Nest only under single-selector parents; `:has()` inside `:has()` is invalid.
 - After an edit, check that the file still parses:
   `npx --yes lightningcss-cli@1.27.0 src/twitch.css -o /tmp/out.css`

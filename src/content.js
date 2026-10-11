@@ -147,8 +147,9 @@ setInterval(() => {
   }
 }, 1000);
 
-// Dev-only live reload, see dev-reload.js. Unpacked builds have no update_url.
-if (!("update_url" in chrome.runtime.getManifest())) {
+// Dev-only live reload, see dev-reload.js. Only the repository's manifest
+// declares that worker: the packages built by scripts/package.sh leave it out.
+if ("background" in chrome.runtime.getManifest()) {
   const timer = setInterval(() => {
     if (!chrome.runtime?.id) {
       // The extension was reloaded under us; give it a moment to come back.

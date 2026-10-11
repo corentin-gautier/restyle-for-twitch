@@ -4,7 +4,7 @@
 
 <h1 align="center">Restyle for Twitch</h1>
 
-<p align="center">A calmer, more coherent interface for twitch.tv, as a Chrome extension.</p>
+<p align="center">A calmer, more coherent interface for twitch.tv, as a Chrome and Firefox extension.</p>
 
 ![The Twitch home page with Restyle for Twitch enabled](docs/screenshot.png)
 
@@ -70,6 +70,19 @@ card.
 It needs Chrome 120 or later, and should work in other Chromium browsers of
 the same generation.
 
+### Firefox
+
+A Firefox package is built with each release, but it is not on Firefox
+Add-ons yet, and Firefox only installs signed add-ons for good. Until it is
+published there, it can be loaded for the current session:
+
+1. Download [restyle-for-twitch-firefox.zip](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest/download/restyle-for-twitch-firefox.zip)
+   from the [latest release](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest).
+2. Open `about:debugging#/runtime/this-firefox`.
+3. Click **Load Temporary Add-on** and select the zip.
+
+Firefox removes it when it closes. It needs Firefox 128 or later.
+
 ## Privacy
 
 The extension only runs on `twitch.tv`. It collects nothing and sends nothing
@@ -91,16 +104,20 @@ unpacked**. There is no build step. The extension is made of:
 When loaded unpacked, the extension reloads itself and any open Twitch tab
 whenever a CSS or JavaScript file changes.
 
-To build the Chrome Web Store package, which leaves the live reload out:
+To build the store packages, which leave the live reload out:
 
 ```sh
-./scripts/package.sh
+./scripts/package.sh            # Chrome Web Store
+./scripts/package.sh firefox    # Firefox Add-ons
+npm run package                 # both
 ```
 
-The zip is written to `dist/`. This script needs Node.js.
+The zips are written to `dist/`. The script needs Node.js. The Firefox
+manifest is derived from `manifest.json`: it gains the add-on id and the data
+collection statement Firefox asks for.
 
 Releases are cut with `npm run release` (version bump, changelog, tag).
-Pushing the tag publishes a GitHub release with that zip attached.
+Pushing the tag publishes a GitHub release with both zips attached.
 
 ## Known limits
 

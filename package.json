@@ -2,10 +2,10 @@
   "name": "restyle-for-twitch",
   "version": "1.5.2",
   "private": true,
-  "description": "A calmer, more coherent interface for Twitch, as a Chrome extension.",
+  "description": "A calmer, more coherent interface for Twitch, as a Chrome and Firefox extension.",
   "scripts": {
     "release": "standard-version",
-    "package": "./scripts/package.sh"
+    "package": "./scripts/package.sh && ./scripts/package.sh firefox"
   },
   "devDependencies": {
     "standard-version": "^9.5.0"

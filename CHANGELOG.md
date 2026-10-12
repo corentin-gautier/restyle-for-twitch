@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.12.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.11.0...v1.12.0) (2026-10-12)
+
+
+### Features
+
+* redesign the Subscribe and Gift a Sub panels ([6aabdf5](https://github.com/corentin-gautier/restyle-for-twitch/commit/6aabdf51e54f3a04dae07fcefdec795645a1442f))
+* show a card's category as a tag beside its tags, one step under the title ([01a3e85](https://github.com/corentin-gautier/restyle-for-twitch/commit/01a3e855dcd8edc658001896f301d5bdd8d96f60))
+
+
+### Fixes
+
+* channel button icons, the replay chat's Report menu and scroll button, the search field's hover ring ([da282b5](https://github.com/corentin-gautier/restyle-for-twitch/commit/da282b5897c66cfe4ea670b8c1fe470a9c92f08d))
+* tidy a channel's Home tab (notification note, shelf widths, air at the end) ([b7e14ed](https://github.com/corentin-gautier/restyle-for-twitch/commit/b7e14edb6b6516b87e81bf28461f246fbe3a5eca))
+
 ## [1.11.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.10.1...v1.11.0) (2026-10-11)
 
 

@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.13.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.12.0...v1.13.0) (2026-10-12)
+
+
+### Features
+
+* redesign the Drops & Rewards tabs (Inventory, All Campaigns, Social Media Badge) ([5e6dfe7](https://github.com/corentin-gautier/restyle-for-twitch/commit/5e6dfe773c46f5258707b1ce0eabefb1a6dea0c7))
+* redesign the "Try 1-Month Ad-Free" popover ([5e6dfe7](https://github.com/corentin-gautier/restyle-for-twitch/commit/5e6dfe773c46f5258707b1ce0eabefb1a6dea0c7))
+* restyle the Subscriptions page ([495f5b8](https://github.com/corentin-gautier/restyle-for-twitch/commit/495f5b8f39144d78fa64c912a0b980174e56968c))
+* style collection pages ([600aa99](https://github.com/corentin-gautier/restyle-for-twitch/commit/600aa993a9b2514459943f9c88ca0d83b7a68b54))
+
+
+### Fixes
+
+* leave Twitch's other sites and standalone pages unstyled ([bf454db](https://github.com/corentin-gautier/restyle-for-twitch/commit/bf454db39f17a5c9b7277777f068ba57880b1b92))
+
+
+### Performance
+
+* stop a card added to a grid from restyling the whole column ([a9fe648](https://github.com/corentin-gautier/restyle-for-twitch/commit/a9fe648a437759d768f5bf08839b52aea3ca8e63))
+* stop the stylesheet from restyling the whole page on every change ([5e6dfe7](https://github.com/corentin-gautier/restyle-for-twitch/commit/5e6dfe773c46f5258707b1ce0eabefb1a6dea0c7))
+
 ## [1.12.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.11.0...v1.12.0) (2026-10-12)
 
 

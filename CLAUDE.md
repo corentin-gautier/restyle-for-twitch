@@ -9,7 +9,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | --- | --- |
 | `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
 | `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
-| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Also sets the page state the stylesheet reads (`data-rs-nav`, `data-rs-channel` on `<html>`, `data-rs-tower` on each card grid) and stops the hover events that start a video card's animated preview. |
+| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Switches the stylesheet off (`data-rs="off"`) on the app's standalone pages (`STANDALONE`). Also sets the page state the stylesheet reads (`data-rs-nav`, `data-rs-channel` on `<html>`, `data-rs-tower` on each card grid) and stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
@@ -107,7 +107,23 @@ checked in a headless Chrome; the others need the user's session.
 | Clip | `/<channel>/clip/<slug>` | Public | Video (VOD) page | `.metadata-layout__split-top` holding `.reedit-clip-button`; guests open the streamer card |
 | Subscribe / Gift a Sub | buttons on a channel | Public (logged-out variant) | Subscribe and Gift a Sub panels | `.sub-modal`, `.support-panel` |
 | Team | `/team/<name>` | Public | Team page | `.teams-page-body__inner-container` (its two columns dissolved into one grid), `.teams-page-body__banner`, `.teams-player`, `.member-list__scrollable-container`; no left sidebar on this page |
-| Creator Dashboard | `dashboard.twitch.tv` | | excluded in `manifest.json` | |
+| Creator Dashboard | `dashboard.twitch.tv` | | not matched in `manifest.json` | |
+
+### Not styled
+
+Only the main app is matched: `www.twitch.tv` (and `clips.twitch.tv`, which
+leads into it). Every other subdomain is a separate site with its own design
+(`dashboard`, `m`, `help`, `safety`, `dev`, `blog`, `appeals`, `player`…), and
+so are two paths of `www.twitch.tv`, listed in `exclude_matches`: `/p/*`
+(About, press, legal) and `/creatorcamp/*`.
+
+Some pages of the app itself have a design of their own too: `/turbo`,
+`/downloads`, `/privacy`, `/dj-program`, `/annual-recap`, `/bits`, `/subs`,
+`/redeem`, `/activate`. The app moves to and from them without a page load,
+which the manifest cannot follow, so `src/content.js` sets `data-rs="off"` on
+them (`STANDALONE`, matched on the first segment of the path). A page of that
+kind found later goes in that list; one served by another site goes in
+`exclude_matches`.
 
 ### Shared components
 

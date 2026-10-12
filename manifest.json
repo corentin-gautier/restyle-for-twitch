@@ -30,10 +30,12 @@
   "content_scripts": [
     {
       "matches": [
-        "*://*.twitch.tv/*"
+        "*://www.twitch.tv/*",
+        "*://clips.twitch.tv/*"
       ],
       "exclude_matches": [
-        "*://dashboard.twitch.tv/*"
+        "*://www.twitch.tv/p/*",
+        "*://www.twitch.tv/creatorcamp/*"
       ],
       "css": [
         "src/tokens.css",

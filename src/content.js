@@ -19,6 +19,25 @@ const DEFAULTS = {
 
 const root = document.documentElement;
 
+// Pages of the app with a design of their own (marketing, purchase and code
+// forms): the stylesheet is switched off on them, as with the popup's
+// toggle. Matched on the first segment of the path. They are reached without
+// a page load, so the manifest's exclude_matches cannot do this.
+const STANDALONE = new Set([
+  "activate",
+  "annual-recap",
+  "bits",
+  "dj-program",
+  "downloads",
+  "privacy",
+  "redeem",
+  "subs",
+  "turbo",
+]);
+const standalone = () => STANDALONE.has(location.pathname.split("/")[1]);
+// Before the settings are read, so that such a page never shows restyled.
+if (standalone()) root.setAttribute("data-rs", "off");
+
 // Relative luminance of a #rrggbb colour (WCAG).
 function luminance(hex) {
   const [r, g, b] = [1, 3, 5].map((i) => {
@@ -84,9 +103,11 @@ function channelPalette(rgb, dark) {
 let settings = DEFAULTS;
 // What the channel palette was last computed from, to skip idle ticks.
 let applied = "";
+// The path the stylesheet was last switched for.
+let path = location.pathname;
 
 function apply() {
-  if (settings.twitch) {
+  if (settings.twitch && !standalone()) {
     root.removeAttribute("data-rs");
   } else {
     root.setAttribute("data-rs", "off");
@@ -172,6 +193,10 @@ new MutationObserver(() => {
   stateQueued = true;
   requestAnimationFrame(() => {
     stateQueued = false;
+    if (location.pathname !== path) {
+      path = location.pathname;
+      apply();
+    }
     pageState();
     towers();
   });

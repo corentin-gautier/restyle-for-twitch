@@ -21,7 +21,7 @@ html:not([data-rs="off"]) {
    * Hero: the banner becomes an inset, rounded frame like the live player.
    * Clipped rather than padded, so Twitch's own sizing is left alone.
    */
-  & .channel-root__player--offline > div:has(> .home) {
+  & .channel-root__player--offline > div:where(.channel-root__player--offline > *):has(> .home) {
     clip-path: inset(var(--rs-2) round var(--rs-radius-l));
   }
 
@@ -29,7 +29,7 @@ html:not([data-rs="off"]) {
    * The banner is a backdrop, not the subject: washed with the page colour
    * so the two panels in front of it carry the hero.
    */
-  & .channel-root__player--offline > div:has(> .home) {
+  & .channel-root__player--offline > div:where(.channel-root__player--offline > *):has(> .home) {
     box-shadow: inset 0 0 0 100vmax color-mix(in srgb, var(--rs-bg) 78%, transparent) !important;
   }
 
@@ -38,7 +38,7 @@ html:not([data-rs="off"]) {
    * buttons on the right): the text panel starts on its left edge and takes
    * the room the video leaves, the video ends on its right edge.
    */
-  & .home-offline-hero > div:has(> .home-carousel-info) {
+  & .home-offline-hero > div:where(.home-offline-hero > *):has(> .home-carousel-info) {
     box-sizing: border-box !important;
     width: 100% !important;
     max-width: var(--rs-measure) !important;
@@ -105,7 +105,7 @@ html:not([data-rs="off"]) {
       }
     }
 
-    & div:has(> h2) {
+    & div:where(.home-carousel-info *):has(> h2) {
       margin: var(--rs-3) 0 var(--rs-4) !important;
     }
 
@@ -114,7 +114,7 @@ html:not([data-rs="off"]) {
     }
 
     /* The suggested channel's category and viewers: bare text in the wrapper. */
-    & > div:first-child > div {
+    & > div:first-child > div:where(.home-carousel-info > * > *) {
       font-size: var(--rs-text-3) !important;
       color: var(--rs-muted) !important;
     }
@@ -236,7 +236,7 @@ html:not([data-rs="off"]) {
       }
     }
 
-    & div:has(> h2) {
+    & div:where(.home-carousel-info--live *):has(> h2) {
       margin-top: var(--rs-2) !important;
     }
 
@@ -267,13 +267,13 @@ html:not([data-rs="off"]) {
   }
 
   /* "Mute": a floating pill, the height of the button beside it. */
-  & .home-carousel-info--live + div > div {
+  & .home-carousel-info--live + div > div:where([data-rs-channel] *) {
     margin: 0 !important;
     background: var(--rs-float) !important;
     border: 1px solid var(--rs-float-border) !important;
     border-radius: var(--rs-radius-pill) !important;
 
-    & button {
+    & button:where([data-rs-channel] * *) {
       min-height: 3.2rem !important;
       padding-inline: 0.4rem !important;
       color: var(--rs-text) !important;
@@ -353,7 +353,7 @@ html:not([data-rs="off"]) {
    * the top bar ends. The live frame is redrawn for that: a rounded hole,
    * the page colour spread around it and cut off at the band's edges.
    */
-  &[data-rs-floating] .channel-root__player--offline > div:has(> .home) {
+  &[data-rs-floating] .channel-root__player--offline > div:where(.channel-root__player--offline > *):has(> .home) {
     clip-path: inset(0 var(--rs-panel-gap) var(--rs-2) round var(--rs-radius-l));
   }
 
@@ -406,14 +406,14 @@ html:not([data-rs="off"]) {
    * the navigation, and room between the buttons and the week's dates.
    */
   /* (Tripled class: the shelf rhythm below zeroes any block holding a title.) */
-  & .home__lower-content .stream-schedule__header.stream-schedule__header.stream-schedule__header > div:has(> [data-test-selector="schedule-caption"]) {
+  & .home__lower-content .stream-schedule__header.stream-schedule__header.stream-schedule__header > div:where(.stream-schedule__header > *):has(> [data-test-selector="schedule-caption"]) {
     margin-bottom: var(--rs-3) !important;
   }
 
-  & .stream-schedule__header > div:has([data-test-selector="schedule-traversal__today-button"]) {
+  & .stream-schedule__header > div:where(.stream-schedule__header > *):has([data-test-selector="schedule-traversal__today-button"]) {
     margin-bottom: var(--rs-4) !important;
 
-    & > div:has(> p.tw-title) {
+    & > div:where(.stream-schedule__header > * > *):has(> p.tw-title) {
       margin-left: var(--rs-3) !important;
     }
   }
@@ -430,7 +430,7 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-l) var(--rs-radius-l) 0 0 !important;
   }
 
-  & .home__lower-content div:has(> .stream-schedule-week):not(.stream-schedule-times) {
+  & .home__lower-content div:where(.home__lower-content *):has(> .stream-schedule-week):not(.stream-schedule-times) {
     overflow: hidden !important;
     border: var(--rs-hairline) !important;
     border-top: 0 !important;
@@ -450,7 +450,7 @@ html:not([data-rs="off"]) {
    * title leading over one quiet line of metadata, and the picture clipped
    * to the card's corners. The bar goes.
    */
-  & .stream-schedule-day div:has(> .stream-schedule-segment--element) {
+  & .stream-schedule-day div:where(.stream-schedule-day *):has(> .stream-schedule-segment--element) {
     overflow: hidden !important;
     border: var(--rs-hairline) !important;
     border-radius: var(--rs-radius-m) !important;
@@ -458,7 +458,7 @@ html:not([data-rs="off"]) {
     transition: background-color var(--rs-ease);
   }
 
-  & .stream-schedule-day button:hover > div:has(> .stream-schedule-segment--element) {
+  & .stream-schedule-day button:hover > div:where(.stream-schedule-day * > *):has(> .stream-schedule-segment--element) {
     background: var(--rs-float) !important;
   }
 
@@ -506,7 +506,7 @@ html:not([data-rs="off"]) {
       display: none !important;
     }
 
-    & div:has(> [data-test-selector="segment-title"]),
+    & div:where(.stream-schedule-segment--element *):has(> [data-test-selector="segment-title"]),
     & .stream-schedule-segment--text-wrapper {
       margin-bottom: 0.2rem !important;
     }
@@ -538,7 +538,7 @@ html:not([data-rs="off"]) {
    * shelf like the others: the title above the clips, at the shelf size,
    * and its button a small-caps link on the right edge.
    */
-  & .home__lower-content div:has(> div[style*="background-color"]):has(a[href*="featured=true"]) {
+  & .home__lower-content div:where(.home__lower-content *):has(> div[style*="background-color"]):has(a[href*="featured=true"]) {
     display: block !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -559,7 +559,7 @@ html:not([data-rs="off"]) {
     border-radius: 0 !important;
 
     /* The row of emotes above the title. */
-    & > div:has(img):not(:has(p, a)) {
+    & > div:where(.home__lower-content * > *):has(img):not(:has(p, a)) {
       display: none !important;
     }
 
@@ -571,8 +571,8 @@ html:not([data-rs="off"]) {
     }
 
     /* Twitch clamps the title to the card's two short lines. */
-    & div:has(> p.tw-title),
-    & div:has(> div > p.tw-title) {
+    & div:where(.home__lower-content * *):has(> p.tw-title),
+    & div:where(.home__lower-content * *):has(> div > p.tw-title) {
       width: auto !important;
       max-width: none !important;
     }
@@ -596,10 +596,6 @@ html:not([data-rs="off"]) {
       color: var(--rs-label) !important;
       transition: color var(--rs-ease);
 
-      &:hover {
-        color: var(--rs-text) !important;
-      }
-
       & * {
         padding: 0 !important;
         font-size: var(--rs-text-2) !important;
@@ -609,10 +605,14 @@ html:not([data-rs="off"]) {
         color: inherit !important;
       }
     }
+
+    & a:hover {
+      color: var(--rs-text) !important;
+    }
   }
 
   /* The clips take the row the card shared with them. */
-  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) + div {
+  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) + div:where(.home__lower-content *) {
     width: 100% !important;
     max-width: none !important;
     margin: 0 !important;
@@ -670,7 +670,7 @@ html:not([data-rs="off"]) {
    * About heading are not shelves and keep their own size.
    */
   & .home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"]),
-  & .channel-info-content :has(> .preview-card-carousel) p.tw-title {
+  & .channel-info-content :where(.channel-info-content *):has(> .preview-card-carousel) p.tw-title {
     font-size: var(--rs-text-display) !important;
     font-weight: 700 !important;
     line-height: 1.2 !important;
@@ -680,12 +680,12 @@ html:not([data-rs="off"]) {
   }
 
   /* Shelves of videos space themselves (see "Shelves of other videos"). */
-  & .channel-info-content :has(> .preview-card-carousel) p.tw-title {
+  & .channel-info-content :where(.channel-info-content *):has(> .preview-card-carousel) p.tw-title {
     padding-block: 0 !important;
   }
 
   & .home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"]) *,
-  & .channel-info-content :has(> .preview-card-carousel) p.tw-title > span {
+  & .channel-info-content :where(.channel-info-content *):has(> .preview-card-carousel) p.tw-title > span {
     font-size: inherit !important;
     font-weight: inherit !important;
     line-height: inherit !important;

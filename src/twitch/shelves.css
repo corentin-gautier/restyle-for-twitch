@@ -13,7 +13,7 @@ html:not([data-rs="off"]) {
    * --rs-shelf-gap above it and --rs-shelf-head under it.
    */
   & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) {
-    & div:has(:is(h2, h3, h4, h5).tw-title):not(:has(.tw-tower, article, .tw-tabs, .about-section, .default-panel)) {
+    & div:where([data-a-target="front-page-main-content"] *, .common-centered-column *, .home__lower-content *):has(:is(h2, h3, h4, h5).tw-title):not(:has(.tw-tower, article, .tw-tabs, .about-section, .default-panel)) {
       margin-block: 0 !important;
       padding-block: 0 !important;
     }
@@ -41,7 +41,7 @@ html:not([data-rs="off"]) {
 
   /* Twitch insets the Home tab's column once more at the top. */
   & .home__lower-content > div,
-  & .home__lower-content > div > div > div:first-child {
+  & .home__lower-content > div > div > div:where(.home__lower-content > * > * > *):first-child {
     margin-top: 0 !important;
   }
 
@@ -50,9 +50,8 @@ html:not([data-rs="off"]) {
    * line in a tall blank band. A panel instead: a moon in an accent-tinted
    * disc over the line, on a surface that fades out towards its edges.
    */
-  & .common-centered-column header + div:has(> em:only-child),
-  & .home__lower-content div:has(> div > [data-test-selector="no-videos"]),
-  & .home__lower-content div:has(> img.tw-image + div strong:only-child),
+  & .common-centered-column header + div:where(.common-centered-column *):has(> em:only-child),
+  & .home__lower-content div:where(.home__lower-content *):has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child),
   & .twilight-main [data-test-selector="SubscriptionsEmptyMessage"] {
     position: relative !important;
     display: flex !important;
@@ -64,34 +63,43 @@ html:not([data-rs="off"]) {
     border: var(--rs-hairline) !important;
     border-radius: var(--rs-radius-l) !important;
     text-align: center !important;
+  }
 
-    &::before {
-      content: "";
-      width: 5.6rem;
-      height: 5.6rem;
-      border-radius: 50%;
-      background: var(--rs-accent-tint-strong);
-    }
+  /*
+   * Its disc and icon. Written out per selector, not nested: nested under
+   * several selectors they would be tried on every element of the page.
+   */
+  & .common-centered-column header + div:where(.common-centered-column *):has(> em:only-child)::before,
+  & .home__lower-content div:where(.home__lower-content *):has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)::before,
+  & .twilight-main [data-test-selector="SubscriptionsEmptyMessage"]::before {
+    content: "";
+    width: 5.6rem;
+    height: 5.6rem;
+    border-radius: 50%;
+    background: var(--rs-accent-tint-strong);
+  }
 
-    /* The moon, drawn as a mask so it takes the accent colour. */
-    &::after {
-      content: "";
-      position: absolute;
-      top: calc(var(--rs-8) + 1.6rem);
-      left: calc(50% - 1.2rem);
-      width: 2.4rem;
-      height: 2.4rem;
-      background: var(--rs-accent);
-      -webkit-mask: var(--rs-empty-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E")) center / contain no-repeat;
-      mask: var(--rs-empty-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E")) center / contain no-repeat;
-    }
+  /* The moon, drawn as a mask so it takes the accent colour. */
+  & .common-centered-column header + div:where(.common-centered-column *):has(> em:only-child)::after,
+  & .home__lower-content div:where(.home__lower-content *):has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)::after,
+  & .twilight-main [data-test-selector="SubscriptionsEmptyMessage"]::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--rs-8) + 1.6rem);
+    left: calc(50% - 1.2rem);
+    width: 2.4rem;
+    height: 2.4rem;
+    background: var(--rs-accent);
+    -webkit-mask: var(--rs-empty-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E")) center / contain no-repeat;
+    mask: var(--rs-empty-icon, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/%3E%3C/svg%3E")) center / contain no-repeat;
+  }
 
-    & > em {
-      font-size: var(--rs-text-5) !important;
-      font-style: normal !important;
-      font-weight: 600 !important;
-      color: var(--rs-label) !important;
-    }
+  /* Its line, on Following. Not nested: the rule above has several selectors. */
+  & .common-centered-column header + div:where(.common-centered-column *):has(> em:only-child) > em:where(.common-centered-column * > *) {
+    font-size: var(--rs-text-5) !important;
+    font-style: normal !important;
+    font-weight: 600 !important;
+    color: var(--rs-label) !important;
   }
 
   /*
@@ -100,8 +108,7 @@ html:not([data-rs="off"]) {
    * Clips Found"), with a film frame for the moon and one step under the
    * filter row.
    */
-  & .home__lower-content div:has(> div > [data-test-selector="no-videos"]),
-  & .home__lower-content div:has(> img.tw-image + div strong:only-child) {
+  & .home__lower-content div:where(.home__lower-content *):has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child) {
     --rs-empty-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm6 3.5v7l6-3.5z'/%3E%3C/svg%3E");
     margin: var(--rs-shelf-head) 0 0 !important;
 
@@ -169,11 +176,11 @@ html:not([data-rs="off"]) {
   /*
    * "Filter By" and "Sort by" labels: clear of the menu they name.
    */
-  & .twilight-main div:has(> strong:only-child):has(+ div .tw-select-button):not(article *) {
+  & .twilight-main div:where(.twilight-main *):has(> strong:only-child):has(+ div .tw-select-button):not(article *) {
     padding-right: 1.2rem !important;
   }
 
-  & .twilight-main div:has(> .tw-form-label:only-child):has(+ div :is(button, select)) {
+  & .twilight-main div:where(.twilight-main *):has(> .tw-form-label:only-child):has(+ div :is(button, select)) {
     padding-right: 0.8rem !important;
   }
 
@@ -181,12 +188,12 @@ html:not([data-rs="off"]) {
    * Clips tab of a channel: the shelf's whole gap sat between the filter
    * row and the title. One step under the row.
    */
-  & .home__lower-content div:has(> div > strong:only-child):has(.top-clips-time-filter) {
+  & .home__lower-content div:where(.home__lower-content *):has(> div > strong:only-child):has(.top-clips-time-filter) {
     margin: 0 !important;
     padding-block: 0 !important;
   }
 
-  & .home__lower-content div:has(> div > strong:only-child):has(.top-clips-time-filter) + div h2.tw-title {
+  & .home__lower-content div:where(.home__lower-content *):has(> div > strong:only-child):has(.top-clips-time-filter) + div h2.tw-title {
     margin-top: var(--rs-shelf-head) !important;
   }
 
@@ -195,12 +202,12 @@ html:not([data-rs="off"]) {
     margin-top: 0 !important;
   }
 
-  & .home__lower-content div:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel) {
+  & .home__lower-content div:where(.home__lower-content *):not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel) {
     margin-top: 0 !important;
   }
 
   /* The selected period is ticked twice, once in its label and once at the row's end. */
-  & [data-a-target^="time-filter-option"] div:has(> div > .tw-pill) + div:has(> .tw-svg) {
+  & [data-a-target^="time-filter-option"] div:where([data-a-target^="time-filter-option"] *):has(> div > .tw-pill) + div:where([data-a-target^="time-filter-option"] *):has(> .tw-svg) {
     display: none !important;
   }
 
@@ -219,7 +226,7 @@ html:not([data-rs="off"]) {
    * channel's colour. Cards like the others: surface, hairline, large
    * radius, as tall as their text, and a quiet button.
    */
-  & .common-centered-column header:has([data-a-target="upcoming-streams-header"]) + div {
+  & .common-centered-column header:where([data-rs-has~="upcoming"] .common-centered-column *):has([data-a-target="upcoming-streams-header"]) + div:where([data-rs-has~="upcoming"] .common-centered-column *) {
     margin: 0 !important;
 
     & .tw-grid {
@@ -230,14 +237,14 @@ html:not([data-rs="off"]) {
       padding: 0 calc(var(--rs-4) / 2) !important;
     }
 
-    & .tw-col div:not(:has(> .tw-halo, > .tw-avatar, > .tw-aspect)) {
+    & .tw-col div:where(.tw-col *):not(:has(> .tw-halo, > .tw-avatar, > .tw-aspect)) {
       height: auto !important;
       min-height: 0 !important;
       margin: 0 !important;
     }
 
     /* The card: the box holding the entry's text and its button. */
-    & div:has(> div > div > strong > a):has(button) {
+    & div:where([data-rs-has~="upcoming"] .common-centered-column * *):has(> div > div > strong > a):has(button) {
       align-items: stretch !important;
       padding: var(--rs-4) !important;
       background: var(--rs-surface) !important;
@@ -245,23 +252,23 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-l) !important;
 
       /* Channel line, then the stream's title and category, then its time. */
-      & > div:first-child,
-      & > div:first-child > div:last-child {
+      & > div:where([data-rs-has~="upcoming"] .common-centered-column * * > *):first-child,
+      & > div:first-child > div:where([data-rs-has~="upcoming"] .common-centered-column * * > * > *):last-child {
         gap: var(--rs-3) !important;
       }
 
       /* Avatar and name; colour bar and time. */
-      & div:has(> strong) {
+      & div:where([data-rs-has~="upcoming"] .common-centered-column * * *):has(> strong) {
         align-items: center !important;
         gap: 0.8rem !important;
       }
 
-      & a {
+      & a:where([data-rs-has~="upcoming"] .common-centered-column * * *) {
         color: inherit !important;
         text-decoration: none !important;
       }
 
-      & strong {
+      & strong:where([data-rs-has~="upcoming"] .common-centered-column * * *) {
         font-size: var(--rs-text-3) !important;
         font-weight: 600 !important;
         color: var(--rs-text) !important;
@@ -274,7 +281,7 @@ html:not([data-rs="off"]) {
         color: var(--rs-text) !important;
       }
 
-      & p:not(.tw-title) {
+      & p:where([data-rs-has~="upcoming"] .common-centered-column * * *):not(.tw-title) {
         font-size: var(--rs-text-3) !important;
         color: var(--rs-muted) !important;
       }
@@ -288,7 +295,7 @@ html:not([data-rs="off"]) {
         border-radius: var(--rs-radius-pill) !important;
       }
 
-      & button {
+      & button:where([data-rs-has~="upcoming"] .common-centered-column * * *) {
         height: 3rem !important;
         padding: 0 0.4rem !important;
         background: var(--rs-raised) !important;
@@ -296,14 +303,14 @@ html:not([data-rs="off"]) {
         color: var(--rs-text) !important;
         transition: background-color var(--rs-ease);
 
-        &:hover {
-          background: var(--rs-accent-tint-strong) !important;
-        }
-
-        & * {
+        & *:where([data-rs-has~="upcoming"] .common-centered-column * * * *) {
           color: inherit !important;
           fill: currentColor !important;
         }
+      }
+
+      & button:where([data-rs-has~="upcoming"] .common-centered-column * * *):hover {
+        background: var(--rs-accent-tint-strong) !important;
       }
     }
 
@@ -311,13 +318,13 @@ html:not([data-rs="off"]) {
      * Some entries end with the channel's banner, a square block set
      * against the card. The row holding both becomes the card and clips it.
      */
-    & div:has(> div[style*="url("]) {
+    & div:where([data-rs-has~="upcoming"] .common-centered-column * *):has(> div[style*="url("]) {
       overflow: hidden !important;
       background: var(--rs-surface) !important;
       border: var(--rs-hairline) !important;
       border-radius: var(--rs-radius-l) !important;
 
-      & > div:has(button) {
+      & > div:where([data-rs-has~="upcoming"] .common-centered-column * * > *):has(button) {
         background: none !important;
         border: 0 !important;
         border-radius: 0 !important;
@@ -358,8 +365,8 @@ html:not([data-rs="off"]) {
    * tab's name. It goes, with what wraps it, and the content starts one
    * step under the tabs.
    */
-  & .common-centered-column:has([data-a-target="following-live-tab"][aria-selected="true"]) :is(header, div):has(> div > [data-a-target="live-channels-header"], > [data-a-target="live-channels-header"]),
-  & .common-centered-column:has([data-a-target="following-channels-tab"][aria-selected="true"]) :is(header, div):has(> div > [data-a-target="following-channels-header"], > [data-a-target="following-channels-header"]) {
+  & .common-centered-column:has([data-a-target="following-live-tab"][aria-selected="true"]) :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="live-channels-header"], > [data-a-target="live-channels-header"]),
+  & .common-centered-column:has([data-a-target="following-channels-tab"][aria-selected="true"]) :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="following-channels-header"], > [data-a-target="following-channels-header"]) {
     display: none !important;
   }
 
@@ -428,7 +435,7 @@ html:not([data-rs="off"]) {
      * The card keeps the banner's 16:9 shape, too short for its content
      * once a wide window fits five in a row: a floor under its height.
      */
-    & > .tw-aspect > div:first-child {
+    & > .tw-aspect > div:where(.tw-aspect > *):first-child {
       padding-bottom: max(56.25%, 21rem) !important;
     }
 

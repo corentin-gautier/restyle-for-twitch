@@ -97,7 +97,7 @@ html:not([data-rs="off"]) {
    * top slot of the chat room when that is what it holds. Pinned messages,
    * predictions and hype trains (community highlights) are left alone.
    */
-  & .chat-room__content > div:has([class*="Leaderboard" i]):not(:has([class*="community-highlight"])) {
+  & .chat-room__content > div:where(.chat-room__content > *):has([class*="Leaderboard" i]):not(:has([class*="community-highlight"])) {
     display: none !important;
   }
 
@@ -107,7 +107,7 @@ html:not([data-rs="off"]) {
    * a thin line inside the card, clipped by the card's own corners.
    */
   /* Positions the bar against a box inside the card's clipping wrapper. */
-  & .community-highlight div:has(> .highlight__progress-bar) {
+  & .community-highlight div:where(.community-highlight *):has(> .highlight__progress-bar) {
     position: relative !important;
   }
 
@@ -169,13 +169,11 @@ html:not([data-rs="off"]) {
     & [data-a-target="chat-line-message-body"] {
       opacity: var(--message-opacity) !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     & .chat-badge {
       opacity: 0.6 !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     & .chat-line__message-highlight {
@@ -183,7 +181,6 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-m) !important;
       opacity: 0 !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     /*
@@ -196,7 +193,6 @@ html:not([data-rs="off"]) {
       opacity: 0 !important;
       pointer-events: none !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     /* Reached with the keyboard, it shows without the pointer on the row. */
@@ -236,7 +232,6 @@ html:not([data-rs="off"]) {
   & .chat-author__display-name {
     opacity: var(--message-opacity) !important;
     transition: opacity var(--rs-ease);
-    will-change: opacity;
   }
 
   /* No extra hover box on the username: the message hover is enough. */
@@ -327,7 +322,6 @@ html:not([data-rs="off"]) {
       opacity: 0 !important;
       pointer-events: none !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     /* Isolated, a row keeps its "Report" menu under the rows after it:
@@ -344,13 +338,11 @@ html:not([data-rs="off"]) {
     & .video-chat__message {
       opacity: var(--message-opacity) !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     & .chat-badge {
       opacity: 0.6 !important;
       transition: opacity var(--rs-ease);
-      will-change: opacity;
     }
 
     & .video-chat__message-author {
@@ -428,7 +420,7 @@ html:not([data-rs="off"]) {
       max-height: 55vh !important;
     }
 
-    & :has(> .emote-grid-section__header-title) {
+    & :where(.emote-picker *):has(> .emote-grid-section__header-title) {
       padding: var(--rs-1) 1.2rem var(--rs-3) !important;
     }
 
@@ -436,7 +428,7 @@ html:not([data-rs="off"]) {
       gap: 0.8rem 0.7rem !important;
     }
 
-    & .emote-picker__tab-content > div > div:first-child:has(> button) {
+    & .emote-picker__tab-content > div > div:first-child:where(.emote-picker__tab-content > * > *):has(> button) {
       margin-inline: 1.2rem !important;
     }
 
@@ -454,13 +446,13 @@ html:not([data-rs="off"]) {
     }
 
     /* Promoted action above the emotes ("Gigantify an Emote"). */
-    & .emote-picker__tab-content > div > div:first-child:has(> button) {
+    & .emote-picker__tab-content > div > div:first-child:where(.emote-picker__tab-content > * > *):has(> button) {
       background: var(--rs-hover) !important;
       border: 0 !important;
       border-radius: var(--rs-radius-m) !important;
       overflow: hidden !important;
 
-      & button div {
+      & button div:where(.emote-picker__tab-content > * > * * *) {
         background: transparent !important;
       }
     }
@@ -530,7 +522,7 @@ html:not([data-rs="off"]) {
     box-shadow: none !important;
     overflow: hidden !important;
 
-    & [role="dialog"] > div:first-child {
+    & [role="dialog"] > div:where([role="dialog"] > *):first-child {
       /* Full width by default: narrowed so the margin shows on the right too. */
       width: calc(100% - 2 * var(--rs-1)) !important;
       margin: var(--rs-1) !important;
@@ -538,22 +530,22 @@ html:not([data-rs="off"]) {
       overflow: hidden !important;
     }
 
-    & [role="dialog"] > div:first-child ~ div {
+    & [role="dialog"] > div:where([role="dialog"] > *):not(:first-child) {
       border: 0 !important;
       border-radius: 0 !important;
     }
 
     /* Rows under the banner: options, amounts, pin toggle. */
-    & [role="dialog"] > div:first-child ~ div > div {
+    & [role="dialog"] > div:not(:first-child) > div:where([role="dialog"] > * > *) {
       padding: var(--rs-1) var(--rs-3) !important;
     }
 
     /* The pin row pads its content a second time: one left edge for all rows. */
-    & [role="dialog"] > div:first-child ~ div > div > div:only-child {
+    & [role="dialog"] > div:not(:first-child) > div > div:where([role="dialog"] > * > * > *):only-child {
       padding-inline: 0 !important;
     }
 
-    & [role="dialog"] > div:first-child {
+    & [role="dialog"] > div:where([role="dialog"] > *):first-child {
       padding-top: var(--rs-3) !important;
       padding-left: var(--rs-3) !important;
     }
@@ -596,13 +588,13 @@ html:not([data-rs="off"]) {
   }
 
   /* One side margin for the preview and the scrolling part. */
-  & .chat-settings__popover > div:has(.name-display__name),
+  & .chat-settings__popover > div:where(.chat-settings__popover > *):has(.name-display__name),
   & .chat-identity-menu__content {
     padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
   }
 
   /* Preview of the name as it shows in chat: an inset card. */
-  & .chat-settings__popover div:has(> span > .name-display__name) {
+  & .chat-settings__popover div:where(.chat-settings__popover *):has(> span > .name-display__name) {
     margin-top: var(--rs-1) !important;
     padding: var(--rs-2) var(--rs-3) !important;
     background: var(--rs-hover) !important;
@@ -621,7 +613,7 @@ html:not([data-rs="off"]) {
     }
 
     /* Twitch frames the campaign card a second time. */
-    & div:has(> [class*="collapsibleHeader"]) {
+    & div:where(.chat-identity-menu__content *):has(> [class*="collapsibleHeader"]) {
       padding: 0 !important;
       background: none !important;
       border: 0 !important;

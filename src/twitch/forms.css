@@ -95,7 +95,7 @@ html:not([data-rs="off"]) {
    * zero-height anchor of a "Sort by" list: padding gives it a height, which
    * pushes the list that far from its button.
    */
-  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *) {
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *) {
     padding: 0.6rem !important;
     /* The variant attached to its button comes without a frame. */
     border: 1px solid var(--rs-float-border) !important;
@@ -105,20 +105,9 @@ html:not([data-rs="off"]) {
     min-width: 100% !important;
     white-space: nowrap !important;
 
-    /*
-     * When the box is a balloon (the "Report" menu of a message in a
-     * video's chat), the wrapper inside it is framed as a popup too: one
-     * frame, the box's.
-     */
-    &.tw-balloon > div {
-      padding: 0 !important;
-      border: 0 !important;
-      background: transparent !important;
-    }
-
     /* Wrappers between the box and its rows. */
-    & div:has(> div > .tw-interactable),
-    & div:has(> div > div > .tw-interactable) {
+    & div:where(.ReactModal__Content * *, [role="dialog"] * *):has(> div > .tw-interactable),
+    & div:where(.ReactModal__Content * *, [role="dialog"] * *):has(> div > div > .tw-interactable) {
       padding: 0 !important;
     }
 
@@ -126,15 +115,15 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-m) !important;
     }
 
-    & .tw-interactable > div,
-    & div:has(> div > div > .tw-checkbox) {
+    & .tw-interactable > div:where(.ReactModal__Content * * > *, [role="dialog"] * * > *),
+    & div:where(.ReactModal__Content * *, [role="dialog"] * *):has(> div > div > .tw-checkbox) {
       align-items: center !important;
       min-height: 3.6rem !important;
       padding: 0.6rem 1rem !important;
     }
 
     /* A row holding bare text ("Sorted by") is a block: its text sat at the top. */
-    & .tw-interactable > div:not(:has(*)) {
+    & .tw-interactable > div:where(.ReactModal__Content * * > *, [role="dialog"] * * > *):not(:has(*)) {
       display: flex !important;
     }
 
@@ -143,57 +132,68 @@ html:not([data-rs="off"]) {
      * block one text line tall, at its top: centred in it, and a little
      * further from its label.
      */
-    & .tw-interactable div:has(> .tw-svg:only-child) {
+    & .tw-interactable div:where(.ReactModal__Content * * *, [role="dialog"] * * *):has(> .tw-svg:only-child) {
       display: flex !important;
       align-items: center !important;
     }
 
-    & .tw-interactable div:has(> .tw-svg:only-child) + div:has(> p) {
+    & .tw-interactable div:where(.ReactModal__Content * * *, [role="dialog"] * * *):has(> .tw-svg:only-child) + div:where(.ReactModal__Content * * *, [role="dialog"] * * *):has(> p) {
       margin-left: 0.8rem !important;
     }
 
     /* Rows holding a pill ("Top 24h") pad their label a second time. */
-    & .tw-interactable > div > div > div:has(.tw-pill) {
+    & .tw-interactable > div > div > div:where(.ReactModal__Content * * > * > * > *, [role="dialog"] * * > * > * > *):has(.tw-pill) {
       padding: 0 !important;
     }
 
-    /* Checkbox lists scroll and end with a footer: the padding moves inside. */
-    &:has(.tw-checkbox) {
-      padding: 0 !important;
-    }
-
-    /*
-     * "Language": this element is not the box but a wrapper around it, whose
-     * top padding is the gap to the button. It keeps that gap, as wide as
-     * under "Sort by", and the frame goes to the box inside.
-     */
-    &:has(> div > div > .scrollable-area) {
-      padding: 0.8rem 0 0 !important;
-      background: none !important;
-      border: 0 !important;
-      border-radius: 0 !important;
-      overflow: visible !important;
-
-      & > div {
-        background: var(--rs-float) !important;
-        border: 1px solid var(--rs-float-border) !important;
-        border-radius: var(--rs-radius-l) !important;
-        overflow: hidden !important;
-      }
-    }
-
-    & .scrollable-area > div {
+    & .scrollable-area > div:where(.ReactModal__Content * * > *, [role="dialog"] * * > *) {
       padding: 0.6rem !important;
     }
 
-    & div:has(> div > div > .tw-checkbox) {
+    & div:where(.ReactModal__Content * *, [role="dialog"] * *):has(> div > div > .tw-checkbox) {
       display: flex !important;
       border-radius: var(--rs-radius-m) !important;
       transition: background-color var(--rs-ease);
-
-      &:hover {
-        background: var(--rs-hover) !important;
-      }
     }
+
+    & div:where(.ReactModal__Content * *, [role="dialog"] * *):has(> div > div > .tw-checkbox):hover {
+      background: var(--rs-hover) !important;
+    }
+  }
+
+  /*
+   * "Language": this element is not the box but a wrapper around it, whose
+   * top padding is the gap to the button. It keeps that gap, as wide as
+   * under "Sort by", and the frame goes to the box inside.
+   */
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *):has(> div > div > .scrollable-area) {
+    padding: 0.8rem 0 0 !important;
+    background: none !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+
+    & > div:where(.ReactModal__Content * > *, [role="dialog"] * > *) {
+      background: var(--rs-float) !important;
+      border: 1px solid var(--rs-float-border) !important;
+      border-radius: var(--rs-radius-l) !important;
+      overflow: hidden !important;
+    }
+  }
+
+  /* Checkbox lists scroll and end with a footer: the padding moves inside. */
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *):has(.tw-checkbox) {
+    padding: 0 !important;
+  }
+
+  /*
+   * When the box is a balloon (the "Report" menu of a message in a
+   * video's chat), the wrapper inside it is framed as a popup too: one
+   * frame, the box's.
+   */
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *).tw-balloon > div:where(.tw-balloon > *) {
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
   }
 }

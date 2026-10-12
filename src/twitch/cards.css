@@ -22,13 +22,8 @@ html:not([data-rs="off"]) {
    *
    * Up to a limit: four stream or video cards to a row, eight categories.
    * On wider screens the cards grow instead.
-   *
-   * The cards of the Subscriptions page are no .tw-tower but are laid out
-   * the same way, an empty item standing for a channel that is gone: they
-   * take the same grid (their own look is in pages.css).
    */
-  & .tw-tower,
-  & .twilight-main div:has(> div > .subscription-card) {
+  & .tw-tower {
     --rs-tower-gap: var(--rs-6);
     --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
 
@@ -44,8 +39,36 @@ html:not([data-rs="off"]) {
       padding-inline: 0 !important;
     }
 
-    & > :empty,
+    & > :where(.tw-tower > *):empty,
     & > [class*="placeholder" i] {
+      display: none !important;
+    }
+  }
+
+  /*
+   * The cards of the Subscriptions page are no .tw-tower but are laid out
+   * the same way, an empty item standing for a channel that is gone: the
+   * same grid (their own look is in pages.css). A rule of its own, not a
+   * second selector on the one above: see "Nest only under single-selector
+   * parents" in CLAUDE.md. Keep the two in sync.
+   */
+  & .twilight-main [role="tablist"] + div > div:where([role="tablist"] + div > *):has(> div > .subscription-card) {
+    --rs-tower-gap: var(--rs-6);
+    --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
+
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, var(--rs-tower-column)) !important;
+    gap: var(--rs-8) var(--rs-tower-gap) !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+
+    & > *:where([role="tablist"] + div > * > *) {
+      width: auto !important;
+      min-width: 0 !important;
+      padding-inline: 0 !important;
+    }
+
+    & > :where([role="tablist"] + div > * > *):empty {
       display: none !important;
     }
   }
@@ -108,13 +131,19 @@ html:not([data-rs="off"]) {
    * past its fourth card, or its eighth category. A shelf that wraps is recognised by its number of cards: 5,
    * 7, 10 or 14 only happen past the limit (they are no multiple of the
    * two, three or four columns of a narrower grid).
+   *
+   * content.js writes the count on the grid (data-rs-count), and whether it
+   * holds categories (data-rs-games). Counted in CSS, from the first card
+   * (":first-child:nth-last-child(5) ~ …") or on the grid with :has(), every
+   * card added, and every preview opened inside a card, had the browser
+   * restyle the whole grid.
    */
-  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :nth-child(n + 5):has([data-a-target="preview-card-image-link"]),
-  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :nth-child(n + 9),
-  & .tw-tower[data-rs-tower="grid"] > :first-child:is(:nth-last-child(5), :nth-last-child(7)) ~ :nth-child(n + 5),
-  & .tw-tower[data-rs-tower="grid"] > :first-child:nth-last-child(10) ~ :nth-child(n + 9),
-  & .tw-tower[data-rs-tower="grid"] > :first-child:nth-last-child(14) ~ :nth-child(n + 13),
-  & .tw-tower[data-rs-tower="grid"]:has(.game-card) > :first-child:nth-last-child(14) ~ :nth-child(n + 9) {
+  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :nth-child(n + 5):where(.tw-tower > *):has([data-a-target="preview-card-image-link"]),
+  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :where(.tw-tower > *):nth-child(n + 9),
+  & .tw-tower[data-rs-tower="grid"]:is([data-rs-count="5"], [data-rs-count="7"]) > :where(.tw-tower > *):nth-child(n + 5),
+  & .tw-tower[data-rs-tower="grid"][data-rs-count="10"] > :where(.tw-tower > *):nth-child(n + 9),
+  & .tw-tower[data-rs-tower="grid"][data-rs-count="14"] > :where(.tw-tower > *):nth-child(n + 13),
+  & .tw-tower[data-rs-tower="grid"][data-rs-games][data-rs-count="14"] > :where(.tw-tower > *):nth-child(n + 9) {
     display: none !important;
   }
 
@@ -123,8 +152,8 @@ html:not([data-rs="off"]) {
    * more": they only mean six columns on a screen wide enough for them.
    */
   @media (min-width: 1850px) {
-    & .tw-tower[data-rs-tower="grid"]:not(:has(.game-card)) > :first-child:nth-last-child(6) ~ :nth-child(n + 5),
-    & .tw-tower[data-rs-tower="grid"]:has(.game-card) > :first-child:nth-last-child(12) ~ :nth-child(n + 9) {
+    & .tw-tower[data-rs-tower="grid"]:not([data-rs-games])[data-rs-count="6"] > :where(.tw-tower > *):nth-child(n + 5),
+    & .tw-tower[data-rs-tower="grid"][data-rs-games][data-rs-count="12"] > :where(.tw-tower > *):nth-child(n + 9) {
       display: none !important;
     }
   }
@@ -152,7 +181,7 @@ html:not([data-rs="off"]) {
   }
 
   /* The spinner is centred on the grid, not on the ghost card it hangs from. */
-  & .tw-tower > :has(.tw-placeholder):not(:has(a)) {
+  & .tw-tower > :where(.tw-tower > *):has(.tw-placeholder):not(:has(a)) {
     position: static !important;
   }
 
@@ -160,14 +189,14 @@ html:not([data-rs="off"]) {
    * Except in a sideways shelf, which is wider than what shows of it and
    * keeps ghosts past its edge: there the spinner stays on its card.
    */
-  & .preview-card-carousel .tw-tower > :has(.tw-placeholder):not(:has(a)) {
+  & .preview-card-carousel .tw-tower > :where(.tw-tower > *):has(.tw-placeholder):not(:has(a)) {
     position: relative !important;
   }
 
-  & .tw-tower > :first-child:has(.tw-placeholder):not(:has(a))::before,
-  & .tw-tower > :has(a) + :has(.tw-placeholder):not(:has(a))::before,
+  & .tw-tower > :first-child:where(.tw-tower > *):has(.tw-placeholder):not(:has(a))::before,
+  & .tw-tower > :where(.tw-tower > *):has(a) + :where(.tw-tower > *):has(.tw-placeholder):not(:has(a))::before,
   & .search-results [data-test-selector="placeholder-result"]:not([data-test-selector="placeholder-result"] ~ *)::before,
-  & .ReactModal__Content .tw-transition > div:has(> div > .tw-placeholder-wrapper)::after {
+  & .ReactModal__Content .tw-transition > div:where(.ReactModal__Content * > *):has(> div > .tw-placeholder-wrapper)::after {
     content: "";
     position: absolute;
     left: calc(50% - 1.4rem);
@@ -183,7 +212,7 @@ html:not([data-rs="off"]) {
   }
 
   /* In a popup the box is the frame: the spinner sits in its middle. */
-  & .ReactModal__Content .tw-transition > div:has(> div > .tw-placeholder-wrapper) {
+  & .ReactModal__Content .tw-transition > div:where(.ReactModal__Content * > *):has(> div > .tw-placeholder-wrapper) {
     position: relative !important;
 
     &::after {
@@ -235,7 +264,7 @@ html:not([data-rs="off"]) {
     clip-path: inset(3px round calc(var(--rs-radius-l) - 3px)) !important;
   }
 
-  & .tw-hover-accent-effect > div:empty {
+  & .tw-hover-accent-effect > div:where(.tw-hover-accent-effect > *):empty {
     display: none !important;
   }
 
@@ -259,7 +288,7 @@ html:not([data-rs="off"]) {
    * neighbours recede), so a popup opened from one, like "Chapters", would
    * be painted under the cards after it: that card is lifted over the rest.
    */
-  & .tw-tower > :has(.tw-balloon) {
+  & .tw-tower > :where(.tw-tower > *):has(.tw-balloon) {
     z-index: 1;
   }
 
@@ -361,7 +390,7 @@ html:not([data-rs="off"]) {
   }
 
   & [data-a-target="preview-card-image-link"]:has(.tw-progress-bar, [role="progressbar"])
-    [class*="ScPositionCorner"] ~ [class*="ScPositionCorner"] {
+    [class*="ScPositionCorner"]:not(:nth-child(1 of [class*="ScPositionCorner"])) {
     transform: translateY(-1.2rem) !important;
   }
 
@@ -378,7 +407,7 @@ html:not([data-rs="off"]) {
    * gives the name its own margins in some builds only: one small step to
    * the title in all of them.
    */
-  & article > div:has([class*="ScTextWrapper"]) {
+  & article > div:where(article > *):has([class*="ScTextWrapper"]) {
     margin-top: var(--rs-3) !important;
   }
 
@@ -426,7 +455,7 @@ html:not([data-rs="off"]) {
     margin-top: var(--rs-2) !important;
   }
 
-  & article button:has(.tw-pill) {
+  & article button:where(article *):has(.tw-pill) {
     height: 2.8rem !important;
     min-height: 0 !important;
     margin-top: 0 !important;
@@ -435,10 +464,6 @@ html:not([data-rs="off"]) {
     background: var(--rs-accent-tint) !important;
     color: var(--rs-accent-quiet) !important;
     transition: background-color var(--rs-ease);
-
-    &:hover {
-      background: var(--rs-accent-tint-strong) !important;
-    }
 
     & p,
     & .tw-pill {
@@ -460,7 +485,7 @@ html:not([data-rs="off"]) {
     }
 
     & .tw-core-button-icon,
-    & :has(> .tw-core-button-icon) {
+    & :where(article * *):has(> .tw-core-button-icon) {
       display: flex !important;
       width: auto !important;
       height: auto !important;
@@ -473,10 +498,14 @@ html:not([data-rs="off"]) {
       padding: 0 0 0 0.4rem !important;
     }
 
-    & :has(> .tw-pill) {
+    & :where(article * *):has(> .tw-pill) {
       margin: 0 0 0 0.4rem !important;
       padding: 0 !important;
     }
+  }
+
+  & article button:where(article *):has(.tw-pill):hover {
+    background: var(--rs-accent-tint-strong) !important;
   }
 
   /*
@@ -505,15 +534,15 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-s) !important;
       transition: background-color var(--rs-ease);
 
-      &:hover,
-      &:focus-visible {
-        background: var(--rs-hover) !important;
-      }
-
       & > div {
         align-items: center !important;
         padding: var(--rs-1) var(--rs-2) !important;
       }
+    }
+
+    & .media-row > a:hover,
+    & .media-row > a:focus-visible {
+      background: var(--rs-hover) !important;
     }
 
     & .media-row__image-wrapper {
@@ -523,7 +552,7 @@ html:not([data-rs="off"]) {
       overflow: hidden !important;
     }
 
-    & :has(> .media-row__info-text) {
+    & :where(.tw-balloon *):has(> .media-row__info-text) {
       padding: 0 0 0 var(--rs-2) !important;
     }
 
@@ -551,11 +580,11 @@ html:not([data-rs="off"]) {
    * Shared wrapper: dissolved so name and category become items of the
    * column. On clips the second line is the "Clipped by" link instead.
    */
-  & article > div:first-child > div:only-child > div:first-child > :has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
+  & article > div:first-child > div:only-child > div:first-child > :where(article > * > * > * > *):has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) {
     display: contents !important;
 
-    & > :is([data-a-target="preview-card-game-link"], :has([data-a-target="preview-card-game-link"])),
-    & > :has([data-a-target="preview-card-clip-curator-link"]) {
+    & > :is([data-a-target="preview-card-game-link"], :where(article > * > * > * > * > *):has([data-a-target="preview-card-game-link"])),
+    & > :where(article > * > * > * > * > *):has([data-a-target="preview-card-clip-curator-link"]) {
       order: 1 !important;
       overflow: hidden !important;
       text-overflow: ellipsis !important;
@@ -569,9 +598,9 @@ html:not([data-rs="off"]) {
   }
 
   /* The name, in each of the three builds. */
-  & article a[data-a-target="preview-card-channel-link"] > div:has(> p[data-a-target="preview-card-channel-link"]),
-  & article > div:first-child > div:only-child > div:first-child > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
-  & article > div:first-child > div:only-child > div:first-child > :has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :has([data-a-target="preview-card-channel-link"])) {
+  & article a[data-a-target="preview-card-channel-link"] > div:where([data-a-target="preview-card-channel-link"] > *):has(> p[data-a-target="preview-card-channel-link"]),
+  & article > div:first-child > div:only-child > div:first-child > :is([data-a-target="preview-card-channel-link"], :where(article > * > * > * > *):has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
+  & article > div:first-child > div:only-child > div:first-child > :where(article > * > * > * > *):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :where(article > * > * > * > * > *):has([data-a-target="preview-card-channel-link"])) {
     order: -1 !important;
     display: flex !important;
     align-items: center !important;
@@ -656,7 +685,7 @@ html:not([data-rs="off"]) {
   }
 
   /* Its line: as tall as the pill, a step under the title. */
-  & article :is(p, div):has(> [data-a-target="preview-card-game-link"]) {
+  & article :is(p, div):where(article *):has(> [data-a-target="preview-card-game-link"]) {
     display: flex !important;
     min-width: 0 !important;
     margin-top: var(--rs-2) !important;
@@ -669,7 +698,7 @@ html:not([data-rs="off"]) {
    * and re-adds them to count how many fit, and a width that changed with
    * them would have it do so forever.
    */
-  & article [class*="ScTextWrapper"]:has(> p > [data-a-target="preview-card-game-link"]) {
+  & article [data-rs-hook="card-text"]:has(> p > [data-a-target="preview-card-game-link"]) {
     flex-flow: row wrap !important;
     align-items: flex-start !important;
 
@@ -678,25 +707,25 @@ html:not([data-rs="off"]) {
       min-width: 0 !important;
     }
 
-    & > p:has(> [data-a-target="preview-card-game-link"]) {
+    & > p:where([data-rs-hook="card-text"] > *):has(> [data-a-target="preview-card-game-link"]) {
       flex: 0 1 auto !important;
       max-width: 100% !important;
       margin-right: 0.4rem !important;
+    }
 
-      & + div {
-        flex: 1 1 0 !important;
-        margin-top: var(--rs-2) !important;
-      }
+    & > p:where([data-rs-hook="card-text"] > *):has(> [data-a-target="preview-card-game-link"]) + div:where([data-rs-hook="card-text"] > *) {
+      flex: 1 1 0 !important;
+      margin-top: var(--rs-2) !important;
     }
   }
 
   /* Without a category, the tags keep the same step under the title. */
-  & article [class*="ScTextWrapper"] > a[data-a-target="preview-card-channel-link"] + div {
+  & article [data-rs-hook="card-text"] > a[data-a-target="preview-card-channel-link"] + div:where([data-rs-hook="card-text"] > *) {
     margin-top: var(--rs-2) !important;
   }
 
   /* "Clipped by" stays plain text, the same step under the title. */
-  & article p:has(> [data-a-target="preview-card-clip-curator-link"]) {
+  & article p:where(article *):has(> [data-a-target="preview-card-clip-curator-link"]) {
     display: flex !important;
     min-width: 0 !important;
     margin-top: var(--rs-2) !important;

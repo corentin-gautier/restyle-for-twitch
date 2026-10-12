@@ -19,7 +19,7 @@ html:not([data-rs="off"]) {
    * this wrapper can be a zero-height anchor whose border shows as a stray
    * line under the button that opened it.
    */
-  & .tw-balloon > div:not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
+  & .tw-balloon > div:where(.tw-balloon > *):not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
     background: var(--rs-float) !important;
     border: 1px solid var(--rs-float-border) !important;
     border-radius: var(--rs-radius-l) !important;
@@ -49,7 +49,7 @@ html:not([data-rs="off"]) {
      * that one has no height, and clipping it hides the whole menu. For the
      * same reason, not when it holds a menu: the menu list is then the box.
      */
-    & > div > .tw-transition > div:not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
+    & > div > .tw-transition > div:where(.ReactModal__Content > * > * > *):not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
       background: var(--rs-float) !important;
       border: 1px solid var(--rs-float-border) !important;
       border-radius: var(--rs-radius-l) !important;
@@ -142,8 +142,8 @@ html:not([data-rs="off"]) {
   }
 
   /* The listbox button's double arrow: the single chevron of the others. */
-  & .twilight-main button[role="combobox"] > div:last-child:has(svg) {
-    & svg {
+  & .twilight-main button[role="combobox"] > div:last-child:where([role="combobox"] > *):has(svg) {
+    & svg:where([role="combobox"] > * *) {
       display: none !important;
     }
 
@@ -197,7 +197,7 @@ html:not([data-rs="off"]) {
   }
 
   /* Player settings menu: the same floating surface as the other menus. */
-  & .ReactModal__Content div:has(> div > div > [data-a-target="player-settings-menu"]) {
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> div > div > [data-a-target="player-settings-menu"]) {
     background: var(--rs-float) !important;
     /* An outline: a border would narrow the rows and wrap their labels. */
     outline: 1px solid var(--rs-float-border) !important;
@@ -227,17 +227,17 @@ html:not([data-rs="off"]) {
         background: var(--rs-accent) !important;
       }
 
-      & * {
+      & *:where(.tw-toggle__button *) {
         color: var(--rs-accent) !important;
         fill: var(--rs-accent) !important;
       }
     }
 
-    & .tw-radio__input:checked + label::before {
+    & .tw-radio__input:checked + label:where([data-a-target="player-settings-menu"] *)::before {
       border-color: var(--rs-accent) !important;
     }
 
-    & .tw-radio__input:checked + label::after {
+    & .tw-radio__input:checked + label:where([data-a-target="player-settings-menu"] *)::after {
       background: var(--rs-accent) !important;
     }
   }
@@ -273,19 +273,19 @@ html:not([data-rs="off"]) {
       color: var(--rs-text-soft) !important;
     }
 
-    & td:last-child {
+    & td:where(#keyboard-shortcuts-overlay *):last-child {
       padding-left: var(--rs-6) !important;
       text-align: right !important;
     }
 
-    & tr:first-child td {
+    & tr:first-child td:where(#keyboard-shortcuts-overlay * *) {
       padding-bottom: 1rem !important;
       font-weight: 600 !important;
       color: var(--rs-text) !important;
       border-bottom: var(--rs-hairline) !important;
     }
 
-    & tr:nth-child(2) td {
+    & tr:nth-child(2) td:where(#keyboard-shortcuts-overlay * *) {
       padding-top: 1rem !important;
     }
 
@@ -296,7 +296,7 @@ html:not([data-rs="off"]) {
       fill: currentColor !important;
     }
 
-    & td:last-child > span {
+    & td:last-child > span:where(#keyboard-shortcuts-overlay * > *) {
       display: inline-block !important;
       padding: 0.1rem 0.7rem !important;
       background: var(--rs-hover) !important;
@@ -313,7 +313,7 @@ html:not([data-rs="off"]) {
    * heads, names toned down beside their values, and the close button moved
    * into the head row's corner.
    */
-  & .video-player__overlay .scrollable-area > div:has(> table.tw-table) {
+  & .video-player__overlay .scrollable-area > div:where(.video-player__overlay *):has(> table.tw-table) {
     position: relative !important;
     padding: var(--rs-1) !important;
     background: var(--rs-float) !important;
@@ -323,7 +323,7 @@ html:not([data-rs="off"]) {
     box-shadow: none !important;
     overflow: hidden !important;
 
-    & > div:first-child {
+    & > div:where(.video-player__overlay * > *):first-child {
       position: absolute !important;
       top: 0.5rem !important;
       right: 0.5rem !important;
@@ -362,7 +362,7 @@ html:not([data-rs="off"]) {
     }
 
     /* Room for the close button beside the last column's head. */
-    & th:last-child > div {
+    & th:last-child > div:where(.video-player__overlay * * > *) {
       padding-right: 4.4rem !important;
     }
 
@@ -381,16 +381,16 @@ html:not([data-rs="off"]) {
       color: inherit !important;
     }
 
-    & td:last-child {
+    & td:where(.video-player__overlay * *):last-child {
       font-variant-numeric: tabular-nums !important;
       color: var(--rs-text) !important;
     }
 
-    & tbody tr:first-child td {
+    & tbody tr:first-child td:where(.video-player__overlay * * * *) {
       padding-top: 0.8rem !important;
     }
 
-    & tbody tr:last-child td {
+    & tbody tr:last-child td:where(.video-player__overlay * * * *) {
       padding-bottom: 0.6rem !important;
     }
   }
@@ -401,7 +401,7 @@ html:not([data-rs="off"]) {
    * frame it twice. Just the picture instead, rounded, under a light ring
    * and a soft shadow, with the timestamp as a chip laid over its bottom.
    */
-  & .video-player .player-controls div:has(> div > [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
+  & .video-player .player-controls div:where(.player-controls *):has(> div > [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
     background: none !important;
     border: 0 !important;
     border-radius: var(--rs-radius-m) !important;
@@ -410,7 +410,7 @@ html:not([data-rs="off"]) {
     transform: translateY(-0.8rem) !important;
   }
 
-  & .video-player .player-controls div:has(> [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
+  & .video-player .player-controls div:where(.player-controls *):has(> [data-test-selector="vod-seekbar-preview-overlay-preview-image"]) {
     position: relative !important;
     background: #000 !important;
     border: 0 !important;
@@ -427,7 +427,7 @@ html:not([data-rs="off"]) {
       pointer-events: none;
     }
 
-    & > [data-test-selector="vod-seekbar-preview-overlay-preview-image"] + div {
+    & > [data-test-selector="vod-seekbar-preview-overlay-preview-image"] + div:where(.player-controls * > *) {
       position: absolute !important;
       inset: auto 0 0.6rem !important;
       display: flex !important;
@@ -493,7 +493,7 @@ html:not([data-rs="off"]) {
       overflow: hidden !important;
     }
 
-    & .media-row__image-wrapper + div {
+    & .media-row__image-wrapper + div:where(#chapter-select-popover-body *) {
       padding: 0 0.4rem 0 1.2rem !important;
     }
 
@@ -588,7 +588,7 @@ html:not([data-rs="off"]) {
    * element holding the close button. Framed like the other floating layers,
    * with room around its content.
    */
-  & .modal-wrapper__content > div:has(> .modal__close-button) {
+  & .modal-wrapper__content > div:where(.modal-wrapper__content > *):has(> .modal__close-button) {
     padding: var(--rs-6) !important;
     background: var(--rs-float) !important;
     border: 1px solid var(--rs-float-border) !important;
@@ -624,7 +624,7 @@ html:not([data-rs="off"]) {
     & .video-player__container,
     & .video-ref,
     & video,
-    & .clips-view-modal-content > div:first-child,
+    & .clips-view-modal-content > div:where(.clips-view-modal-content > *):first-child,
     & .clips-view-modal-content > div:first-child .tw-aspect {
       border-radius: var(--rs-radius-m) !important;
       overflow: hidden !important;
@@ -634,10 +634,10 @@ html:not([data-rs="off"]) {
       padding: var(--rs-4) 0 0 !important;
     }
 
-    & .metadata-layout__split-top + div {
+    & .metadata-layout__split-top + div:where(.modal-wrapper__content > * *) {
       margin-top: var(--rs-4) !important;
 
-      & > div {
+      & > div:where(.modal-wrapper__content > * * > *) {
         background: var(--rs-hover) !important;
         border: 0 !important;
         border-radius: var(--rs-radius-m) !important;
@@ -668,10 +668,11 @@ html:not([data-rs="off"]) {
       border: 1px solid var(--rs-float-border) !important;
       border-radius: 50% !important;
       color: var(--rs-text) !important;
+    }
 
-      &:hover {
-        background: var(--rs-raised) !important;
-      }
+    & .modal__close-button button:hover,
+    & .clip-carousel-button button:hover {
+      background: var(--rs-raised) !important;
     }
   }
 
@@ -690,7 +691,7 @@ html:not([data-rs="off"]) {
    * A dialog box Twitch leaves mounted with nothing in it (on a clip's
    * page): its border alone showed as a stray line.
    */
-  & .ReactModal__Content .tw-transition > div:empty {
+  & .ReactModal__Content .tw-transition > div:where(.ReactModal__Content * > *):empty {
     display: none !important;
   }
 
@@ -702,18 +703,18 @@ html:not([data-rs="off"]) {
    * the menus' gutters, with the palette's ink and accent. The box has no
    * hook of its own: it is the one holding a haloed avatar and a name.
    */
-  & .ReactModal__Content .tw-transition > div:has(.tw-halo):has(h1) {
+  & .ReactModal__Content .tw-transition > div:where(.ReactModal__Content * > *):has(.tw-halo):has(h1) {
     /* The channel-colour strip beside the banner. */
     & div[style*="background-color"]:not([style*="background-image"]):has(+ div[style*="background-image"]) {
       display: none !important;
     }
 
-    & div:has(> div[style*="background-image"]) {
+    & div:where(.ReactModal__Content * > * *):has(> div[style*="background-image"]) {
       height: 8rem !important;
     }
 
     /* The body, under the banner. */
-    & > div > div:not(:has(> div[style*="background-image"])) {
+    & > div > div:where(.ReactModal__Content * > * > * > *):not(:has(> div[style*="background-image"])) {
       padding: 0 var(--rs-3) var(--rs-3) !important;
       background: none !important;
       white-space: normal !important;
@@ -729,7 +730,7 @@ html:not([data-rs="off"]) {
       margin: var(--rs-3) 0 var(--rs-2) !important;
     }
 
-    & div:has(> h1) {
+    & div:where(.ReactModal__Content * > * *):has(> h1) {
       padding: 0 !important;
     }
 
@@ -742,12 +743,12 @@ html:not([data-rs="off"]) {
     }
 
     /* "Streaming <game> with <n> viewers", under the name of a live channel. */
-    & div:has(> h1) + div p {
+    & div:where(.ReactModal__Content * > * *):has(> h1) + div p:where(.ReactModal__Content * > * * *) {
       font-size: var(--rs-text-3) !important;
       color: var(--rs-muted) !important;
       white-space: normal !important;
 
-      & span {
+      & span:where(.ReactModal__Content * > * * * *) {
         font-weight: 500 !important;
         color: var(--rs-text-soft) !important;
       }
@@ -760,11 +761,11 @@ html:not([data-rs="off"]) {
     }
 
     /* Follower count. */
-    & div:has(> p[title]) + p {
+    & div:where(.ReactModal__Content * > * *):has(> p[title]) + p:where(.ReactModal__Content * > * *) {
       font-size: var(--rs-text-3) !important;
       color: var(--rs-muted) !important;
 
-      & span {
+      & span:where(.ReactModal__Content * > * * *) {
         font-weight: 600 !important;
         color: var(--rs-text) !important;
       }
@@ -780,13 +781,13 @@ html:not([data-rs="off"]) {
         border-radius: var(--rs-radius-pill) !important;
         background: var(--rs-hover) !important;
         transition: background-color var(--rs-ease);
-
-        &:hover {
-          background: var(--rs-raised) !important;
-        }
       }
 
-      & :has(> .social-media-link) {
+      & .social-media-link:hover {
+        background: var(--rs-raised) !important;
+      }
+
+      & :where(.streamer-card-body__social-medias *):has(> .social-media-link) {
         max-width: 100% !important;
         min-width: 0 !important;
       }
@@ -810,7 +811,7 @@ html:not([data-rs="off"]) {
     }
 
     /* "Upcoming stream:", a small-caps label over an inset entry. */
-    & div:has(> p[style*="uppercase"]) {
+    & div:where(.ReactModal__Content * > * *):has(> p[style*="uppercase"]) {
       margin: var(--rs-3) 0 var(--rs-1) !important;
 
       & p {
@@ -821,7 +822,7 @@ html:not([data-rs="off"]) {
       }
     }
 
-    & div:has(> div > .stream-schedule-segment--vertical-line) {
+    & div:where(.ReactModal__Content * > * *):has(> div > .stream-schedule-segment--vertical-line) {
       margin: 0 !important;
       padding: var(--rs-2) var(--rs-3) !important;
       border-radius: var(--rs-radius-m) !important;
@@ -842,7 +843,7 @@ html:not([data-rs="off"]) {
         color: var(--rs-text) !important;
       }
 
-      & > div:last-child {
+      & > div:where(.ReactModal__Content * > * * > *):last-child {
         margin-top: var(--rs-2) !important;
       }
     }
@@ -852,7 +853,7 @@ html:not([data-rs="off"]) {
     }
 
     /* Follow, and the options button beside it. */
-    & div:has(> button[aria-label="More options"]) {
+    & div:where(.ReactModal__Content * > * *):has(> button[aria-label="More options"]) {
       align-items: center !important;
       margin-top: var(--rs-3) !important;
     }
@@ -860,9 +861,166 @@ html:not([data-rs="off"]) {
     & [data-a-target="follow-button"] {
       background: var(--rs-accent) !important;
       color: var(--rs-on-accent) !important;
+    }
 
-      &:hover {
-        background: var(--rs-accent-hover) !important;
+    & [data-a-target="follow-button"]:hover {
+      background: var(--rs-accent-hover) !important;
+    }
+  }
+
+  /*
+   * Turbo offer ("Try 1-Month Ad-Free", in the top bar): a popover with an
+   * empty header strip holding only its close button, over a banner, a
+   * centred pitch, two benefits with their small print, three more as bare
+   * icons over a caption, and two small buttons at the right.
+   *
+   * The banner goes to the top edge, the close button floating on it. The
+   * pitch gets a title's type; the benefits become one tinted panel and
+   * three tiles, their icons in the accent; the buttons share the width.
+   * Everything sits on one inset.
+   */
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> .tw-popover-header + .turbo-ballon-content__scroll-container) {
+    --rs-turbo-pad: var(--rs-4);
+
+    position: relative !important;
+
+    & > .tw-popover-header {
+      position: absolute !important;
+      z-index: 1 !important;
+      top: var(--rs-3) !important;
+      right: var(--rs-3) !important;
+      left: auto !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+
+      & > :not(.tw-popover-header__icon-slot--right) {
+        display: none !important;
+      }
+
+      & button {
+        background: var(--rs-scrim) !important;
+        color: var(--rs-on-scrim) !important;
+      }
+    }
+
+    /* The banner, then the pitch. */
+    & img[alt="Turbo Header"] {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    & div:where(.ReactModal__Content * *):has(> strong) {
+      padding: 0 var(--rs-turbo-pad) !important;
+
+      & > strong {
+        display: block !important;
+        font-size: var(--rs-text-title) !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        letter-spacing: -0.015em !important;
+      }
+
+      & > p {
+        margin-top: var(--rs-2) !important;
+        font-size: var(--rs-text-3) !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & > div {
+        margin: var(--rs-1) 0 0 !important;
+
+        & p {
+          font-size: var(--rs-text-3) !important;
+          color: var(--rs-label) !important;
+        }
+      }
+    }
+
+    & .turbo-ballon-content__scroll-container .tw-svg svg {
+      fill: var(--rs-accent) !important;
+    }
+
+    /* The two benefits with small print: rows of one panel. */
+    & .turbo-ballon-content__scroll-container > div > :where(.turbo-ballon-content__scroll-container > * > *):nth-child(2) {
+      margin: var(--rs-4) var(--rs-turbo-pad) 0 !important;
+      padding: var(--rs-3) !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+
+      & > div:where(.turbo-ballon-content__scroll-container > * > * > *) {
+        margin: 0 !important;
+      }
+
+      & > div + div:where(.turbo-ballon-content__scroll-container > * > * > *) {
+        margin-top: var(--rs-3) !important;
+      }
+
+      & > div > div:where(.turbo-ballon-content__scroll-container > * > * > * > *):first-child {
+        margin-right: var(--rs-2) !important;
+      }
+
+      & p:where(.turbo-ballon-content__scroll-container > * > * *) {
+        margin-top: 0.2rem !important;
+        font-size: var(--rs-text-2) !important;
+        line-height: 1.45 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* The three others: tiles sharing a row. */
+    & .turbo-ballon-content__scroll-container > div > :where(.turbo-ballon-content__scroll-container > * > *):nth-child(3) {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: var(--rs-2) !important;
+      margin: var(--rs-2) var(--rs-turbo-pad) 0 !important;
+      padding: 0 !important;
+
+      & > div:where(.turbo-ballon-content__scroll-container > * > * > *) {
+        align-items: center !important;
+        gap: var(--rs-1) !important;
+        width: auto !important;
+        padding: var(--rs-3) var(--rs-2) !important;
+        background: var(--rs-hover) !important;
+        border-radius: var(--rs-radius-m) !important;
+        text-align: center !important;
+      }
+
+      & p:where(.turbo-ballon-content__scroll-container > * > * *) {
+        font-size: var(--rs-text-2) !important;
+        line-height: 1.35 !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    /* "Billed Monthly • Cancel Anytime". */
+    & .turbo-ballon-content__scroll-container > div > :where(.turbo-ballon-content__scroll-container > * > *):nth-child(4) {
+      margin: var(--rs-3) 0 0 !important;
+
+      & span:where(.turbo-ballon-content__scroll-container > * > * *) {
+        font-size: var(--rs-text-1) !important;
+        color: var(--rs-faint) !important;
+      }
+    }
+
+    /* The buttons. */
+    & > .turbo-ballon-content__scroll-container + div:where(.ReactModal__Content * > *) {
+      gap: var(--rs-2) !important;
+      margin: 0 !important;
+      padding: var(--rs-3) var(--rs-turbo-pad) var(--rs-turbo-pad) !important;
+
+      & > button:where(.ReactModal__Content * > * > *) {
+        flex: 1 1 0 !important;
+        height: 3.6rem !important;
+        justify-content: center !important;
+      }
+
+      /* "Gift Turbo": on the float surface its own fill hardly shows. */
+      & > button:where(.ReactModal__Content * > * > *):first-child:not(:only-child) {
+        background: var(--rs-hover) !important;
       }
     }
   }

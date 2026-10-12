@@ -41,7 +41,7 @@ html:not([data-rs="off"]) {
   }
 
   /* Bundle offers: the framed group follows the rounding of its cards. */
-  & .support-panel div:has(> .gifting-option):not(:has(> .gifting-option:only-child)) {
+  & .support-panel div:where(.support-panel *):has(> .gifting-option):not(:has(> .gifting-option:only-child)) {
     border-radius: var(--rs-radius-m) !important;
     overflow: hidden !important;
   }
@@ -96,11 +96,11 @@ html:not([data-rs="off"]) {
         background: var(--rs-hover) !important;
       }
 
-      & input:focus-visible + label {
+      & input:focus-visible + label:where(.tw-selectable *) {
         box-shadow: 0 0 0 2px var(--rs-text) !important;
       }
 
-      & input:checked + label {
+      & input:checked + label:where(.tw-selectable *) {
         box-shadow: 0 0 0 2px var(--rs-accent) !important;
       }
     }
@@ -120,18 +120,18 @@ html:not([data-rs="off"]) {
     }
 
     /* Footer with the actions, under the scrolling part. */
-    & > .scrollable-area + div {
+    & > .scrollable-area + div:where(.support-panel > *) {
       border-top: var(--rs-hairline) !important;
 
       /* Over a player the footer comes darker than the sheet it closes. */
       &,
-      & > div,
-      & > div > div {
+      & > div:where(.support-panel > * > *),
+      & > div > div:where(.support-panel > * > * > *) {
         background: var(--rs-float) !important;
       }
 
       /* "All prices are shown in ...": a footnote under the buttons. */
-      & > div > div:last-child:not(:has(*)) {
+      & > div > div:last-child:where(.support-panel > * > * > *):not(:has(*)) {
         margin: var(--rs-2) 0 0 !important;
         font-size: var(--rs-text-2) !important;
         color: var(--rs-faint) !important;
@@ -144,27 +144,27 @@ html:not([data-rs="off"]) {
      * tier's benefit above that list goes, and the legal note under it
      * steps back.
      */
-    & .scrollable-area div:has(> div > [class*="ScCoreGraphic"]):has(> div > strong) {
+    & .scrollable-area div:where(.support-panel * *):has(> div > [class*="ScCoreGraphic"]):has(> div > strong) {
       display: none !important;
     }
 
-    & .scrollable-area div:last-child > p:only-child:has(> a.tw-link) {
+    & .scrollable-area div:last-child > p:only-child:where(.support-panel * * > *):has(> a.tw-link) {
       font-size: var(--rs-text-2) !important;
       color: var(--rs-faint) !important;
     }
 
     /* The channel's bio under its name: a quiet aside, without the
        quotation mark drawn over its first letters. */
-    & .scrollable-area div:has(> div > div > p.tw-title) > div:last-child:not(:has(.tw-title)) {
-      & > div:has(> img) {
+    & .scrollable-area div:where(.support-panel * *):has(> div > div > p.tw-title) > div:last-child:where(.support-panel * * > *):not(:has(.tw-title)) {
+      & > div:where(.support-panel * * > * > *):has(> img) {
         display: none !important;
       }
 
-      & > div {
+      & > div:where(.support-panel * * > * > *) {
         padding: 0 !important;
       }
 
-      & p {
+      & p:where(.support-panel * * > * *) {
         font-size: var(--rs-text-3) !important;
         line-height: 1.45 !important;
         color: var(--rs-muted) !important;
@@ -178,22 +178,22 @@ html:not([data-rs="off"]) {
      * the bold start alone as a small label, and the perks as a two-column
      * list, icon then name.
      */
-    & .scrollable-area div:has(> strong):has(> div > p > span) {
+    & .scrollable-area div:where(.support-panel * *):has(> strong):has(> div > p > span) {
       & > strong {
         display: none !important;
       }
 
-      & > div:has(> p > span),
-      & > div:has(> strong) {
+      & > div:where(.support-panel * * > *):has(> p > span),
+      & > div:where(.support-panel * * > *):has(> strong) {
         margin: var(--rs-4) 0 var(--rs-2) !important;
         padding: 0 !important;
       }
 
-      & > div:first-of-type {
+      & > div:where(.support-panel * * > *):first-of-type {
         margin-top: 0 !important;
       }
 
-      & > div > p:has(> span) {
+      & > div > p:where(.support-panel * * > * > *):has(> span) {
         font-size: 0 !important;
         line-height: 0 !important;
       }
@@ -210,8 +210,7 @@ html:not([data-rs="off"]) {
       }
 
       /* Emotes and badges: one gap, and "Show All" level with them. */
-      & > div:has(> div > div > img),
-      & > div:has(.chat-badge) {
+      & > div:where(.support-panel * * > *):has(> div > div > img, .chat-badge) {
         align-items: center !important;
         gap: 0.8rem 1rem !important;
 
@@ -227,13 +226,13 @@ html:not([data-rs="off"]) {
         }
       }
 
-      & > div:has(> div > div > img):not(:has(.chat-badge)) > div {
+      & > div:where(.support-panel * * > *):has(> div > div > img):not(:has(.chat-badge)) > div {
         display: flex !important;
         height: 2.8rem !important;
       }
 
       /* Perks. */
-      & > div:has(> div > div > .tw-svg) {
+      & > div:where(.support-panel * * > *):has(> div > div > .tw-svg) {
         display: grid !important;
         grid-template-columns: 1fr 1fr !important;
         gap: var(--rs-2) var(--rs-4) !important;
@@ -261,7 +260,7 @@ html:not([data-rs="off"]) {
 
     /* "Elevate your Subscription": a full row under the list, not a
        button adrift on the right. */
-    & .scrollable-area div:has(> [data-a-target^="elevate-your-subscription"]) {
+    & .scrollable-area div:where(.support-panel * *):has(> [data-a-target^="elevate-your-subscription"]) {
       margin: var(--rs-4) 1.6rem var(--rs-3) !important;
 
       & > button {
@@ -296,7 +295,7 @@ html:not([data-rs="off"]) {
         transition: background-color var(--rs-ease), border-color var(--rs-ease);
       }
 
-      & input:checked + label {
+      & input:checked + label:where(.tw-selectable *) {
         border-color: var(--rs-accent) !important;
         background: var(--rs-accent-tint) !important;
       }
@@ -308,7 +307,7 @@ html:not([data-rs="off"]) {
     }
 
     /* The months of a gift: three equal cards from gutter to gutter. */
-    & .scrollable-area div:has(> div > .tw-selectable):not(.gift-theme-selector) {
+    & .scrollable-area div:where(.support-panel * *):has(> div > .tw-selectable):not(.gift-theme-selector) {
       margin-right: -0.4rem !important;
 
       & > div {
@@ -321,12 +320,12 @@ html:not([data-rs="off"]) {
      * renewals. On the panel's gutters, under the same small labels as the
      * benefits, each tier a card with its button across it.
      */
-    & .scrollable-area div:has(> div > div > .upgrade-options) {
+    & .scrollable-area div:where(.support-panel * *):has(> div > div > .upgrade-options) {
       margin-inline: 1.6rem !important;
     }
 
-    & .scrollable-area div:has(> div > .upgrade-options) {
-      & > div:first-child > strong,
+    & .scrollable-area div:where(.support-panel * *):has(> div > .upgrade-options) {
+      & > div:first-child > strong:where(.support-panel * * > * > *),
       & > strong {
         display: block !important;
         margin: 0 0 var(--rs-2) !important;
@@ -342,12 +341,12 @@ html:not([data-rs="off"]) {
       }
 
       /* "Renew every" repeats the label over it. */
-      & > div:has([data-a-target^="multimonth-option"]) > strong {
+      & > div:where(.support-panel * * > *):has([data-a-target^="multimonth-option"]) > strong {
         display: none !important;
       }
 
       /* The cards keep their margins: the row is pulled out by as much. */
-      & div:has(> [data-a-target^="multimonth-option"]) {
+      & div:where(.support-panel * * *):has(> [data-a-target^="multimonth-option"]) {
         margin-inline: -0.4rem !important;
       }
 
@@ -361,7 +360,7 @@ html:not([data-rs="off"]) {
         height: 100% !important;
       }
 
-      & div:has(> .upgrade-options) {
+      & div:where(.support-panel * * *):has(> .upgrade-options) {
         background: transparent !important;
       }
     }
@@ -378,7 +377,7 @@ html:not([data-rs="off"]) {
         background: var(--rs-hover) !important;
       }
 
-      & > div:last-child {
+      & > div:where(.upgrade-options > *):last-child {
         margin-bottom: 0 !important;
       }
 
@@ -387,7 +386,7 @@ html:not([data-rs="off"]) {
         line-height: 1.45 !important;
       }
 
-      & div:has(> .tw-purchase-button),
+      & div:where(.upgrade-options *):has(> .tw-purchase-button),
       & .tw-purchase-button {
         width: 100% !important;
       }
@@ -406,14 +405,14 @@ html:not([data-rs="off"]) {
      */
     & [role="dialog"] {
       /* "Gift to the Community" beside the tier select. */
-      & > div:first-child {
+      & > div:where([role="dialog"] > *):first-child {
         align-items: center !important;
         padding-bottom: var(--rs-3) !important;
       }
 
       /* "Gift a specific viewer" and "Gift Anonymously": one row on the
          panel's gutters, without the rules that ran edge to edge. */
-      & > div:has(> .tw-checkbox) {
+      & > div:where([role="dialog"] > *):has(> .tw-checkbox) {
         align-items: center !important;
         justify-content: space-between !important;
         margin-bottom: var(--rs-3) !important;
@@ -423,7 +422,7 @@ html:not([data-rs="off"]) {
 
       /* The advert ("Complete the goal!"): a tinted card like the theme
          picker under it, instead of an accent frame. */
-      & [class*="giftHeroSlot"] {
+      & [data-rs-hook="gift-hero"] {
         border: 0 !important;
         border-radius: var(--rs-radius-m) !important;
         background: var(--rs-hover) !important;
@@ -437,8 +436,7 @@ html:not([data-rs="off"]) {
       }
 
       /* The rows. */
-      & div:has(> div > .gifting-option__image),
-      & div:has(> div > div > [data-a-target="gift-custom-quantity-input"]) {
+      & div:where([role="dialog"] *):has(> div > .gifting-option__image, > div > div > [data-a-target="gift-custom-quantity-input"]) {
         align-items: center !important;
         min-height: 5.6rem !important;
         margin: 0 !important;
@@ -465,12 +463,12 @@ html:not([data-rs="off"]) {
       }
 
       /* The custom quantity closes the list, on the same gutters. */
-      & div:has(> div > div > [data-a-target="gift-custom-quantity-input"]) {
+      & div:where([role="dialog"] *):has(> div > div > [data-a-target="gift-custom-quantity-input"]) {
         margin: var(--rs-2) 1.6rem 0 !important;
       }
 
       /* Price button, with the price before discount on its left. */
-      & div:has(> button):has(> div > p) {
+      & div:where([role="dialog"] *):has(> button):has(> div > p) {
         flex-direction: row-reverse !important;
         align-items: center !important;
         gap: var(--rs-2) !important;
@@ -489,7 +487,7 @@ html:not([data-rs="off"]) {
       }
 
       & button[data-a-target^="gift-button-oneclick"],
-      & div:has(> button):has(> div > p) > button {
+      & div:where([role="dialog"] *):has(> button):has(> div > p) > button {
         min-width: 11rem !important;
       }
 

@@ -54,7 +54,7 @@ html:not([data-rs="off"]) {
    * Stories row on the Following page: a scroll area of haloed avatars. The
    * whole row goes, found through those halos since nothing else names it.
    */
-  & .twilight-main div:has(> .scrollable-area [class*="avatarHalo"]) {
+  & .twilight-main div:where(.twilight-main *):has(> .scrollable-area [class*="avatarHalo"]) {
     display: none !important;
   }
 
@@ -67,18 +67,18 @@ html:not([data-rs="off"]) {
    *    cleared (the 1rem taken off is the blank leading above the capitals).
    */
   & .common-centered-column {
-    & > :has(h1) {
+    & > :where(.common-centered-column > *):has(h1) {
       margin-top: 0 !important;
       padding-block: calc(var(--rs-8) + 3rem - 1rem) !important;
     }
 
-    & > * :has(h1) {
+    & > * :where(.common-centered-column > * *):has(h1) {
       margin-top: 0 !important;
       padding-top: 0 !important;
     }
 
     /* Browse: same gap under the title as between Following's title and its tabs. */
-    & > section > div:has(> h1) {
+    & > section > div:where(.common-centered-column > * > *):has(> h1) {
       margin-bottom: 0 !important;
       padding-bottom: 1rem !important;
     }
@@ -168,15 +168,15 @@ html:not([data-rs="off"]) {
    * wrappers around both give up their inline padding, and the two blocks
    * take the page inset themselves.
    */
-  & .twilight-main > header:has(.settings-tabs),
-  & .twilight-main :has(> .settings-tabs),
-  & .twilight-main :has(> .settings-root__content),
-  & .twilight-main :has(> * > .settings-root__content) {
+  & .twilight-main > header:where(.twilight-main > *):has(.settings-tabs),
+  & .twilight-main :where(.twilight-main *):has(> .settings-tabs),
+  & .twilight-main :where(.twilight-main *):has(> .settings-root__content),
+  & .twilight-main :where(.twilight-main *):has(> * > .settings-root__content) {
     padding-inline: 0 !important;
   }
 
-  & .twilight-main > header:has(.settings-tabs),
-  & .twilight-main :has(> .settings-tabs) {
+  & .twilight-main > header:where(.twilight-main > *):has(.settings-tabs),
+  & .twilight-main :where(.twilight-main *):has(> .settings-tabs) {
     padding-top: 0 !important;
     margin-top: 0 !important;
   }
@@ -187,7 +187,7 @@ html:not([data-rs="off"]) {
     padding-inline: var(--rs-page-inset) !important;
 
     /* Same gap under the title as between Following's title and its tabs. */
-    & > div:has(> h2) {
+    & > div:where(.settings-tabs > *):has(> h2) {
       margin-block: 0 !important;
       padding-block: 0 1rem !important;
     }
@@ -210,12 +210,12 @@ html:not([data-rs="off"]) {
    * and tabs in a header like Settings; Wallet and Subscriptions are one
    * block holding a title, tabs and content.
    */
-  & .twilight-main > header > div:has(> .drops-tabs),
-  & .twilight-main div:has(> .drops-root__content) {
+  & .twilight-main > header > div:where(.twilight-main > * > *):has(> .drops-tabs),
+  & .twilight-main div:where(.twilight-main *):has(> .drops-root__content) {
     padding-inline: var(--rs-page-inset) !important;
   }
 
-  & .twilight-main div:has(> h2):has(> div > .tw-tabs, > [role="tablist"]):not(.settings-tabs) {
+  & .twilight-main div:where(.twilight-main *):has(> h2):has(> div > .tw-tabs, > [role="tablist"]):not(.settings-tabs) {
     margin: calc(var(--rs-8) + 2rem) var(--rs-page-inset) 0 !important;
     /* The air at the page's end, as padding: the scroll area stops at the block's box, leaving a margin out. */
     padding-bottom: var(--rs-shelf-gap) !important;
@@ -230,7 +230,7 @@ html:not([data-rs="off"]) {
 
   /* Settings, Wallet, Subscriptions: the page title, as large as Following's. */
   & .settings-tabs h2,
-  & .twilight-main div:has(> div > .tw-tabs, > [role="tablist"]) > h2 {
+  & .twilight-main div:where(.twilight-main *):has(> div > .tw-tabs, > [role="tablist"]) > h2 {
     font-size: 6rem !important;
   }
 
@@ -268,12 +268,12 @@ html:not([data-rs="off"]) {
      * width. It also sets the distance to the field, a little past the
      * focus ring.
      */
-    & > div > :has(input) [class*="Attached"]:has(> .tw-balloon) {
+    & > div > :where(.twilight-main * > * > *):has(input) [class*="Attached"]:has(> .tw-balloon) {
       min-width: 100% !important;
       margin-top: var(--rs-1) !important;
     }
 
-    & > div > :has(input) .tw-balloon {
+    & > div > :where(.twilight-main * > * > *):has(input) .tw-balloon {
       min-width: 100% !important;
       margin-top: 0 !important;
       /* The list inside is the box: this wrapper would frame it a second time. */
@@ -299,12 +299,12 @@ html:not([data-rs="off"]) {
           font-size: var(--rs-text-3) !important;
           color: inherit !important;
         }
+      }
 
-        &:hover,
-        &:focus-visible {
-          background: var(--rs-hover) !important;
-          color: var(--rs-text) !important;
-        }
+      & :is([role="option"], button, a):hover,
+      & :is([role="option"], button, a):focus-visible {
+        background: var(--rs-hover) !important;
+        color: var(--rs-text) !important;
       }
     }
   }
@@ -324,14 +324,14 @@ html:not([data-rs="off"]) {
    * sentence; they get the title size of Browse, the sentence as its quiet
    * second line, and the air of a shelf title before the grid.
    */
-  & .common-centered-column > section > div:first-child:has(> h1):has(> p) {
+  & .common-centered-column > section > div:first-child:where(.common-centered-column > * > *):has(> h1):has(> p) {
     padding-bottom: var(--rs-8) !important;
 
-    & > h1 {
+    & > h1:where(.common-centered-column > * > * > *) {
       font-size: 6rem !important;
     }
 
-    & > p {
+    & > p:where(.common-centered-column > * > * > *) {
       max-width: 72rem !important;
       margin-top: var(--rs-3) !important;
       font-size: var(--rs-text-6) !important;
@@ -430,7 +430,7 @@ html:not([data-rs="off"]) {
    * and after the list; laid out as blocks they stack above and below it.
    * The list scrolls sideways on its own instead.
    */
-  & .twilight-main .tw-tabs > div:has(> button) {
+  & .twilight-main .tw-tabs > div:where(.tw-tabs > *):has(> button) {
     display: none !important;
   }
 
@@ -497,10 +497,10 @@ html:not([data-rs="off"]) {
   }
 
   /* A shelf title's step from the tabs to what a tab holds. */
-  & .twilight-main [role="tablist"]:has(> [data-a-target="expired"]) + div {
+  & .twilight-main [role="tablist"]:has(> [data-a-target="expired"]) + div:where(.twilight-main *) {
     margin-top: var(--rs-shelf-head) !important;
 
-    & > div {
+    & > div:where(.twilight-main * > *) {
       margin-top: 0 !important;
     }
   }
@@ -512,7 +512,7 @@ html:not([data-rs="off"]) {
    * card grid (see "Cards"), each one a rounded panel that clips its banner
    * and fills its cell.
    */
-  & .twilight-main div:has(> div > .subscription-card) > div {
+  & .twilight-main [role="tablist"] + div > div:where([role="tablist"] + div > *):has(> div > .subscription-card) > div:where([role="tablist"] + div > * > *) {
     display: grid !important;
     margin: 0 !important;
   }
@@ -540,7 +540,7 @@ html:not([data-rs="off"]) {
     &,
     & .tw-card,
     & .tw-card-body,
-    & .tw-card-body > div:last-of-type {
+    & .tw-card-body > div:where(.tw-card-body > *):last-of-type {
       display: flex !important;
       flex-direction: column !important;
     }
@@ -548,7 +548,7 @@ html:not([data-rs="off"]) {
     & .tw-card,
     & .tw-card > div,
     & .tw-card-body,
-    & .tw-card-body > div:last-of-type,
+    & .tw-card-body > div:where(.tw-card-body > *):last-of-type,
     & .subscription-card__sub-progress {
       flex: 1 1 auto !important;
     }
@@ -572,20 +572,20 @@ html:not([data-rs="off"]) {
     }
 
     /* The head: room for the avatar, then the name and the months. */
-    & .tw-card-body > div:first-of-type {
+    & .tw-card-body > div:where(.tw-card-body > *):first-of-type {
       padding-top: calc(var(--rs-sub-avatar) - var(--rs-sub-overlap) + var(--rs-3)) !important;
 
-      & > div,
-      & div:has(> .subscription-card__channel-name) {
+      & > div:where(.tw-card-body > * > *),
+      & div:where(.tw-card-body > * *):has(> .subscription-card__channel-name) {
         margin: 0 !important;
       }
 
-      & > div + div {
+      & > div + div:where(.tw-card-body > * > *) {
         margin-top: var(--rs-1) !important;
       }
 
       /* The verified tick is taller than the name: one height with or without it. */
-      & div:has(> .subscription-card__channel-name) {
+      & div:where(.tw-card-body > * *):has(> .subscription-card__channel-name) {
         align-items: center !important;
         min-height: 2.6rem !important;
       }
@@ -596,16 +596,16 @@ html:not([data-rs="off"]) {
      * card, so that its centred lines read as one block under the head's
      * left-aligned ones; the button spans the card under it.
      */
-    & .tw-card-body > div:last-of-type {
+    & .tw-card-body > div:where(.tw-card-body > *):last-of-type {
       padding-top: var(--rs-4) !important;
       padding-bottom: var(--rs-sub-pad) !important;
 
-      & > div {
+      & > div:where(.tw-card-body > * > *) {
         margin: 0 !important;
         padding: 0 !important;
       }
 
-      & > div + div {
+      & > div + div:where(.tw-card-body > * > *) {
         margin-top: var(--rs-3) !important;
       }
 
@@ -615,7 +615,7 @@ html:not([data-rs="off"]) {
         border-radius: var(--rs-radius-m) !important;
       }
 
-      & button {
+      & button:where(.tw-card-body > * *) {
         width: 100% !important;
         height: 3.6rem !important;
         justify-content: center !important;
@@ -626,7 +626,7 @@ html:not([data-rs="off"]) {
       margin: 0 !important;
     }
 
-    & .subscription-card__sub-progress > div + div {
+    & .subscription-card__sub-progress > div + div:where(.subscription-card__sub-progress > *) {
       margin-top: var(--rs-3) !important;
     }
 
@@ -638,7 +638,7 @@ html:not([data-rs="off"]) {
       }
 
       /* The bar, between the two badges. */
-      & > div:has(.tw-progress-bar) {
+      & > div:where(.sub-badge-progress > *):has(.tw-progress-bar) {
         flex: 1 !important;
       }
     }
@@ -671,17 +671,17 @@ html:not([data-rs="off"]) {
     }
 
     /* "Total Months Subscribed: 3 Months": a quiet line, its figure in ink. */
-    & .tw-card-body > div:first-of-type p {
+    & .tw-card-body > div:first-of-type p:where(.tw-card-body > * *) {
       font-size: var(--rs-text-3) !important;
       color: var(--rs-muted) !important;
 
-      & > span {
+      & > span:where(.tw-card-body > * * > *) {
         color: var(--rs-text) !important;
       }
     }
 
     /* Its star; the verified tick by the name keeps the accent. */
-    & .tw-card-body > div:first-of-type .tw-svg:not([data-test-selector="VerifiedPartnerBadge"] *) svg {
+    & .tw-card-body > div:first-of-type .tw-svg:not([data-test-selector="VerifiedPartnerBadge"] *) svg:where(.tw-svg *) {
       fill: var(--rs-faint) !important;
     }
 

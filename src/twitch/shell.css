@@ -26,9 +26,9 @@ html:not([data-rs="off"]) {
   &.tw-root--theme-light,
   & .tw-root--theme-dark,
   & .tw-root--theme-light,
-  & .ReactModal__Content div:has(> [data-a-target="player-settings-menu"]),
-  & .ReactModal__Content div:has(> div > [data-a-target="player-settings-menu"]),
-  & .ReactModal__Content div:has(> div > div > [data-a-target="player-settings-menu"]) {
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> [data-a-target="player-settings-menu"]),
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> div > [data-a-target="player-settings-menu"]),
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> div > div > [data-a-target="player-settings-menu"]) {
     --color-background-body: var(--rs-bg) !important;
     --color-background-base: var(--rs-bg) !important;
     --color-background-alt: var(--rs-surface) !important;
@@ -189,9 +189,9 @@ html:not([data-rs="off"]) {
    * shape from --border-radius-rounded, which cannot be remapped (see above).
    */
   &[data-rs-round="0"] button[class*="ScCoreButton"],
-  &[data-rs-round="0"] div:has(> button[class*="ScCoreButton"]),
+  &[data-rs-round="0"] div:where([data-rs-round="0"] *):has(> button[class*="ScCoreButton"]),
   /* A channel's Follow button sits in a second, outer clip. */
-  &[data-rs-round="0"] div:has(> div > div[style] > div > div > button[data-a-target="follow-button"]) {
+  &[data-rs-round="0"] div:where([data-rs-round="0"] *):has(> div > div[style] > div > div > button[data-a-target="follow-button"]) {
     border-radius: 0 !important;
   }
 
@@ -332,7 +332,7 @@ html:not([data-rs="off"]) {
    * hidden copy of it, then the results): a floating layer like the menus,
    * with roomier rows that light up on hover.
    */
-  & .top-nav div:has(> div > div > .search-tray) {
+  & .top-nav div:where(.top-nav *):has(> div > div > .search-tray) {
     padding: var(--rs-1) !important;
     background: var(--rs-float) !important;
     border: 1px solid var(--rs-float-border) !important;
@@ -378,7 +378,7 @@ html:not([data-rs="off"]) {
     }
 
     /* One icon column for every row, even the last one which has no icon, so the text lines up. */
-    & .search-item > :first-child:not(:has(strong, p)) {
+    & .search-item > :first-child:where(.search-item > *):not(:has(strong, p)) {
       box-sizing: border-box !important;
       flex: 0 0 calc(var(--rs-avatar-card) + 1rem) !important;
       width: calc(var(--rs-avatar-card) + 1rem) !important;
@@ -386,7 +386,7 @@ html:not([data-rs="off"]) {
       margin: 0 !important;
     }
 
-    & .search-item > :first-child:not(:has(strong, p)) + * {
+    & .search-item:not(:has(> :first-child strong, > :first-child p)) > :where(.search-item > *):nth-child(2) {
       margin-left: 0 !important;
       padding-left: 0 !important;
     }
@@ -499,7 +499,7 @@ html:not([data-rs="off"]) {
    * right end free for the sidebar's collapse arrow, which sits over it.
    */
   & .followed-side-nav-header p,
-  & .followed-side-nav-header__dropdown-trigger > div:last-child {
+  & .followed-side-nav-header__dropdown-trigger > div:where(.followed-side-nav-header__dropdown-trigger > *):last-child {
     display: none !important;
   }
 
@@ -516,7 +516,7 @@ html:not([data-rs="off"]) {
    * under it recedes (regular, faded). The name is the first block of the
    * row's metadata, whatever wraps it (plain rows and guest-star rows differ).
    */
-  & [data-a-target="side-nav-card-metadata"] > :first-child p {
+  & [data-a-target="side-nav-card-metadata"] > :first-child p:where([data-a-target="side-nav-card-metadata"] > * *) {
     font-size: 1.25rem !important;
     font-weight: 600 !important;
     color: var(--rs-label) !important;
@@ -544,7 +544,7 @@ html:not([data-rs="off"]) {
       background-color: var(--rs-hover) !important;
     }
 
-    &:hover [data-a-target="side-nav-card-metadata"] > :first-child p {
+    &:hover [data-a-target="side-nav-card-metadata"] > :first-child p:where([data-a-target="side-nav-card-metadata"] > * *) {
       color: var(--rs-text) !important;
     }
   }
@@ -598,7 +598,7 @@ html:not([data-rs="off"]) {
    * third line of the row, in the metadata's size and tone, with its icon
    * or pill in the accent tint instead of Twitch's purple.
    */
-  & .side-nav-card__link > div:not(.side-nav-card__avatar) > div:not(:has([data-a-target="side-nav-card-metadata"])) {
+  & .side-nav-card__link > div:not(.side-nav-card__avatar) > div:where(.side-nav-card__link > * > *):not(:has([data-a-target="side-nav-card-metadata"])) {
     align-items: center !important;
     gap: var(--rs-1) !important;
     margin-top: 0.3rem !important;
@@ -643,7 +643,7 @@ html:not([data-rs="off"]) {
    * The box stops 0.4rem short of the collapse arrow (1rem from the panel's
    * edge, 3.2rem wide), which sits over the row's right end.
    */
-  & .side-nav [class*="saveYourStreakSideNavRow"] {
+  & .side-nav [data-rs-hook="streak"] {
     margin-right: calc(4.6rem - var(--rs-2)) !important;
     border-radius: var(--rs-radius-m) !important;
     text-decoration: none !important;
@@ -656,7 +656,7 @@ html:not([data-rs="off"]) {
       background: transparent !important;
     }
 
-    & > div > div:has(> p) {
+    & > div > div:where([data-rs-hook="streak"] > * > *):has(> p) {
       margin: 0 !important;
       padding: 0 !important;
     }
@@ -674,7 +674,7 @@ html:not([data-rs="off"]) {
     }
   }
 
-  & .side-nav div:has(> [class*="saveYourStreakSideNavRow"]) {
+  & .side-nav div:where(.side-nav *):has(> [data-rs-hook="streak"]) {
     margin-top: 0 !important;
   }
 
@@ -855,7 +855,7 @@ html:not([data-rs="off"]) {
     }
 
     /* The first line: a channel and its category, a category, or the link. */
-    & div[tabindex] > div > p:first-child,
+    & div[tabindex] > div > p:where([data-popper-placement^="right"] * > * > *):first-child,
     & div[tabindex] > div > div > p,
     & a p {
       font-size: var(--rs-text-3) !important;
@@ -872,7 +872,7 @@ html:not([data-rs="off"]) {
      * A shared stream's list: a row per channel, avatar and name on one
      * side, viewers on the other, under a quiet "Live with:".
      */
-    & div[tabindex] div:has(> div > .tw-avatar) {
+    & div[tabindex] div:where([data-popper-placement^="right"] * *):has(> div > .tw-avatar) {
       display: flex !important;
       align-items: center !important;
       justify-content: space-between !important;
@@ -880,7 +880,7 @@ html:not([data-rs="off"]) {
       margin-top: 0.6rem !important;
     }
 
-    & div[tabindex] div:has(> .tw-avatar) {
+    & div[tabindex] div:where([data-popper-placement^="right"] * *):has(> .tw-avatar) {
       display: flex !important;
       align-items: center !important;
       gap: 0.8rem !important;
@@ -896,7 +896,7 @@ html:not([data-rs="off"]) {
       height: 2rem !important;
     }
 
-    & div[tabindex] div:has(.tw-avatar) + div > p:only-child {
+    & div[tabindex] div:where([data-popper-placement^="right"] * *):has(.tw-avatar) + div > p:where([data-popper-placement^="right"] * * > *):only-child {
       margin-top: 0.8rem !important;
       font-size: var(--rs-text-2) !important;
       font-weight: 400 !important;

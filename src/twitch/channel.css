@@ -56,7 +56,7 @@ html:not([data-rs="off"]) {
    */
   & [class*="channel-root__player"],
   & .channel-root__upper-watch,
-  & .channel-root__player div:has(> div > .channel-root__player-background) {
+  & .channel-root__player div:where(.channel-root__player *):has(> div > .channel-root__player-background) {
     background: var(--rs-bg) !important;
   }
 
@@ -92,14 +92,14 @@ html:not([data-rs="off"]) {
       padding-inline: 0 !important;
     }
 
-    & > * :has([data-a-target="stream-title"]):has(img),
-    & > * :has(.about-section__panel) {
+    & > * :where(.channel-info-content > * *):has([data-a-target="stream-title"]):has(img),
+    & > * :where(.channel-info-content > * *):has(.about-section__panel) {
       padding-inline: 0 !important;
       margin-inline: 0 !important;
       max-width: none !important;
     }
 
-    & > * :has(.about-section__panel) {
+    & > * :where(.channel-info-content > * *):has(.about-section__panel) {
       padding-top: 0 !important;
       margin-top: 0 !important;
     }
@@ -120,7 +120,7 @@ html:not([data-rs="off"]) {
       margin-block: 0 !important;
     }
 
-    & > * + * {
+    & > * + *:where(.channel-info-content > *) {
       margin-top: var(--rs-8) !important;
     }
   }
@@ -134,7 +134,7 @@ html:not([data-rs="off"]) {
     padding-top: max(0px, var(--rs-shelf-head) - var(--rs-4)) !important;
   }
 
-  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) div:has(.metadata-layout__support) {
+  &:not([data-rs-info="video"]) #live-channel-stream-information div:where(#live-channel-stream-information *):has(.metadata-layout__support) {
     padding-block: 0 !important;
     margin-block: 0 !important;
   }
@@ -157,7 +157,7 @@ html:not([data-rs="off"]) {
   }
 
   /* Avatar flush with the column's left edge. */
-  & #live-channel-stream-information div:has(> a .tw-avatar) {
+  & #live-channel-stream-information div:where(#live-channel-stream-information *):has(> a .tw-avatar) {
     margin-left: 0 !important;
     padding-left: 0 !important;
     margin-top: 0 !important;
@@ -169,14 +169,14 @@ html:not([data-rs="off"]) {
    * (.metadata-layout__support), then title + viewer count. Both end on the
    * column's right edge.
    */
-  & #live-channel-stream-information div:has(> .metadata-layout__support),
+  & #live-channel-stream-information div:where(#live-channel-stream-information *):has(> .metadata-layout__support),
   & .metadata-layout__support,
-  & .metadata-layout__support + div {
+  & .metadata-layout__support + div:where(#live-channel-stream-information *) {
     margin-right: 0 !important;
     padding-right: 0 !important;
   }
 
-  & #live-channel-stream-information div:has(> .metadata-layout__support) {
+  & #live-channel-stream-information div:where(#live-channel-stream-information *):has(> .metadata-layout__support) {
     padding-left: var(--rs-4) !important;
   }
 
@@ -207,17 +207,17 @@ html:not([data-rs="off"]) {
   }
 
   /* Remove margin above the stream title */
-  & div:has(> [data-a-target="stream-title"]) {
+  & div:where(#live-channel-stream-information *):has(> [data-a-target="stream-title"]) {
     margin-top: 0 !important;
   }
 
   /* Add spacing above the stream information */
-  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) {
+  &:not([data-rs-info="video"]) #live-channel-stream-information {
     margin-top: var(--rs-6) !important;
   }
 
   /* On live channel view, move the buttons up */
-  & #live-channel-stream-information:not(:has(.metadata-layout__split-top)) [data-target="channel-header-right"] {
+  &:not([data-rs-info="video"]) #live-channel-stream-information [data-target="channel-header-right"] {
     margin-top: -50px !important;
   }
 
@@ -226,7 +226,7 @@ html:not([data-rs="off"]) {
    * for the "Follow" label and sits left of centre; the bell starts further
    * in than the icons of "Gift a Sub" and "Subscribe" beside it.
    */
-  & [data-a-target="unfollow-button"] div:has(> [class*="ScAnimation"]) {
+  & [data-a-target="unfollow-button"] div:where([data-a-target="unfollow-button"] *):has(> [class*="ScAnimation"]) {
     margin: 0 !important;
   }
 
@@ -239,9 +239,14 @@ html:not([data-rs="off"]) {
     display: none !important;
   }
 
-  /* Air between the title and the row of chips (category, tags) under it. */
-  & div:has(> [data-a-target="stream-title"]) + div {
-    margin-top: var(--rs-2) !important;
+  /*
+   * Air between the title and the row of chips (category, tags) under it.
+   * Set under the title's own block, not over the row after it: a rule that
+   * goes on from a :has() to another element is one the browser re-checks
+   * across this whole area on every change in it (the viewer count rolls).
+   */
+  & div:where(#live-channel-stream-information *):has(> [data-a-target="stream-title"]) {
+    margin-bottom: var(--rs-2) !important;
   }
 
   /* The category under the title is a chip like the tags beside it. */
@@ -281,7 +286,7 @@ html:not([data-rs="off"]) {
    * Viewer count: icon and number share Twitch's live colour inside a pill
    * tinted with it. The colour is set once on the pill and inherited.
    */
-  & #live-channel-stream-information div:has(> [data-a-target="animated-channel-viewers-count"]) {
+  & #live-channel-stream-information div:where(#live-channel-stream-information *):has(> [data-a-target="animated-channel-viewers-count"]) {
     display: inline-flex !important;
     align-items: center !important;
     gap: 0.4rem !important;
@@ -290,14 +295,16 @@ html:not([data-rs="off"]) {
     color: var(--rs-live) !important;
     background: var(--rs-live-tint) !important;
 
-    & > div {
-      margin: 0 !important;
-      padding: 0 !important;
-    }
-
-    & svg {
+    /* Its icon, by the exact path to it: see the note on the title above. */
+    & > div > .tw-svg > svg {
       fill: currentColor !important;
     }
+  }
+
+  /* The icon's holder, the block right before the number. */
+  & #live-channel-stream-information div:where(#live-channel-stream-information *):has(+ [data-a-target="animated-channel-viewers-count"]) {
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   & [data-a-target="animated-channel-viewers-count"],
@@ -321,7 +328,7 @@ html:not([data-rs="off"]) {
     margin-bottom: 0 !important;
   }
 
-  & .about-section__panel > div:first-child {
+  & .about-section__panel > div:where(.about-section__panel > *):first-child {
     display: none !important;
   }
 
@@ -343,9 +350,9 @@ html:not([data-rs="off"]) {
       align-items: flex-start !important;
     }
 
-    & > div > div:last-child,
-    & :has(> .social-media-link),
-    & :has(> div > .social-media-link) {
+    & > div > div:where(.about-section__panel--content > * > *):last-child,
+    & :where(.about-section__panel--content *):has(> .social-media-link),
+    & :where(.about-section__panel--content *):has(> div > .social-media-link) {
       margin-top: 0 !important;
       padding-top: 0 !important;
     }
@@ -372,7 +379,7 @@ html:not([data-rs="off"]) {
     color: var(--rs-text) !important;
   }
 
-  & .about-section__panel + div {
+  & .about-section__panel + div:where(.about-section *) {
     margin-bottom: 0 !important;
   }
 
@@ -383,13 +390,13 @@ html:not([data-rs="off"]) {
    */
   & .about-section__actions {
 
-    & div:has(> div > h3) {
+    & div:where(.about-section__actions *):has(> div > h3) {
       /* As tall as About's heading row, so both cards start level. */
       margin-bottom: 0 !important;
       padding-bottom: 0 !important;
     }
 
-    & div:has(> h3) {
+    & div:where(.about-section__actions *):has(> h3) {
       margin: 0 !important;
     }
 
@@ -405,7 +412,7 @@ html:not([data-rs="off"]) {
     }
 
     /* The backing Twitch puts under the progress track is the card's now. */
-    & div:has(> * > * > [role="progressbar"]) {
+    & div:where(.about-section__actions *):has(> * > * > [role="progressbar"]) {
       background: transparent !important;
     }
   }
@@ -415,7 +422,7 @@ html:not([data-rs="off"]) {
    * button): its box reads the page colour and vanishes into the page while
    * still covering the title. It becomes a floating layer like the menus.
    */
-  & .channel-info-content article:has(.tw-callout-message) > div {
+  & .channel-info-content article:where(.channel-info-content *):has(.tw-callout-message) > div {
     --color-background-base: var(--rs-float) !important;
     --color-background-body: var(--rs-float) !important;
     --color-background-alt: var(--rs-float) !important;

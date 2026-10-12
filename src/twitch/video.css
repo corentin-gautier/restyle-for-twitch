@@ -19,7 +19,7 @@ html:not([data-rs="off"]) {
     display: none !important;
   }
 
-  & div:has(> .timestamp-metadata__bar) > p {
+  & div:where([data-rs-info="video"] *):has(> .timestamp-metadata__bar) > p {
     margin: 0 !important;
     padding: 0 !important;
     font-size: var(--rs-text-3) !important;
@@ -28,7 +28,7 @@ html:not([data-rs="off"]) {
   }
 
   /* The title: the block that follows the date. */
-  & .metadata-layout__split-top div:has(> div > .timestamp-metadata__bar) + div {
+  & .metadata-layout__split-top div:where(.metadata-layout__split-top *):has(> div > .timestamp-metadata__bar) + div:where(.metadata-layout__split-top *) {
     margin-top: var(--rs-1) !important;
     padding-right: var(--rs-8) !important;
     font-size: var(--rs-text-title) !important;
@@ -57,11 +57,11 @@ html:not([data-rs="off"]) {
     }
   }
 
-  & .metadata-layout__split-top + div {
+  & .metadata-layout__split-top + div:where(#live-channel-stream-information *) {
     padding: 0 !important;
     margin: var(--rs-6) 0 0 !important;
 
-    & > div {
+    & > div:where(#live-channel-stream-information * > *) {
       margin: 0 !important;
       padding: var(--rs-4) !important;
       background: var(--rs-surface) !important;
@@ -69,21 +69,21 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-l) !important;
     }
 
-    & h1 {
+    & h1:where(#live-channel-stream-information * *) {
       font-size: var(--rs-text-6) !important;
       color: var(--rs-text) !important;
     }
 
     /* "last live" and follower count under the name. */
-    & .metadata-layout__support + div,
-    & .metadata-layout__support + div * {
+    & .metadata-layout__support + div:where(#live-channel-stream-information * *),
+    & .metadata-layout__support + div *:where(#live-channel-stream-information * * *) {
       font-size: var(--rs-text-3) !important;
       color: var(--rs-muted) !important;
     }
 
     /* Not the "LIVE" tag that line starts with while the channel is live: white on its red. */
     & .metadata-layout__support + div .tw-channel-status-text-indicator,
-    & .metadata-layout__support + div .tw-channel-status-text-indicator * {
+    & .metadata-layout__support + div .tw-channel-status-text-indicator *:where(.tw-channel-status-text-indicator *) {
       font-size: var(--rs-text-2) !important;
       font-weight: 600 !important;
       color: var(--rs-on-scrim) !important;
@@ -100,7 +100,7 @@ html:not([data-rs="off"]) {
    * (to the creator dashboard) goes: the guests say as much.
    */
   & .metadata-layout__split-top:has(.reedit-clip-button, [data-test-selector="clips-watch-full-button"]) {
-    & div:has(+ div > [data-a-target="stream-title"]) {
+    & div:where(.metadata-layout__split-top *):has(+ div > [data-a-target="stream-title"]) {
       margin: 0 !important;
     }
 
@@ -118,7 +118,7 @@ html:not([data-rs="off"]) {
         gap: var(--rs-1) var(--rs-2) !important;
       }
 
-      & > div > div + div {
+      & > div > div + div:where(.metadata-layout__split-top > * > * > *) {
         margin-top: var(--rs-2) !important;
         gap: 0 !important;
       }
@@ -134,20 +134,20 @@ html:not([data-rs="off"]) {
       & p a {
         color: var(--rs-text-soft) !important;
         text-decoration: none !important;
-
-        &:hover {
-          color: var(--rs-text) !important;
-        }
       }
 
-      & div:has(> p:only-child) {
+      & p a:hover {
+        color: var(--rs-text) !important;
+      }
+
+      & div:where(.metadata-layout__split-top > * *):has(> p:only-child) {
         margin: 0 !important;
       }
     }
 
-    & div:has(> div > a[href*="/guest-star"]),
-    & div:has(> div > a[href*="/guest-star"]) + span,
-    & div:has(> a[href*="/directory/category/"]) + span {
+    & div:where(.metadata-layout__split-top *):has(> div > a[href*="/guest-star"]),
+    & div:where(.metadata-layout__split-top *):has(> div > a[href*="/guest-star"]) + span:where(.metadata-layout__split-top *),
+    & div:where(.metadata-layout__split-top *):has(> a[href*="/directory/category/"]) + span:where(.metadata-layout__split-top *) {
       display: none !important;
     }
 
@@ -160,23 +160,23 @@ html:not([data-rs="off"]) {
       background: var(--rs-accent-tint) !important;
       text-decoration: none !important;
 
-      &:hover {
-        background: var(--rs-accent-tint-strong) !important;
-      }
-
       & p {
         font-size: var(--rs-text-1) !important;
         color: var(--rs-accent-quiet) !important;
       }
     }
 
+    & a[href*="/directory/category/"]:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+
     /* Guests: avatar and name in one pill, which opens the streamer's card. */
-    & div:has(> div > div > span > button[aria-haspopup="dialog"]) {
+    & div:where(.metadata-layout__split-top *):has(> div > div > span > button[aria-haspopup="dialog"]) {
       flex-wrap: wrap !important;
       gap: var(--rs-1) !important;
     }
 
-    & div:has(> span > button[aria-haspopup="dialog"]) {
+    & div:where(.metadata-layout__split-top *):has(> span > button[aria-haspopup="dialog"]) {
       display: inline-flex !important;
       align-items: center !important;
       gap: 0.6rem !important;
@@ -186,10 +186,6 @@ html:not([data-rs="off"]) {
       border-radius: var(--rs-radius-pill) !important;
       background: var(--rs-hover) !important;
       transition: background-color var(--rs-ease);
-
-      &:hover {
-        background: var(--rs-raised) !important;
-      }
 
       & > div {
         margin: 0 !important;
@@ -206,6 +202,10 @@ html:not([data-rs="off"]) {
         text-decoration: none !important;
       }
     }
+
+    & div:where(.metadata-layout__split-top *):has(> span > button[aria-haspopup="dialog"]):hover {
+      background: var(--rs-raised) !important;
+    }
   }
 
   /*
@@ -213,13 +213,15 @@ html:not([data-rs="off"]) {
    * the right edge of the column, like "Sort by" on the directory pages.
    * The row has no hook of its own; it is the one holding a lone <strong>
    * label next to a button, nested one level deeper on the videos tab.
+   * It shows on a channel's Videos and Clips tabs (.home__lower-content) and
+   * under a video: the :has() is only tried there, not under a live stream.
    */
-  & .channel-info-content div:has(> div > strong:only-child):has(button):not(article *),
-  & .channel-info-content div:has(> div > div > strong:only-child):has(button):not(article *) {
+  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > strong:only-child):has(button):not(article *),
+  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > div > strong:only-child):has(button):not(article *) {
     justify-content: flex-end !important;
   }
 
-  & .channel-info-content div:has(> div > strong:only-child):has(button):not(article *) > div {
+  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > strong:only-child):has(button):not(article *) > div {
     flex-grow: 0 !important;
   }
 
@@ -231,22 +233,22 @@ html:not([data-rs="off"]) {
    * cards; all of those are zeroed, and three steps remain: under the
    * "Filter By" row, under a shelf's header, and between two shelves.
    */
-  & .channel-info-content > div:has(.preview-card-carousel) > div {
+  &[data-rs-info="video"] .channel-info-content > div:where([data-rs-info="video"] *):has(.preview-card-carousel) > div {
     margin: 0 !important;
     padding-inline: 0 !important;
   }
 
-  & .channel-info-content div:has(> .preview-card-carousel) {
+  & .channel-info-content div:where(.channel-info-content *):has(> .preview-card-carousel) {
     margin-block: 0 !important;
     padding-block: 0 !important;
   }
 
-  & .channel-info-content div:has(> .preview-card-carousel) + div:has(> .preview-card-carousel) {
+  & .channel-info-content div:where(.channel-info-content *):has(> .preview-card-carousel) + div:where(.channel-info-content *):has(> .preview-card-carousel) {
     margin-top: var(--rs-shelf-gap) !important;
   }
 
   /* Whatever comes right before the first shelf: the "Filter By" row. */
-  & .channel-info-content div:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel) {
+  & .channel-info-content div:where(.channel-info-content *):not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel) {
     margin-bottom: var(--rs-6) !important;
   }
 
@@ -260,14 +262,14 @@ html:not([data-rs="off"]) {
    * pushed to the right edge as a small-caps label, like "Show more"
    * elsewhere. A subtitle ("4 videos") stays tucked under the title.
    */
-  & .channel-info-content div:has(> p.tw-title > [data-test-selector="title"]) {
+  & .channel-info-content div:where(.channel-info-content *):has(> p.tw-title > [data-test-selector="title"]) {
     align-items: baseline !important;
     justify-content: space-between !important;
     margin: 0 0 var(--rs-shelf-head) !important;
+  }
 
-    &:has(+ [data-test-selector="subtitle"]) {
-      margin-bottom: 0 !important;
-    }
+  & .channel-info-content div:where(.channel-info-content *):has(> p.tw-title > [data-test-selector="title"]):has(+ [data-test-selector="subtitle"]) {
+    margin-bottom: 0 !important;
   }
 
   & .channel-info-content [data-test-selector="subtitle"] {

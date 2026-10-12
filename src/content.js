@@ -35,6 +35,7 @@ const STANDALONE = new Set([
   "turbo",
 ]);
 const standalone = () => STANDALONE.has(location.pathname.split("/")[1]);
+
 // Before the settings are read, so that such a page never shows restyled.
 if (standalone()) root.setAttribute("data-rs", "off");
 
@@ -107,10 +108,14 @@ let applied = "";
 let path = location.pathname;
 
 function apply() {
-  if (settings.twitch && !standalone()) {
-    root.removeAttribute("data-rs");
-  } else {
-    root.setAttribute("data-rs", "off");
+  const styled = settings.twitch && !standalone();
+  if (styled) root.removeAttribute("data-rs");
+  else root.setAttribute("data-rs", "off");
+  // Skipped while off (see the observer below): caught up on the way back.
+  if (styled) {
+    pageState();
+    towers();
+    hooks();
   }
   root.setAttribute("data-rs-space", String(settings.space));
   root.setAttribute("data-rs-round", String(settings.round));
@@ -159,17 +164,30 @@ setInterval(() => {
 }, 1000);
 
 // Page state the stylesheet needs to know from the root: whether the sidebar
-// is collapsed (its popups are rendered outside it) and whether a channel's
-// Home tab is showing (the player lives outside the channel's block).
+// is collapsed (its popups are rendered outside it), whether a channel's
+// Home tab is showing (the player lives outside the channel's block),
+// whether the block under the player is a video's or a clip's, not a live
+// stream's, and which of a few page-wide blocks are present (data-rs-has:
+// Following's "upcoming streams" shelf, a directory header with a
+// description and nothing else).
 // CSS could test both with html:has(...), but a :has() on the root is
 // re-evaluated on every DOM change and restyles the whole page each time,
-// so they are kept as attributes instead. Keep in sync with twitch/shell.css
-// and twitch/channel-tabs.css.
+// so they are kept as attributes instead. Keep in sync with twitch/shell.css,
+// twitch/channel-tabs.css, twitch/channel.css, twitch/video.css,
+// twitch/shelves.css and twitch/directory.css.
 function pageState() {
   const nav = document.querySelector(".side-nav--collapsed") ? "collapsed" : null;
   const home = document.querySelector(".channel-root--home");
   const channel = home ? (home.classList.contains("channel-root--live") ? "live-home" : "home") : null;
-  for (const [name, value] of [["data-rs-nav", nav], ["data-rs-channel", channel]]) {
+  const info = document.querySelector(".metadata-layout__split-top") ? "video" : null;
+  const has =
+    [
+      document.querySelector('[data-a-target="upcoming-streams-header"]') && "upcoming",
+      document.querySelector(".directory-header-new__description") && !document.querySelector(".directory-header-new__info") && "plain-header",
+    ]
+      .filter(Boolean)
+      .join(" ") || null;
+  for (const [name, value] of [["data-rs-nav", nav], ["data-rs-channel", channel], ["data-rs-info", info], ["data-rs-has", has]]) {
     if (value === null) root.removeAttribute(name);
     else if (root.getAttribute(name) !== value) root.setAttribute(name, value);
   }
@@ -179,9 +197,37 @@ function pageState() {
 // grids that wrap, and shelves that hold one row whatever their width. Only
 // its generated classes tell them apart, so each grid is marked once with
 // what its own rule says.
+// Each also gets its number of cards, and whether they are categories: the
+// stylesheet drops the cards past a full row from those. Counted in CSS
+// instead, every change inside a grid restyled all of its cards.
 function towers() {
-  for (const tower of document.querySelectorAll(".tw-tower:not([data-rs-tower])")) {
-    tower.setAttribute("data-rs-tower", getComputedStyle(tower).flexWrap === "nowrap" ? "row" : "grid");
+  for (const tower of document.querySelectorAll(".tw-tower")) {
+    if (!tower.hasAttribute("data-rs-tower")) {
+      tower.setAttribute("data-rs-tower", getComputedStyle(tower).flexWrap === "nowrap" ? "row" : "grid");
+    }
+    const count = String(tower.children.length);
+    if (tower.getAttribute("data-rs-count") !== count) tower.setAttribute("data-rs-count", count);
+    tower.toggleAttribute("data-rs-games", tower.querySelector(".game-card") !== null);
+  }
+}
+
+// Elements that only a generated class name identifies. A rule that tests
+// such a name ahead of a broad subject ([class*="x"] > div) has the browser
+// restyle everything under any element whose class changes, anywhere on the
+// page. Marked once with an attribute instead, the test costs nothing. Keep
+// in sync with twitch/shell.css, twitch/subscribe.css and twitch/cards.css.
+const HOOKS = {
+  streak: '.side-nav [class*="saveYourStreakSideNavRow"]',
+  "gift-hero": '.support-panel [class*="giftHeroSlot"]',
+  // The text column of a stream, video or clip card.
+  "card-text": 'article [class*="ScTextWrapper"]',
+};
+
+function hooks() {
+  for (const [name, selector] of Object.entries(HOOKS)) {
+    for (const element of document.querySelectorAll(`${selector}:not([data-rs-hook])`)) {
+      element.setAttribute("data-rs-hook", name);
+    }
   }
 }
 
@@ -197,12 +243,16 @@ new MutationObserver(() => {
       path = location.pathname;
       apply();
     }
+    // Only the stylesheets read these.
+    if (root.getAttribute("data-rs") === "off") return;
     pageState();
     towers();
+    hooks();
   });
 }).observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
 pageState();
 towers();
+hooks();
 
 // Video cards replace their thumbnail with an animated storyboard while
 // hovered: a sprite sheet downloaded and stepped through for every card the

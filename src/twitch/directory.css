@@ -40,7 +40,7 @@ html:not([data-rs="off"]) {
     }
 
     /* The column beside the box art, centred on it. */
-    & > div > div:has(h1) {
+    & > div > div:where(.directory-header-new__info > * > *):has(h1) {
       justify-content: center !important;
       gap: var(--rs-2) !important;
 
@@ -58,7 +58,7 @@ html:not([data-rs="off"]) {
     }
 
     /* Figures, then tags: one wrapping row, the tags pushed to the next line. */
-    & div:has(> div > p[title]) {
+    & div:where(.directory-header-new__info *):has(> div > p[title]) {
       display: flex !important;
       flex-wrap: wrap !important;
       align-items: center !important;
@@ -76,12 +76,12 @@ html:not([data-rs="off"]) {
         color: var(--rs-text) !important;
       }
 
-      & > div:has(.tw-tag) {
+      & > div:where(.directory-header-new__info * > *):has(.tw-tag) {
         flex-basis: 100% !important;
       }
 
       /* The bullet that led to the tags. */
-      & > div:has(+ div .tw-tag) {
+      & > div:where(.directory-header-new__info * > *):has(+ div .tw-tag) {
         display: none !important;
       }
     }
@@ -97,7 +97,7 @@ html:not([data-rs="off"]) {
     }
 
     /* Actions: a little air above. */
-    & > div > div:has(h1) > div:has([data-a-target="game-directory-follow-button"]) {
+    & > div > div:where(.directory-header-new__info > * > *):has(h1) > div:where(.directory-header-new__info > * > * > *):has([data-a-target="game-directory-follow-button"]) {
       margin-top: var(--rs-2) !important;
     }
   }
@@ -107,7 +107,7 @@ html:not([data-rs="off"]) {
    * category header's class names: a picture and, beside it, name, viewer
    * count, tags and a sentence. The same panel, found by its description.
    */
-  & .common-centered-column > div:has(.directory-header-new__description):not(:has(.tw-tower, .directory-header-new__info)) {
+  & .common-centered-column > div:where([data-rs-has~="plain-header"] .common-centered-column > *):has(.directory-header-new__description):not(:has(.tw-tower, .directory-header-new__info)) {
     margin: calc(var(--rs-8) + 3rem - 1rem) 0 0 !important;
     padding: var(--rs-6) !important;
     background: var(--rs-surface) !important;
@@ -128,7 +128,7 @@ html:not([data-rs="off"]) {
       overflow: hidden !important;
     }
 
-    & div:has(> div > h1) {
+    & div:where([data-rs-has~="plain-header"] .common-centered-column > * *):has(> div > h1) {
       justify-content: center !important;
       gap: var(--rs-2) !important;
 
@@ -146,7 +146,7 @@ html:not([data-rs="off"]) {
     }
 
     /* Viewer count, then tags: one wrapping row, the tags on the next line. */
-    & div:has(> div > p > strong) {
+    & div:where([data-rs-has~="plain-header"] .common-centered-column > * *):has(> div > p > strong) {
       display: flex !important;
       flex-wrap: wrap !important;
       align-items: center !important;
@@ -168,12 +168,12 @@ html:not([data-rs="off"]) {
         color: var(--rs-text) !important;
       }
 
-      & > div:has(.tw-tag) {
+      & > div:where([data-rs-has~="plain-header"] .common-centered-column > * * > *):has(.tw-tag) {
         flex-basis: 100% !important;
       }
 
       /* The bullet that led to the tags. */
-      & > div:has(+ div .tw-tag) {
+      & > div:where([data-rs-has~="plain-header"] .common-centered-column > * * > *):has(+ div .tw-tag) {
         display: none !important;
       }
     }
@@ -198,11 +198,11 @@ html:not([data-rs="off"]) {
    * at text size, the sentence toned down. Only on the directory pages'
    * column: a channel page's callouts float over the stream info.
    */
-  & .twilight-main .common-centered-column div:has(> article .tw-callout-message) {
+  & .twilight-main .common-centered-column div:where(.common-centered-column *):has(> article .tw-callout-message) {
     margin: 0 0 var(--rs-4) !important;
   }
 
-  & .twilight-main .common-centered-column article:has(.tw-callout-message) {
+  & .twilight-main .common-centered-column article:where(.common-centered-column *):has(.tw-callout-message) {
     padding: var(--rs-2) var(--rs-3) var(--rs-2) var(--rs-4) !important;
     background: var(--rs-surface) !important;
     border: var(--rs-hairline) !important;

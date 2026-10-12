@@ -9,7 +9,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | --- | --- |
 | `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
 | `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
-| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Switches the stylesheet off (`data-rs="off"`) on the app's standalone pages (`STANDALONE`). Also sets the page state the stylesheet reads (`data-rs-nav`, `data-rs-channel` on `<html>`, `data-rs-tower` on each card grid) and stops the hover events that start a video card's animated preview. |
+| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Sets what the stylesheet reads instead of working it out itself (see "Performance"): page state on `<html>` (`data-rs-nav`, `data-rs-channel`, `data-rs-info`, `data-rs-has`), each card grid's kind, card count and content (`data-rs-tower`, `data-rs-count`, `data-rs-games`), and `data-rs-hook` on a few elements only a generated class name identifies. Stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
@@ -30,10 +30,55 @@ The user is French-speaking: reply in French, write code and docs in English.
 - Firefox (128+) loads the same files: stick to CSS both engines support, and
   add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
 - Nest only under single-selector parents; `:has()` inside `:has()` is invalid.
+- Follow the rules under "Performance": a selector that looks harmless can
+  make the browser restyle the whole page on every chat message.
 - On a rounded element, a border goes all round or not at all: never on one
   side only.
 - After an edit, check that the file still parses:
   `npx --yes lightningcss-cli@1.27.0 src/twitch/<file>.css -o /tmp/out.css`
+
+## Performance
+
+Twitch changes its DOM all the time (chat lines, rolling viewer counts,
+classes toggled on containers). What a selector matches is not what makes it
+costly: it is which elements the browser has to *try* it on, and what it then
+restyles when something changes. One rule of the wrong shape was enough to
+restyle the whole page on every change (45% of CPU time in style on a busy
+chat, against 2% without the extension). The rules:
+
+- **A `:has()` on a bare tag or `*` carries a guard.** `div:has(> x)` is tried
+  on every `div` of the page, and each try marks the element for
+  re-evaluation. Written `div:where(.scope *):has(> x)`, with a `:where()`
+  that repeats an ancestor the selector already requires, it is only tried
+  inside that ancestor; `:where()` adds no specificity and changes nothing
+  that matches. The guard follows the exact path (`.scope > * > *`), child
+  and descendant steps only.
+- **So does a bare-tag subject after a position or sibling test.**
+  `.a + div`, `.a > :first-child p`: every `div` or `p` of the page is tried,
+  and each try marks its parent as "restyle the children when one is added".
+  Written `.a + div:where(.scope *)`.
+- **A guard's scope is a class, an id or a stable attribute**, never `[class…]`,
+  `[style…]` or an `aria-` state, and not a container as large as
+  `.twilight-main` when a smaller one exists.
+- **No nesting under a selector list that holds `:has()`**, and no nested
+  `&:hover`, `&.x`, `& + x` under a `:has()` parent: both compile to
+  `:is(<whole parent>)…`, which the browser cannot reject early. Write
+  `& a:hover` beside `& a`, and one rule per selector (or one `:has(a, b)`).
+- **No generated class name (`[class*="x"]`) ahead of a broad subject**
+  (`[class*="x"] > div`, `[class*="x"] > *`, `[class*="x"] ~ [class*="y"]`):
+  every class change on the page then restyles what is under the changed
+  element. Have `content.js` mark the element once (`HOOKS`,
+  `data-rs-hook`) and select the attribute.
+- **Page state is an attribute set by `content.js`, not a `:has()` on a large
+  container**: `#live-channel-stream-information:not(:has(.x)) …` is
+  re-evaluated on every change inside it. Same for counting a grid's cards.
+- **No position test followed by a sibling combinator with a broad subject**
+  (`:first-child ~ div`): write `div:not(:first-child)`.
+
+After touching selectors, measure rather than guess: on a live channel with
+a busy chat, a performance trace's "Recalculate Style" events should stay
+around a millisecond and a few dozen elements each. A regression shows as
+events of thousands of elements.
 
 ## Stylesheets
 
@@ -53,6 +98,7 @@ and a rule that must beat another goes in the same file or a later one.
 | `shelves.css` | Shelf rhythm (also empty states, filter rows, the Following tabs) |
 | `video.css` | Video (VOD) page (also the clip page) |
 | `team.css` | Team page |
+| `drops.css` | Drops & Rewards (Inventory, All Campaigns, Social Media Badge) |
 | `subscribe.css` | Subscribe and Gift a Sub panels |
 | `forms.css` | Form controls; Filter and sort menus |
 | `chat.css` | Chat |
@@ -91,7 +137,9 @@ checked in a headless Chrome; the others need the user's session.
 | Category, clips | `/directory/category/<slug>/clips?range=7d` | Public | same | filter row |
 | Search | `/search?term=<query>` | Public | Search results | `.search-results`, `.search-result-card` |
 | Settings | `/settings/profile` | Logged in | Pages | `.settings-tabs`, `.settings-root__content` |
-| Drops | `/drops/inventory` | Logged in | Pages (account pages) | `.drops-tabs`, `.drops-root__content` |
+| Drops, Inventory | `/drops/inventory` | Logged in | Pages (account pages: title, tabs, margins); Drops & Rewards | `.drops-tabs`, `.drops-root__content`, `.inventory-campaign-info` (a campaign's head, laid across its panel), tiles around `.inventory-drop-image`, `.reward_tile` |
+| Drops, All Campaigns | `/drops/campaigns` | Logged in | Drops & Rewards | `.accordion-header` and the block after it, `.drop-details__label`, `.drop-benefit__image-container` |
+| Drops, Social Media Badge | `/drops/social-badge` | Logged in | Drops & Rewards | `article` holding `.tw-callout-message`, the box holding `.tw-avatar` |
 | Wallet, Subscriptions | `/wallet`, `/subscriptions` | Logged in | Pages (account pages) | a block holding an `<h2>`, tabs and content |
 | Subscriptions, a tab | `/subscriptions?tab=expired` (also `paid`, `gifts`, `mobile`, `turbo`, `other`) | Logged in | Pages (after the tabs); Shelf rhythm (empty tab) | `.subscription-card` in a grid, `.sub-badge-progress`, `[data-test-selector="SubscriptionsEmptyMessage"]`; the six tabs wrap |
 
@@ -132,7 +180,7 @@ kind found later goes in that list; one served by another site goes in
 | Component | Section | Notes |
 | --- | --- | --- |
 | Stream, video and clip cards | Cards | `article`, three text layouts; name first, then title, then category or "Clipped by". |
-| Card grids | Cards | `.tw-tower`: a CSS grid with one gap, at most four cards (eight categories) to a row. Twitch decides how many cards a shelf gets, one per 30rem of the grid's width; the columns follow that count. `data-rs-tower="row"` marks the shelves Twitch keeps on one row. |
+| Card grids | Cards | Drops tiles use the same grid with narrower columns (`--rs-tower-column`, set in Drops & Rewards). `.tw-tower`: a CSS grid with one gap, at most four cards (eight categories) to a row. Twitch decides how many cards a shelf gets, one per 30rem of the grid's width; the columns follow that count. `data-rs-tower="row"` marks the shelves Twitch keeps on one row. |
 | Category cards | Cards | `.game-card`, `.tw-box-art-card`. |
 | Shelf titles | Pages; Offline channel page | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
 | Tags and category chips | Cards; Channel page | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
@@ -141,6 +189,7 @@ kind found later goes in that list; one served by another site goes in
 | Empty states | Shelf rhythm | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found.", "No Clips Found" and an empty tab of Subscriptions. |
 | Loading | Cards | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
 | Streamer card | Menus, popovers, dialogs (end of file) | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
+| Turbo offer | Menus, popovers, dialogs (end of file) | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
 | Clip viewer | Menus, popovers, dialogs (end of file) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
 | Chat popups | Chat | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 

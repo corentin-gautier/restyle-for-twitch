@@ -48,6 +48,7 @@
         "src/twitch/shelves.css",
         "src/twitch/video.css",
         "src/twitch/team.css",
+        "src/twitch/drops.css",
         "src/twitch/subscribe.css",
         "src/twitch/forms.css",
         "src/twitch/chat.css",

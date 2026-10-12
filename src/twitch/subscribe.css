@@ -31,6 +31,15 @@ html:not([data-rs="off"]) {
     overflow: hidden !important;
   }
 
+  /*
+   * With floating panels the video loses its top padding and sits that much
+   * higher in its box: the sheet follows it, to keep the same inset all round.
+   */
+  &[data-rs-floating] .support-panel-container {
+    top: var(--rs-4) !important;
+    bottom: calc(2 * var(--rs-4) + 2px) !important;
+  }
+
   /* Bundle offers: the framed group follows the rounding of its cards. */
   & .support-panel div:has(> .gifting-option):not(:has(> .gifting-option:only-child)) {
     border-radius: var(--rs-radius-m) !important;
@@ -55,8 +64,45 @@ html:not([data-rs="off"]) {
       }
     }
 
-    & .gift-theme-selector label {
-      border-radius: var(--rs-radius-s) !important;
+    /*
+     * The themes: Twitch frames each picture in a thick border, with a
+     * square tile showing at the rounded corners, and rings the chosen one
+     * three times. One rounded tile each, the chosen one ringed in the
+     * accent.
+     */
+    & .gift-theme-selector .tw-selectable {
+      & label {
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-s) !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transition: box-shadow var(--rs-ease);
+      }
+
+      & label > div,
+      & .gift-theme-selector__background {
+        border-radius: var(--rs-radius-s) !important;
+      }
+
+      & .gift-theme-selector__background {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        width: 3.6rem !important;
+        height: 3.6rem !important;
+        padding: 0.4rem !important;
+        background: var(--rs-hover) !important;
+      }
+
+      & input:focus-visible + label {
+        box-shadow: 0 0 0 2px var(--rs-text) !important;
+      }
+
+      & input:checked + label {
+        box-shadow: 0 0 0 2px var(--rs-accent) !important;
+      }
     }
 
     & .tw-select,
@@ -76,6 +122,409 @@ html:not([data-rs="off"]) {
     /* Footer with the actions, under the scrolling part. */
     & > .scrollable-area + div {
       border-top: var(--rs-hairline) !important;
+
+      /* Over a player the footer comes darker than the sheet it closes. */
+      &,
+      & > div,
+      & > div > div {
+        background: var(--rs-float) !important;
+      }
+
+      /* "All prices are shown in ...": a footnote under the buttons. */
+      & > div > div:last-child:not(:has(*)) {
+        margin: var(--rs-2) 0 0 !important;
+        font-size: var(--rs-text-2) !important;
+        color: var(--rs-faint) !important;
+        text-align: right !important;
+      }
+    }
+
+    /*
+     * Subscribe: the panel lists what a sub brings. The advert for another
+     * tier's benefit above that list goes, and the legal note under it
+     * steps back.
+     */
+    & .scrollable-area div:has(> div > [class*="ScCoreGraphic"]):has(> div > strong) {
+      display: none !important;
+    }
+
+    & .scrollable-area div:last-child > p:only-child:has(> a.tw-link) {
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-faint) !important;
+    }
+
+    /* The channel's bio under its name: a quiet aside, without the
+       quotation mark drawn over its first letters. */
+    & .scrollable-area div:has(> div > div > p.tw-title) > div:last-child:not(:has(.tw-title)) {
+      & > div:has(> img) {
+        display: none !important;
+      }
+
+      & > div {
+        padding: 0 !important;
+      }
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+        line-height: 1.45 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /*
+     * The benefits. Twitch writes them as sentences with a bold start ("62
+     * Custom Emotes to express yourself in chat") under a bold introduction,
+     * then four captioned icons in a row. They become three labelled groups:
+     * the bold start alone as a small label, and the perks as a two-column
+     * list, icon then name.
+     */
+    & .scrollable-area div:has(> strong):has(> div > p > span) {
+      & > strong {
+        display: none !important;
+      }
+
+      & > div:has(> p > span),
+      & > div:has(> strong) {
+        margin: var(--rs-4) 0 var(--rs-2) !important;
+        padding: 0 !important;
+      }
+
+      & > div:first-of-type {
+        margin-top: 0 !important;
+      }
+
+      & > div > p:has(> span) {
+        font-size: 0 !important;
+        line-height: 0 !important;
+      }
+
+      & > div > p > span,
+      & > div > strong {
+        display: block !important;
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        line-height: 1.4 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      /* Emotes and badges: one gap, and "Show All" level with them. */
+      & > div:has(> div > div > img),
+      & > div:has(.chat-badge) {
+        align-items: center !important;
+        gap: 0.8rem 1rem !important;
+
+        & > div {
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        & > button {
+          height: auto !important;
+          padding: 0 !important;
+          font-size: var(--rs-text-2) !important;
+        }
+      }
+
+      & > div:has(> div > div > img):not(:has(.chat-badge)) > div {
+        display: flex !important;
+        height: 2.8rem !important;
+      }
+
+      /* Perks. */
+      & > div:has(> div > div > .tw-svg) {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: var(--rs-2) var(--rs-4) !important;
+        margin: 0 !important;
+
+        & > div {
+          flex-direction: row !important;
+          align-items: center !important;
+          gap: 0.8rem !important;
+          width: auto !important;
+        }
+
+        & > div > div {
+          display: flex !important;
+          margin: 0 !important;
+        }
+
+        & p {
+          font-size: var(--rs-text-3) !important;
+          text-align: left !important;
+          color: var(--rs-label) !important;
+        }
+      }
+    }
+
+    /* "Elevate your Subscription": a full row under the list, not a
+       button adrift on the right. */
+    & .scrollable-area div:has(> [data-a-target^="elevate-your-subscription"]) {
+      margin: var(--rs-4) 1.6rem var(--rs-3) !important;
+
+      & > button {
+        width: 100% !important;
+      }
+    }
+
+    /* "Save ...", "10% off": chips in the tags' tint, not bright green labels. */
+    & .scrollable-area .tw-pill {
+      padding: 0.2rem 0.8rem !important;
+      border-radius: var(--rs-radius-pill) !important;
+      background: var(--rs-accent-tint) !important;
+      font-size: var(--rs-text-1) !important;
+      font-weight: 500 !important;
+      text-transform: none !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    /*
+     * Choices of a duration (a sub renewed every 1, 3 or 6 months, a gift of
+     * as many): Twitch frames each in a thick border around a second box.
+     * One tinted card each, the chosen one in the accent.
+     */
+    & .tw-selectable:not(.gift-theme-selector *) {
+      & label {
+        padding: 0 !important;
+        border: 1px solid var(--rs-float-border) !important;
+        border-radius: var(--rs-radius-m) !important;
+        background: var(--rs-hover) !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        transition: background-color var(--rs-ease), border-color var(--rs-ease);
+      }
+
+      & input:checked + label {
+        border-color: var(--rs-accent) !important;
+        background: var(--rs-accent-tint) !important;
+      }
+
+      & label > div > div {
+        padding: 0.8rem 1rem !important;
+        background: transparent !important;
+      }
+    }
+
+    /* The months of a gift: three equal cards from gutter to gutter. */
+    & .scrollable-area div:has(> div > .tw-selectable):not(.gift-theme-selector) {
+      margin-right: -0.4rem !important;
+
+      & > div {
+        flex: 1 1 0 !important;
+      }
+    }
+
+    /*
+     * "Elevate your Subscription": the higher tiers, then the longer
+     * renewals. On the panel's gutters, under the same small labels as the
+     * benefits, each tier a card with its button across it.
+     */
+    & .scrollable-area div:has(> div > div > .upgrade-options) {
+      margin-inline: 1.6rem !important;
+    }
+
+    & .scrollable-area div:has(> div > .upgrade-options) {
+      & > div:first-child > strong,
+      & > strong {
+        display: block !important;
+        margin: 0 0 var(--rs-2) !important;
+        font-size: var(--rs-text-1) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & > strong {
+        margin-top: var(--rs-4) !important;
+      }
+
+      /* "Renew every" repeats the label over it. */
+      & > div:has([data-a-target^="multimonth-option"]) > strong {
+        display: none !important;
+      }
+
+      /* The cards keep their margins: the row is pulled out by as much. */
+      & div:has(> [data-a-target^="multimonth-option"]) {
+        margin-inline: -0.4rem !important;
+      }
+
+      & [data-a-target^="multimonth-option"] {
+        flex: 1 1 0 !important;
+      }
+
+      & [data-a-target^="multimonth-option"] :is(.tw-selectable, label, label > div, label > div > div) {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      & div:has(> .upgrade-options) {
+        background: transparent !important;
+      }
+    }
+
+    & .upgrade-options {
+      width: 100% !important;
+
+      & > div {
+        gap: 1rem !important;
+        margin-bottom: var(--rs-2) !important;
+        padding: 1.2rem !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+        background: var(--rs-hover) !important;
+      }
+
+      & > div:last-child {
+        margin-bottom: 0 !important;
+      }
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+        line-height: 1.45 !important;
+      }
+
+      & div:has(> .tw-purchase-button),
+      & .tw-purchase-button {
+        width: 100% !important;
+      }
+
+      & .tw-purchase-button {
+        justify-content: space-between !important;
+      }
+    }
+
+    /*
+     * Gift a Sub: a list of offers. Twitch draws each one differently (a
+     * framed advert, a row, a purple box of bundles with a banner, a field)
+     * with titles as large as the channel's name. They become rows of one
+     * kind: picture, label, then the price button with the price before
+     * discount beside it, the buttons in one column.
+     */
+    & [role="dialog"] {
+      /* "Gift to the Community" beside the tier select. */
+      & > div:first-child {
+        align-items: center !important;
+        padding-bottom: var(--rs-3) !important;
+      }
+
+      /* "Gift a specific viewer" and "Gift Anonymously": one row on the
+         panel's gutters, without the rules that ran edge to edge. */
+      & > div:has(> .tw-checkbox) {
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: var(--rs-3) !important;
+        padding: 0 1.6rem 0 0.6rem !important;
+        border: 0 !important;
+      }
+
+      /* The advert ("Complete the goal!"): a tinted card like the theme
+         picker under it, instead of an accent frame. */
+      & [class*="giftHeroSlot"] {
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+        background: var(--rs-hover) !important;
+        overflow: hidden !important;
+
+        & > div {
+          align-items: center !important;
+          padding: 0.8rem !important;
+          background: transparent !important;
+        }
+      }
+
+      /* The rows. */
+      & div:has(> div > .gifting-option__image),
+      & div:has(> div > div > [data-a-target="gift-custom-quantity-input"]) {
+        align-items: center !important;
+        min-height: 5.6rem !important;
+        margin: 0 !important;
+        padding: 0.6rem 0 !important;
+        background: transparent !important;
+
+        & > div,
+        & [id^="gift-text-oneclick"] {
+          align-items: center !important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+        }
+      }
+
+      & .gifting-option__image {
+        width: 5.6rem !important;
+        height: auto !important;
+      }
+
+      & p.tw-title {
+        font-size: var(--rs-text-5) !important;
+        font-weight: 600 !important;
+        letter-spacing: 0 !important;
+      }
+
+      /* The custom quantity closes the list, on the same gutters. */
+      & div:has(> div > div > [data-a-target="gift-custom-quantity-input"]) {
+        margin: var(--rs-2) 1.6rem 0 !important;
+      }
+
+      /* Price button, with the price before discount on its left. */
+      & div:has(> button):has(> div > p) {
+        flex-direction: row-reverse !important;
+        align-items: center !important;
+        gap: var(--rs-2) !important;
+        margin: 0 !important;
+        padding: 0 !important;
+
+        & > div {
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        & > div > p {
+          font-size: var(--rs-text-2) !important;
+          color: var(--rs-faint) !important;
+        }
+      }
+
+      & button[data-a-target^="gift-button-oneclick"],
+      & div:has(> button):has(> div > p) > button {
+        min-width: 11rem !important;
+      }
+
+      /* Bundles: no frame, and their banner is a small label over them. */
+      & .discounted-bundle-box {
+        margin: var(--rs-2) 0 0 !important;
+        padding-top: var(--rs-3) !important;
+        border: 0 !important;
+        border-top: var(--rs-hairline) !important;
+        border-radius: 0 !important;
+      }
+
+      & .discounted-bundle-box__header {
+        min-height: 0 !important;
+        margin: 0 0 var(--rs-2) !important;
+        padding: 0 !important;
+        background: transparent !important;
+
+        & img {
+          display: none !important;
+        }
+
+        & div {
+          height: auto !important;
+          padding: 0 !important;
+        }
+
+        & p {
+          font-size: var(--rs-text-1) !important;
+          font-weight: 600 !important;
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+          color: var(--rs-muted) !important;
+        }
+      }
     }
   }
 

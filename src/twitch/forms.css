@@ -90,11 +90,12 @@ html:not([data-rs="off"]) {
    * padded wrappers, links, buttons or checkboxes), each with its own inner
    * margins. One box padding and one row size for all of them. Dialogs with
    * headings, pictures or text fields are not menus and are left alone, and
-   * so is the tag search's suggestion list, styled with its field. Nor the
+   * so is the tag search's suggestion list, styled with its field, and the
+   * Gift a Sub panel, whose checkbox row is no menu. Nor the
    * zero-height anchor of a "Sort by" list: padding gives it a height, which
    * pushes the list that far from its button.
    */
-  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *) {
+  & :is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *) {
     padding: 0.6rem !important;
     /* The variant attached to its button comes without a frame. */
     border: 1px solid var(--rs-float-border) !important;
@@ -103,6 +104,17 @@ html:not([data-rs="off"]) {
     width: max-content !important;
     min-width: 100% !important;
     white-space: nowrap !important;
+
+    /*
+     * When the box is a balloon (the "Report" menu of a message in a
+     * video's chat), the wrapper inside it is framed as a popup too: one
+     * frame, the box's.
+     */
+    &.tw-balloon > div {
+      padding: 0 !important;
+      border: 0 !important;
+      background: transparent !important;
+    }
 
     /* Wrappers between the box and its rows. */
     & div:has(> div > .tw-interactable),
@@ -124,6 +136,20 @@ html:not([data-rs="off"]) {
     /* A row holding bare text ("Sorted by") is a block: its text sat at the top. */
     & .tw-interactable > div:not(:has(*)) {
       display: flex !important;
+    }
+
+    /*
+     * A row's icon (the bells of a channel's notification menu) sits in a
+     * block one text line tall, at its top: centred in it, and a little
+     * further from its label.
+     */
+    & .tw-interactable div:has(> .tw-svg:only-child) {
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    & .tw-interactable div:has(> .tw-svg:only-child) + div:has(> p) {
+      margin-left: 0.8rem !important;
     }
 
     /* Rows holding a pill ("Top 24h") pad their label a second time. */

@@ -82,6 +82,7 @@ checked in a headless Chrome; the others need the user's session.
 | Home | `/` | Public | Pages; Cards | shelves of `.tw-tower`, carousel hidden |
 | Following | `/directory/following` | Logged in | Pages; Shelf rhythm | `.common-centered-column`, tabs, `.channel-follow-listing--card` on the Channels tab |
 | Event | `/directory/event/<slug>` | Public | Category page header | `.directory-header-new__description` without `.directory-header-new__info` |
+| Collection | `/directory/collection/<slug>` | Public | Pages | first block of the column's `<section>`, holding an `<h1>` and a `<p>`, over a `.tw-tower` |
 | Browse | `/directory` | Public | Pages | `.vertical-selector`, `section[aria-label="Filter & Sort Options"]` |
 | Browse section | `/directory/gaming` | Public | Pages | `.vertical-directory-home-header` |
 | All live channels | `/directory/all` | Public | Pages; Cards | `.tw-tower` |

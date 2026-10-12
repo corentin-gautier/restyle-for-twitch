@@ -316,6 +316,28 @@ html:not([data-rs="off"]) {
     color: var(--rs-muted) !important;
   }
 
+  /*
+   * Collection pages (/directory/collection/…): a name and a sentence over
+   * a grid. Twitch sets the name small and the grid right under the
+   * sentence; they get the title size of Browse, the sentence as its quiet
+   * second line, and the air of a shelf title before the grid.
+   */
+  & .common-centered-column > section > div:first-child:has(> h1):has(> p) {
+    padding-bottom: var(--rs-8) !important;
+
+    & > h1 {
+      font-size: 6rem !important;
+    }
+
+    & > p {
+      max-width: 72rem !important;
+      margin-top: var(--rs-3) !important;
+      font-size: var(--rs-text-6) !important;
+      line-height: 1.45 !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
   /* The title's type, on any page. */
   & .twilight-main h1:not(.channel-info-content *, article *) {
     margin-top: 0 !important;

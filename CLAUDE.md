@@ -93,6 +93,7 @@ checked in a headless Chrome; the others need the user's session.
 | Settings | `/settings/profile` | Logged in | Pages | `.settings-tabs`, `.settings-root__content` |
 | Drops | `/drops/inventory` | Logged in | Pages (account pages) | `.drops-tabs`, `.drops-root__content` |
 | Wallet, Subscriptions | `/wallet`, `/subscriptions` | Logged in | Pages (account pages) | a block holding an `<h2>`, tabs and content |
+| Subscriptions, a tab | `/subscriptions?tab=expired` (also `paid`, `gifts`, `mobile`, `turbo`, `other`) | Logged in | Pages (after the tabs); Shelf rhythm (empty tab) | `.subscription-card` in a grid, `.sub-badge-progress`, `[data-test-selector="SubscriptionsEmptyMessage"]`; the six tabs wrap |
 
 ### Channel pages
 
@@ -137,7 +138,7 @@ kind found later goes in that list; one served by another site goes in
 | Tags and category chips | Cards; Channel page | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
 | Live chat | Chat | `.chat-line__message`, leaderboard hidden, highlight cards. |
 | Shelves | Shelf rhythm | A title, a grid, sometimes "Show more": all spacing sits on the title, `--rs-shelf-gap` above and `--rs-shelf-head` under. Same on home, Following, a channel's Home tab and under a video. |
-| Empty states | Shelf rhythm | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found." and "No Clips Found". |
+| Empty states | Shelf rhythm | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found.", "No Clips Found" and an empty tab of Subscriptions. |
 | Loading | Cards | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
 | Streamer card | Menus, popovers, dialogs (end of file) | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
 | Clip viewer | Menus, popovers, dialogs (end of file) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |

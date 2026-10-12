@@ -22,8 +22,13 @@ html:not([data-rs="off"]) {
    *
    * Up to a limit: four stream or video cards to a row, eight categories.
    * On wider screens the cards grow instead.
+   *
+   * The cards of the Subscriptions page are no .tw-tower but are laid out
+   * the same way, an empty item standing for a channel that is gone: they
+   * take the same grid (their own look is in pages.css).
    */
-  & .tw-tower {
+  & .tw-tower,
+  & .twilight-main div:has(> div > .subscription-card) {
     --rs-tower-gap: var(--rs-6);
     --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
 

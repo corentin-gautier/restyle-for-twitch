@@ -216,7 +216,9 @@ html:not([data-rs="off"]) {
   }
 
   & .twilight-main div:has(> h2):has(> div > .tw-tabs, > [role="tablist"]):not(.settings-tabs) {
-    margin: calc(var(--rs-8) + 2rem) var(--rs-page-inset) var(--rs-8) !important;
+    margin: calc(var(--rs-8) + 2rem) var(--rs-page-inset) 0 !important;
+    /* The air at the page's end, as padding: the scroll area stops at the block's box, leaving a margin out. */
+    padding-bottom: var(--rs-shelf-gap) !important;
 
     & > h2 {
       margin-bottom: 1rem !important;
@@ -471,6 +473,241 @@ html:not([data-rs="off"]) {
     &[aria-selected="true"] {
       color: var(--rs-text) !important;
       box-shadow: inset 0 -3px 0 var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Subscriptions (/subscriptions). Six long tabs: in capitals they are wider
+   * than the column, and scrolled sideways the last one, "Expired", is cut
+   * off. They wrap here instead, with a rule under each row: the list's
+   * single one is replaced by a background repeating at a tab's height. The
+   * count is a block of its own, glued to the label once the tabs' inner
+   * spacing is reset.
+   */
+  & .twilight-main [role="tablist"]:has(> [data-a-target="expired"]) {
+    flex-wrap: wrap !important;
+    row-gap: 0 !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    background: repeating-linear-gradient(to bottom, transparent 0 calc(5.2rem - 1px), var(--rs-border) calc(5.2rem - 1px) 5.2rem) !important;
+  }
+
+  & .twilight-main [data-test-selector="SubscriptionsExpiredSubCount"] {
+    margin-left: 0.4em !important;
+  }
+
+  /* A shelf title's step from the tabs to what a tab holds. */
+  & .twilight-main [role="tablist"]:has(> [data-a-target="expired"]) + div {
+    margin-top: var(--rs-shelf-head) !important;
+
+    & > div {
+      margin-top: 0 !important;
+    }
+  }
+
+  /*
+   * Its cards: a channel's banner over its name, the months subscribed and
+   * the progress to the next badge. Twitch lays them out at a fixed width,
+   * left-aligned, in a hairline box open at the top. They take the site's
+   * card grid (see "Cards"), each one a rounded panel that clips its banner
+   * and fills its cell.
+   */
+  & .twilight-main div:has(> div > .subscription-card) > div {
+    display: grid !important;
+    margin: 0 !important;
+  }
+
+  & .twilight-main .subscription-card {
+    --rs-sub-pad: var(--rs-4);
+    /* How far the avatar hangs under the banner. */
+    --rs-sub-avatar: 6.4rem;
+    --rs-sub-overlap: 3.2rem;
+
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    background: var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    /*
+     * Cards of a row share its height, but not their content's: a card
+     * whose badges are all unlocked says so in one line less. The height is
+     * passed down to the progress panel, which takes the difference, so
+     * that the buttons of a row line up.
+     */
+    &,
+    & .tw-card,
+    & .tw-card-body,
+    & .tw-card-body > div:last-of-type {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    & .tw-card,
+    & .tw-card > div,
+    & .tw-card-body,
+    & .tw-card-body > div:last-of-type,
+    & .subscription-card__sub-progress {
+      flex: 1 1 auto !important;
+    }
+
+    /* Twitch's own frame, and the grey band and rule of the card's head. */
+    & .tw-card > div,
+    & .tw-card-body > div {
+      background: transparent !important;
+      border: 0 !important;
+    }
+
+    /*
+     * One inset on every side. Twitch pads each part differently and pulls
+     * the progress row 1rem to the left, so the card's left and right
+     * margins do not match; all of it is reset to this inset and to gaps
+     * between the parts.
+     */
+    & .tw-card-body > div {
+      margin: 0 !important;
+      padding: 0 var(--rs-sub-pad) !important;
+    }
+
+    /* The head: room for the avatar, then the name and the months. */
+    & .tw-card-body > div:first-of-type {
+      padding-top: calc(var(--rs-sub-avatar) - var(--rs-sub-overlap) + var(--rs-3)) !important;
+
+      & > div,
+      & div:has(> .subscription-card__channel-name) {
+        margin: 0 !important;
+      }
+
+      & > div + div {
+        margin-top: var(--rs-1) !important;
+      }
+
+      /* The verified tick is taller than the name: one height with or without it. */
+      & div:has(> .subscription-card__channel-name) {
+        align-items: center !important;
+        min-height: 2.6rem !important;
+      }
+    }
+
+    /*
+     * The progress and its button. The progress is a panel set into the
+     * card, so that its centred lines read as one block under the head's
+     * left-aligned ones; the button spans the card under it.
+     */
+    & .tw-card-body > div:last-of-type {
+      padding-top: var(--rs-4) !important;
+      padding-bottom: var(--rs-sub-pad) !important;
+
+      & > div {
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      & > div + div {
+        margin-top: var(--rs-3) !important;
+      }
+
+      & > .subscription-card__sub-progress {
+        padding: var(--rs-4) var(--rs-3) var(--rs-3) !important;
+        background: var(--rs-raised) !important;
+        border-radius: var(--rs-radius-m) !important;
+      }
+
+      & button {
+        width: 100% !important;
+        height: 3.6rem !important;
+        justify-content: center !important;
+      }
+    }
+
+    & .subscription-card__sub-progress > div {
+      margin: 0 !important;
+    }
+
+    & .subscription-card__sub-progress > div + div {
+      margin-top: var(--rs-3) !important;
+    }
+
+    & .sub-badge-progress {
+      gap: var(--rs-2) !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+
+      /* The bar, between the two badges. */
+      & > div:has(.tw-progress-bar) {
+        flex: 1 !important;
+      }
+    }
+
+    & .subscription-card__channel-avatar {
+      top: calc(-1 * var(--rs-sub-overlap)) !important;
+      left: var(--rs-sub-pad) !important;
+      box-sizing: border-box !important;
+      width: var(--rs-sub-avatar) !important;
+      height: var(--rs-sub-avatar) !important;
+      background: var(--rs-surface) !important;
+      border: 3px solid var(--rs-surface) !important;
+      border-radius: 50% !important;
+      overflow: hidden !important;
+
+      /* Twitch's square backing behind the picture would show at the corners. */
+      & .tw-avatar,
+      & img {
+        width: 100% !important;
+        height: 100% !important;
+        background: transparent !important;
+        border-radius: 50% !important;
+      }
+    }
+
+    & .subscription-card__channel-name h3 {
+      font-size: var(--rs-text-title) !important;
+      font-weight: 700 !important;
+      letter-spacing: -0.015em !important;
+    }
+
+    /* "Total Months Subscribed: 3 Months": a quiet line, its figure in ink. */
+    & .tw-card-body > div:first-of-type p {
+      font-size: var(--rs-text-3) !important;
+      color: var(--rs-muted) !important;
+
+      & > span {
+        color: var(--rs-text) !important;
+      }
+    }
+
+    /* Its star; the verified tick by the name keeps the accent. */
+    & .tw-card-body > div:first-of-type .tw-svg:not([data-test-selector="VerifiedPartnerBadge"] *) svg {
+      fill: var(--rs-faint) !important;
+    }
+
+    /*
+     * The badge progress. Twitch's greys are those of the dark theme on
+     * either theme, and its bar is brown.
+     */
+    & .subscription-card__sub-progress p {
+      color: var(--rs-muted) !important;
+    }
+
+    & .expired-sub-message {
+      font-size: var(--rs-text-3) !important;
+    }
+
+    & .sub-badge-progress p {
+      font-size: var(--rs-text-1) !important;
+    }
+
+    /* The track, on the panel's own colour. */
+    & .tw-progress-bar {
+      background: var(--rs-border) !important;
+    }
+
+    & [data-a-target="tw-progress-bar-animation"] {
+      background: var(--rs-accent) !important;
     }
   }
 

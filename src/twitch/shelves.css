@@ -52,7 +52,8 @@ html:not([data-rs="off"]) {
    */
   & .common-centered-column header + div:has(> em:only-child),
   & .home__lower-content div:has(> div > [data-test-selector="no-videos"]),
-  & .home__lower-content div:has(> img.tw-image + div strong:only-child) {
+  & .home__lower-content div:has(> img.tw-image + div strong:only-child),
+  & .twilight-main [data-test-selector="SubscriptionsEmptyMessage"] {
     position: relative !important;
     display: flex !important;
     flex-direction: column !important;
@@ -116,6 +117,21 @@ html:not([data-rs="off"]) {
     & :is(h4, strong) {
       font-size: var(--rs-text-5) !important;
       font-style: normal !important;
+      font-weight: 600 !important;
+      color: var(--rs-label) !important;
+    }
+  }
+
+  /*
+   * And for an empty tab of Subscriptions ("Any active Subscriptions you
+   * purchase will show up here."), a star in the disc, across the column.
+   */
+  & .twilight-main [data-test-selector="SubscriptionsEmptyMessage"] {
+    --rs-empty-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9z'/%3E%3C/svg%3E");
+    flex: 1 1 100% !important;
+
+    & > p {
+      font-size: var(--rs-text-5) !important;
       font-weight: 600 !important;
       color: var(--rs-label) !important;
     }

@@ -148,6 +148,28 @@ html:not([data-rs="off"]) {
       }
     }
 
+    /*
+     * With notifications already on, the same spot holds a note ("Your
+     * notifications from <channel> will be personalized."): a bell glued to
+     * two lines of body text. A quiet footnote, the bell level with its
+     * first line.
+     */
+    & .home-notify-cta:has(> p) {
+      align-items: flex-start !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        padding-top: 0.1rem !important;
+        color: var(--rs-accent-quiet) !important;
+      }
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
     /* "Turn on Notifications": a quieter button, in the hover tint. */
     & .home-notify-cta button {
       min-height: 3.2rem !important;
@@ -616,12 +638,30 @@ html:not([data-rs="off"]) {
 
   /*
    * Shelves of categories and suggested channels: Twitch sizes their items
-   * for its own, wider column. They share the row instead.
+   * for its own, wider column. They share the row instead, up to the width
+   * a card has when the row is full (three channels; five categories, the
+   * most Twitch lists there): a shelf of one or two would otherwise stretch
+   * them across the column.
    */
   & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower {
+    --rs-shelf-card: calc((100% - 2 * var(--rs-tower-gap)) / 3);
+
     grid-template-columns: none !important;
     grid-auto-flow: column !important;
-    grid-auto-columns: minmax(0, 1fr) !important;
+    grid-auto-columns: minmax(0, var(--rs-shelf-card)) !important;
+    justify-content: start !important;
+  }
+
+  & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower:has(.game-card) {
+    --rs-shelf-card: calc((100% - 4 * var(--rs-tower-gap)) / 5);
+  }
+
+  /*
+   * The Home tab ends flush under its last shelf: the page closes with the
+   * air that separates two shelves.
+   */
+  & .home__lower-content {
+    padding-bottom: var(--rs-shelf-gap) !important;
   }
 
   /*

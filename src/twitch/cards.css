@@ -249,6 +249,15 @@ html:not([data-rs="off"]) {
     will-change: opacity;
   }
 
+  /*
+   * Each card is a stacking context (will-change above, opacity while its
+   * neighbours recede), so a popup opened from one, like "Chapters", would
+   * be painted under the cards after it: that card is lifted over the rest.
+   */
+  & .tw-tower > :has(.tw-balloon) {
+    z-index: 1;
+  }
+
   & .tw-tower:hover > * {
     opacity: var(--rs-recede);
     filter: grayscale(1);
@@ -352,15 +361,17 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Stream and video cards, under the thumbnail: a small avatar with the
-   * channel name centred on it, then the title, then the category.
+   * Stream and video cards, under the thumbnail: a small avatar, and beside
+   * it the channel name, then the title close under it, then the category.
    * Twitch puts the title first, and builds the text block in three ways:
    *  - live cards: one link (carrying the channel-link target) wraps a title
    *    block then a name block;
    *  - video cards: title, name and category are separate children;
    *  - some video cards: name and category share one wrapper.
    * In all three the text block (and the wrapping link) becomes a column and
-   * the name is ordered first, as tall as the avatar.
+   * the name is ordered first, starting level with the avatar's top. Twitch
+   * gives the name its own margins in some builds only: one small step to
+   * the title in all of them.
    */
   & article > div:has([class*="ScTextWrapper"]) {
     margin-top: var(--rs-3) !important;
@@ -397,6 +408,19 @@ html:not([data-rs="off"]) {
    * tint, but taller and squarer than a tag, since it opens a menu. Its
    * count loses its own pill and joins the label.
    */
+  /*
+   * On a channel's own videos the name's line is left empty, and its margins
+   * add to the gap under the title.
+   */
+  & article [class*="ScTextMargin"]:empty {
+    display: none !important;
+  }
+
+  /* A button, not a line of text: a full step under the title. */
+  & article .preview-card-game-balloon:has(.tw-pill) {
+    margin-top: var(--rs-2) !important;
+  }
+
   & article button:has(.tw-pill) {
     height: 2.8rem !important;
     min-height: 0 !important;
@@ -546,7 +570,10 @@ html:not([data-rs="off"]) {
     order: -1 !important;
     display: flex !important;
     align-items: center !important;
-    min-height: var(--rs-avatar-card) !important;
+    /* One line of the name's size: some builds hold a taller line beside it. */
+    height: calc(1.4 * var(--rs-text-3)) !important;
+    min-height: 0 !important;
+    margin: 0 0 0.2rem !important;
   }
 
   /*
@@ -585,6 +612,100 @@ html:not([data-rs="off"]) {
     letter-spacing: 0 !important;
     color: var(--rs-faint) !important;
     transition: color var(--rs-ease);
+  }
+
+  /*
+   * The category is a tag, like the category chip under a player and the
+   * tags beside it: an accent-tinted pill, cut with an ellipsis when the
+   * name is longer than the card. It sits a full step under the title, as
+   * the "Chapters" button does.
+   */
+  & article [data-a-target="preview-card-game-link"] {
+    display: inline-block !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    height: 2rem !important;
+    padding: 0 0.8rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-accent-tint) !important;
+    line-height: 2rem !important;
+    vertical-align: top !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    transition: background-color var(--rs-ease);
+
+    &,
+    & *,
+    &:hover,
+    &:hover * {
+      font-size: var(--rs-text-1) !important;
+      font-weight: 500 !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  /* Its line: as tall as the pill, a step under the title. */
+  & article :is(p, div):has(> [data-a-target="preview-card-game-link"]) {
+    display: flex !important;
+    min-width: 0 !important;
+    margin-top: var(--rs-2) !important;
+  }
+
+  /*
+   * Tags follow the category on its line instead of taking one of their own:
+   * the text column becomes a wrapping row whose other items each fill a
+   * line. Nothing here may depend on the tags being there: Twitch removes
+   * and re-adds them to count how many fit, and a width that changed with
+   * them would have it do so forever.
+   */
+  & article [class*="ScTextWrapper"]:has(> p > [data-a-target="preview-card-game-link"]) {
+    flex-flow: row wrap !important;
+    align-items: flex-start !important;
+
+    & > * {
+      flex: 0 0 100% !important;
+      min-width: 0 !important;
+    }
+
+    & > p:has(> [data-a-target="preview-card-game-link"]) {
+      flex: 0 1 auto !important;
+      max-width: 100% !important;
+      margin-right: 0.4rem !important;
+
+      & + div {
+        flex: 1 1 0 !important;
+        margin-top: var(--rs-2) !important;
+      }
+    }
+  }
+
+  /* Without a category, the tags keep the same step under the title. */
+  & article [class*="ScTextWrapper"] > a[data-a-target="preview-card-channel-link"] + div {
+    margin-top: var(--rs-2) !important;
+  }
+
+  /* "Clipped by" stays plain text, the same step under the title. */
+  & article p:has(> [data-a-target="preview-card-clip-curator-link"]) {
+    display: flex !important;
+    min-width: 0 !important;
+    margin-top: var(--rs-2) !important;
+
+    & > a {
+      min-width: 0 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  }
+
+  /* Live cards add a margin of their own under the title. */
+  & article [data-a-target="preview-card-title-link"] {
+    margin-bottom: 0 !important;
   }
 
   & article p[data-a-target="preview-card-channel-link"]:hover,

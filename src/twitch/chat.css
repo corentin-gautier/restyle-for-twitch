@@ -277,6 +277,34 @@ html:not([data-rs="off"]) {
     padding-inline: var(--rs-2) !important;
   }
 
+  /*
+   * "Resume auto scroll", shown once the replay's chat is scrolled back: a
+   * grey bar with black text across the foot of the list. A floating pill
+   * over it instead, centred, on the surface of the other floating boxes.
+   */
+  & .video-chat__sync-button {
+    right: auto !important;
+    bottom: var(--rs-3) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    height: 3.2rem !important;
+    padding: 0 1.4rem !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-float) !important;
+    font-size: var(--rs-text-3) !important;
+    font-weight: 600 !important;
+    white-space: nowrap !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease), border-color var(--rs-ease);
+
+    &:hover {
+      border-color: var(--rs-accent) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
   & .vod-message {
     padding: var(--rs-2) !important;
     line-height: 1.55 !important;
@@ -300,6 +328,12 @@ html:not([data-rs="off"]) {
       pointer-events: none !important;
       transition: opacity var(--rs-ease);
       will-change: opacity;
+    }
+
+    /* Isolated, a row keeps its "Report" menu under the rows after it:
+       the one with an open menu is lifted over them. */
+    &:has(.tw-balloon) {
+      z-index: 1 !important;
     }
 
     & .video-chat__message,

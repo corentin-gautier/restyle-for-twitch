@@ -221,6 +221,19 @@ html:not([data-rs="off"]) {
     margin-top: -50px !important;
   }
 
+  /*
+   * The channel's buttons, once followed. The heart keeps the margin meant
+   * for the "Follow" label and sits left of centre; the bell starts further
+   * in than the icons of "Gift a Sub" and "Subscribe" beside it.
+   */
+  & [data-a-target="unfollow-button"] div:has(> [class*="ScAnimation"]) {
+    margin: 0 !important;
+  }
+
+  & .channel-root button[aria-expanded]:has([class*="ScCoreButtonIcon"]) [data-a-target="tw-core-button-label-text"]:has(> .tw-svg) {
+    padding-left: 0.2rem !important;
+  }
+
   /* Hide the report and share buttons */
   & [data-a-target="report-button-more-button"], & [data-a-target="share-button"] {
     display: none !important;

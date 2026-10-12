@@ -300,12 +300,21 @@ html:not([data-rs="off"]) {
     }
 
     /*
-     * Focus: Twitch rings the input alone, which stops dead at the button.
+     * Focus and hover: Twitch rings the input alone, which stops dead at the button.
      * The ring is drawn around the pair instead, each half carrying its three
      * outer sides, whichever of the two has the focus.
      */
     & input:focus {
       outline: none !important;
+    }
+
+    /* Hover: the same, in a quiet grey, from anywhere on the pair. */
+    &:hover input {
+      box-shadow: inset 2px 0 0 var(--rs-faint), inset 0 2px 0 var(--rs-faint), inset 0 -2px 0 var(--rs-faint) !important;
+    }
+
+    &:hover .tw-combo-input__button-icon {
+      box-shadow: inset -2px 0 0 var(--rs-faint), inset 0 2px 0 var(--rs-faint), inset 0 -2px 0 var(--rs-faint) !important;
     }
 
     &:focus-within input {

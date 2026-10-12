@@ -8,7 +8,7 @@ html:not([data-rs="off"]) {
    * block ruled between rows; each is a panel of its own here, its picture
    * clipped by the panel's corner, its dates as a quiet second column.
    */
-  @include guarded(".drops-root__content div%g:has(> .accordion-header)") {
+  & .drops-root__content div[data-rs-hook~="campaign"] {
     margin: 0 0 var(--rs-2) !important;
     @include panel(m);
     overflow: hidden !important;
@@ -126,19 +126,19 @@ html:not([data-rs="off"]) {
    * the list's own gap between two groups, a shelf's gap before the next
    * heading.
    */
-  @include guarded(".drops-root__content > div%g:has(.accordion-header)") {
+  & .drops-root__content > div[data-rs-hook~="campaign-group"] {
     margin: 0 !important;
   }
 
-  @include guarded(".drops-root__content > div%g:not(:has(.accordion-header))") {
+  @include guarded('.drops-root__content > div%g:not([data-rs-hook~="campaign-group"])') {
     margin-bottom: 0 !important;
   }
 
-  @include guarded(".drops-root__content > div%g:not(:has(.accordion-header)) + div%g:has(.accordion-header)") {
+  @include guarded('.drops-root__content > div%g:not([data-rs-hook~="campaign-group"]) + div[data-rs-hook~="campaign-group"]') {
     margin-top: var(--rs-shelf-head) !important;
   }
 
-  @include guarded(".drops-root__content > div%g:has(.accordion-header) + div%g:has(h4)") {
+  @include guarded('.drops-root__content > div[data-rs-hook~="campaign-group"] + div%g:has(h4)') {
     margin-top: calc(var(--rs-shelf-gap) - var(--rs-2)) !important;
   }
 }

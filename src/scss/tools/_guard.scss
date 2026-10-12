@@ -7,7 +7,8 @@
 //   }
 //
 // compiles to `.scope > div:where(.scope > *):has(> img)`. Each `%g` becomes
-// the path from the nearest ancestor named by a class or an id alone down to
+// the path from the nearest ancestor named by a class or an id alone (or
+// marked by content.js, [data-rs-hook~="x"]) down to
 // the element it sits on, one `*` per step. A sibling step stays at the same
 // depth, and a sibling is never taken for an ancestor.
 //
@@ -27,10 +28,21 @@
 
 $marker: "%g";
 
-// A class or an id alone: nothing a guard may not hold ([attr], :state).
+// A class or an id alone, or an element content.js marked (data-rs-hook,
+// with or without its tag): nothing a guard may not hold (another [attr], a
+// :state).
 @function -is-scope($compound) {
+  @if string.index($compound, ":") {
+    @return false;
+  }
+  $hook: string.index($compound, "[data-rs-hook~=");
+  @if $hook {
+    $tag: string.slice($compound, 1, $hook - 1);
+    @return not string.index($tag, ".") and not string.index($tag, "#") and
+      not string.index(string.slice($compound, $hook + 1), "[");
+  }
   $first: string.slice($compound, 1, 1);
-  @return ($first == "." or $first == "#") and not string.index($compound, ":") and not string.index($compound, "[");
+  @return ($first == "." or $first == "#") and not string.index($compound, "[");
 }
 
 @function -replace($string, $search, $with) {

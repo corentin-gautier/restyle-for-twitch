@@ -39,7 +39,7 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-l) var(--rs-radius-l) 0 0 !important;
   }
 
-  @include guarded(".home__lower-content div%g:has(> .stream-schedule-week):not(.stream-schedule-times)") {
+  & .home__lower-content div[data-rs-hook~="schedule-days"] {
     overflow: hidden !important;
     border: var(--rs-hairline) !important;
     border-top: 0 !important;

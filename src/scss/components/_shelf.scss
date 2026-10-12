@@ -9,8 +9,9 @@ html:not([data-rs="off"]) {
    * wrappers around it, the shelf, the cards and that row. Here all of those
    * give theirs up and two steps remain, both on the title:
    * --rs-shelf-gap above it and --rs-shelf-head under it.
+   * (data-rs-following: content.js marks the Following page on <html>.)
    */
-  & :is([data-a-target="front-page-main-content"], .common-centered-column:has([data-a-target="following-overview-tab"]), .home__lower-content) {
+  & :is([data-a-target="front-page-main-content"], [data-rs-following] .common-centered-column, .home__lower-content) {
     & div:where([data-a-target="front-page-main-content"] *, .common-centered-column *, .home__lower-content *):has(:is(h2, h3, h4, h5).tw-title):not(:has(.tw-tower, article, .tw-tabs, .about-section, .default-panel)) {
       margin-block: 0 !important;
       padding-block: 0 !important;

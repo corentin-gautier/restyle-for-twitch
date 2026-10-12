@@ -18,14 +18,15 @@ html:not([data-rs="off"]) {
     display: none !important;
   }
 
-  & div:where([data-rs-info="video"] *):has(> .timestamp-metadata__bar) > p {
+  /* The date, after the (hidden) rule. */
+  @include guarded(".metadata-layout__split-top .timestamp-metadata__bar ~ p%g") {
     @include flush;
     @include type(3, 500);
     color: var(--rs-muted) !important;
   }
 
-  /* The title: the block that follows the date. */
-  @include guarded(".metadata-layout__split-top div%g:has(> div > .timestamp-metadata__bar) + div%g") {
+  /* The title: the block that follows the date's (marked by content.js). */
+  @include guarded('.metadata-layout__split-top div[data-rs-hook~="video-date"] + div%g') {
     margin-top: var(--rs-1) !important;
     padding-right: var(--rs-8) !important;
     @include type(title, 600);
@@ -35,7 +36,7 @@ html:not([data-rs="off"]) {
   }
 
   /* Category chip and view count on one line; the chip replaces the dot. */
-  & div:has(> [data-a-target="video-info-game-boxart-link"]) {
+  & div[data-rs-hook~="video-category"] {
     @include row;
     gap: var(--rs-2) !important;
     margin-top: var(--rs-2) !important;

@@ -10,7 +10,7 @@ html:not([data-rs="off"]) {
    */
   @include guarded(
     ".common-centered-column header + div%g:has(> em:only-child)",
-    '.home__lower-content div%g:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)',
+    '.home__lower-content div[data-rs-hook~="empty"]',
     '.twilight-main [data-test-selector="SubscriptionsEmptyMessage"]'
   ) {
     position: relative !important;
@@ -30,7 +30,7 @@ html:not([data-rs="off"]) {
    */
   @include guarded(
     ".common-centered-column header + div%g:has(> em:only-child)::before",
-    '.home__lower-content div%g:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)::before',
+    '.home__lower-content div[data-rs-hook~="empty"]::before',
     '.twilight-main [data-test-selector="SubscriptionsEmptyMessage"]::before'
   ) {
     content: "";
@@ -43,7 +43,7 @@ html:not([data-rs="off"]) {
   /* The moon, drawn as a mask so it takes the accent colour. */
   @include guarded(
     ".common-centered-column header + div%g:has(> em:only-child)::after",
-    '.home__lower-content div%g:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)::after',
+    '.home__lower-content div[data-rs-hook~="empty"]::after',
     '.twilight-main [data-test-selector="SubscriptionsEmptyMessage"]::after'
   ) {
     content: "";
@@ -71,7 +71,7 @@ html:not([data-rs="off"]) {
    * Clips Found"), with a film frame for the moon and one step under the
    * filter row.
    */
-  @include guarded('.home__lower-content div%g:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)') {
+  & .home__lower-content div[data-rs-hook~="empty"] {
     --rs-empty-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm6 3.5v7l6-3.5z'/%3E%3C/svg%3E");
     margin: var(--rs-shelf-head) 0 0 !important;
 

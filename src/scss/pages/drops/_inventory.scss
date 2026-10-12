@@ -13,7 +13,7 @@ html:not([data-rs="off"]) {
     max-width: none !important;
   }
 
-  @include guarded(".inventory-max-width > div%g:has(> .inventory-campaign-info)") {
+  & .inventory-max-width > div[data-rs-hook~="inventory-campaign"] {
     @include stack;
     gap: var(--rs-4) !important;
     margin: 0 0 var(--rs-4) !important;

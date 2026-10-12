@@ -8,6 +8,9 @@ html:not([data-rs="off"]) {
    * are in pages/_account.scss). Twitch sets every heading of these tabs at body size
    * and stacks sections 16px apart; they get a block heading, a quiet
    * description on a readable measure, and a shelf's gap between sections.
+   * The blocks told apart by what they hold (a tile, a campaign, the parts
+   * of the badge tab) are marked by content.js (data-rs-hook): found here
+   * with :has(), every tile added to a grid restyled the whole tab.
    */
   & .drops-root__content {
     padding-top: var(--rs-8) !important;
@@ -94,7 +97,7 @@ html:not([data-rs="off"]) {
      * A tile: the picture on the tile's own colour, the name under it.
      * Twitch gives the picture a band of another grey and the tile a shadow.
      */
-    @include guarded("div%g:has(> div > div > div > :is(.inventory-drop-image, .banner_image), > div > .drop-benefit__image-container)") {
+    & div[data-rs-hook~="drop-tile"] {
       height: 100% !important;
       margin: 0 !important;
       background: var(--rs-raised) !important;

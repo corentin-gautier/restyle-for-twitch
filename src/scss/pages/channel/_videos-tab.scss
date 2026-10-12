@@ -9,14 +9,16 @@ html:not([data-rs="off"]) {
    * The row has no hook of its own; it is the one holding a lone <strong>
    * label next to a button, nested one level deeper on the videos tab.
    * It shows on a channel's Videos and Clips tabs (.home__lower-content) and
-   * under a video: the :has() is only tried there, not under a live stream.
+   * under a video. content.js marks the first kind (data-rs-hook), as it
+   * does a shelf's row and the block holding the shelves under a video:
+   * found here with :has(), each card added to a shelf restyled them all.
    */
-  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > strong:only-child):has(button):not(article *),
+  & .channel-info-content div[data-rs-hook~="filter-by"],
   & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > div > strong:only-child):has(button):not(article *) {
     justify-content: flex-end !important;
   }
 
-  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > strong:only-child):has(button):not(article *) > div {
+  & .channel-info-content div[data-rs-hook~="filter-by"] > div {
     flex-grow: 0 !important;
   }
 
@@ -28,22 +30,22 @@ html:not([data-rs="off"]) {
    * cards; all of those are zeroed, and three steps remain: under the
    * "Filter By" row, under a shelf's header, and between two shelves.
    */
-  &[data-rs-info="video"] .channel-info-content > div:where([data-rs-info="video"] *):has(.preview-card-carousel) > div {
+  &[data-rs-info="video"] .channel-info-content > div[data-rs-hook~="video-shelves"] > div {
     margin: 0 !important;
     padding-inline: 0 !important;
   }
 
-  @include guarded(".channel-info-content div%g:has(> .preview-card-carousel)") {
+  & .channel-info-content div[data-rs-hook~="shelf-row"] {
     margin-block: 0 !important;
     padding-block: 0 !important;
   }
 
-  @include guarded(".channel-info-content div%g:has(> .preview-card-carousel) + div%g:has(> .preview-card-carousel)") {
+  & .channel-info-content div[data-rs-hook~="shelf-row"] + div[data-rs-hook~="shelf-row"] {
     margin-top: var(--rs-shelf-gap) !important;
   }
 
   /* Whatever comes right before the first shelf: the "Filter By" row. */
-  @include guarded(".channel-info-content div%g:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel)") {
+  & .channel-info-content div[data-rs-hook~="before-shelves"] {
     margin-bottom: var(--rs-6) !important;
   }
 

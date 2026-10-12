@@ -11,7 +11,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | `src/scss/` | The stylesheet's source (see "Sass" and "Stylesheets"): `restyle.scss` lists the partials in cascade order, every rule scoped under `html:not([data-rs="off"])`; `base/` (tokens, theme), `tools/` (the guard mixin, the shared mixins), `layout/`, `components/`, `pages/`. |
 | `src/restyle.css` | Compiled from `src/scss/` and loaded by `manifest.json`. Never edited by hand, and not in the repository: after a clone, `npm install` then `npm run build`. The packages (local and GitHub release) are built with it inside. |
 | `src/scss/base/_tokens.scss` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
-| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Sets what the stylesheet reads instead of working it out itself (see "Performance"): page state on `<html>` (`data-rs-nav`, `data-rs-channel`, `data-rs-info`, `data-rs-has`), each card grid's kind, card count and content (`data-rs-tower`, `data-rs-count`, `data-rs-games`), and `data-rs-hook` on a few elements only a generated class name identifies. Stops the hover events that start a video card's animated preview. |
+| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Sets what the stylesheet reads instead of working it out itself (see "Performance"): page state on `<html>` (`data-rs-nav`, `data-rs-channel`, `data-rs-info`, `data-rs-following`, `data-rs-has`), each card grid's kind, card count and content (`data-rs-tower`, `data-rs-count`, `data-rs-games`), and `data-rs-hook` on the elements the stylesheet could only find with a costly selector (`HOOKS`). Stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
@@ -96,16 +96,31 @@ chat, against 2% without the extension). The rules:
   every class change on the page then restyles what is under the changed
   element. Have `content.js` mark the element once (`HOOKS`,
   `data-rs-hook`) and select the attribute.
+- **A `:has()` goes on the element a rule styles, not on one of its
+  ancestors.** `div:where(.scope *):has(> .x) > p` tries the `:has()` on every
+  `div` of the scope, guard or not, and marks each one; a card added to a
+  grid anywhere under them then restyles the whole scope (20 to 40 ms a card
+  on Following, a channel's Videos tab or Drops, against under 1 ms). So does
+  a `:has()` on a sibling of those ancestors (`header:has(.x) + div …`).
+  Have `content.js` mark the element (`HOOKS`: a container to look in, then
+  the selector) and write `div[data-rs-hook~="name"] > p`; a guard under it
+  then starts from the mark. A mark is a token: `~=`, since an element can
+  carry two.
 - **Page state is an attribute set by `content.js`, not a `:has()` on a large
-  container**: `#live-channel-stream-information:not(:has(.x)) …` is
-  re-evaluated on every change inside it. Same for counting a grid's cards.
+  container**: `#live-channel-stream-information:not(:has(.x)) …` and
+  `.twilight-main:has(.tw-tower) h2` are re-evaluated on every change inside
+  the container. Same for counting a grid's cards, and for which tab of
+  Following is open (`data-rs-following`).
 - **No position test followed by a sibling combinator with a broad subject**
   (`:first-child ~ div`): write `div:not(:first-child)`.
 
 After touching selectors, measure rather than guess: on a live channel with
 a busy chat, a performance trace's "Recalculate Style" events should stay
 around a millisecond and a few dozen elements each. A regression shows as
-events of thousands of elements.
+events of thousands of elements. On a page of grids (home, Following, a
+channel's tabs, under a video, Drops), clone a card into a `.tw-tower` and
+read the same event: it should count little more than the card's own
+elements.
 
 ## Stylesheets
 

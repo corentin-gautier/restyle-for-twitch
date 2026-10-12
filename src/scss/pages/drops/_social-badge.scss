@@ -26,7 +26,7 @@ html:not([data-rs="off"]) {
     margin-top: var(--rs-4) !important;
   }
 
-  @include guarded(".drops-root__content div%g:has(> div > h3) > div%g:has(.tw-avatar)") {
+  & .drops-root__content div[data-rs-hook~="badge-levels"] {
     max-width: none !important;
     margin-top: var(--rs-shelf-head) !important;
     padding: var(--rs-4) var(--rs-6) !important;
@@ -40,7 +40,7 @@ html:not([data-rs="off"]) {
    * the form a block lower and its note close under it; each later heading
    * a shelf title's step over what it names.
    */
-  @include guarded(".drops-root__content div%g:has(> div > h3):has(> div > .tw-svg)") {
+  & .drops-root__content div[data-rs-hook~="badge-intro"] {
     @include guarded("> div%g:has(> p)") {
       max-width: 80rem !important;
       margin: var(--rs-2) 0 0 !important;
@@ -62,7 +62,7 @@ html:not([data-rs="off"]) {
   }
 
   /* The form: its two fields a step apart, the button level with them. */
-  @include guarded(".drops-root__content div%g:has(> div > h3):has(> div > .tw-svg) + div%g") {
+  & .drops-root__content div[data-rs-hook~="badge-form"] {
     margin-top: var(--rs-6) !important;
 
     @include guarded("div%g:has(> div > .tw-form-group, > div > div > .tw-form-group)") {
@@ -84,12 +84,12 @@ html:not([data-rs="off"]) {
     }
   }
 
-  @include guarded(".drops-root__content div%g:has(> table.tw-table)") {
+  & .drops-root__content div[data-rs-hook~="badge-posts"] {
     margin-top: var(--rs-shelf-head) !important;
   }
 
   /* "We'll periodically check your posts…", a footnote to the table. */
-  @include guarded(".drops-root__content div%g:has(> table.tw-table) + div%g") {
+  @include guarded('.drops-root__content div[data-rs-hook~="badge-posts"] + div%g') {
     margin: var(--rs-3) 0 0 !important;
 
     @include guarded("p%g") {

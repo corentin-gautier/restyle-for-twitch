@@ -14,7 +14,7 @@ html:not([data-rs="off"]) {
     @include flush;
   }
 
-  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) {
+  & .home__lower-content div[data-rs-hook~="featured-clips"] {
     flex-direction: row !important;
     align-items: baseline !important;
     justify-content: space-between !important;
@@ -78,7 +78,7 @@ html:not([data-rs="off"]) {
   }
 
   /* The clips take the row the card shared with them. */
-  @include guarded('.home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) + div%g') {
+  @include guarded('.home__lower-content div[data-rs-hook~="featured-clips"] + div%g') {
     width: 100% !important;
     max-width: none !important;
     @include flush;

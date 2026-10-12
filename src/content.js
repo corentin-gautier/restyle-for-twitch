@@ -167,8 +167,8 @@ setInterval(() => {
 // is collapsed (its popups are rendered outside it), whether a channel's
 // Home tab is showing (the player lives outside the channel's block),
 // whether the block under the player is a video's or a clip's, not a live
-// stream's, and which of a few page-wide blocks are present (data-rs-has:
-// Following's "upcoming streams" shelf, a directory header with a
+// stream's, which tab of Following is open, and which of a few page-wide blocks are present (data-rs-has:
+// cards or a grid of them, a clip's own block, a directory header with a
 // description and nothing else).
 // CSS could test both with html:has(...), but a :has() on the root is
 // re-evaluated on every DOM change and restyles the whole page each time,
@@ -179,14 +179,20 @@ function pageState() {
   const home = document.querySelector(".channel-root--home");
   const channel = home ? (home.classList.contains("channel-root--live") ? "live-home" : "home") : null;
   const info = document.querySelector(".metadata-layout__split-top") ? "video" : null;
+  // Following: present on the page, and naming the open tab ("overview", "live", "channels"…).
+  const followingTab = document.querySelector('.common-centered-column [data-a-target="following-overview-tab"]')
+    ? document.querySelector('.common-centered-column [data-a-target^="following-"][data-a-target$="-tab"][aria-selected="true"]')
+    : null;
+  const following = followingTab ? followingTab.getAttribute("data-a-target").slice("following-".length, -"-tab".length) : null;
   const has =
     [
-      document.querySelector('[data-a-target="upcoming-streams-header"]') && "upcoming",
+      document.querySelector(".twilight-main :is(.tw-tower, article)") && "cards",
+      document.querySelector('.metadata-layout__split-top :is(.reedit-clip-button, [data-test-selector="clips-watch-full-button"])') && "clip",
       document.querySelector(".directory-header-new__description") && !document.querySelector(".directory-header-new__info") && "plain-header",
     ]
       .filter(Boolean)
       .join(" ") || null;
-  for (const [name, value] of [["data-rs-nav", nav], ["data-rs-channel", channel], ["data-rs-info", info], ["data-rs-has", has]]) {
+  for (const [name, value] of [["data-rs-nav", nav], ["data-rs-channel", channel], ["data-rs-info", info], ["data-rs-following", following], ["data-rs-has", has]]) {
     if (value === null) root.removeAttribute(name);
     else if (root.getAttribute(name) !== value) root.setAttribute(name, value);
   }
@@ -210,23 +216,97 @@ function towers() {
   }
 }
 
-// Elements that only a generated class name identifies. A rule that tests
-// such a name ahead of a broad subject ([class*="x"] > div) has the browser
-// restyle everything under any element whose class changes, anywhere on the
-// page. Marked once with an attribute instead, the test costs nothing. Keep
-// in sync with the rules of src/scss/ that select data-rs-hook.
-const HOOKS = {
-  streak: '.side-nav [class*="saveYourStreakSideNavRow"]',
-  "gift-hero": '.support-panel [class*="giftHeroSlot"]',
+// Elements the stylesheet could only find with a costly selector, marked
+// with data-rs-hook so that it selects an attribute instead. Two kinds:
+// - those only a generated class name identifies: a rule that tests such a
+//   name ahead of a broad subject ([class*="x"] > div) has the browser
+//   restyle everything under any element whose class changes, anywhere on
+//   the page;
+// - those only what they hold identifies (div:has(> .x)), when they are the
+//   ancestor in a rule and not what it styles: the test is then tried on
+//   every block around a grid, and each card added restyles them all.
+// Grouped by the container to look in (null: the document), cheap to find
+// and absent from most pages, so that a page only pays for its own. Keep in
+// sync with the rules of src/scss/ that select data-rs-hook.
+const UPCOMING = 'header:has([data-a-target="upcoming-streams-header"]) + div';
+const HOOKS = [
+  [".side-nav", { streak: '[class*="saveYourStreakSideNavRow"]' }],
+  [".support-panel", { "gift-hero": '[class*="giftHeroSlot"]' }],
   // The text column of a stream, video or clip card.
-  "card-text": 'article [class*="ScTextWrapper"]',
-};
+  [null, { "card-text": 'article [class*="ScTextWrapper"]' }],
+  // Following, "Upcoming Streams": the box under its title, an entry, and
+  // the row an entry shares with the channel's banner.
+  [
+    ".common-centered-column",
+    {
+      upcoming: UPCOMING,
+      "upcoming-entry": `${UPCOMING} div:has(> div > div > strong > a):has(button)`,
+      "upcoming-art": `${UPCOMING} div:has(> div[style*="url("])`,
+    },
+  ],
+  // A channel's tabs and under a video: a shelf of videos, what comes right
+  // before the first one, the block holding those shelves, the "Filter By"
+  // row, a video's category row.
+  [
+    ".channel-info-content",
+    {
+      "shelf-row": ":has(> .preview-card-carousel)",
+      "before-shelves": "div:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel)",
+      "video-shelves": ".channel-info-content > div:has(.preview-card-carousel)",
+      "filter-by": "div:has(> div > strong:only-child):has(button):not(article *)",
+      "video-category": 'div:has(> [data-a-target="video-info-game-boxart-link"])',
+    },
+  ],
+  // A channel's tabs: an empty tab's message, the "Featured Clips" card of
+  // the Home tab, the days of the schedule.
+  [
+    ".home__lower-content",
+    {
+      empty: 'div:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)',
+      "featured-clips": 'div[style*="background-color"]:has(a[href*="featured=true"])',
+      "schedule-days": "div:has(> .stream-schedule-week):not(.stream-schedule-times)",
+    },
+  ],
+  // A video's own block: the box holding its date.
+  [".metadata-layout__split-top", { "video-date": "div:has(> div > .timestamp-metadata__bar)" }],
+  // Drops & Rewards: a tile, a campaign in progress, a campaign of the list
+  // and a group of them, then the intro, the form, the levels and the posts
+  // of the Social Media Badge tab.
+  [
+    ".drops-root__content",
+    {
+      "drop-tile": "div:has(> div > div > div > :is(.inventory-drop-image, .banner_image), > div > .drop-benefit__image-container)",
+      "inventory-campaign": ".inventory-max-width > div:has(> .inventory-campaign-info)",
+      campaign: "div:has(> .accordion-header)",
+      "campaign-group": ".drops-root__content > div:has(.accordion-header)",
+      "badge-intro": "div:has(> div > h3):has(> div > .tw-svg)",
+      "badge-form": "div:has(> div > h3):has(> div > .tw-svg) + div",
+      "badge-levels": "div:has(> div > h3) > div:has(.tw-avatar)",
+      "badge-posts": "div:has(> table.tw-table)",
+    },
+  ],
+];
 
 function hooks() {
-  for (const [name, selector] of Object.entries(HOOKS)) {
-    for (const element of document.querySelectorAll(`${selector}:not([data-rs-hook])`)) {
-      element.setAttribute("data-rs-hook", name);
+  // What each element should be marked as, now.
+  const marks = new Map();
+  for (const [scope, entries] of HOOKS) {
+    for (const box of scope ? document.querySelectorAll(scope) : [document]) {
+      for (const [name, selector] of Object.entries(entries)) {
+        for (const element of box.querySelectorAll(selector)) {
+          const names = marks.get(element);
+          if (!names) marks.set(element, name);
+          else if (!names.split(" ").includes(name)) marks.set(element, `${names} ${name}`);
+        }
+      }
     }
+  }
+  // Twitch reuses elements: one that no longer is what it was marked as loses the mark.
+  for (const element of document.querySelectorAll("[data-rs-hook]")) {
+    if (!marks.has(element)) element.removeAttribute("data-rs-hook");
+  }
+  for (const [element, names] of marks) {
+    if (element.getAttribute("data-rs-hook") !== names) element.setAttribute("data-rs-hook", names);
   }
 }
 
@@ -248,7 +328,7 @@ new MutationObserver(() => {
     towers();
     hooks();
   });
-}).observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ["class"] });
+}).observe(root, { subtree: true, childList: true, attributes: true, attributeFilter: ["class", "aria-selected"] });
 pageState();
 towers();
 hooks();

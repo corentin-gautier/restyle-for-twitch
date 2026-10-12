@@ -11,7 +11,7 @@ html:not([data-rs="off"]) {
    * pills, and the rest is one muted level. The "Streaming Together" link
    * (to the creator dashboard) goes: the guests say as much.
    */
-  & .metadata-layout__split-top:has(.reedit-clip-button, [data-test-selector="clips-watch-full-button"]) {
+  &[data-rs-has~="clip"] .metadata-layout__split-top {
     & div:where(.metadata-layout__split-top *):has(+ div > [data-a-target="stream-title"]) {
       margin: 0 !important;
     }

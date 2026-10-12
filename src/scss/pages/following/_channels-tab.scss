@@ -6,14 +6,15 @@ html:not([data-rs="off"]) {
   /*
    * Following, Live and Channels tabs: the title under the tabs repeats the
    * tab's name. It goes, with what wraps it, and the content starts one
-   * step under the tabs.
+   * step under the tabs. content.js says which tab is open
+   * (data-rs-following on <html>).
    */
-  & .common-centered-column:has([data-a-target="following-live-tab"][aria-selected="true"]) :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="live-channels-header"], > [data-a-target="live-channels-header"]),
-  & .common-centered-column:has([data-a-target="following-channels-tab"][aria-selected="true"]) :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="following-channels-header"], > [data-a-target="following-channels-header"]) {
+  &[data-rs-following="live"] .common-centered-column :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="live-channels-header"], > [data-a-target="live-channels-header"]),
+  &[data-rs-following="channels"] .common-centered-column :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="following-channels-header"], > [data-a-target="following-channels-header"]) {
     display: none !important;
   }
 
-  & .common-centered-column:has(:is([data-a-target="following-live-tab"], [data-a-target="following-channels-tab"])[aria-selected="true"]) #following-page-main-content {
+  &:is([data-rs-following="live"], [data-rs-following="channels"]) .common-centered-column #following-page-main-content {
     padding-top: calc(var(--rs-shelf-head) - 1.6rem) !important;
   }
 

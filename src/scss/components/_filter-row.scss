@@ -44,7 +44,7 @@ html:not([data-rs="off"]) {
     margin-top: 0 !important;
   }
 
-  @include guarded(".home__lower-content div%g:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel)") {
+  & .home__lower-content div[data-rs-hook~="before-shelves"] {
     margin-top: 0 !important;
   }
 

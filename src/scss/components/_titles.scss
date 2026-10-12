@@ -16,10 +16,12 @@ html:not([data-rs="off"]) {
    * air above. They are <h2>, or a titled <h3>-<h5> outside any card; the
    * names on category cards are <h2> too and are handled with the cards.
    * Only on pages that show cards: Settings and the like use the same
-   * headings for form sections and field labels.
+   * headings for form sections and field labels. content.js says which
+   * pages do (data-rs-has): tested here with :has() on the page's main
+   * block, every card added to a grid restyled the whole page.
    */
-  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *),
-  & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *),
+  &[data-rs-has~="cards"] .twilight-main h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *),
+  &[data-rs-has~="cards"] .twilight-main :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *),
   & .twilight-main [data-a-target="following-channels-header"] {
     @include type(display, 700);
     line-height: 1.2 !important;
@@ -28,8 +30,8 @@ html:not([data-rs="off"]) {
     padding-block: var(--rs-8) var(--rs-3) !important;
   }
 
-  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *) *,
-  & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) * {
+  &[data-rs-has~="cards"] .twilight-main h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *) *,
+  &[data-rs-has~="cards"] .twilight-main :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) * {
     font-size: inherit !important;
     font-weight: inherit !important;
     line-height: inherit !important;

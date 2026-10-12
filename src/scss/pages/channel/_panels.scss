@@ -1,0 +1,47 @@
+// Channel: the panels under About.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Panels: Twitch lays them out as a JS masonry, absolutely positioned and
+   * centred on its own, which never lines up with the column. Its inline
+   * positioning is neutralised and CSS columns take over, edge to edge.
+   */
+  & .channel-panels {
+    padding-block: var(--rs-6) !important;
+  }
+
+  & .channel-panels-container {
+    width: auto !important;
+    height: auto !important;
+    columns: 28rem 3 !important;
+    column-gap: var(--rs-4) !important;
+
+    & > div {
+      position: static !important;
+      transform: none !important;
+      width: auto !important;
+      margin: 0 0 var(--rs-4) !important;
+      break-inside: avoid !important;
+    }
+  }
+
+  & .default-panel {
+    box-sizing: border-box !important;
+    width: auto !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    @include panel(l);
+    padding: var(--rs-4) !important;
+
+    /* Twitch gives the panel's blocks a fixed 320px layout: they follow the column instead. */
+    & > *,
+    & img {
+      max-width: 100% !important;
+    }
+
+    & img {
+      height: auto !important;
+    }
+  }
+}

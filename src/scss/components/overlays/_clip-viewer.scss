@@ -1,0 +1,77 @@
+// Clip viewer, opened from a clip card.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Clip viewer (a clip opened from a shelf of the home page): a player, the
+   * clip's details and its channel, with close and next/previous buttons
+   * hung outside the box. The box stops clipping so those show, as round
+   * floating buttons; the player is rounded; the details follow the video
+   * page's hierarchy and the channel block is a quiet inset.
+   */
+  & .modal-wrapper__content:has(.clips-view-modal-content) > div {
+    position: relative !important;
+    overflow: visible !important;
+
+    & .clips-view-modal-content,
+    & .clips-view-modal-content > div {
+      @include bare;
+      box-shadow: none !important;
+    }
+
+    @include guarded(
+      ".video-player",
+      ".video-player__container",
+      ".video-ref",
+      "video",
+      ".clips-view-modal-content > div%g:first-child",
+      ".clips-view-modal-content > div:first-child .tw-aspect"
+    ) {
+      @include clip(m);
+    }
+
+    & .metadata-layout__split-top {
+      padding: var(--rs-4) 0 0 !important;
+    }
+
+    & .metadata-layout__split-top + div:where(.modal-wrapper__content > * *) {
+      margin-top: var(--rs-4) !important;
+
+      & > div:where(.modal-wrapper__content > * * > *) {
+        background: var(--rs-hover) !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+      }
+    }
+
+    & .modal__close-button {
+      position: absolute !important;
+      top: 0 !important;
+      right: -5.2rem !important;
+      width: auto !important;
+      margin: 0 !important;
+    }
+
+    & .clip-carousel-button--right {
+      right: -5.2rem !important;
+    }
+
+    & .clip-carousel-button--left {
+      left: -5.2rem !important;
+    }
+
+    & .modal__close-button button,
+    & .clip-carousel-button button {
+      width: 3.6rem !important;
+      height: 3.6rem !important;
+      @include floating;
+      border-radius: 50% !important;
+      color: var(--rs-text) !important;
+
+      &:hover {
+        background: var(--rs-raised) !important;
+      }
+    }
+  }
+}

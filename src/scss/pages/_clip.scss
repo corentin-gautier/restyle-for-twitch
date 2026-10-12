@@ -1,0 +1,118 @@
+// Clip (/<channel>/clip/…): the clip's own block, on its page and in the clip viewer.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A clip's own block, on its page and in the clip viewer: the same
+   * hierarchy as a video (date, title, then one quiet line of metadata).
+   * Twitch strings together a "Streaming Together" link, the category, "with"
+   * and the guests in their chat colours, then "Clipped by" and the views.
+   * Here the category is the chip it is elsewhere, the guests are neutral
+   * pills, and the rest is one muted level. The "Streaming Together" link
+   * (to the creator dashboard) goes: the guests say as much.
+   */
+  & .metadata-layout__split-top:has(.reedit-clip-button, [data-test-selector="clips-watch-full-button"]) {
+    & div:where(.metadata-layout__split-top *):has(+ div > [data-a-target="stream-title"]) {
+      margin: 0 !important;
+    }
+
+    & > div[style*="width"] {
+      margin-top: var(--rs-2) !important;
+
+      & > div,
+      & > div > div {
+        margin: 0 !important;
+      }
+
+      & > div > div {
+        flex-wrap: wrap !important;
+        align-items: center !important;
+        gap: var(--rs-1) var(--rs-2) !important;
+      }
+
+      & > div > div + div:where(.metadata-layout__split-top > * > * > *) {
+        margin-top: var(--rs-2) !important;
+        gap: 0 !important;
+      }
+
+      & p {
+        margin: 0 !important;
+        @include type(3, 500);
+        font-variant-numeric: tabular-nums !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & p a {
+        color: var(--rs-text-soft) !important;
+        text-decoration: none !important;
+
+        &:hover {
+          color: var(--rs-text) !important;
+        }
+      }
+
+      & div:where(.metadata-layout__split-top > * *):has(> p:only-child) {
+        margin: 0 !important;
+      }
+    }
+
+    & div:where(.metadata-layout__split-top *):has(> div > a[href*="/guest-star"]),
+    & div:where(.metadata-layout__split-top *):has(> div > a[href*="/guest-star"]) + span:where(.metadata-layout__split-top *),
+    & div:where(.metadata-layout__split-top *):has(> a[href*="/directory/category/"]) + span:where(.metadata-layout__split-top *) {
+      display: none !important;
+    }
+
+    & a[href*="/directory/category/"] {
+      @include inline-row;
+      min-height: 2rem !important;
+      padding: 0 0.8rem !important;
+      border-radius: var(--rs-radius-pill) !important;
+      background: var(--rs-accent-tint) !important;
+      text-decoration: none !important;
+
+      & p {
+        font-size: var(--rs-text-1) !important;
+        color: var(--rs-accent-quiet) !important;
+      }
+
+      &:hover {
+        background: var(--rs-accent-tint-strong) !important;
+      }
+    }
+
+    /* Guests: avatar and name in one pill, which opens the streamer's card. */
+    & div:where(.metadata-layout__split-top *):has(> div > div > span > button[aria-haspopup="dialog"]) {
+      flex-wrap: wrap !important;
+      gap: var(--rs-1) !important;
+    }
+
+    & div:where(.metadata-layout__split-top *):has(> span > button[aria-haspopup="dialog"]) {
+      @include inline-row;
+      gap: 0.6rem !important;
+      min-height: 2.4rem !important;
+      margin: 0 !important;
+      padding: 0.2rem 1rem 0.2rem 0.2rem !important;
+      border-radius: var(--rs-radius-pill) !important;
+      background: var(--rs-hover) !important;
+      transition: background-color var(--rs-ease);
+
+      & > div {
+        margin: 0 !important;
+      }
+
+      & > span {
+        color: inherit !important;
+      }
+
+      & button {
+        @include type(3, 500);
+        color: var(--rs-text) !important;
+        text-decoration: none !important;
+      }
+
+      &:hover {
+        background: var(--rs-raised) !important;
+      }
+    }
+  }
+}

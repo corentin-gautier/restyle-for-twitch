@@ -1,0 +1,32 @@
+// The centred column every directory page sits in: its gutters.
+
+html:not([data-rs="off"]) {
+  /*
+   * The page's side gutters are set once, on the centred column. Twitch
+   * builds them from a margin on the wrapper around the column, the
+   * column's padding and a padding on the block inside it: the first and
+   * the last are zeroed.
+   */
+  & .common-centered-column {
+    max-width: 1760px;
+    margin-inline: auto !important;
+    padding-inline: var(--rs-page-inset) !important;
+    padding-top: 0 !important;
+  }
+
+  & div:has(> .common-centered-column),
+  & div:has(> .search-results) {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  /* Search results start on the left gutter, not centred in the window. */
+  & div:has(> .search-results) {
+    justify-content: flex-start !important;
+  }
+
+  & .common-centered-column > :is(div, section) {
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+  }
+}

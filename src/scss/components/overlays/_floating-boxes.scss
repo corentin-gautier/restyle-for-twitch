@@ -1,0 +1,54 @@
+// Balloons, popovers and dialogs: the floating surface.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Floating layers must read as above the page: their own lighter surface
+   * and a firmer edge, no shadow.
+   */
+  & .tw-balloon,
+  & [role="dialog"] > div,
+  & .ReactModal__Content > div {
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /*
+   * Not when it holds a menu: the menu list is then the box (see below), and
+   * this wrapper can be a zero-height anchor whose border shows as a stray
+   * line under the button that opened it.
+   */
+  @include guarded('.tw-balloon > div%g:not(:has([role="menu"], [role="listbox"], [role="radiogroup"]))') {
+    @include floating(l);
+  }
+
+  & .tw-balloon > div {
+    box-shadow: none !important;
+  }
+
+  /*
+   * Popovers and dialogs (Bits, whispers, notifications...): Twitch renders
+   * them through ReactModal, and its tooltips too. What tells them apart is
+   * that their content is a labelled dialog. (Not "holds no tooltip": the
+   * notifications panel has tooltips of its own inside.)
+   *
+   * Their box reads the base background token, so it is retinted to the
+   * float surface from here.
+   */
+  & .ReactModal__Content[role="dialog"]:is([aria-label], [aria-labelledby]) {
+    --color-background-base: var(--rs-float);
+    --color-background-body: var(--rs-float);
+
+    /*
+     * The box is the element inside the transition wrapper: it carries the
+     * rounded edge and clips what scrolls inside, which otherwise pokes out
+     * past the corners. Not the outer wrapper: on anchored menus ("Sort by")
+     * that one has no height, and clipping it hides the whole menu. For the
+     * same reason, not when it holds a menu: the menu list is then the box.
+     */
+    & > div > .tw-transition > div:where(.ReactModal__Content > * > * > *):not(:has([role="menu"], [role="listbox"], [role="radiogroup"])) {
+      @include floating(l);
+      overflow: hidden !important;
+    }
+  }
+}

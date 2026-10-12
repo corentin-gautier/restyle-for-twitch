@@ -1,0 +1,61 @@
+// Player: the chapter list.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Chapter list, opened from a video's controls: the same floating card as
+   * the player's settings menu, rows with rounded corners and even padding,
+   * the chapter being played tinted with the accent.
+   */
+  & [role="dialog"][aria-describedby="chapter-select-popover-body"] > div {
+    @include floating(m);
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.45) !important;
+    overflow: hidden !important;
+  }
+
+  & #chapter-select-popover-body {
+    @include stack;
+    gap: 0.2rem !important;
+    padding: 0.6rem !important;
+
+    & .media-row button {
+      border-radius: var(--rs-radius-s) !important;
+      background: none !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+
+      & > div {
+        align-items: center !important;
+        padding: 0.6rem !important;
+      }
+    }
+
+    /* The row being played has its play mark always on, without that class. */
+    & .media-row:has(.media-row__image-wrapper > div:last-child:not(.media-row__image-play-overlay)) button {
+      background: color-mix(in srgb, var(--rs-accent) 16%, transparent) !important;
+    }
+
+    & .media-row__image-wrapper {
+      @include clip(xs);
+    }
+
+    @include guarded(".media-row__image-wrapper + div%g") {
+      padding: 0 0.4rem 0 1.2rem !important;
+    }
+
+    & .media-row__info-text p {
+      @include type(4, 600);
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .media-row__info-description p {
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+}

@@ -26,8 +26,9 @@ trap 'rm -rf "$stage"' EXIT
 mkdir -p dist "$stage/src"
 cp -R _locales icons popup "$stage/"
 cp LICENSE "$stage/"
-cp src/content.js src/tokens.css "$stage/src/"
-cp -R src/twitch "$stage/src/"
+# The stylesheet is compiled from src/scss/ (needs `npm ci` once).
+npm run --silent build >&2
+cp src/content.js src/restyle.css "$stage/src/"
 node -e '
   const manifest = require("./manifest.json");
   delete manifest.background;

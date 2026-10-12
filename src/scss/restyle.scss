@@ -1,0 +1,115 @@
+// The whole stylesheet, compiled to src/restyle.css (`npm run build`, or
+// `npm run watch` while working).
+//
+// Everything is scoped under html:not([data-rs="off"]) so the popup toggle
+// can switch the whole sheet off.
+//
+// Twitch's layout classes are generated (Layout-sc-…, hashed suffixes) and
+// change between builds. Rules therefore hang on its stable hooks: BEM-style
+// classes, data-a-target, ARIA roles, or what an element contains (:has).
+// Twitch often sets type on an inner <p> or <span>, hence the `*` selectors.
+//
+// The files below are one cascade, not independent sheets: rules of equal
+// weight are settled by this order, and later files rely on coming after
+// earlier ones. That is why the folders are interleaved. A new file goes
+// where its rules belong in the sequence; a rule that must beat another goes
+// in the same file or a later one.
+//
+//   base/        tokens, theme remap, animations
+//   tools/       the guard mixin and the shared mixins (no CSS of their own)
+//   layout/      what frames every page: top bar, sidebar, page column
+//   components/  what the whole site shares: cards, tabs, menus, player popups
+//   pages/       one file per page, or per tab of a page; what only one
+//                page uses sits in its components/ folder (the chat under
+//                pages/channel/, the seek bar's preview under pages/video/)
+@use "base/tokens";
+@use "base/theme";
+@use "layout/top-bar";
+@use "layout/sidebar";
+@use "layout/signup-banner";
+@use "layout/sidebar-collapsed";
+@use "layout/floating-panels";
+@use "layout/page-column";
+@use "pages/home";
+@use "pages/following/stories";
+@use "components/page-header";
+@use "pages/browse/sections";
+@use "pages/settings";
+@use "pages/account";
+@use "pages/browse/filters";
+@use "pages/collection";
+@use "components/titles";
+@use "components/tabs";
+@use "pages/subscriptions";
+@use "components/tabs-in-popovers";
+@use "components/cards/grid";
+@use "components/loading";
+@use "components/cards/thumbnail";
+@use "components/cards/hover";
+@use "components/cards/thumbnail-stats";
+@use "components/cards/body";
+@use "components/cards/chapters";
+@use "components/cards/text";
+@use "components/cards/category-card";
+@use "components/tags";
+@use "pages/channel/player";
+@use "pages/channel/info-column";
+@use "pages/channel/stream-info";
+@use "pages/channel/about";
+@use "pages/channel/follow-callout";
+@use "pages/channel/panels";
+@use "pages/category";
+@use "pages/event";
+@use "components/content-notice";
+@use "pages/search";
+@use "pages/channel/home-hero";
+@use "pages/channel/tabs-content";
+@use "pages/channel/schedule-tab";
+@use "pages/channel/home-tab";
+@use "pages/channel/shelf-titles";
+@use "components/shelf";
+@use "components/empty-state";
+@use "components/filter-row";
+@use "pages/following/upcoming-streams";
+@use "pages/following/follow-games-banner";
+@use "pages/following/channels-tab";
+@use "pages/video/info";
+@use "pages/clip";
+@use "pages/channel/videos-tab";
+@use "pages/team";
+@use "pages/drops/shared";
+@use "pages/drops/inventory";
+@use "pages/drops/campaigns";
+@use "pages/drops/social-badge";
+@use "pages/channel/components/subscribe-panel";
+@use "components/form-controls";
+@use "components/filter-menus";
+@use "pages/channel/components/chat/column";
+@use "pages/channel/components/chat/highlights";
+@use "pages/channel/components/chat/messages";
+@use "pages/video/components/chat-replay";
+@use "pages/channel/components/chat/plain-chat";
+@use "pages/channel/components/chat/emote-picker";
+@use "pages/channel/components/chat/cheer-and-rewards";
+@use "pages/channel/components/chat/identity";
+@use "pages/channel/components/chat/drops";
+@use "pages/channel/components/chat/input";
+@use "components/overlays/floating-boxes";
+@use "components/overlays/menus";
+@use "components/overlays/backdrop";
+@use "components/overlays/whispers";
+@use "components/player/settings-menu";
+@use "components/player/keyboard-shortcuts";
+@use "components/player/stats";
+@use "pages/video/components/seek-preview";
+@use "pages/video/components/chapter-list";
+@use "pages/video/components/muted-audio-alert";
+@use "pages/channel/components/accent-regions";
+@use "components/shelf-arrows";
+@use "components/overlays/modal";
+@use "components/overlays/clip-viewer";
+@use "components/player/content-gate";
+@use "components/overlays/empty-dialog";
+@use "components/overlays/streamer-card";
+@use "components/overlays/turbo-offer";
+@use "base/keyframes";

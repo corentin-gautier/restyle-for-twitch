@@ -1,0 +1,179 @@
+// Left sidebar, collapsed: a rail of avatars and its popups.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Collapsed sidebar: a rail of avatars. Twitch pads the links more than
+   * the rail is wide, which pushes the avatars off the axis of the icons
+   * above them. Everything is centred on the rail, sections are parted by
+   * a hairline, and pointing at an avatar rings it with the accent.
+   */
+  & .side-nav--collapsed {
+    & .collapse-toggle {
+      justify-content: center !important;
+      margin: 0 !important;
+      padding: var(--rs-2) 0 !important;
+    }
+
+    & .side-bar-contents {
+      padding: 0 !important;
+    }
+
+    & .side-nav-section {
+      align-items: center !important;
+      padding: var(--rs-2) 0 !important;
+      border-top: var(--rs-hairline) !important;
+    }
+
+    & .side-nav-section > div {
+      width: 100% !important;
+      justify-content: center !important;
+    }
+
+    & .side-nav-header {
+      justify-content: center !important;
+      padding: 0.6rem 0 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & a.side-nav-card {
+      justify-content: center !important;
+      width: 100% !important;
+      padding: 0.5rem 0 !important;
+      background: none !important;
+    }
+
+    & .side-nav-card__avatar {
+      margin: 0 auto !important;
+      border-radius: 50% !important;
+      transition: box-shadow var(--rs-ease);
+    }
+
+    /* A zero-width tooltip anchor after the avatar, whose negative margin shifts the centring. */
+    & .side-nav-card__link__tooltip-arrow {
+      margin: 0 !important;
+    }
+
+    & a.side-nav-card:hover .side-nav-card__avatar {
+      box-shadow: 0 0 0 2px var(--rs-surface), 0 0 0 4px var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * Its popups. Twitch has four, each built and padded its own way: a live
+   * channel's (name and category, title, viewers), a shared stream's (the
+   * same, over the list of who is on it), an offline channel's (a link to
+   * its videos) and a category's (its name). One box for all: the same
+   * frame, padding and type, a strong first line and quiet ones under.
+   */
+  &[data-rs-nav="collapsed"] .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has([class*="side-nav-guest-star-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
+    /* The wrappers keep the generic popups' large radius and clip the box with it. */
+    border-radius: 0 !important;
+
+    & > .tw-transition > div {
+      padding: 0 0 0 0.8rem !important;
+      @include bare;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      overflow: visible !important;
+    }
+
+    /* Doubled class: the menu rules pad a box that holds a link their own way. */
+    & > .tw-transition.tw-transition.tw-transition > div > div {
+      display: block !important;
+      box-sizing: border-box !important;
+      width: max-content !important;
+      min-width: 0 !important;
+      max-width: 26rem !important;
+      padding: 0.8rem 1.2rem !important;
+      @include floating(m);
+      box-shadow: none !important;
+      white-space: normal !important;
+    }
+
+    & div[tabindex] div:not(.tw-channel-status-indicator, .tw-avatar),
+    & div[tabindex] a {
+      height: auto !important;
+      min-height: 0 !important;
+      @include flush;
+      background: none !important;
+      border-radius: 0 !important;
+    }
+
+    & p,
+    & span {
+      margin: 0 !important;
+      @include type(2, 400);
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /* The first line: a channel and its category, a category, or the link. */
+    & div[tabindex] > div > p:where([data-popper-placement^="right"] * > * > *):first-child,
+    & div[tabindex] > div > div > p,
+    & a p {
+      @include type(3, 600);
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-channel-status-indicator {
+      margin-right: 0.6rem !important;
+    }
+
+    /*
+     * A shared stream's list: a row per channel, avatar and name on one
+     * side, viewers on the other, under a quiet "Live with:".
+     */
+    & div[tabindex] div:where([data-popper-placement^="right"] * *):has(> div > .tw-avatar) {
+      @include row;
+      justify-content: space-between !important;
+      gap: var(--rs-4) !important;
+      margin-top: 0.6rem !important;
+    }
+
+    & div[tabindex] div:where([data-popper-placement^="right"] * *):has(> .tw-avatar) {
+      @include row;
+      gap: 0.8rem !important;
+      min-width: 0 !important;
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.8rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-avatar {
+      flex: none !important;
+      width: 2rem !important;
+      height: 2rem !important;
+    }
+
+    & div[tabindex] div:where([data-popper-placement^="right"] * *):has(.tw-avatar) + div > p:where([data-popper-placement^="right"] * * > *):only-child {
+      margin-top: 0.8rem !important;
+      @include type(2, 400);
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  /*
+   * The section icons of the collapsed sidebar ("Followed Channels", "Live
+   * Channels") have a tooltip of another kind, white with an arrow: the
+   * same box as the popups above.
+   */
+  &[data-rs-nav="collapsed"] .ReactModal__Content[role="tooltip"] > [data-popper-placement^="right"] {
+    & .tw-tooltip-popper-arrow {
+      display: none !important;
+    }
+
+    & .tw-tooltip-wrapper {
+      /* On the same line as the popups: 8px from the rail. */
+      margin-left: -0.2rem !important;
+      padding: 0.8rem 1.2rem !important;
+      @include floating(m);
+      box-shadow: none !important;
+      @include type(3, 600);
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+  }
+}

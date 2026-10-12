@@ -1,0 +1,318 @@
+// Left sidebar, expanded: sections, channel rows, the hover cards beside them.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  & .side-nav,
+  & .side-nav__scrollable_content {
+    background: var(--rs-surface) !important;
+  }
+
+  & .side-nav {
+    border-right: var(--rs-hairline) !important;
+  }
+
+  & .side-bar-contents {
+    padding: var(--rs-2) !important;
+  }
+
+  /* "For You" row above the channel lists: gone, text and space. */
+  & .side-nav__title {
+    display: none !important;
+  }
+
+  /*
+   * Stories. Their classes are generated in camelCase, hence the
+   * case-insensitive matches; kept away from a bare "stories" match outside
+   * the sidebar so a channel avatar with a story ring survives.
+   */
+  & .side-nav [class*="stories" i],
+  & .side-nav-section[aria-label*="stories" i],
+  & [class*="storiesLeftNav" i],
+  & [class*="stories-left-nav" i],
+  & [class*="storiesShelf" i],
+  & [class*="stories-shelf" i],
+  & [aria-label="Stories" i] {
+    display: none !important;
+  }
+
+  /*
+   * Hover cards on channel rows (stream title preview). They are rendered
+   * outside the sidebar, so they are caught by their content's class and the
+   * balloon around it is dropped with them. Only while the sidebar is
+   * expanded: collapsed, these popups are where the names are (see
+   * "Collapsed sidebar").
+   */
+  &:not([data-rs-nav="collapsed"]) [class*="side-nav-channel-tooltip"],
+  &:not([data-rs-nav="collapsed"]) [class*="side-nav-guest-star-tooltip"],
+  &:not([data-rs-nav="collapsed"]) :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
+  &:not([data-rs-nav="collapsed"]) div:has(> [class*="side-nav-channel-tooltip"]),
+  &:not([data-rs-nav="collapsed"]) div:has(> [class*="side-nav-guest-star-tooltip"]) {
+    display: none !important;
+  }
+
+  /*
+   * Offline rows have their own hover popup, a lone "See all recent videos"
+   * link. It carries no class of its own: told by opening to the right of
+   * its row and holding nothing but a link to a channel's videos.
+   */
+  &:not([data-rs-nav="collapsed"]) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
+    display: none !important;
+  }
+
+  /*
+   * Recommended categories repeat their name in a tooltip beside the row.
+   * No class either: a popup opening to the right that holds one unwrapped
+   * line and nothing else. Kept when the sidebar is collapsed, where the
+   * name is not on screen.
+   */
+  &:not([data-rs-nav="collapsed"]) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] [style*="nowrap"] > div[tabindex] p:only-child):not(:has(a, button, img)) {
+    display: none !important;
+  }
+
+  & .side-nav-section {
+    padding-block: var(--rs-3) !important;
+  }
+
+  /* Section headers: "Followed Channels", "Live Channels"... */
+  & .side-nav-header h3,
+  & .followed-side-nav-header h3 {
+    @include caps(1);
+    color: var(--rs-label) !important;
+  }
+
+  /*
+   * "Followed Channels" is a sort dropdown in disguise: a button holding the
+   * title, a "Viewers (High to Low)" subtitle and a sort icon. It is reduced
+   * to a plain title like the other section headers. This also leaves its
+   * right end free for the sidebar's collapse arrow, which sits over it.
+   */
+  @include guarded(
+    ".followed-side-nav-header p",
+    ".followed-side-nav-header__dropdown-trigger > div%g:last-child"
+  ) {
+    display: none !important;
+  }
+
+  & .followed-side-nav-header button {
+    pointer-events: none !important;
+    cursor: default !important;
+    background: transparent !important;
+  }
+
+  /*
+   * Channel rows. Sidebar text sits a step below chat and the main column:
+   * smaller and dimmer, back to full contrast on the hovered row only. Within
+   * a row the channel name leads (semibold, label colour) and the category
+   * under it recedes (regular, faded). The name is the first block of the
+   * row's metadata, whatever wraps it (plain rows and guest-star rows differ).
+   */
+  @include guarded('[data-a-target="side-nav-card-metadata"] > :first-child p%g', $from: '[data-a-target="side-nav-card-metadata"]') {
+    font-size: 1.25rem !important;
+    font-weight: 600 !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+  }
+
+  /* Offline channels stay a step back. */
+  & .side-nav-card__link--offline .side-nav-card__title p {
+    font-weight: 500 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  & .side-nav-card__link {
+    padding: var(--rs-2) var(--rs-3) !important;
+    margin-inline: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    transition: background-color var(--rs-ease) !important;
+
+    /*
+     * Twitch's own row hover is a fixed grey of its theme. Ours follows the
+     * tone of the background, including one picked in the popup.
+     */
+    &:hover,
+    &:focus-visible {
+      background-color: var(--rs-hover) !important;
+    }
+
+    @include guarded('&:hover [data-a-target="side-nav-card-metadata"] > :first-child p%g', $from: '[data-a-target="side-nav-card-metadata"]') {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * One left edge and one right edge for everything in the expanded
+   * sidebar: the rows' own inset (--rs-3 inside their hover box). Twitch
+   * starts the section headers and "Show more" 0.8rem in instead, short of
+   * the avatars.
+   */
+  & .side-nav--expanded {
+    & [data-a-target="side-nav-header-expanded"] {
+      margin-inline: var(--rs-3) !important;
+    }
+
+    /* The same step under every header: this one adds a margin of its own. */
+    & .followed-side-nav-header {
+      margin-bottom: 0 !important;
+    }
+
+    & .side-nav-show-more-toggle__button {
+      padding-inline: var(--rs-3) !important;
+    }
+
+    /*
+     * The collapse arrow sits in its panel where the chat's does in its own:
+     * a 3.2rem button 1rem from the top and 1rem from the edge on the page's
+     * side. (Twitch centres it in a wider box, further in and lower down.)
+     * The sidebar's hairline is on that side, and counts in the 1rem.
+     */
+    & .collapse-toggle {
+      top: 1rem !important;
+      right: calc(1rem - 1px) !important;
+      left: auto !important;
+      width: auto !important;
+      @include flush;
+    }
+  }
+
+  /*
+   * The avatar sits level with the name and category: Twitch centres it on
+   * the whole row, extra line included.
+   */
+  & .side-nav-card__avatar {
+    align-self: flex-start !important;
+  }
+
+  /*
+   * Extra line under a row's category (Hype Train, Watch Streak...): the
+   * third line of the row, in the metadata's size and tone, with its icon
+   * or pill in the accent tint instead of Twitch's purple.
+   */
+  @include guarded('.side-nav-card__link > div:not(.side-nav-card__avatar) > div%g:not(:has([data-a-target="side-nav-card-metadata"]))') {
+    align-items: center !important;
+    gap: var(--rs-1) !important;
+    margin-top: 0.3rem !important;
+
+    & :is(p, span) {
+      @include type(1, 500);
+      line-height: 1.4 !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    /* Icons drawn as a mask over a coloured box. */
+    & [role="img"] {
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      margin: 0 !important;
+      background-color: var(--rs-accent-quiet) !important;
+    }
+
+    & svg {
+      width: 1.3rem !important;
+      height: 1.3rem !important;
+      fill: var(--rs-accent-quiet) !important;
+    }
+
+    & :is(.tw-pill, .tw-tag, [class*="ScPill"], [class*="ScTag"]) {
+      padding: 0.1rem 0.7rem !important;
+      background: var(--rs-accent-tint) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-pill) !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+  }
+
+  /*
+   * "Save your Streak" (logged in): a row above the channel lists, for a
+   * followed channel whose watch streak is about to lapse. Twitch gives it
+   * its own padding, an underlined purple link and a square grey hover. It
+   * becomes a row like the channels': its avatar on their axis (inside its
+   * ring, 0.4rem wide), its label as far from the ring as a channel's name
+   * is from its avatar, the same hover box.
+   * The box stops 0.4rem short of the collapse arrow (1rem from the panel's
+   * edge, 3.2rem wide), which sits over the row's right end.
+   */
+  & .side-nav [data-rs-hook="streak"] {
+    margin-right: calc(4.6rem - var(--rs-2)) !important;
+    border-radius: var(--rs-radius-m) !important;
+    text-decoration: none !important;
+    transition: background-color var(--rs-ease);
+
+    & > div {
+      gap: var(--rs-2) !important;
+      /* Less on the right: the label needs the room, and the box ends there anyway. */
+      padding: calc(var(--rs-2) - 0.4rem) 0.4rem calc(var(--rs-2) - 0.4rem) calc(var(--rs-3) - 0.4rem) !important;
+      background: transparent !important;
+    }
+
+    @include guarded("> div > div%g:has(> p)", $from: '[data-rs-hook="streak"]') {
+      @include flush;
+    }
+
+    & p {
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      color: var(--rs-accent-quiet) !important;
+      text-decoration: none !important;
+    }
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--rs-hover) !important;
+    }
+  }
+
+  @include guarded('.side-nav div%g:has(> [data-rs-hook="streak"])') {
+    margin-top: 0 !important;
+  }
+
+  /* Same for the sidebar's icon buttons (collapse arrow). */
+  & .side-nav [class*="ScButtonIcon"]:hover,
+  & .side-nav [class*="ScButtonIcon"]:focus-visible {
+    background-color: var(--rs-hover) !important;
+  }
+
+  & .side-nav-card__avatar,
+  & .side-nav-card__avatar img {
+    border-radius: var(--rs-radius-pill) !important;
+  }
+
+  /* Categories show box art, taller than wide: a small radius, not a pill. */
+  & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar,
+  & .side-nav a[href^="/directory/"] .side-nav-card__avatar.side-nav-card__avatar img {
+    border-radius: var(--rs-radius-xs) !important;
+  }
+
+  & .side-nav-card__metadata p,
+  & .side-nav-card__metadata span,
+  & .side-nav-card__live-status p,
+  & .side-nav-card__live-status span {
+    @include type(1, 400);
+    color: var(--rs-faint) !important;
+  }
+
+  & .side-nav-card__metadata {
+    margin-top: 0.2rem !important;
+  }
+
+  /* Viewer counts (and "Offline") end on the row's right edge. */
+  & .side-nav-card__live-status {
+    display: flex !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums !important;
+
+    & > div {
+      justify-content: flex-end !important;
+    }
+  }
+
+  /* Show more / show less. */
+  & .side-nav-show-more-toggle__button *,
+  & [data-a-target^="side-nav-show-"],
+  & [data-a-target^="side-nav-show-"] * {
+    @include type(1, 500);
+    color: var(--rs-muted) !important;
+  }
+}

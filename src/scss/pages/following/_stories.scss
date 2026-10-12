@@ -1,0 +1,12 @@
+// Following: the row of stories, hidden.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Stories row on the Following page: a scroll area of haloed avatars. The
+   * whole row goes, found through those halos since nothing else names it.
+   */
+  @include guarded('.twilight-main div%g:has(> .scrollable-area [class*="avatarHalo"])') {
+    display: none !important;
+  }
+}

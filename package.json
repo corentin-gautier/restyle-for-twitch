@@ -5,10 +5,13 @@
   "license": "AGPL-3.0-only",
   "description": "A calmer, more coherent interface for Twitch, as a Chrome and Firefox extension.",
   "scripts": {
+    "build": "sass --load-path=src/scss --no-source-map --no-charset --style=compressed src/scss/restyle.scss src/restyle.css",
+    "watch": "sass --load-path=src/scss --watch --no-source-map --no-charset src/scss/restyle.scss src/restyle.css",
     "release": "standard-version",
     "package": "./scripts/package.sh && ./scripts/package.sh firefox"
   },
   "devDependencies": {
+    "sass": "^1.105.1",
     "standard-version": "^9.5.0"
   }
 }

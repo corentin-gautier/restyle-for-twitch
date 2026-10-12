@@ -1,0 +1,213 @@
+// Top bar: its surface, nav links, icon buttons, the search field and its suggestions.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Same surface as the sidebar and the chat, so the chrome reads as one frame
+   * around the content. Taller and flat.
+   */
+  & .top-nav,
+  & .top-nav__menu {
+    height: calc(4rem + var(--rs-4)) !important;
+  }
+
+  & .top-nav__menu {
+    background: var(--rs-surface) !important;
+    box-shadow: none !important;
+    /*
+     * Logo on the sidebar's text edge, user avatar on the chat's right edge.
+     * Both sit inside Twitch buttons with their own inset (about 1.1rem for
+     * the logo, 0.8rem for the avatar), which is taken off the bar's padding.
+     */
+    padding-inline: calc(var(--rs-2) + 0.75rem - 1.1rem) calc(var(--rs-4) - 0.8rem) !important;
+    border-bottom: var(--rs-hairline) !important;
+  }
+
+  /* Following / Browse: same small caps as the sidebar section headers. */
+  & .top-nav .navigation-link,
+  & .top-nav .navigation-link *,
+  & .top-nav [data-a-target="following-link"],
+  & .top-nav [data-a-target="following-link"] *,
+  & .top-nav [data-a-target="browse-link"],
+  & .top-nav [data-a-target="browse-link"] * {
+    @include caps(2);
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & .top-nav .navigation-link:hover,
+  & .top-nav .navigation-link:hover *,
+  & .top-nav .navigation-link[aria-current="page"],
+  & .top-nav .navigation-link[aria-current="page"] *,
+  & .top-nav [data-a-target="following-link"]:hover *,
+  & .top-nav [data-a-target="browse-link"]:hover * {
+    color: var(--rs-text) !important;
+  }
+
+  /* Icon buttons (notifications, whispers, bits...): dimmed until hovered. */
+  & .top-nav__menu [class*="ScButtonIcon"] {
+    color: var(--rs-muted) !important;
+    transition: color var(--rs-ease);
+
+    &:hover {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Search: the input and its attached button share one fill and split the
+   * pill between them, so the pair reads as a single field.
+   */
+  & .top-nav__search-container {
+    max-width: 48rem !important;
+
+    /* Only the attached search button: the tray under the field has buttons too. */
+    & input,
+    & .tw-combo-input__button-icon {
+      height: 4rem !important;
+      background-color: var(--rs-raised) !important;
+      border: 0 !important;
+    }
+
+    & input {
+      border-radius: var(--rs-radius-pill) 0 0 var(--rs-radius-pill) !important;
+      padding-inline: var(--rs-4) var(--rs-2) !important;
+      font-size: var(--rs-text-3) !important;
+    }
+
+    & input::placeholder {
+      color: var(--rs-muted) !important;
+    }
+
+    & .tw-combo-input__button-icon {
+      border-radius: 0 var(--rs-radius-pill) var(--rs-radius-pill) 0 !important;
+      padding-inline: var(--rs-2) var(--rs-3) !important;
+      color: var(--rs-muted) !important;
+
+      &:hover {
+        color: var(--rs-text) !important;
+      }
+    }
+
+    /* "Remove from search history", at the end of a tray row: a quiet round button. */
+    & .search-item__history button {
+      width: 3.2rem !important;
+      height: 3.2rem !important;
+      border-radius: 50% !important;
+      color: var(--rs-muted) !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+        color: var(--rs-text) !important;
+      }
+    }
+
+    /*
+     * Focus and hover: Twitch rings the input alone, which stops dead at the button.
+     * The ring is drawn around the pair instead, each half carrying its three
+     * outer sides, whichever of the two has the focus.
+     */
+    & input:focus {
+      outline: none !important;
+    }
+
+    /* Hover: the same, in a quiet grey, from anywhere on the pair. */
+    &:hover input {
+      box-shadow: inset 2px 0 0 var(--rs-faint), inset 0 2px 0 var(--rs-faint), inset 0 -2px 0 var(--rs-faint) !important;
+    }
+
+    &:hover .tw-combo-input__button-icon {
+      box-shadow: inset -2px 0 0 var(--rs-faint), inset 0 2px 0 var(--rs-faint), inset 0 -2px 0 var(--rs-faint) !important;
+    }
+
+    &:focus-within input {
+      box-shadow: inset 2px 0 0 var(--rs-accent), inset 0 2px 0 var(--rs-accent), inset 0 -2px 0 var(--rs-accent) !important;
+    }
+
+    &:focus-within .tw-combo-input__button-icon {
+      box-shadow: inset -2px 0 0 var(--rs-accent), inset 0 2px 0 var(--rs-accent), inset 0 -2px 0 var(--rs-accent) !important;
+      outline: none !important;
+    }
+  }
+
+  /*
+   * Search suggestions. The tray is a box laid over the field (it holds a
+   * hidden copy of it, then the results): a floating layer like the menus,
+   * with roomier rows that light up on hover.
+   */
+  @include guarded(".top-nav div%g:has(> div > div > .search-tray)") {
+    padding: var(--rs-1) !important;
+    @include floating;
+    /* Concentric with the pill-shaped field it wraps: half its height, plus the padding around it. Square when the field is. */
+    border-radius: min(calc(2rem + var(--rs-1)), var(--rs-radius-pill)) !important;
+    box-shadow: none !important;
+    /* The border must not shift the hidden field off the real one. */
+    margin: -2px !important;
+    /* Fix width */
+    width: calc(100% + 4px) !important;
+  }
+
+  & .search-tray {
+    padding-top: var(--rs-1) !important;
+
+    & a {
+      border-radius: var(--rs-radius-l) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & .search-item {
+      align-items: center !important;
+      min-height: 5.2rem !important;
+      padding: 1rem 1.6rem !important;
+    }
+
+    /* The magnifier of "Search for…" sits in the middle of the icon column, like the avatars. */
+    & [class*="search-item__icon"] {
+      @include row;
+      justify-content: center !important;
+    }
+
+    & [class*="search-item__icon"],
+    & [class*="search-item__icon"] .tw-avatar {
+      width: var(--rs-avatar-card) !important;
+      height: var(--rs-avatar-card) !important;
+    }
+
+    /* One icon column for every row, even the last one which has no icon, so the text lines up. */
+    @include guarded(".search-item > :first-child%g:not(:has(strong, p))") {
+      box-sizing: border-box !important;
+      flex: 0 0 calc(var(--rs-avatar-card) + 1rem) !important;
+      width: calc(var(--rs-avatar-card) + 1rem) !important;
+      padding: 0 1rem 0 0 !important;
+      margin: 0 !important;
+    }
+
+    & .search-item:not(:has(> :first-child strong, > :first-child p)) > :where(.search-item > *):nth-child(2) {
+      margin-left: 0 !important;
+      padding-left: 0 !important;
+    }
+
+    /* Name, then a quieter line (category and title, or "Channel"). */
+    & strong,
+    & strong span {
+      font-size: var(--rs-text-3) !important;
+    }
+
+    & p {
+      @include muted(2);
+    }
+
+    /* Viewer count, as in the sidebar. */
+    & [aria-label$="viewers"] {
+      font-size: var(--rs-text-2) !important;
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+}

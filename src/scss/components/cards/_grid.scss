@@ -1,0 +1,160 @@
+// Card grids and one-row shelves (.tw-tower), and how many cards a row shows.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Grids: a CSS grid with one gap, for card grids and one-row shelves alike.
+   *
+   * Twitch lays them out as a wrapping flex row of fixed-width items that
+   * grow, spaced by padding on each item, and pads the last row with empty
+   * placeholder items so its cards keep their width. A grid needs neither:
+   * the items lose their padding and the placeholders go.
+   *
+   * The column count has to be Twitch's, though: it fills a shelf with as
+   * many cards as fit, one per 30rem of the grid's width (two category
+   * cards in the same room), and a row with one column more or less would
+   * end on a hole or wrap its last card. Columns are therefore 30rem wide
+   * at least, gap included, counted over the grid's full width: the grid
+   * runs one gap past its last column, in padding that a negative margin
+   * takes back, since n columns only have n - 1 gaps between them.
+   *
+   * Up to a limit: four stream or video cards to a row, eight categories.
+   * On wider screens the cards grow instead.
+   */
+  & .tw-tower {
+    --rs-tower-gap: var(--rs-6);
+    --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
+
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, var(--rs-tower-column)) !important;
+    gap: var(--rs-8) var(--rs-tower-gap) !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+
+    & > * {
+      width: auto !important;
+      min-width: 0 !important;
+      padding-inline: 0 !important;
+    }
+
+    @include guarded(
+      "> %g:empty",
+      '> [class*="placeholder" i]'
+    ) {
+      display: none !important;
+    }
+  }
+
+  /*
+   * The cards of the Subscriptions page are no .tw-tower but are laid out
+   * the same way, an empty item standing for a channel that is gone: the
+   * same grid (their own look is in pages/_subscriptions.scss). A rule of its own, not a
+   * second selector on the one above: see "Nest only under single-selector
+   * parents" in CLAUDE.md. Keep the two in sync.
+   */
+  & .twilight-main [role="tablist"] + div > div:where([role="tablist"] + div > *):has(> div > .subscription-card) {
+    --rs-tower-gap: var(--rs-6);
+    --rs-tower-column: minmax(min(100%, max(calc(30rem - var(--rs-tower-gap)), calc((100% - 3 * var(--rs-tower-gap)) / 4))), 1fr);
+
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, var(--rs-tower-column)) !important;
+    gap: var(--rs-8) var(--rs-tower-gap) !important;
+    margin-inline: 0 !important;
+    padding-inline: 0 !important;
+
+    & > *:where([role="tablist"] + div > * > *) {
+      width: auto !important;
+      min-width: 0 !important;
+      padding-inline: 0 !important;
+    }
+
+    & > :where([role="tablist"] + div > * > *):empty {
+      display: none !important;
+    }
+  }
+
+  /* Category cards: two columns in the room of one stream card. */
+  & .tw-tower:has(.game-card) {
+    --rs-tower-half: minmax(max(calc(15rem - var(--rs-tower-gap)), calc((100% - 7 * var(--rs-tower-gap)) / 8)), 1fr);
+    --rs-tower-column: var(--rs-tower-half) var(--rs-tower-half);
+  }
+
+  /*
+   * Shelves that Twitch keeps on one row whatever their width (content.js
+   * marks them): a column per card, sharing the row.
+   */
+  & .tw-tower[data-rs-tower="row"] {
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(0, 1fr) !important;
+  }
+
+  /*
+   * A sideways shelf is one row too, but as long as it takes. Twitch scrolls
+   * it by whole cards, measuring one card's own width: the gap is therefore
+   * part of each card, as padding, so that a step lands on a card's edge
+   * and only the right end of the shelf ever shows part of a card.
+   */
+  & .preview-card-carousel .tw-tower {
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: 30rem !important;
+    column-gap: 0 !important;
+
+    & > * {
+      box-sizing: border-box !important;
+      padding-right: var(--rs-tower-gap) !important;
+    }
+  }
+
+  /*
+   * The card cut off by the shelf's right edge fades out instead of ending
+   * on a straight cut. The fade starts where that card does: at the last
+   * multiple of the cards' pitch (30rem) that fits in the shelf's width.
+   * Nothing fades when the edge falls in a gap.
+   */
+  & .preview-card-carousel {
+    container-type: inline-size !important;
+  }
+
+  & .preview-card-carousel__child-container {
+    mask-image: linear-gradient(to right, #000 calc(100% - mod(100cqw + var(--rs-6), 30rem) + var(--rs-6)), transparent) !important;
+  }
+
+  /*
+   * Past the limit, Twitch still hands a shelf one card per 30rem: five,
+   * six or seven where four columns show, and twice that once "Show more"
+   * has added a row. The cards over a full row are dropped, or the shelf
+   * would end on a row of one or two.
+   *
+   * A one-row shelf (not a sideways one, which scrolls) drops whatever is
+   * past its fourth card, or its eighth category. A shelf that wraps is recognised by its number of cards: 5,
+   * 7, 10 or 14 only happen past the limit (they are no multiple of the
+   * two, three or four columns of a narrower grid).
+   *
+   * content.js writes the count on the grid (data-rs-count), and whether it
+   * holds categories (data-rs-games). Counted in CSS, from the first card
+   * (":first-child:nth-last-child(5) ~ …") or on the grid with :has(), every
+   * card added, and every preview opened inside a card, had the browser
+   * restyle the whole grid.
+   */
+  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :nth-child(n + 5):where(.tw-tower > *):has([data-a-target="preview-card-image-link"]),
+  & .tw-tower[data-rs-tower="row"]:not([data-js-selector="carousel-content"]) > :where(.tw-tower > *):nth-child(n + 9),
+  & .tw-tower[data-rs-tower="grid"]:is([data-rs-count="5"], [data-rs-count="7"]) > :where(.tw-tower > *):nth-child(n + 5),
+  & .tw-tower[data-rs-tower="grid"][data-rs-count="10"] > :where(.tw-tower > *):nth-child(n + 9),
+  & .tw-tower[data-rs-tower="grid"][data-rs-count="14"] > :where(.tw-tower > *):nth-child(n + 13),
+  & .tw-tower[data-rs-tower="grid"][data-rs-games][data-rs-count="14"] > :where(.tw-tower > *):nth-child(n + 9) {
+    display: none !important;
+  }
+
+  /*
+   * Six cards, or twelve categories, are also three columns after "Show
+   * more": they only mean six columns on a screen wide enough for them.
+   */
+  @media (min-width: 1850px) {
+    & .tw-tower[data-rs-tower="grid"]:not([data-rs-games])[data-rs-count="6"] > :where(.tw-tower > *):nth-child(n + 5),
+    & .tw-tower[data-rs-tower="grid"][data-rs-games][data-rs-count="12"] > :where(.tw-tower > *):nth-child(n + 9) {
+      display: none !important;
+    }
+  }
+}

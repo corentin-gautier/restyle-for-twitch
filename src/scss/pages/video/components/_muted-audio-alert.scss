@@ -1,0 +1,56 @@
+// Player: the muted audio notice.
+
+html:not([data-rs="off"]) {
+  /*
+   * "Audio for portions of this video has been muted…": Twitch lays a black
+   * slab over the middle of the picture. A small chip in the player's
+   * bottom-left corner instead, on one line; pointing at it unfolds the
+   * whole sentence. It sits on the video, so its ink is fixed, not themed.
+   */
+  & .muted-segments-alert__position-wrapper {
+    align-items: flex-start !important;
+    padding-inline: var(--rs-3) !important;
+  }
+
+  & .muted-segments-alert__scroll-wrapper {
+    width: auto !important;
+    max-width: 32rem !important;
+  }
+
+  & .muted-segments-alert__content {
+    align-items: center !important;
+    padding: 0 0.2rem 0 1rem !important;
+    background: rgba(15, 16, 18, 0.55) !important;
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: var(--rs-radius-m) !important;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    will-change: opacity;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    & p {
+      min-width: 0 !important;
+      padding: 0.5rem 0 !important;
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.6rem !important;
+      color: rgba(255, 255, 255, 0.85) !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+
+    &:hover p {
+      white-space: normal !important;
+    }
+
+    & button {
+      width: 2.4rem !important;
+      height: 2.4rem !important;
+      color: rgba(255, 255, 255, 0.7) !important;
+    }
+  }
+}

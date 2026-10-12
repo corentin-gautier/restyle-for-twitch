@@ -1,0 +1,30 @@
+// The title block of a directory page ("Following", "Browse", a category group).
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Page header ("Following", "Browse", a category group like "Games"...).
+   * The block of the column that holds the title sets the page's margins,
+   * however deep the title sits in it (the nesting differs on every page):
+   *  - no side padding: the column alone sets the gutters;
+   *  - one top offset, every other one on the way down to the title being
+   *    cleared (the 1rem taken off is the blank leading above the capitals).
+   */
+  & .common-centered-column {
+    @include guarded("> %g:has(h1)") {
+      margin-top: 0 !important;
+      padding-block: calc(var(--rs-8) + 3rem - 1rem) !important;
+    }
+
+    @include guarded("> * %g:has(h1)") {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+
+    /* Browse: same gap under the title as between Following's title and its tabs. */
+    @include guarded("> section > div%g:has(> h1)") {
+      margin-bottom: 0 !important;
+      padding-bottom: 1rem !important;
+    }
+  }
+}

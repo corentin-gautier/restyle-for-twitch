@@ -98,19 +98,28 @@ anywhere. Its one permission, `storage`, is used to remember your settings.
 
 ## Development
 
-To work on it, clone the repository and load its folder with **Load
-unpacked**. There is no build step. The extension is made of:
+The stylesheet is written in Sass and compiled to one file, `src/restyle.css`,
+which is not in the repository. To work on it, clone the repository, then:
+
+```sh
+npm install
+npm run build    # once, or
+npm run watch    # rebuilds on every save
+```
+
+and load the folder with **Load unpacked**. The extension is made of:
 
 | Path | Role |
 | --- | --- |
-| `src/tokens.css` | Design tokens: spacing, radii, type scale, palette. |
-| `src/twitch/` | The rules that map Twitch's interface onto those tokens, one file per area. |
-| `src/content.js` | Applies the settings, pauses the hidden carousel's video and stops the video cards' animated previews. |
+| `src/scss/` | The stylesheet's source. `restyle.scss` lists every file in cascade order. `base/` holds the design tokens (spacing, radii, type scale, palette) and the theme; `layout/` the top bar, the sidebar and the page column; `components/` what the whole site shares (cards, tabs, menus, player popups); `pages/` one file per page or per tab of a page, each page's folder holding the components only it uses (the chat under `pages/channel/components/`); `tools/` the shared mixins and the one that writes the selectors' performance guards. |
+| `src/restyle.css` | The compiled stylesheet, the only one the extension loads. Never edited by hand. |
+| `src/content.js` | Applies the settings, marks what the stylesheet needs to know about the page, pauses the hidden carousel's video and stops the video cards' animated previews. |
 | `popup/` | The settings popup. |
 | `src/dev-reload.js` | Live reload, for unpacked installs only. |
 
 When loaded unpacked, the extension reloads itself and any open Twitch tab
-whenever a CSS or JavaScript file changes.
+whenever the compiled stylesheet or a JavaScript file changes: with
+`npm run watch` running, saving a Sass file is enough.
 
 To build the store packages, which leave the live reload out:
 
@@ -120,9 +129,10 @@ To build the store packages, which leave the live reload out:
 npm run package                 # both
 ```
 
-The zips are written to `dist/`. The script needs Node.js. The Firefox
-manifest is derived from `manifest.json`: it gains the add-on id and the data
-collection statement Firefox asks for.
+The zips are written to `dist/`. The script needs Node.js and the
+dependencies (`npm install`): it compiles the stylesheet, minified, before
+zipping. The Firefox manifest is derived from `manifest.json`: it gains the
+add-on id and the data collection statement Firefox asks for.
 
 Releases are cut with `npm run release` (version bump, changelog, tag).
 Pushing the tag publishes a GitHub release with both zips attached.

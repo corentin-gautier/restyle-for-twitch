@@ -1,0 +1,87 @@
+// Browse: the filter row (tag search, "Sort by") and the line under a section's title.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Browse: the filter row under the tabs (tag search, "Sort by"). Its
+   * controls take the shared size, and the tag search its magnifier's room
+   * (see "Form controls"). The section is only identifiable by its English
+   * label.
+   */
+  & .twilight-main section[aria-label="Filter & Sort Options"] {
+    & input,
+    & button[aria-haspopup],
+    & [data-test-selector^="toggle-balloon-wrapper"] > button,
+    & [role="combobox"] {
+      height: var(--rs-control-height) !important;
+      min-height: var(--rs-control-height) !important;
+      border-radius: var(--rs-radius-m) !important;
+      font-size: var(--rs-text-4) !important;
+    }
+
+    & button[aria-haspopup],
+    & [data-test-selector^="toggle-balloon-wrapper"] > button,
+    & [role="combobox"]:not(input) {
+      padding-inline: var(--rs-control-pad) !important;
+    }
+
+    /*
+     * The suggestions dropdown: detached from the field, at least as wide,
+     * with a tighter radius than other floating boxes (it holds a list, which
+     * a large radius crops) and padded rows that light up on hover. Only in
+     * the search half of the row: the "Sort by" menu keeps Twitch's layout.
+     */
+    /*
+     * The positioned wrapper shrinks to its content: at least the field's
+     * width. It also sets the distance to the field, a little past the
+     * focus ring.
+     */
+    @include guarded('> div > %g:has(input) [class*="Attached"]:has(> .tw-balloon)') {
+      min-width: 100% !important;
+      margin-top: var(--rs-1) !important;
+    }
+
+    @include guarded("> div > %g:has(input) .tw-balloon") {
+      min-width: 100% !important;
+      margin-top: 0 !important;
+      /* The list inside is the box: this wrapper would frame it a second time. */
+      padding: 0 !important;
+      background: transparent !important;
+      border-radius: var(--rs-radius-m) !important;
+
+      & > div {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: var(--rs-1) !important;
+        border-radius: var(--rs-radius-m) !important;
+      }
+
+      & :is([role="option"], button, a) {
+        padding: var(--rs-2) var(--rs-3) !important;
+        border-radius: var(--rs-radius-s) !important;
+        color: var(--rs-label) !important;
+        transition: background-color var(--rs-ease), color var(--rs-ease);
+
+        & * {
+          font-size: var(--rs-text-3) !important;
+          color: inherit !important;
+        }
+
+        &:hover, &:focus-visible {
+          background: var(--rs-hover) !important;
+          color: var(--rs-text) !important;
+        }
+      }
+    }
+  }
+
+  /* The line under a Browse section's title ("Games", "IRL"...). */
+  & .vertical-directory-home-header p.tw-title {
+    margin-top: var(--rs-2) !important;
+    @include type(6, 400);
+    letter-spacing: 0 !important;
+    color: var(--rs-muted) !important;
+  }
+}

@@ -1,0 +1,98 @@
+// Channel, Videos and Clips tabs, and under a video: "Filter By" and the shelves of videos.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * "Filter By" above a channel's videos and clips: label and menu sit at
+   * the right edge of the column, like "Sort by" on the directory pages.
+   * The row has no hook of its own; it is the one holding a lone <strong>
+   * label next to a button, nested one level deeper on the videos tab.
+   * It shows on a channel's Videos and Clips tabs (.home__lower-content) and
+   * under a video: the :has() is only tried there, not under a live stream.
+   */
+  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > strong:only-child):has(button):not(article *),
+  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > div > strong:only-child):has(button):not(article *) {
+    justify-content: flex-end !important;
+  }
+
+  & .channel-info-content div:where(.home__lower-content *, [data-rs-info="video"] *):has(> div > strong:only-child):has(button):not(article *) > div {
+    flex-grow: 0 !important;
+  }
+
+  /*
+   * Shelves of other videos: on the column's edges, with titled rows.
+   *
+   * Their vertical spacing is set here and nowhere else. Twitch spreads it
+   * over the shelf, its header, its title, the carousel's body and the
+   * cards; all of those are zeroed, and three steps remain: under the
+   * "Filter By" row, under a shelf's header, and between two shelves.
+   */
+  &[data-rs-info="video"] .channel-info-content > div:where([data-rs-info="video"] *):has(.preview-card-carousel) > div {
+    margin: 0 !important;
+    padding-inline: 0 !important;
+  }
+
+  @include guarded(".channel-info-content div%g:has(> .preview-card-carousel)") {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  @include guarded(".channel-info-content div%g:has(> .preview-card-carousel) + div%g:has(> .preview-card-carousel)") {
+    margin-top: var(--rs-shelf-gap) !important;
+  }
+
+  /* Whatever comes right before the first shelf: the "Filter By" row. */
+  @include guarded(".channel-info-content div%g:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel)") {
+    margin-bottom: var(--rs-6) !important;
+  }
+
+  & .channel-info-content .preview-card-carousel__body {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  /*
+   * Shelf header: the title on the left, its link ("View All", "Play All")
+   * pushed to the right edge as a small-caps label, like "Show more"
+   * elsewhere. A subtitle ("4 videos") stays tucked under the title.
+   */
+  @include guarded('.channel-info-content div%g:has(> p.tw-title > [data-test-selector="title"])') {
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    margin: 0 0 var(--rs-shelf-head) !important;
+  }
+
+  @include guarded('.channel-info-content div%g:has(> p.tw-title > [data-test-selector="title"]):has(+ [data-test-selector="subtitle"])') {
+    margin-bottom: 0 !important;
+  }
+
+  & .channel-info-content [data-test-selector="subtitle"] {
+    margin: 0 0 var(--rs-shelf-head) !important;
+    padding: 0 !important;
+    @include muted(3);
+  }
+
+  & [data-a-target^="video-shelf-expand-link"] {
+    text-decoration: none !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+
+    & > div {
+      gap: 0.4rem !important;
+    }
+
+    & p {
+      @include caps(2);
+      color: inherit !important;
+    }
+
+    & svg {
+      fill: currentColor !important;
+    }
+
+    &:hover {
+      color: var(--rs-text) !important;
+    }
+  }
+}

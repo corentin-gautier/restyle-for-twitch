@@ -1,0 +1,41 @@
+// Chat: the leaderboard (hidden) and highlight cards above the messages.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Gifter / cheerer leaderboard pinned above the messages: drop the whole
+   * top slot of the chat room when that is what it holds. Pinned messages,
+   * predictions and hype trains (community highlights) are left alone.
+   */
+  @include guarded('.chat-room__content > div%g:has([class*="Leaderboard" i]):not(:has([class*="community-highlight"]))') {
+    display: none !important;
+  }
+
+  /*
+   * Progress bar of a highlight card (drops, hype train goals...): Twitch
+   * hangs it under the card, where it crosses the rounded border. It becomes
+   * a thin line inside the card, clipped by the card's own corners.
+   */
+  /* Positions the bar against a box inside the card's clipping wrapper. */
+  @include guarded(".community-highlight div%g:has(> .highlight__progress-bar)") {
+    position: relative !important;
+  }
+
+  & .community-highlight .highlight__progress-bar {
+    inset: auto 0 0 !important;
+    z-index: 1 !important;
+    width: auto !important;
+    height: 0.3rem !important;
+    border-radius: 0 !important;
+
+    & .tw-progress-bar {
+      height: 100% !important;
+      background: var(--rs-border) !important;
+    }
+
+    & [data-a-target="tw-progress-bar-animation"] {
+      height: 100% !important;
+      background: var(--rs-accent) !important;
+    }
+  }
+}

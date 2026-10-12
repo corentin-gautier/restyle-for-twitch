@@ -1,0 +1,131 @@
+// Chat replay on videos.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Chat replay on videos: built from other components than the live chat
+   * (.video-chat, .vod-message), and given the same treatment: surface,
+   * spacing, quiet messages that come back on hover, fade at the top.
+   */
+  & .video-chat,
+  & .video-chat__header {
+    background: var(--rs-surface) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  & .video-chat__header span {
+    font-weight: 600 !important;
+  }
+
+  & .video-chat__message-list-wrapper {
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--rs-12)) !important;
+  }
+
+  & .video-chat__message-list-wrapper li {
+    padding-inline: var(--rs-2) !important;
+  }
+
+  /*
+   * "Resume auto scroll", shown once the replay's chat is scrolled back: a
+   * grey bar with black text across the foot of the list. A floating pill
+   * over it instead, centred, on the surface of the other floating boxes.
+   */
+  & .video-chat__sync-button {
+    right: auto !important;
+    bottom: var(--rs-3) !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: auto !important;
+    height: 3.2rem !important;
+    padding: 0 1.4rem !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-float) !important;
+    @include type(3, 600);
+    white-space: nowrap !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease), border-color var(--rs-ease);
+
+    &:hover {
+      border-color: var(--rs-accent) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  & .vod-message {
+    padding: var(--rs-2) !important;
+    line-height: 1.55 !important;
+    /* For the hover box below, kept behind the row's content. */
+    position: relative !important;
+    isolation: isolate !important;
+
+    /*
+     * The row's hover box. The replay has no overlay like the live chat's,
+     * so it gets one, faded in like it (see "Messages are quiet until
+     * hovered").
+     */
+    &::before {
+      content: "" !important;
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: -1 !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    /* Isolated, a row keeps its "Report" menu under the rows after it:
+       the one with an open menu is lifted over them. */
+    &:has(.tw-balloon) {
+      z-index: 1 !important;
+    }
+
+    & .video-chat__message,
+    & .text-fragment {
+      color: var(--rs-text) !important;
+    }
+
+    & .video-chat__message {
+      opacity: var(--message-opacity) !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    & .chat-badge {
+      opacity: 0.6 !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    & .video-chat__message-author {
+      font-weight: 600 !important;
+      text-decoration: none !important;
+    }
+
+    /* The timestamp is a button that seeks the video: no box of its own. */
+    & .vod-message__header button {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    & .vod-message__header p {
+      font-size: var(--rs-text-1) !important;
+      font-variant-numeric: tabular-nums !important;
+      line-height: 2.2rem !important;
+      color: var(--rs-faint) !important;
+    }
+
+    &:hover {
+      &::before,
+      & .video-chat__message,
+      & .chat-author__display-name {
+        opacity: 1 !important;
+      }
+
+      & .chat-badge {
+        opacity: 1 !important;
+      }
+    }
+  }
+}

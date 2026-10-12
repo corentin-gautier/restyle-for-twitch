@@ -133,7 +133,7 @@ function apply() {
   root.style.setProperty("--rs-accent", accent);
   // Labels on accent-filled buttons: white unless the accent is too pale for it.
   root.style.setProperty("--rs-on-accent", contrast("#ffffff", accent) >= 3 ? "#fff" : "#16171a");
-  // tokens.css derives the sidebars and other surfaces from this colour, and
+  // scss/base/_tokens.scss derives the sidebars and other surfaces from this colour, and
   // picks the text palette from its tone.
   if (background) {
     root.style.setProperty("--rs-bg-custom", background);
@@ -172,9 +172,8 @@ setInterval(() => {
 // description and nothing else).
 // CSS could test both with html:has(...), but a :has() on the root is
 // re-evaluated on every DOM change and restyles the whole page each time,
-// so they are kept as attributes instead. Keep in sync with twitch/shell.css,
-// twitch/channel-tabs.css, twitch/channel.css, twitch/video.css,
-// twitch/shelves.css and twitch/directory.css.
+// so they are kept as attributes instead. Keep in sync with the rules of
+// src/scss/ that read these attributes.
 function pageState() {
   const nav = document.querySelector(".side-nav--collapsed") ? "collapsed" : null;
   const home = document.querySelector(".channel-root--home");
@@ -193,7 +192,7 @@ function pageState() {
   }
 }
 
-// Card grids (twitch/cards.css). Twitch has two kinds under one stable class:
+// Card grids (scss/components/cards/_grid.scss). Twitch has two kinds under one stable class:
 // grids that wrap, and shelves that hold one row whatever their width. Only
 // its generated classes tell them apart, so each grid is marked once with
 // what its own rule says.
@@ -215,7 +214,7 @@ function towers() {
 // such a name ahead of a broad subject ([class*="x"] > div) has the browser
 // restyle everything under any element whose class changes, anywhere on the
 // page. Marked once with an attribute instead, the test costs nothing. Keep
-// in sync with twitch/shell.css, twitch/subscribe.css and twitch/cards.css.
+// in sync with the rules of src/scss/ that select data-rs-hook.
 const HOOKS = {
   streak: '.side-nav [class*="saveYourStreakSideNavRow"]',
   "gift-hero": '.support-panel [class*="giftHeroSlot"]',
@@ -288,9 +287,9 @@ for (const type of ["mouseover", "mouseout", "pointerover", "pointerout"]) {
   );
 }
 
-// Home: twitch/pages.css hides the featured carousel, but a hidden video keeps
+// Home: scss/pages/_home.scss hides the featured carousel, but a hidden video keeps
 // autoplaying and streaming. Pause it whenever Twitch (re)starts it.
-// Keep these selectors in sync with the carousel rule in twitch/pages.css.
+// Keep these selectors in sync with the carousel rule in scss/pages/_home.scss.
 const CAROUSEL_VIDEOS = [
   '[class*="front-page-carousel"] video',
   '[data-a-target*="front-page-carousel"] video',

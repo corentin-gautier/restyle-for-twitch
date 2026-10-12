@@ -1,0 +1,48 @@
+// Category cards (box art and name).
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Category cards: their name is an <h2>, kept out of the shelf-title rule
+   * and given the same weight as a stream title.
+   */
+  & .twilight-main h2:is(.tw-tower *, .game-card *, a *),
+  & .twilight-main h2:is(.tw-tower *, .game-card *, a *) * {
+    @include type(5, 600);
+    line-height: 1.35 !important;
+    letter-spacing: -0.005em !important;
+    color: var(--rs-text) !important;
+  }
+
+  /*
+   * Category cards: the same air between the box art and the name as
+   * between a thumbnail and its text on stream cards. Twitch leaves 4px,
+   * as a margin on the name.
+   */
+  & .game-card .tw-card-body {
+    margin-top: var(--rs-3) !important;
+
+    & [data-a-target="tw-card-title"] {
+      margin-top: 0 !important;
+    }
+  }
+
+  /*
+   * Category cards: the options button sits at the end of the name's row and
+   * covers its last letters. It is shifted from there onto the box art's
+   * bottom right corner, on a dark disc so it reads over any image. Stream
+   * and video cards (articles with a preview thumbnail) keep theirs in place.
+   */
+  & .feedback-card:not(article:has([data-a-target="preview-card-image-link"]) *) {
+    position: relative !important;
+    z-index: 2 !important;
+    /* Up past the gap above the name (see the rule before this one). */
+    transform: translate(-1.1rem, calc(-3.4rem - var(--rs-3))) !important;
+
+    & button {
+      background: var(--rs-scrim) !important;
+      color: var(--rs-on-scrim) !important;
+      border-radius: var(--rs-radius-pill) !important;
+    }
+  }
+}

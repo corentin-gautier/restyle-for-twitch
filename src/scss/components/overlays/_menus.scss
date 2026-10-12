@@ -1,0 +1,108 @@
+// Menus, and the three builds of "Sort by".
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Menus rendered the same way ("Sort by"...): the list is the box, with
+   * padded rows that light up on hover, like the tag search suggestions.
+   * Found through their ARIA roles, the only stable hook they have.
+   */
+  & .ReactModal__Content :is([role="menu"], [role="listbox"], [role="radiogroup"]) {
+    padding: var(--rs-1) !important;
+    @include floating(m);
+  }
+
+  & .ReactModal__Content :is([role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="option"], [role="radio"]) {
+    padding: var(--rs-2) var(--rs-3) !important;
+    border-radius: var(--rs-radius-s) !important;
+    color: var(--rs-label) !important;
+    transition: background-color var(--rs-ease), color var(--rs-ease);
+
+    & * {
+      font-size: var(--rs-text-3) !important;
+      color: inherit !important;
+    }
+
+    &:hover,
+    &:focus-visible,
+    &:is([aria-checked="true"], [aria-selected="true"]) {
+      background: var(--rs-hover) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * "Sort by" comes in three builds: a listbox (Browse, a category's live
+   * channels), a button with an attached menu (a category's videos) and a
+   * select button (clips, a channel's tabs). One field and one menu: the
+   * listbox takes the other menus' box and rows, and the two other buttons
+   * take the select button's weight, arrow and open state.
+   */
+  & .ReactModal__Content [role="listbox"] {
+    padding: 0.6rem !important;
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /* Opening upwards, the list touches its button: the gap it has downwards. */
+  & .ReactModal__Content > [data-popper-placement^="top"]:has(> .tw-transition [role="listbox"]) {
+    padding-bottom: 0.8rem !important;
+  }
+
+  & .ReactModal__Content [role="option"] {
+    min-height: 3.6rem !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: var(--rs-radius-m) !important;
+    color: var(--rs-text) !important;
+
+    & * {
+      font-size: var(--rs-text-4) !important;
+    }
+  }
+
+  & .twilight-main :is([role="combobox"]:not(input), [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded]) {
+    font-weight: 400 !important;
+
+    & * {
+      font-weight: 400 !important;
+    }
+  }
+
+  /* The attached-menu button centres its label: on the left, arrow on the right. */
+  & .twilight-main [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded] > div {
+    width: 100% !important;
+    justify-content: space-between !important;
+  }
+
+  /* It also pads its label twice inside: the button alone does, like the select button. */
+  & .twilight-main [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded] {
+    & > div {
+      padding: 0 !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0.6rem 0 0 !important;
+    }
+  }
+
+  /* The listbox button's double arrow: the single chevron of the others. */
+  & .twilight-main button[role="combobox"] > div:last-child:where([role="combobox"] > *):has(svg) {
+    & svg:where([role="combobox"] > * *) {
+      display: none !important;
+    }
+
+    &::after {
+      content: "";
+      width: 2rem;
+      height: 2rem;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+      mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M14.5 6.5 10 11 5.5 6.5 4 8l6 6 6-6-1.5-1.5z'/%3E%3C/svg%3E") center / 1.6rem no-repeat;
+    }
+  }
+
+  /* Open or focused: the same accent ring on the three. */
+  & .twilight-main :is(.tw-select-button, button[role="combobox"], [data-test-selector^="toggle-balloon-wrapper"] > button[aria-expanded]):is([aria-expanded="true"], :focus-visible) {
+    outline: none !important;
+    box-shadow: inset 0 0 0 2px var(--rs-accent) !important;
+  }
+}

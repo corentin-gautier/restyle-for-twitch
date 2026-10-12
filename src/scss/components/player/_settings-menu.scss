@@ -1,0 +1,50 @@
+// Player: the settings menu.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /* Player settings menu: the same floating surface as the other menus. */
+  @include guarded('.ReactModal__Content div%g:has(> div > div > [data-a-target="player-settings-menu"])') {
+    background: var(--rs-float) !important;
+    /* An outline: a border would narrow the rows and wrap their labels. */
+    outline: 1px solid var(--rs-float-border) !important;
+    outline-offset: -1px !important;
+    @include clip(l);
+  }
+
+  /* Its text and controls are painted in fixed light-on-dark colours. */
+  & [data-a-target="player-settings-menu"] {
+    & *:not(.tw-pill, .tw-pill *) {
+      color: var(--rs-text) !important;
+    }
+
+    & [role="separator"] {
+      border-color: var(--rs-border) !important;
+    }
+
+    & .tw-toggle__button {
+      background: var(--rs-raised) !important;
+    }
+
+    & .tw-toggle__input:checked + .tw-toggle__button {
+      border-color: var(--rs-accent) !important;
+
+      &::after {
+        background: var(--rs-accent) !important;
+      }
+
+      @include guarded("*%g") {
+        color: var(--rs-accent) !important;
+        fill: var(--rs-accent) !important;
+      }
+    }
+
+    @include guarded(".tw-radio__input:checked + label%g::before", $from: '[data-a-target="player-settings-menu"]') {
+      border-color: var(--rs-accent) !important;
+    }
+
+    @include guarded(".tw-radio__input:checked + label%g::after", $from: '[data-a-target="player-settings-menu"]') {
+      background: var(--rs-accent) !important;
+    }
+  }
+}

@@ -1,0 +1,130 @@
+// Channel, Home tab: "Featured Clips", the page title, its shelves of categories and channels.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * "Featured Clips" on a channel's Home tab: Twitch sets a coloured card
+   * holding the title and a button to the left of the clips. It becomes a
+   * shelf like the others: the title above the clips, at the shelf size,
+   * and its button a small-caps link on the right edge.
+   */
+  @include guarded('.home__lower-content div%g:has(> div[style*="background-color"]):has(a[href*="featured=true"])') {
+    display: block !important;
+    @include flush;
+  }
+
+  & .home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) {
+    flex-direction: row !important;
+    align-items: baseline !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: var(--rs-shelf-gap) 0 var(--rs-shelf-head) !important;
+    padding: 0 !important;
+    @include bare;
+    border-radius: 0 !important;
+
+    /* The row of emotes above the title. */
+    @include guarded("> div%g:has(img):not(:has(p, a))") {
+      display: none !important;
+    }
+
+    & > div {
+      width: auto !important;
+      max-width: none !important;
+      @include flush;
+    }
+
+    /* Twitch clamps the title to the card's two short lines. */
+    @include guarded(
+      "div%g:has(> p.tw-title)",
+      "div%g:has(> div > p.tw-title)"
+    ) {
+      width: auto !important;
+      max-width: none !important;
+    }
+
+    & p.tw-title {
+      display: block !important;
+      overflow: visible !important;
+      white-space: nowrap !important;
+      -webkit-line-clamp: unset !important;
+      @include type(display, 700);
+      line-height: 1.2 !important;
+      letter-spacing: -0.02em !important;
+      color: var(--rs-text) !important;
+    }
+
+    & a {
+      height: auto !important;
+      padding: 0 !important;
+      background: none !important;
+      color: var(--rs-label) !important;
+      transition: color var(--rs-ease);
+
+      & * {
+        padding: 0 !important;
+        @include caps(2);
+        color: inherit !important;
+      }
+
+      &:hover {
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+
+  /* The clips take the row the card shared with them. */
+  @include guarded('.home__lower-content div[style*="background-color"]:has(a[href*="featured=true"]) + div%g') {
+    width: 100% !important;
+    max-width: none !important;
+    @include flush;
+  }
+
+  /* Offline, the channel name is the page's title, not a label above one. */
+  & .home-header-sticky h1 {
+    @include type(title, 700);
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--rs-text) !important;
+  }
+
+  /* Kept out of the shelf-title rule: a caption beside a video, not a landmark. */
+  & .home-carousel-info h2 {
+    font-size: 2.4rem !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.01em !important;
+  }
+
+  /*
+   * Shelves of categories and suggested channels: Twitch sizes their items
+   * for its own, wider column. They share the row instead, up to the width
+   * a card has when the row is full (three channels; five categories, the
+   * most Twitch lists there): a shelf of one or two would otherwise stretch
+   * them across the column.
+   */
+  & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower {
+    --rs-shelf-card: calc((100% - 2 * var(--rs-tower-gap)) / 3);
+
+    grid-template-columns: none !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(0, var(--rs-shelf-card)) !important;
+    justify-content: start !important;
+  }
+
+  & .home__lower-content [data-a-target^="home-shelf-title"] .tw-tower:has(.game-card) {
+    --rs-shelf-card: calc((100% - 4 * var(--rs-tower-gap)) / 5);
+  }
+
+  /*
+   * The Home tab ends flush under its last shelf: the page closes with the
+   * air that separates two shelves.
+   */
+  & .home__lower-content {
+    padding-bottom: var(--rs-shelf-gap) !important;
+  }
+}

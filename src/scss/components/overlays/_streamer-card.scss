@@ -1,0 +1,171 @@
+// Streamer card, opened from a guest's name.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Streamer card (opened from a guest's name under a shared stream or
+   * clip): banner, avatar, name, bio, links, next stream, Follow. Twitch
+   * packs it on 8px gutters, paints its body a step darker than the box and
+   * its links and button in the channel's colour. One floating surface on
+   * the menus' gutters, with the palette's ink and accent. The box has no
+   * hook of its own: it is the one holding a haloed avatar and a name.
+   */
+  @include guarded(".ReactModal__Content .tw-transition > div%g:has(.tw-halo):has(h1)", $from: ".ReactModal__Content") {
+    /* The channel-colour strip beside the banner. */
+    & div[style*="background-color"]:not([style*="background-image"]):has(+ div[style*="background-image"]) {
+      display: none !important;
+    }
+
+    @include guarded('div%g:has(> div[style*="background-image"])', $from: ".ReactModal__Content") {
+      height: 8rem !important;
+    }
+
+    /* The body, under the banner. */
+    @include guarded('> div > div%g:not(:has(> div[style*="background-image"]))', $from: ".ReactModal__Content") {
+      padding: 0 var(--rs-3) var(--rs-3) !important;
+      background: none !important;
+      white-space: normal !important;
+    }
+
+    /*
+     * Avatar and name: Twitch pulls the row up so the avatar bites into the
+     * banner. Under it instead, the name on the avatar's middle line.
+     */
+    & div[style*="top: -1rem"] {
+      top: 0 !important;
+      align-items: center !important;
+      margin: var(--rs-3) 0 var(--rs-2) !important;
+    }
+
+    @include guarded("div%g:has(> h1)", $from: ".ReactModal__Content") {
+      padding: 0 !important;
+    }
+
+    & h1,
+    & h1 a {
+      @include type(6, 600);
+      color: var(--rs-text) !important;
+      text-decoration: none !important;
+    }
+
+    /* "Streaming <game> with <n> viewers", under the name of a live channel. */
+    @include guarded("div%g:has(> h1) + div p%g", $from: ".ReactModal__Content") {
+      @include muted(3);
+      white-space: normal !important;
+
+      @include guarded("span%g", $from: ".ReactModal__Content") {
+        font-weight: 500 !important;
+        color: var(--rs-text-soft) !important;
+      }
+    }
+
+    & p[title] {
+      font-size: var(--rs-text-3) !important;
+      line-height: 1.5 !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    /* Follower count. */
+    @include guarded("div%g:has(> p[title]) + p%g", $from: ".ReactModal__Content") {
+      @include muted(3);
+
+      @include guarded("span%g", $from: ".ReactModal__Content") {
+        font-weight: 600 !important;
+        color: var(--rs-text) !important;
+      }
+    }
+
+    & .streamer-card-body__social-medias {
+      gap: 0.6rem !important;
+      margin-top: var(--rs-2) !important;
+
+      & .social-media-link {
+        max-width: 100% !important;
+        padding: 0.3rem 1rem 0.3rem 0.8rem !important;
+        border-radius: var(--rs-radius-pill) !important;
+        background: var(--rs-hover) !important;
+        transition: background-color var(--rs-ease);
+
+        &:hover {
+          background: var(--rs-raised) !important;
+        }
+      }
+
+      @include guarded("%g:has(> .social-media-link)") {
+        max-width: 100% !important;
+        min-width: 0 !important;
+      }
+
+      & a {
+        text-decoration: none !important;
+      }
+
+      & p {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+        @include type(2, 500);
+        color: var(--rs-label) !important;
+      }
+
+      & div[style*="color"] {
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* "Upcoming stream:", a small-caps label over an inset entry. */
+    @include guarded('div%g:has(> p[style*="uppercase"])', $from: ".ReactModal__Content") {
+      margin: var(--rs-3) 0 var(--rs-1) !important;
+
+      & p {
+        @include type(1, 600);
+        letter-spacing: var(--rs-caps-tracking) !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    @include guarded("div%g:has(> div > .stream-schedule-segment--vertical-line)", $from: ".ReactModal__Content") {
+      margin: 0 !important;
+      padding: var(--rs-2) var(--rs-3) !important;
+      border-radius: var(--rs-radius-m) !important;
+      background: var(--rs-hover) !important;
+      @include muted(3);
+
+      & p {
+        @include type(2, 500);
+        color: var(--rs-muted) !important;
+      }
+
+      & > strong {
+        display: block !important;
+        margin-top: var(--rs-1) !important;
+        font-size: var(--rs-text-4) !important;
+        color: var(--rs-text) !important;
+      }
+
+      @include guarded("> div%g:last-child", $from: ".ReactModal__Content") {
+        margin-top: var(--rs-2) !important;
+      }
+    }
+
+    & .stream-schedule-segment--vertical-line {
+      border-radius: var(--rs-radius-pill) !important;
+    }
+
+    /* Follow, and the options button beside it. */
+    @include guarded('div%g:has(> button[aria-label="More options"])', $from: ".ReactModal__Content") {
+      align-items: center !important;
+      margin-top: var(--rs-3) !important;
+    }
+
+    & [data-a-target="follow-button"] {
+      background: var(--rs-accent) !important;
+      color: var(--rs-on-accent) !important;
+
+      &:hover {
+        background: var(--rs-accent-hover) !important;
+      }
+    }
+  }
+}

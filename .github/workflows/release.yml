@@ -21,6 +21,7 @@ jobs:
           node-version: 22
       - name: Package the extension
         run: |
+          npm ci
           cp "$(./scripts/package.sh)" restyle-for-twitch.zip
           cp "$(./scripts/package.sh firefox)" restyle-for-twitch-firefox.zip
       # Minor versions are "## [x.y.0]" in the changelog, patches "### [x.y.z]".

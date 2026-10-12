@@ -1,0 +1,57 @@
+// Player: the preview along a video's seek bar.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Preview shown while pointing along a video's seek bar. Twitch's is a
+   * picture over a bar holding the timestamp, and the generic balloon rules
+   * frame it twice. Just the picture instead, rounded, under a light ring
+   * and a soft shadow, with the timestamp as a chip laid over its bottom.
+   */
+  @include guarded('.video-player .player-controls div%g:has(> div > [data-test-selector="vod-seekbar-preview-overlay-preview-image"])') {
+    @include bare;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: 0 0.8rem 2.4rem rgba(0, 0, 0, 0.45) !important;
+    /* Clear of the seek bar, now that the timestamp's bar is gone. */
+    transform: translateY(-0.8rem) !important;
+  }
+
+  @include guarded('.video-player .player-controls div%g:has(> [data-test-selector="vod-seekbar-preview-overlay-preview-image"])') {
+    position: relative !important;
+    background: #000 !important;
+    border: 0 !important;
+    @include clip(m);
+
+    /* The ring, over the picture so that it stays even on a bright frame. */
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.18);
+      pointer-events: none;
+    }
+
+    @include guarded('> [data-test-selector="vod-seekbar-preview-overlay-preview-image"] + div%g') {
+      position: absolute !important;
+      inset: auto 0 0.6rem !important;
+      display: flex !important;
+      justify-content: center !important;
+      padding: 0 !important;
+      background: none !important;
+    }
+
+    & p {
+      padding: 0.2rem 0.8rem !important;
+      background: rgba(15, 16, 18, 0.72) !important;
+      backdrop-filter: blur(8px);
+      border-radius: var(--rs-radius-pill) !important;
+      @include type(2, 600);
+      line-height: 1.8rem !important;
+      font-variant-numeric: tabular-nums !important;
+      letter-spacing: 0.02em !important;
+      color: #fff !important;
+    }
+  }
+}

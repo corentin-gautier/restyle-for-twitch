@@ -1,0 +1,83 @@
+// Form controls: text fields, text areas, select menus.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Text fields, text areas and select menus, wherever they are: one
+   * padding, equal on all four sides, hence one height. Not the top bar's
+   * search field (a pill, with its own proportions) nor the chat field
+   * (which holds buttons).
+   */
+  & :is(.tw-input, .tw-select, .tw-select-button, .tw-textarea):not(.top-nav *, .chat-input__textarea *) {
+    box-sizing: border-box !important;
+    padding: var(--rs-control-pad) !important;
+    border-radius: var(--rs-radius-m) !important;
+    font-size: var(--rs-text-4) !important;
+    line-height: 2rem !important;
+  }
+
+  & :is(.tw-input, .tw-select, .tw-select-button):not(.top-nav *, .chat-input__textarea *) {
+    height: var(--rs-control-height) !important;
+    min-height: var(--rs-control-height) !important;
+  }
+
+  /*
+   * Placeholders and field labels take the palette's ink: Twitch's own
+   * follows its theme, unreadable on a custom background of the other tone.
+   */
+  & :is(.tw-input, .tw-textarea)::placeholder {
+    color: var(--rs-muted) !important;
+    opacity: 1 !important;
+  }
+
+  & .tw-form-label {
+    color: var(--rs-text) !important;
+  }
+
+  /*
+   * Fields with an icon on the left (a magnifier, or the category search's
+   * glyph): room for it before the text. Told by the icon's box coming
+   * before the field, whatever the field's type.
+   */
+  & .tw-input__icon:not(:has(button)) ~ .tw-input:not(.top-nav *, .chat-input__textarea *) {
+    padding-left: calc(var(--rs-control-pad) + 2.8rem) !important;
+  }
+
+  & select.tw-select {
+    padding-right: 3.6rem !important;
+  }
+
+  /*
+   * Twitch pins that icon's box to the field's top-left corner, at its own
+   * shorter height: it follows the field's height, and moves in so the icon
+   * sits on the field's padding, like the text on the other side.
+   */
+  & .tw-input__icon:not(:has(button)):has(~ .tw-input):not(.top-nav *, .chat-input__textarea *) {
+    top: 0 !important;
+    bottom: 0 !important;
+    left: calc(var(--rs-control-pad) - 0.6rem) !important;
+    height: 100% !important;
+    @include row;
+  }
+
+  /* A select button pads its label twice inside: the button alone does. */
+  & .tw-select-button {
+    & > div {
+      padding: 0 !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0.6rem 0 0 !important;
+    }
+  }
+
+  /* A field with a button attached keeps its right side square. */
+  & .tw-combo-input__input .tw-input:not(.top-nav *) {
+    border-radius: var(--rs-radius-m) 0 0 var(--rs-radius-m) !important;
+  }
+
+  /* A button attached to a field (Settings) takes its height. */
+  & .tw-combo-input:not(.top-nav *) button {
+    height: var(--rs-control-height) !important;
+  }
+}

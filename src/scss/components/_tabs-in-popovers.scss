@@ -1,0 +1,65 @@
+// Tabs inside popovers (Notifications, Prime): a compact version.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * The same tabs inside popovers (Notifications, Prime): a compact version,
+   * the tabs sharing the width as Twitch lays them out.
+   */
+  & .ReactModal__Content .tw-tabs {
+    border-bottom: var(--rs-hairline) !important;
+    box-shadow: none !important;
+
+    /* Twitch's fixed heights would crop the taller tabs. */
+    &,
+    & > div,
+    & [role="tablist"],
+    & [role="tablist"] > * {
+      height: auto !important;
+      overflow: visible !important;
+    }
+
+    & [role="tablist"] {
+      padding-inline: var(--rs-3) !important;
+      gap: var(--rs-2) !important;
+    }
+
+    & [role="tablist"] > * {
+      padding: 0 !important;
+    }
+
+    & [class*="ScTabIndicatorLayout"] {
+      display: none !important;
+    }
+
+    & [role="tab"] {
+      width: 100% !important;
+      height: auto !important;
+      min-height: 4rem !important;
+      margin-bottom: -1px !important;
+      padding: 0 var(--rs-1) !important;
+      align-items: center !important;
+      justify-content: center !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      color: var(--rs-muted) !important;
+      transition: color var(--rs-ease), box-shadow var(--rs-ease);
+
+      & * {
+        @include caps(2);
+        line-height: 1.4 !important;
+        color: inherit !important;
+      }
+
+      &:hover {
+        color: var(--rs-text) !important;
+        box-shadow: inset 0 -3px 0 var(--rs-border) !important;
+      }
+
+      &[aria-selected="true"] {
+        color: var(--rs-text) !important;
+        box-shadow: inset 0 -3px 0 var(--rs-accent) !important;
+      }
+    }
+  }
+}

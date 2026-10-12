@@ -1,0 +1,31 @@
+// Following: the "You can now follow your favorite games!" banner.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Following, "You can now follow your favorite games!": a grey slab with
+   * square corners. The same panel as an empty shelf.
+   */
+  & [data-target="following__follow-games-cta"] {
+    gap: var(--rs-3) !important;
+    margin: var(--rs-shelf-gap) 0 0 !important;
+    padding: var(--rs-8) var(--rs-4) !important;
+    background: radial-gradient(ellipse 60% 140% at 50% 0%, var(--rs-accent-tint), transparent 70%), var(--rs-surface) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    & > div {
+      margin: 0 !important;
+    }
+
+    & p {
+      @include type(5, 600);
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* Alone under the tabs (Categories tab): the step the other tabs' content has. */
+  & section > [data-target="following__follow-games-cta"]:first-child {
+    margin-top: var(--rs-shelf-head) !important;
+  }
+}

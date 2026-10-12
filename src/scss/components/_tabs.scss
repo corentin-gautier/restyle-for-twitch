@@ -1,0 +1,98 @@
+// Tabs (Following, Browse, channel pages, Settings).
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Tabs (Following, Browse, channel pages): flat, on a full-width rule, with
+   * small-caps labels like the nav links, and the selected one marked by a
+   * thick accent bar sitting on the rule.
+   *
+   * Twitch gives the list, its items and the links fixed heights, which keeps
+   * the tabs short whatever their padding: all are released and the height is
+   * set once, on the link, which centres its label.
+   */
+  & .twilight-main .tw-tabs,
+  & .twilight-main .tw-tabs > div {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  & .twilight-main [role="tablist"] {
+    display: flex !important;
+    align-items: stretch !important;
+    gap: var(--rs-6) !important;
+    width: 100% !important;
+    height: auto !important;
+    /* Tabs never wrap or shrink: a list that is too long scrolls sideways. */
+    overflow: auto hidden !important;
+    scrollbar-width: none !important;
+    /*
+     * The rule under the tabs is an inset shadow, not a border: the list
+     * clips what sticks out of it, so a tab cannot hang over a border, but
+     * its own accent bar paints over this line.
+     */
+    border-bottom: 0 !important;
+    box-shadow: inset 0 -1px 0 var(--rs-border) !important;
+    /* The next title brings its own gap. */
+    margin-bottom: 0 !important;
+
+    & > * {
+      display: flex !important;
+      flex: none !important;
+      height: auto !important;
+      @include flush;
+    }
+
+    /* Twitch's own underline marker (a sibling of the tab link). */
+    & [class*="ScTabIndicatorLayout"] {
+      display: none !important;
+    }
+  }
+
+  /*
+   * When the tabs do not fit (Settings), Twitch adds a scroll button before
+   * and after the list; laid out as blocks they stack above and below it.
+   * The list scrolls sideways on its own instead.
+   */
+  @include guarded(".twilight-main .tw-tabs > div%g:has(> button)") {
+    display: none !important;
+  }
+
+  & .twilight-main [role="tab"] {
+    @include row;
+    height: auto !important;
+    min-height: 5.2rem !important;
+    margin-bottom: 0 !important;
+    padding: 0 var(--rs-1) !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--rs-muted) !important;
+    /* Also on the tab itself: some carry their label without a wrapper. */
+    @include caps(2);
+    white-space: nowrap !important;
+    transition: color var(--rs-ease), box-shadow var(--rs-ease);
+
+    & * {
+      height: auto !important;
+      @include caps(2);
+      line-height: 1.4 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      color: inherit !important;
+    }
+
+    &:hover {
+      color: var(--rs-text) !important;
+      box-shadow: inset 0 -3px 0 var(--rs-border) !important;
+    }
+
+    &[aria-selected="true"] {
+      color: var(--rs-text) !important;
+      box-shadow: inset 0 -3px 0 var(--rs-accent) !important;
+    }
+  }
+}

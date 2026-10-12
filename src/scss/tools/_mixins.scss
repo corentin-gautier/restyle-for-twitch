@@ -1,0 +1,75 @@
+// Declarations the sheets repeat, by what they are for. Each `!important`
+// is here for the same reason as everywhere else: to beat Twitch's styles.
+
+// Twitch's own margin and padding, off.
+@mixin flush {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// Twitch's own background and border, off.
+@mixin bare {
+  background: none !important;
+  border: 0 !important;
+}
+
+// A panel on the page. $radius is the end of a --rs-radius-* token (xs, s, m, l…).
+@mixin panel($radius: null) {
+  background: var(--rs-surface) !important;
+  border: var(--rs-hairline) !important;
+  @if $radius {
+    border-radius: var(--rs-radius-#{$radius}) !important;
+  }
+}
+
+// A box floating over the page: menus, popovers, dialogs, chat popups.
+@mixin floating($radius: null) {
+  background: var(--rs-float) !important;
+  border: 1px solid var(--rs-float-border) !important;
+  @if $radius {
+    border-radius: var(--rs-radius-#{$radius}) !important;
+  }
+}
+
+// Rounded, and clipping what it holds to its corners.
+@mixin clip($radius) {
+  border-radius: var(--rs-radius-#{$radius}) !important;
+  overflow: hidden !important;
+}
+
+// A step of the type scale (the end of a --rs-text-* token) and a weight.
+@mixin type($size, $weight) {
+  font-size: var(--rs-text-#{$size}) !important;
+  font-weight: $weight !important;
+}
+
+// Secondary text at a step of the type scale.
+@mixin muted($size) {
+  font-size: var(--rs-text-#{$size}) !important;
+  color: var(--rs-muted) !important;
+}
+
+// A small label in tracked capitals, optionally at a step of the type scale.
+@mixin caps($size: null) {
+  @if $size {
+    font-size: var(--rs-text-#{$size}) !important;
+  }
+  font-weight: 600 !important;
+  letter-spacing: var(--rs-caps-tracking) !important;
+  text-transform: uppercase !important;
+}
+
+@mixin stack {
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+@mixin row {
+  display: flex !important;
+  align-items: center !important;
+}
+
+@mixin inline-row {
+  display: inline-flex !important;
+  align-items: center !important;
+}

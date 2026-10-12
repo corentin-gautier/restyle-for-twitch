@@ -1,0 +1,128 @@
+// Drops & Rewards, Inventory tab (/drops/inventory).
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A campaign in progress: Twitch puts its name, end date and buttons in a
+   * narrow column beside the drops. Here it is a panel with a head across
+   * the top (the game's box art, the name over the date, the buttons at the
+   * right) and the drops under it, on the full width.
+   */
+  & .inventory-max-width {
+    max-width: none !important;
+  }
+
+  @include guarded(".inventory-max-width > div%g:has(> .inventory-campaign-info)") {
+    @include stack;
+    gap: var(--rs-4) !important;
+    margin: 0 0 var(--rs-4) !important;
+    padding: var(--rs-4) !important;
+    @include panel(l);
+    box-shadow: none !important;
+
+    & > div:not(.inventory-campaign-info) {
+      padding: 0 !important;
+    }
+  }
+
+  & .inventory-campaign-info {
+    display: grid !important;
+    grid-template-columns: auto minmax(0, 1fr) auto !important;
+    column-gap: var(--rs-3) !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    border: 0 !important;
+
+    & > div {
+      @include flush;
+    }
+
+    /* The name, then the end date. */
+    @include guarded("> div%g:nth-child(1)") {
+      grid-area: 1 / 2 !important;
+      align-self: end !important;
+
+      @include guarded("a%g") {
+        @include type(6, 700);
+        color: var(--rs-text) !important;
+      }
+    }
+
+    @include guarded("> div%g:nth-child(2)") {
+      grid-area: 2 / 2 !important;
+      align-self: start !important;
+
+      @include guarded("span%g") {
+        @include type(3, 400);
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* The row holding the box art and the buttons: its two parts join the grid. */
+    @include guarded("> div%g:nth-child(3)") {
+      display: contents !important;
+
+      @include guarded("> div%g") {
+        @include flush;
+      }
+
+      @include guarded("> div%g:has(> .inventory-boxart)") {
+        grid-area: 1 / 1 / 3 / 2 !important;
+      }
+
+      @include guarded("> div%g:not(:has(> .inventory-boxart))") {
+        grid-area: 1 / 3 / 3 / 4 !important;
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+        gap: var(--rs-2) !important;
+        max-width: 36rem !important;
+
+        @include guarded("> *%g") {
+          @include flush;
+        }
+
+        /* A hint, when there is one: a line of its own over the buttons. */
+        @include guarded("> div%g:has(> p)") {
+          flex: 1 1 100% !important;
+          text-align: right !important;
+
+          @include guarded("p%g") {
+            @include muted(2);
+          }
+        }
+
+        @include guarded("> div%g:has(> p:empty)") {
+          display: none !important;
+        }
+
+        @include guarded("a%g") {
+          height: 3.2rem !important;
+          padding-inline: var(--rs-1) !important;
+        }
+      }
+    }
+
+    & .inventory-boxart {
+      display: block !important;
+      width: 4.2rem !important;
+      height: 5.6rem !important;
+      object-fit: cover !important;
+      border-radius: var(--rs-radius-xs) !important;
+    }
+  }
+
+  /* "Claimed", after the campaigns; "Rewards", after it. */
+  & .inventory-max-width + div:where(.drops-root__content *),
+  & .inventory-page + .inventory-page {
+    margin-top: var(--rs-shelf-gap) !important;
+  }
+
+  & .inventory-max-width {
+    margin-top: var(--rs-8) !important;
+  }
+}

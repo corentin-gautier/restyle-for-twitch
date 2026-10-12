@@ -1,0 +1,360 @@
+// Channel, Home tab: the page colour, the hero (offline and live), the shelf arrows, and the hero under the floating panels option.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Twitch paints the page in the channel's colour and lets it show beside
+   * the content; the page background takes over, across the full width.
+   */
+  & .channel-root--home {
+    background: var(--rs-bg) !important;
+  }
+
+  & .channel-root__info--home .channel-info-content {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /*
+   * Hero: the banner becomes an inset, rounded frame like the live player.
+   * Clipped rather than padded, so Twitch's own sizing is left alone.
+   */
+  @include guarded(".channel-root__player--offline > div%g:has(> .home)") {
+    clip-path: inset(var(--rs-2) round var(--rs-radius-l));
+  }
+
+  /*
+   * The banner is a backdrop, not the subject: washed with the page colour
+   * so the two panels in front of it carry the hero.
+   */
+  @include guarded(".channel-root__player--offline > div%g:has(> .home)") {
+    box-shadow: inset 0 0 0 100vmax color-mix(in srgb, var(--rs-bg) 78%, transparent) !important;
+  }
+
+  /*
+   * The two panels share the width of the column below (avatar on the left,
+   * buttons on the right): the text panel starts on its left edge and takes
+   * the room the video leaves, the video ends on its right edge.
+   */
+  @include guarded(".home-offline-hero > div%g:has(> .home-carousel-info)") {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: var(--rs-measure) !important;
+    margin-inline: auto !important;
+    padding-inline: 3.2rem !important;
+    justify-content: space-between !important;
+    gap: var(--rs-4) !important;
+  }
+
+  & .home-carousel-info {
+    flex: 1 1 0 !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  /* The wrapper is wider than the video it holds: brought back to Twitch's fixed video width. */
+  & .home-video__wrapper {
+    flex: 0 0 53.3rem !important;
+    width: 53.3rem !important;
+    margin: 0 !important;
+  }
+
+  & .home-carousel-info,
+  & .home-video {
+    @include clip(m);
+  }
+
+  & .home-carousel-info {
+    @include panel;
+    box-shadow: none !important;
+  }
+
+  /*
+   * Offline hero's text panel ("Offline", or "Suggested Channels" when
+   * Twitch shows another channel's stream there). Twitch centres a status
+   * badge and a title in it and leaves a bare link at the bottom. It reads
+   * from the top instead: a quiet small-caps pill, the title, the suggested
+   * channel as a name over a muted line, and its one action as a button on
+   * the bottom edge, like the live hero's.
+   */
+  & .home-carousel-info:not(.home-carousel-info--live) {
+    padding: var(--rs-6) !important;
+
+    /* Twitch's wrappers: no margin, and nothing centred. */
+    & div {
+      margin: 0 !important;
+      justify-content: flex-start !important;
+    }
+
+    & .channel-status-info {
+      padding: 0.2rem 0.8rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+
+      & strong {
+        @include caps(1);
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    & div:where(.home-carousel-info *):has(> h2) {
+      margin: var(--rs-3) 0 var(--rs-4) !important;
+    }
+
+    & h2 {
+      color: var(--rs-text) !important;
+    }
+
+    /* The suggested channel's category and viewers: bare text in the wrapper. */
+    & > div:first-child > div:where(.home-carousel-info > * > *) {
+      @include muted(3);
+    }
+
+    & .home-carousel-info--subtitle p {
+      @include type(5, 600);
+      color: var(--rs-text) !important;
+    }
+
+    /* "Watch <channel> with 551 viewers": a filled button. */
+    & strong > a.tw-link {
+      @include inline-row;
+      min-height: 3.2rem !important;
+      padding: 0 1.4rem !important;
+      background: var(--rs-accent) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      text-decoration: none !important;
+      transition: opacity var(--rs-ease);
+
+      &,
+      & * {
+        @include type(3, 600);
+        color: var(--rs-on-accent) !important;
+      }
+
+      &:hover {
+        opacity: 0.88 !important;
+      }
+    }
+
+    /*
+     * With notifications already on, the same spot holds a note ("Your
+     * notifications from <channel> will be personalized."): a bell glued to
+     * two lines of body text. A quiet footnote, the bell level with its
+     * first line.
+     */
+    & .home-notify-cta:has(> p) {
+      align-items: flex-start !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        padding-top: 0.1rem !important;
+        color: var(--rs-accent-quiet) !important;
+      }
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* "Turn on Notifications": a quieter button, in the hover tint. */
+    & .home-notify-cta button {
+      min-height: 3.2rem !important;
+      padding-inline: 0.6rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-pill) !important;
+
+      &,
+      & [data-a-target="tw-core-button-label-text"] {
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+
+  /*
+   * Live hero: Twitch floats a tall, mostly empty card over the video, with
+   * a black "Mute" block hanging under it. The card shrinks to what it
+   * says and sits in the hero's bottom left corner, as far from the frame's
+   * bottom as from its side, with "Mute" beside it on the same line.
+   */
+  & .home-live-player-overlay--contents {
+    box-sizing: border-box !important;
+    /* The frame's bottom edge (--rs-2), then the 2.2rem the card keeps from its side. */
+    height: calc(100% - var(--rs-2) - 2.2rem) !important;
+    align-items: flex-end !important;
+
+    & > div {
+      display: flex !important;
+      align-items: flex-end !important;
+      gap: var(--rs-2) !important;
+      width: auto !important;
+      height: auto !important;
+      @include flush;
+    }
+  }
+
+  & .home-carousel-info--live {
+    flex: 0 1 auto !important;
+    gap: var(--rs-4) !important;
+    max-width: 44rem !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: var(--rs-4) !important;
+    align-items: flex-start !important;
+
+    /* Twitch's wrappers: no margin, no room kept for a taller card. */
+    & div {
+      margin: 0 !important;
+    }
+
+    /* "Live Now": a small-caps pill in the live tint, like the viewer count. */
+    & .channel-status-info {
+      padding: 0.2rem 0.8rem !important;
+      background: var(--rs-live-tint) !important;
+      border-radius: var(--rs-radius-pill) !important;
+
+      & strong {
+        @include caps(1);
+        color: var(--rs-live) !important;
+      }
+    }
+
+    @include guarded("div%g:has(> h2)") {
+      margin-top: var(--rs-2) !important;
+    }
+
+    /* "Watch now with 8K viewers": the card's one action, a filled button. */
+    & [data-a-target="home-live-overlay-button"] {
+      @include inline-row;
+      min-height: 3.2rem !important;
+      padding: 0 1.4rem !important;
+      background: var(--rs-accent) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      text-decoration: none !important;
+      /* The count is an element of its own: as flex items, the spaces around it would go. */
+      white-space: pre !important;
+      transition: opacity var(--rs-ease);
+
+      &,
+      & * {
+        @include type(3, 600);
+        color: var(--rs-on-accent) !important;
+      }
+
+      &:hover {
+        opacity: 0.88 !important;
+      }
+    }
+  }
+
+  /* "Mute": a floating pill, the height of the button beside it. */
+  & .home-carousel-info--live + div > div:where([data-rs-channel] *) {
+    margin: 0 !important;
+    @include floating(pill);
+
+    & button:where([data-rs-channel] * *) {
+      min-height: 3.2rem !important;
+      padding-inline: 0.4rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & [data-a-target="tw-core-button-label-text"] {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * The hero's video is the persistent player laid over its panel: no inset
+   * there, and only the top corners rounded, to follow the panel's.
+   */
+  &[data-rs-channel] .persistent-player:not(.persistent-player--theatre) {
+    padding: 0 !important;
+    background: transparent !important;
+
+    & .video-player__container {
+      max-height: calc(100vh - 16rem) !important;
+    }
+
+    & .video-player,
+    & .video-player__container,
+    & .video-ref,
+    & video {
+      border-radius: var(--rs-radius-m) !important;
+    }
+  }
+
+  /*
+   * Home tab of a live channel: the live video, scaled up, is the hero's
+   * backdrop. It cannot be clipped itself (Twitch sizes and scales it), so
+   * a frame in the page colour is laid over the band instead: square
+   * outside, rounded inside, like the offline banner's inset. The band's
+   * height is Twitch's constant, also set inline on the block below it.
+   */
+  &[data-rs-channel="live-home"] .persistent-player:not(.persistent-player--theatre) :is(.video-player, .video-player__container, .video-ref, video) {
+    border-radius: 0 !important;
+  }
+
+  & .channel-root--live.channel-root--home .channel-root__info--home::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 468px;
+    box-sizing: border-box;
+    border: var(--rs-2) solid var(--rs-bg);
+    border-radius: calc(var(--rs-radius-l) + min(var(--rs-2), var(--rs-radius-pill)));
+    box-shadow: 0 0 0 100px var(--rs-bg);
+    clip-path: inset(0);
+    pointer-events: none;
+  }
+
+  /*
+   * Shelf arrows on a channel's tabs: outside the shelf, a step from its
+   * edges, rather than over the first and last cards. The column has the
+   * page's margin on both sides to hold them. (Twitch pulls each one 3rem
+   * over the cards, and shifts the left one further.)
+   */
+  & .channel-root__info--home .preview-card-carousel__button--next {
+    margin: 0 0 0 var(--rs-2) !important;
+  }
+
+  & .channel-root__info--home .preview-card-carousel__button--previous {
+    margin: 0 !important;
+    transform: translateX(calc(-100% - var(--rs-2))) !important;
+  }
+
+  /*
+   * "Floating panels" option (see layout/_floating-panels.scss): the hero lines up with the
+   * panels instead of sitting in an even inset. Its top is the sidebar's,
+   * its sides are a panel gap from the sidebar and from the window, where
+   * the top bar ends. The live frame is redrawn for that: a rounded hole,
+   * the page colour spread around it and cut off at the band's edges.
+   */
+  @include guarded("&[data-rs-floating] .channel-root__player--offline > div%g:has(> .home)") {
+    clip-path: inset(0 var(--rs-panel-gap) var(--rs-2) round var(--rs-radius-l));
+  }
+
+  &[data-rs-floating] .channel-root--live.channel-root--home .channel-root__info--home::before {
+    left: var(--rs-panel-gap);
+    right: var(--rs-panel-gap);
+    height: calc(468px - var(--rs-2));
+    border: 0;
+    border-radius: var(--rs-radius-l);
+    clip-path: inset(0 calc(-1 * var(--rs-panel-gap)) calc(-1 * var(--rs-2)));
+  }
+
+  /* What sits on the live hero (the info card, Mute) keeps its distance from the frame's side. */
+  &[data-rs-floating] .home-live-player-overlay--contents {
+    padding-inline: calc(3.2rem + var(--rs-panel-gap) - var(--rs-2)) !important;
+  }
+
+  /* The chat column waits off to the right there, and would add a sideways scroll. */
+  & .root-scrollable:has(.channel-root--home) {
+    overflow-x: hidden !important;
+  }
+}

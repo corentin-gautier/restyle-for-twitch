@@ -1,0 +1,106 @@
+// Following: the repeated title of the Live and Channels tabs, and the Channels tab's cards.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Following, Live and Channels tabs: the title under the tabs repeats the
+   * tab's name. It goes, with what wraps it, and the content starts one
+   * step under the tabs.
+   */
+  & .common-centered-column:has([data-a-target="following-live-tab"][aria-selected="true"]) :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="live-channels-header"], > [data-a-target="live-channels-header"]),
+  & .common-centered-column:has([data-a-target="following-channels-tab"][aria-selected="true"]) :is(header, div):where(.common-centered-column *):has(> div > [data-a-target="following-channels-header"], > [data-a-target="following-channels-header"]) {
+    display: none !important;
+  }
+
+  & .common-centered-column:has(:is([data-a-target="following-live-tab"], [data-a-target="following-channels-tab"])[aria-selected="true"]) #following-page-main-content {
+    padding-top: calc(var(--rs-shelf-head) - 1.6rem) !important;
+  }
+
+  /*
+   * Following, Channels tab: each channel is its banner under a dark veil,
+   * with a small avatar and name lost in the middle. A card instead: the
+   * banner fades into the card's surface, and a larger, ringed avatar and
+   * the name sit on that surface, with the buttons under them.
+   */
+  & .channel-follow-listing--card .user-card {
+    @include panel(l);
+    overflow: hidden !important;
+    transition: border-color var(--rs-ease);
+
+    &:hover {
+      border-color: var(--rs-float-border) !important;
+    }
+
+    & [data-a-target="user-card-modal"] {
+      padding: var(--rs-3) !important;
+      background: linear-gradient(to top, var(--rs-surface) 18%, color-mix(in srgb, var(--rs-surface) 50%, transparent)) !important;
+    }
+
+    /* Avatar and name, centred in the room left above the buttons. */
+    & .info {
+      flex: 1 1 auto !important;
+      justify-content: center !important;
+      /* Counts the card's top padding in, so the gaps above and under are equal. */
+      margin-top: calc(var(--rs-3) * -1) !important;
+      padding: 0 !important;
+    }
+
+    & .info a {
+      @include stack;
+      align-items: center !important;
+      gap: var(--rs-2) !important;
+      text-decoration: none !important;
+    }
+
+    & .info a > div {
+      padding: 0 !important;
+    }
+
+    & .tw-avatar {
+      width: 7.2rem !important;
+      height: 7.2rem !important;
+      border-radius: 50% !important;
+      box-shadow: 0 0 0 3px var(--rs-surface) !important;
+    }
+
+    & .info strong {
+      @include type(6, 700);
+      letter-spacing: -0.01em !important;
+      color: var(--rs-text) !important;
+    }
+
+    /*
+     * The card keeps the banner's 16:9 shape, too short for its content
+     * once a wide window fits five in a row: a floor under its height.
+     */
+    @include guarded("> .tw-aspect > div%g:first-child") {
+      padding-bottom: max(56.25%, 21rem) !important;
+    }
+
+    /*
+     * Twitch shows the buttons on hover only. Always there, but quiet:
+     * neutral fills instead of the accent, which comes back as a tint when
+     * one is pointed at.
+     */
+    & .user-card__buttons-container {
+      opacity: 1 !important;
+    }
+
+    & .user-card__buttons-container button {
+      background: var(--rs-hover) !important;
+      color: var(--rs-label) !important;
+      transition: background-color var(--rs-ease), color var(--rs-ease);
+
+      & * {
+        color: inherit !important;
+        fill: currentColor !important;
+      }
+
+      &:hover {
+        background: var(--rs-accent-tint-strong) !important;
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+}

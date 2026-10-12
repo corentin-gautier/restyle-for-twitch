@@ -1,0 +1,47 @@
+// Under the thumbnail: the avatar beside the text column.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Stream and video cards, under the thumbnail: a small avatar, and beside
+   * it the channel name, then the title close under it, then the category.
+   * Twitch puts the title first, and builds the text block in three ways:
+   *  - live cards: one link (carrying the channel-link target) wraps a title
+   *    block then a name block;
+   *  - video cards: title, name and category are separate children;
+   *  - some video cards: name and category share one wrapper.
+   * In all three the text block (and the wrapping link) becomes a column and
+   * the name is ordered first, starting level with the avatar's top. Twitch
+   * gives the name its own margins in some builds only: one small step to
+   * the title in all of them.
+   */
+  @include guarded('article > div%g:has([class*="ScTextWrapper"])', $from: "article") {
+    margin-top: var(--rs-3) !important;
+  }
+
+  & article [class*="ScImageWrapper"]:has(.preview-card-avatar, [data-test-selector="preview-card-avatar"], [data-test-selector="preview-card-box-art"]) {
+    flex: 0 0 var(--rs-avatar-card) !important;
+    width: var(--rs-avatar-card) !important;
+    min-width: var(--rs-avatar-card) !important;
+    margin-top: 0 !important;
+    align-self: flex-start !important;
+    margin-inline-end: var(--rs-4) !important;
+  }
+
+  /*
+   * Video and clip cards on channel pages put the category's box art, or a
+   * larger avatar, in that slot: both are brought to the avatar's width so
+   * the text starts on the same line as on every other card.
+   */
+  & article [data-test-selector="preview-card-box-art"] {
+    display: block !important;
+    width: 100% !important;
+    @include clip(xs);
+  }
+
+  & article [data-test-selector="preview-card-avatar"] .tw-avatar:not(.primary-with-small-avatar__mini-avatar *, .primary-with-small-avatar__preview-card-mini-avatar *) {
+    width: var(--rs-avatar-card) !important;
+    height: var(--rs-avatar-card) !important;
+  }
+}

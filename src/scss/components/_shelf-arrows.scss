@@ -1,0 +1,14 @@
+// Shelf arrows.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /* Shelf arrows: a white disc with a purple chevron, both set inline. */
+  & .preview-card-carousel__button > div {
+    @include floating;
+    box-shadow: none !important;
+
+    & [style*="color"] {
+      color: var(--rs-text) !important;
+    }
+  }
+}

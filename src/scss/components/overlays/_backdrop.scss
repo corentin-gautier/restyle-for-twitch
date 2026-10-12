@@ -1,0 +1,30 @@
+// The page dimmed behind a dialog; no shadow around floating boxes.
+
+html:not([data-rs="off"]) {
+  /*
+   * ...and the page dims behind them. The overlay has no area of its own: it
+   * is stretched over the viewport to carry the backdrop.
+   */
+  & .ReactModal__Overlay:has(> .ReactModal__Content[role="dialog"]:is([aria-label], [aria-labelledby])) {
+    position: fixed !important;
+    inset: 0 !important;
+    background: var(--rs-backdrop) !important;
+  }
+
+  /*
+   * No shadow around anything Twitch floats through ReactModal (dialogs and
+   * tooltips alike). The shadow sits on one of the outer wrappers of the
+   * content; controls deeper inside keep theirs, which are focus rings.
+   */
+  & .ReactModal__Content,
+  & .ReactModal__Content > div,
+  & .ReactModal__Content > div > div,
+  & .ReactModal__Content > div > div > div,
+  & .ReactModal__Content > div > div > div > div,
+  & [role="tooltip"],
+  & .tw-tooltip,
+  & [class*="ScTooltip"] {
+    box-shadow: none !important;
+    filter: none !important;
+  }
+}

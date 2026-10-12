@@ -1,0 +1,37 @@
+// Account pages (Drops, Wallet, Subscriptions): their header, title and margins.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Account pages (logged in), on the same margins. Drops keeps its title
+   * and tabs in a header like Settings; Wallet and Subscriptions are one
+   * block holding a title, tabs and content.
+   */
+  @include guarded(
+    ".twilight-main > header > div%g:has(> .drops-tabs)",
+    ".twilight-main div%g:has(> .drops-root__content)"
+  ) {
+    padding-inline: var(--rs-page-inset) !important;
+  }
+
+  @include guarded('.twilight-main div%g:has(> h2):has(> div > .tw-tabs, > [role="tablist"]):not(.settings-tabs)') {
+    margin: calc(var(--rs-8) + 2rem) var(--rs-page-inset) 0 !important;
+    /* The air at the page's end, as padding: the scroll area stops at the block's box, leaving a margin out. */
+    padding-bottom: var(--rs-shelf-gap) !important;
+
+    & > h2 {
+      margin-bottom: 1rem !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+      letter-spacing: -0.025em !important;
+    }
+  }
+
+  /* Settings, Wallet, Subscriptions: the page title, as large as Following's. */
+  @include guarded(
+    ".settings-tabs h2",
+    '.twilight-main div%g:has(> div > .tw-tabs, > [role="tablist"]) > h2'
+  ) {
+    font-size: 6rem !important;
+  }
+}

@@ -1,0 +1,74 @@
+// Chat popup: emote picker.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Emote picker: one floating surface. Twitch paints the search row, the
+   * section headers and the tab column in a darker step that the palette
+   * turns into mismatched bands.
+   */
+  & .emote-picker {
+    @include floating(l);
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & [class*="emote-picker__search-content"] {
+      padding: var(--rs-3) 0 var(--rs-2) var(--rs-3) !important;
+      background: transparent !important;
+    }
+
+    & .tw-input {
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    /* Section headers stay opaque: they stick while the emotes scroll under them. */
+    /* Taller than Twitch's, to show more emotes at once. */
+    & .emote-picker__scroll-container {
+      height: 44rem !important;
+      max-height: 55vh !important;
+    }
+
+    @include guarded("%g:has(> .emote-grid-section__header-title)") {
+      padding: var(--rs-1) 1.2rem var(--rs-3) !important;
+    }
+
+    & .emote-grid {
+      gap: 0.8rem 0.7rem !important;
+    }
+
+    @include guarded(".emote-picker__tab-content > div > div:first-child%g:has(> button)") {
+      margin-inline: 1.2rem !important;
+    }
+
+    & .emote-grid-section__header-title {
+      padding: 1rem 0 !important;
+      background: var(--rs-float) !important;
+
+      & strong {
+        @include caps(1);
+        color: var(--rs-label) !important;
+      }
+    }
+
+    /* Promoted action above the emotes ("Gigantify an Emote"). */
+    @include guarded(".emote-picker__tab-content > div > div:first-child%g:has(> button)") {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      @include clip(m);
+
+      @include guarded("button div%g") {
+        background: transparent !important;
+      }
+    }
+
+    & .emote-button {
+      border-radius: var(--rs-radius-s) !important;
+    }
+
+    & .emote-picker__nav_content {
+      background: transparent !important;
+      border-left: var(--rs-hairline) !important;
+    }
+  }
+}

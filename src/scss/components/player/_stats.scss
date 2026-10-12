@@ -1,0 +1,89 @@
+// Player: Video Stats and Ad Stats.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Video Stats and Ad Stats (Settings > Advanced): a table over the
+   * player's top-left corner, under an empty band holding the close button.
+   * The same floating card as the keyboard shortcuts: small-caps column
+   * heads, names toned down beside their values, and the close button moved
+   * into the head row's corner.
+   */
+  & .video-player__overlay .scrollable-area > div:where(.video-player__overlay *):has(> table.tw-table) {
+    position: relative !important;
+    padding: var(--rs-1) !important;
+    @include floating(m);
+    /* No shadow: the scroll area around the card would cut it off. */
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & > div:where(.video-player__overlay * > *):first-child {
+      position: absolute !important;
+      top: 0.5rem !important;
+      right: 0.5rem !important;
+      z-index: 1 !important;
+    }
+
+    & button,
+    & button * {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+
+    & table {
+      @include bare;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & th {
+      background: none !important;
+      border-radius: 0 !important;
+      border-bottom: var(--rs-hairline) !important;
+
+      & > div {
+        padding: 0.8rem 1rem !important;
+      }
+
+      & strong {
+        @include type(1, 600);
+        letter-spacing: 0.06em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* Room for the close button beside the last column's head. */
+    & th:last-child > div:where(.video-player__overlay * * > *) {
+      padding-right: 4.4rem !important;
+    }
+
+    & td {
+      padding: 0.4rem 1rem !important;
+      border: 0 !important;
+      font-size: var(--rs-text-3) !important;
+      line-height: 2rem !important;
+      white-space: nowrap !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    & td p {
+      font-size: inherit !important;
+      line-height: inherit !important;
+      color: inherit !important;
+    }
+
+    & td:where(.video-player__overlay * *):last-child {
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-text) !important;
+    }
+
+    & tbody tr:first-child td:where(.video-player__overlay * * * *) {
+      padding-top: 0.8rem !important;
+    }
+
+    & tbody tr:last-child td:where(.video-player__overlay * * * *) {
+      padding-bottom: 0.6rem !important;
+    }
+  }
+}

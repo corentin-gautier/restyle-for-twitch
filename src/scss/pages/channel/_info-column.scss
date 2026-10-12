@@ -1,0 +1,86 @@
+// Channel: the column under the player and its vertical rhythm.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Everything under the player (stream info, About, panels) is one centred
+   * column of --rs-measure. Inside it, Twitch's layout wrappers give up their
+   * own inline padding and margin so every block starts and ends on the
+   * column's edges. Those wrappers are matched by what they contain.
+   */
+  & .channel-info-content {
+    background: var(--rs-bg) !important;
+    padding-inline: var(--rs-4) !important;
+
+    & > * {
+      max-width: var(--rs-measure) !important;
+      margin-inline: auto !important;
+      padding-inline: 0 !important;
+    }
+
+    @include guarded(
+      '> * %g:has([data-a-target="stream-title"]):has(img)',
+      "> * %g:has(.about-section__panel)"
+    ) {
+      padding-inline: 0 !important;
+      margin-inline: 0 !important;
+      max-width: none !important;
+    }
+
+    @include guarded("> * %g:has(.about-section__panel)") {
+      padding-top: 0 !important;
+      margin-top: 0 !important;
+    }
+  }
+
+  /*
+   * Vertical rhythm under the player, in one place: the column starts one
+   * step under the video, its blocks are one large
+   * step apart, and none of them, nor the wrappers inside the stream info,
+   * adds padding or margin of its own. A channel's Home tab lays its column
+   * out differently and keeps its blocks' padding.
+   */
+  & .channel-root__info:not(.channel-root__info--home) .channel-info-content {
+    padding-block: var(--rs-shelf-head) var(--rs-8) !important;
+
+    & > * {
+      padding-block: 0 !important;
+      margin-block: 0 !important;
+    }
+
+    @include guarded("> * + *%g") {
+      margin-top: var(--rs-8) !important;
+    }
+  }
+
+  /*
+   * "Floating panels": the player gave up its top inset, and the column
+   * stays where Twitch's script puts it, now that much further from the
+   * video. Taken off the step above.
+   */
+  &[data-rs-floating] .channel-root__info:not(.channel-root__info--home) .channel-info-content {
+    padding-top: max(0px, var(--rs-shelf-head) - var(--rs-4)) !important;
+  }
+
+  @include guarded('&:not([data-rs-info="video"]) #live-channel-stream-information div%g:has(.metadata-layout__support)') {
+    padding-block: 0 !important;
+    margin-block: 0 !important;
+  }
+
+  & .metadata-layout__split-top {
+    padding-block: 0 !important;
+  }
+
+  & .channel-root__info--home .channel-info-content > div,
+  & .channel-root__info--home #live-channel-stream-information {
+    padding-block: var(--rs-4) !important;
+  }
+
+  /*
+   * Divider above the stream info. Added by hand on a generated class name:
+   * it will stop matching whenever Twitch rebuilds its styles.
+   */
+  & .dhOkSg {
+    border: none !important;
+  }
+}

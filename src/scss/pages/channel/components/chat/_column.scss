@@ -1,0 +1,88 @@
+// Chat: the column, its header, the arrow that brings it back, and the column as a floating panel.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  --message-opacity: 0.8;
+
+  & .channel-root__right-column,
+  & .right-column,
+  & .chat-shell {
+    --color-background-base: var(--rs-surface);
+    --color-background-body: var(--rs-surface);
+  }
+
+  & .channel-root__right-column,
+  & .right-column,
+  & .chat-shell,
+  & .chat-room,
+  & .stream-chat,
+  & .stream-chat-header,
+  & .chat-input {
+    background: var(--rs-surface) !important;
+  }
+
+  & .stream-chat-header {
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /*
+   * Chat collapsed: the arrow that brings it back is a bare white glyph
+   * astride the player's right edge. It moves onto the video, 1rem inside
+   * its top right corner (the player's inset is --rs-4), as a floating
+   * disc that reads on any picture. Not in theatre mode, where the video
+   * has no inset.
+   */
+  & .right-column--collapsed:not(.right-column--theatre) .toggle-visibility__right-column {
+    top: calc(var(--rs-4) + 1rem) !important;
+    right: calc(var(--rs-4) + 1rem) !important;
+    left: auto !important;
+
+    & button {
+      @include floating(pill);
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* "Floating panels": the player has no inset above it (see pages/channel/_player.scss). */
+  &[data-rs-floating] .right-column--collapsed:not(.right-column--theatre) .toggle-visibility__right-column {
+    top: 1rem !important;
+  }
+
+  /*
+   * "Floating panels" option (see layout/_floating-panels.scss): the column keeps its slot and
+   * goes transparent, and the box inside it becomes the panel, a gap in from
+   * the window's right and bottom edges. Twitch gives that box the slot's
+   * width, so the gap is taken off it. Not in theatre mode, where the chat
+   * stays edge to edge beside the video.
+   */
+  &[data-rs-floating] .right-column:not(.right-column--theatre) {
+    &,
+    & .channel-root__right-column,
+    & .chat-shell,
+    & .chat-room,
+    & .stream-chat,
+    & .stream-chat-header,
+    & .chat-input,
+    & .video-chat,
+    & .video-chat__header {
+      background: transparent !important;
+    }
+
+    & .channel-root__right-column > div {
+      width: calc(100% - var(--rs-panel-gap)) !important;
+      height: calc(100% - var(--rs-panel-gap)) !important;
+      box-sizing: border-box !important;
+      @include panel(l);
+    }
+
+    /* What Twitch pins to the slot's width inside it: the chat, the replay. */
+    & .chat-shell {
+      min-width: 0 !important;
+    }
+
+    & .video-chat {
+      flex-basis: 100% !important;
+    }
+  }
+}

@@ -1,0 +1,110 @@
+// Writes the `:where()` guards of CLAUDE.md's "Performance" section, so that
+// they are worked out from the selector instead of typed (and kept in step)
+// by hand.
+//
+//   .scope {
+//     @include guarded("> div%g:has(> img)") { … }
+//   }
+//
+// compiles to `.scope > div:where(.scope > *):has(> img)`. Each `%g` becomes
+// the path from the nearest ancestor named by a class or an id alone down to
+// the element it sits on, one `*` per step. A sibling step stays at the same
+// depth, and a sibling is never taken for an ancestor.
+//
+// `$from` names another ancestor to start from, written as it is in the
+// selector: a stable attribute, a tag, or a class further up when the nearest
+// one is not always there.
+//
+//   @include guarded("> div%g:has(> img)", $from: '[role="dialog"]') { … }
+//
+// A guard this cannot work out (a union of scopes, a page state ahead of the
+// scope) is written in full, as in plain CSS.
+@use "sass:list";
+@use "sass:map";
+@use "sass:meta";
+@use "sass:selector";
+@use "sass:string";
+
+$marker: "%g";
+
+// A class or an id alone: nothing a guard may not hold ([attr], :state).
+@function -is-scope($compound) {
+  $first: string.slice($compound, 1, 1);
+  @return ($first == "." or $first == "#") and not string.index($compound, ":") and not string.index($compound, "[");
+}
+
+@function -replace($string, $search, $with) {
+  $at: string.index($string, $search);
+  @if not $at {
+    @return $string;
+  }
+  @return string.slice($string, 1, $at - 1) + $with +
+    -replace(string.slice($string, $at + string.length($search)), $search, $with);
+}
+
+// $path: the ancestors of an element then the element, as (combinator, compound) pairs.
+@function -guard($path, $from) {
+  $steps: "";
+  $i: list.length($path);
+  @while $i > 1 {
+    $step: " *";
+    @if list.nth(list.nth($path, $i), 1) == ">" {
+      $step: " > *";
+    }
+    $steps: $step + $steps;
+    $i: $i - 1;
+    $above: list.nth(list.nth($path, $i), 2);
+    @if $from {
+      @if $above == $from {
+        @return $above + $steps;
+      }
+    } @else if -is-scope($above) {
+      @return $above + $steps;
+    }
+  }
+  @if $from {
+    @error "guarded(): no `#{$from}` above `#{list.nth(list.nth($path, -1), 2)}`";
+  }
+  @error "guarded(): no class or id above `#{list.nth(list.nth($path, -1), 2)}` to scope its guard to";
+}
+
+@mixin guarded($selectors...) {
+  $from: map.get(meta.keywords($selectors), "from");
+  @if $from {
+    // As Sass writes it once parsed ([role="dialog"] loses its quotes).
+    $from: "#{selector.parse($from)}";
+  }
+  $out: ();
+  @each $complex in selector.nest(&, string.unquote("#{$selectors}")) {
+    $path: ();
+    $combinator: " ";
+    $text: "";
+    @each $item in $complex {
+      @if list.index(">" "+" "~", $item) {
+        $combinator: $item;
+      } @else {
+        @if $combinator == "+" or $combinator == "~" {
+          $last: list.nth($path, -1);
+          $path: list.set-nth($path, -1, (list.nth($last, 1), $item));
+        } @else {
+          $path: list.append($path, ($combinator, $item));
+        }
+        @if string.index($item, $marker) {
+          $item: -replace($item, $marker, ":where(#{-guard($path, $from)})");
+        }
+        @if $text != "" {
+          $text: $text + " ";
+        }
+        @if $combinator != " " {
+          $text: $text + $combinator + " ";
+        }
+        $text: $text + $item;
+        $combinator: " ";
+      }
+    }
+    $out: list.append($out, string.unquote($text), comma);
+  }
+  @at-root #{$out} {
+    @content;
+  }
+}

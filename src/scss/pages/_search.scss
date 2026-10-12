@@ -1,0 +1,40 @@
+// Search results (/search).
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Same distance from the sidebar as the other pages, rounded thumbnails,
+   * and one text hierarchy per result.
+   */
+  & .search-results {
+    padding-inline: var(--rs-page-inset) !important;
+
+    /* One result: name, then quieter lines for category, viewers and title. */
+    & .search-result-card {
+      gap: var(--rs-2) !important;
+    }
+
+    & .search-result-card__img,
+    & .search-result-card__img-wrapper:not(:has(.tw-avatar)) {
+      @include clip(m);
+    }
+
+    & strong a {
+      @include type(5, 600);
+      color: var(--rs-text) !important;
+    }
+
+    & p:not(.tw-title),
+    & p:not(.tw-title) a {
+      @include muted(3);
+    }
+
+    & p[data-test-selector$="__title"] {
+      color: var(--rs-text-soft) !important;
+    }
+
+    & .tw-aspect:not(.tw-avatar *) {
+      @include clip(m);
+    }
+  }
+}

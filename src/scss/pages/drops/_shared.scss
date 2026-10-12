@@ -1,0 +1,186 @@
+// Drops & Rewards: what its three tabs share (headings, tiles, progress).
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Three tabs under one title (the title, the tabs and the page's margins
+   * are in pages/_account.scss). Twitch sets every heading of these tabs at body size
+   * and stacks sections 16px apart; they get a block heading, a quiet
+   * description on a readable measure, and a shelf's gap between sections.
+   */
+  & .drops-root__content {
+    padding-top: var(--rs-8) !important;
+    padding-bottom: var(--rs-shelf-gap) !important;
+
+    @include guarded(
+      ":is(h3, h4, h5):not(.accordion-header + div *)",
+      ".inventory-max-width > div:first-child > div:first-child p%g"
+    ) {
+      @include type(title, 700);
+      line-height: 1.2 !important;
+      letter-spacing: -0.015em !important;
+      color: var(--rs-text) !important;
+    }
+
+    /* A heading's own wrapper, and the description under it. */
+    @include guarded(
+      "div%g:has(> :is(h3, h4, h5))",
+      "div%g:has(> div > :is(h3, h4)):not(:has(.tw-tower, .accordion-header, article))",
+      ".inventory-max-width > div:first-child > div%g:first-child"
+    ) {
+      @include flush;
+    }
+
+    @include guarded(
+      ".inventory-page > div:nth-child(2)%g:has(> p)",
+      ".inventory-max-width > div:first-child > div%g:last-child",
+      "h5 + div%g"
+    ) {
+      max-width: 80rem !important;
+      margin: var(--rs-2) 0 var(--rs-shelf-head) !important;
+    }
+
+    /*
+     * On All Campaigns, one or two lines, each in wrappers of their own.
+     * (Not a tile's pill, also a lone span in its wrapper.)
+     */
+    @include guarded("div%g:has(> span:only-child:not(.tw-pill)):not(.accordion-header *, .accordion-header + div *)") {
+      max-width: 80rem !important;
+      margin: var(--rs-2) 0 0 !important;
+    }
+
+    @include guarded("div%g:has(> div > span:only-child:not(.tw-pill)):not(.accordion-header *, .accordion-header + div *)") {
+      margin-bottom: 0 !important;
+    }
+
+    @include guarded(
+      ".inventory-page > div:nth-child(2) > p%g",
+      ".inventory-max-width > div:first-child > div:last-child p%g",
+      "h5 + div p%g",
+      "div:not(.accordion-header *, .accordion-header + div *) > span%g:only-child:not(.tw-pill)"
+    ) {
+      font-size: var(--rs-text-4) !important;
+      line-height: 1.5 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /*
+     * Grids of tiles (drops, claimed drops, rewards): the site's card grid,
+     * with narrower columns and a tighter gap, and without the fading of
+     * the other cards while one is pointed at, since most are not links.
+     */
+    & .tw-tower {
+      --rs-tower-gap: var(--rs-4);
+      --rs-tower-column: minmax(16rem, 1fr);
+
+      gap: var(--rs-tower-gap) !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+
+      & > * {
+        max-width: none !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+      }
+
+      &:hover > * {
+        opacity: 1;
+        filter: none;
+      }
+    }
+
+    /*
+     * A tile: the picture on the tile's own colour, the name under it.
+     * Twitch gives the picture a band of another grey and the tile a shadow.
+     */
+    @include guarded("div%g:has(> div > div > div > :is(.inventory-drop-image, .banner_image), > div > .drop-benefit__image-container)") {
+      height: 100% !important;
+      margin: 0 !important;
+      background: var(--rs-raised) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-m) !important;
+      box-shadow: none !important;
+      overflow: hidden !important;
+
+      /* A campaign's benefit holds its picture in a named box, with no veil. */
+      & .drop-benefit__image-container {
+        padding: var(--rs-4) var(--rs-4) var(--rs-2) !important;
+        background: transparent !important;
+
+        & > div {
+          border-radius: var(--rs-radius-s) !important;
+        }
+      }
+
+      @include guarded("div%g:has(> div > :is(.inventory-drop-image, .banner_image))") {
+        padding: var(--rs-4) var(--rs-4) var(--rs-2) !important;
+        background: transparent !important;
+
+        @include guarded("> div%g:has(> img)") {
+          border-radius: var(--rs-radius-s) !important;
+        }
+
+        & img {
+          background: transparent !important;
+        }
+
+        /* The veil over a drop to connect, or one that is gone. */
+        @include guarded("> div%g:not(:has(> img))") {
+          background: var(--rs-scrim) !important;
+
+          & p {
+            color: var(--rs-on-scrim) !important;
+          }
+        }
+      }
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+      }
+
+      /* The row under a claimed drop or a reward, holding its button. */
+      @include guarded("> div%g:has(> button, > div > button)") {
+        padding: 0 var(--rs-3) var(--rs-3) !important;
+        border: 0 !important;
+
+        & button {
+          width: 100% !important;
+        }
+      }
+
+      /* An empty line Twitch keeps for a status. */
+      @include guarded("> div%g:has(> p:empty:only-child)") {
+        display: none !important;
+      }
+    }
+
+    & .reward_tile .banner_image_container {
+      padding: var(--rs-4) var(--rs-4) var(--rs-2) !important;
+      background: transparent !important;
+    }
+
+    /* How many of a claimed drop. */
+    @include guarded(
+      ".tw-tower div%g:has(> img.inventory-drop-image) ~ div%g",
+      ".tw-tower div%g:has(> div > div > img.inventory-drop-image) + div > div > div + div > div > div%g"
+    ) {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-xs) !important;
+    }
+
+    /* Progress to a drop: the bar in the accent, its figure under it. */
+    & .tw-progress-bar {
+      background: var(--rs-border) !important;
+
+      & [data-a-target="tw-progress-bar-animation"] {
+        background: var(--rs-accent) !important;
+      }
+
+      @include guarded("+ div p%g") {
+        @include muted(1);
+      }
+    }
+  }
+}

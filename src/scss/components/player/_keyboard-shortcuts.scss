@@ -1,0 +1,67 @@
+// Player: the keyboard shortcuts table.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Keyboard shortcuts, opened from that menu: a table laid over the
+   * player's top-left corner. A floating card set in from the corner, with
+   * a title row and the keys as chips.
+   */
+  & div:has(> #keyboard-shortcuts-overlay) {
+    /* Twitch's fixed width is too narrow once the cells are padded. */
+    width: max-content !important;
+    margin: var(--rs-2) !important;
+    padding: var(--rs-1) !important;
+    @include floating(m);
+    overflow: hidden !important;
+  }
+
+  & #keyboard-shortcuts-overlay {
+    /* The table draws a ring of its own inside the card. */
+    & table {
+      border: 0 !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+
+    & td {
+      padding: 0.6rem 1rem !important;
+      vertical-align: middle !important;
+      white-space: nowrap !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    @include guarded("td%g:last-child") {
+      padding-left: var(--rs-6) !important;
+      text-align: right !important;
+    }
+
+    @include guarded("tr:first-child td%g") {
+      padding-bottom: 1rem !important;
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+      border-bottom: var(--rs-hairline) !important;
+    }
+
+    @include guarded("tr:nth-child(2) td%g") {
+      padding-top: 1rem !important;
+    }
+
+    /* The close button is painted in Twitch's purple. */
+    & button,
+    & button * {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+
+    @include guarded("td:last-child > span%g") {
+      display: inline-block !important;
+      padding: 0.1rem 0.7rem !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-s) !important;
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+}

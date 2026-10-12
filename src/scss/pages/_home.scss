@@ -1,0 +1,20 @@
+// Home (/): the featured carousel, hidden. Its shelves are in components/.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Home: no featured carousel. Hiding it does not stop its stream:
+   * content.js pauses the video inside (keep its selectors in sync).
+   * Collapsed rather than `display: none`: with no box at all, the first
+   * shelf under it keeps a loading card in place of its second stream.
+   */
+  & [class*="front-page-carousel"],
+  & [data-a-target*="front-page-carousel"],
+  & [class*="featured-content-carousel"] {
+    height: 0 !important;
+    min-height: 0 !important;
+    @include flush;
+    overflow: hidden !important;
+    visibility: hidden !important;
+  }
+}

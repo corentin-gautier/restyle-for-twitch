@@ -1,0 +1,187 @@
+// Card text: name, title, category tag, tags, "Clipped by".
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  & article [class*="ScTextWrapper"] {
+    @include stack;
+    min-width: 0 !important;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  /*
+   * Shared wrapper: dissolved so name and category become items of the
+   * column. On clips the second line is the "Clipped by" link instead.
+   */
+  @include guarded(
+    'article > div:first-child > div:only-child > div:first-child > %g:has([data-a-target="preview-card-channel-link"]):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"]))',
+    $from: "article"
+  ) {
+    display: contents !important;
+
+    @include guarded(
+      '> :is([data-a-target="preview-card-game-link"], %g:has([data-a-target="preview-card-game-link"]))',
+      '> %g:has([data-a-target="preview-card-clip-curator-link"])',
+      $from: "article"
+    ) {
+      order: 1 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      white-space: nowrap !important;
+    }
+  }
+
+  & article a[data-a-target="preview-card-channel-link"]:has(h3, h4, [data-a-target="preview-card-title-link"]) {
+    @include stack;
+  }
+
+  /* The name, in each of the three builds. */
+  & article a[data-a-target="preview-card-channel-link"] > div:where([data-a-target="preview-card-channel-link"] > *):has(> p[data-a-target="preview-card-channel-link"]),
+  & article > div:first-child > div:only-child > div:first-child > :is([data-a-target="preview-card-channel-link"], :where(article > * > * > * > *):has([data-a-target="preview-card-channel-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"], [data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])),
+  & article > div:first-child > div:only-child > div:first-child > :where(article > * > * > * > *):has(:is([data-a-target="preview-card-game-link"], [data-a-target="preview-card-clip-curator-link"])):not(:has(h3, h4, [data-a-target="preview-card-title-link"])) > :is([data-a-target="preview-card-channel-link"], :where(article > * > * > * > * > *):has([data-a-target="preview-card-channel-link"])) {
+    order: -1 !important;
+    @include row;
+    /* One line of the name's size: some builds hold a taller line beside it. */
+    height: calc(1.4 * var(--rs-text-3)) !important;
+    min-height: 0 !important;
+    margin: 0 0 0.2rem !important;
+  }
+
+  /*
+   * Card text: the title is the strongest line; the channel name is medium in
+   * the label colour, the category smaller and faded. On live cards the link
+   * carrying the channel-link target also wraps the title, so the name is
+   * reached through its <p>, or through the link only when it holds no title.
+   */
+  & article h3,
+  & article h4,
+  & [data-a-target="preview-card-title-link"],
+  & [data-a-target="preview-card-title-link"] * {
+    @include type(5, 600);
+    line-height: 1.35 !important;
+    letter-spacing: -0.005em !important;
+    color: var(--rs-text) !important;
+  }
+
+  & article p[data-a-target="preview-card-channel-link"],
+  & article [data-a-target="preview-card-channel-link"] p,
+  & article a[data-a-target="preview-card-channel-link"]:not(:has(h3, h4, [data-a-target="preview-card-title-link"])),
+  & article a[data-a-target="preview-card-channel-link"]:not(:has(h3, h4, [data-a-target="preview-card-title-link"])) :not(.tw-svg, .tw-svg *) {
+    @include type(3, 500);
+    letter-spacing: 0 !important;
+    color: var(--rs-label) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & [data-a-target="preview-card-game-link"],
+  & [data-a-target="preview-card-game-link"] *,
+  & [data-a-target="preview-card-clip-curator-link"] {
+    @include type(2, 400);
+    letter-spacing: 0 !important;
+    color: var(--rs-faint) !important;
+    transition: color var(--rs-ease);
+  }
+
+  /*
+   * The category is a tag, like the category chip under a player and the
+   * tags beside it: an accent-tinted pill, cut with an ellipsis when the
+   * name is longer than the card. It sits a full step under the title, as
+   * the "Chapters" button does.
+   */
+  & article [data-a-target="preview-card-game-link"] {
+    display: inline-block !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    height: 2rem !important;
+    padding: 0 0.8rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-accent-tint) !important;
+    line-height: 2rem !important;
+    vertical-align: top !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    text-decoration: none !important;
+    transition: background-color var(--rs-ease);
+
+    &,
+    & *,
+    &:hover,
+    &:hover * {
+      @include type(1, 500);
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  /* Its line: as tall as the pill, a step under the title. */
+  @include guarded('article :is(p, div)%g:has(> [data-a-target="preview-card-game-link"])', $from: "article") {
+    display: flex !important;
+    min-width: 0 !important;
+    margin-top: var(--rs-2) !important;
+  }
+
+  /*
+   * Tags follow the category on its line instead of taking one of their own:
+   * the text column becomes a wrapping row whose other items each fill a
+   * line. Nothing here may depend on the tags being there: Twitch removes
+   * and re-adds them to count how many fit, and a width that changed with
+   * them would have it do so forever.
+   */
+  & article [data-rs-hook="card-text"]:has(> p > [data-a-target="preview-card-game-link"]) {
+    flex-flow: row wrap !important;
+    align-items: flex-start !important;
+
+    & > * {
+      flex: 0 0 100% !important;
+      min-width: 0 !important;
+    }
+
+    & > p:where([data-rs-hook="card-text"] > *):has(> [data-a-target="preview-card-game-link"]) {
+      flex: 0 1 auto !important;
+      max-width: 100% !important;
+      margin-right: 0.4rem !important;
+    }
+
+    & > p:where([data-rs-hook="card-text"] > *):has(> [data-a-target="preview-card-game-link"]) + div:where([data-rs-hook="card-text"] > *) {
+      flex: 1 1 0 !important;
+      margin-top: var(--rs-2) !important;
+    }
+  }
+
+  /* Without a category, the tags keep the same step under the title. */
+  @include guarded('article [data-rs-hook="card-text"] > a[data-a-target="preview-card-channel-link"] + div%g', $from: '[data-rs-hook="card-text"]') {
+    margin-top: var(--rs-2) !important;
+  }
+
+  /* "Clipped by" stays plain text, the same step under the title. */
+  @include guarded('article p%g:has(> [data-a-target="preview-card-clip-curator-link"])', $from: "article") {
+    display: flex !important;
+    min-width: 0 !important;
+    margin-top: var(--rs-2) !important;
+
+    & > a {
+      min-width: 0 !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+    }
+  }
+
+  /* Live cards add a margin of their own under the title. */
+  & article [data-a-target="preview-card-title-link"] {
+    margin-bottom: 0 !important;
+  }
+
+  & article p[data-a-target="preview-card-channel-link"]:hover,
+  & article p[data-a-target="preview-card-channel-link"]:hover p,
+  & article a[data-a-target="preview-card-channel-link"]:not(:has([data-a-target="preview-card-title-link"])):hover p,
+  & [data-a-target="preview-card-clip-curator-link"]:hover,
+  & [data-a-target="preview-card-game-link"]:hover,
+  & [data-a-target="preview-card-game-link"]:hover * {
+    color: var(--rs-text) !important;
+  }
+}

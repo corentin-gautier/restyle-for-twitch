@@ -1,0 +1,60 @@
+// What sits over a thumbnail: stats pills and watch progress.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Stats over thumbnails (viewers, duration, views, date): dark pills. On
+   * live cards the viewer count is led by the same red dot as the sidebar.
+   */
+  & article .tw-media-card-stat {
+    @include inline-row;
+    gap: 0.5rem !important;
+    padding: 0.2rem 0.8rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+    background: var(--rs-scrim) !important;
+    color: var(--rs-on-scrim) !important;
+    @include type(2, 500);
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  & article:has(.tw-channel-status-text-indicator) .tw-media-card-stat::before {
+    content: "";
+    flex: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--rs-live-dot);
+  }
+
+  /*
+   * Watch progress on thumbnails: a floating pill-shaped bar, inset from the
+   * edges so it never meets the rounded corners. The views / date pills in
+   * the bottom corners move up to sit above it; they are the corner overlays
+   * that follow the first one (the duration, top left).
+   */
+  & [data-a-target="preview-card-image-link"] .tw-progress-bar,
+  & [data-a-target="preview-card-image-link"] [role="progressbar"],
+  & .tw-card-image .tw-progress-bar {
+    height: 0.4rem !important;
+    margin: 0 1rem 1rem !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: auto !important;
+    @include clip(pill);
+    background: var(--rs-scrim) !important;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14) !important;
+  }
+
+  & [data-a-target="preview-card-image-link"] [data-a-target="tw-progress-bar-animation"],
+  & [data-a-target="preview-card-image-link"] .tw-progress-bar > div {
+    height: 100% !important;
+    background: var(--rs-accent) !important;
+    border-radius: var(--rs-radius-pill) !important;
+  }
+
+  & [data-a-target="preview-card-image-link"]:has(.tw-progress-bar, [role="progressbar"])
+    [class*="ScPositionCorner"]:not(:nth-child(1 of [class*="ScPositionCorner"])) {
+    transform: translateY(-1.2rem) !important;
+  }
+}

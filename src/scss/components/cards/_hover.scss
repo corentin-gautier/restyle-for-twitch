@@ -1,0 +1,71 @@
+// Hover: the cards around the pointed one recede.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Hover: a spotlight. In a grid or a shelf, the cards around the hovered
+   * one recede, so the eye stays on it, and its picture eases in a little
+   * inside the frame. Between two cards the pointer is on none: they all
+   * stay receded, so moving along a row never flashes the grid back.
+   *
+   * Written with the grid's own :hover, not `:has(> :hover)`: a :hover
+   * inside :has() makes every pointer move re-evaluate every :has() anchor
+   * above it, up to the whole page.
+   */
+  & .tw-tower > * {
+    transition: opacity 0.25s ease, filter 0.25s ease;
+    will-change: opacity;
+  }
+
+  /*
+   * Each card is a stacking context (will-change above, opacity while its
+   * neighbours recede), so a popup opened from one, like "Chapters", would
+   * be painted under the cards after it: that card is lifted over the rest.
+   */
+  @include guarded(".tw-tower > %g:has(.tw-balloon)") {
+    z-index: 1;
+  }
+
+  & .tw-tower:hover > * {
+    opacity: var(--rs-recede);
+    filter: grayscale(1);
+  }
+  
+  & .tw-tower:hover > :hover {
+    opacity: 1;
+    filter: none;
+  }
+
+  /* Movement only for those who have not asked their system to reduce it. */
+  @media (prefers-reduced-motion: no-preference) {
+    & [data-a-target="tw-box-art-card-link"] img,
+    & .tw-box-art-card img,
+    & .vertical-selector img {
+      transition: transform var(--rs-ease-move) !important;
+      will-change: transform;
+    }
+
+    /*
+     * Not the animated preview a video card plays on hover: it replaces the
+     * still picture at its own size, and scaling it makes the swap jump.
+     */
+    & .tw-tower > :hover [data-a-target="tw-box-art-card-link"] img,
+    & .game-card:hover img,
+    & [data-a-target="tw-box-art-card-link"]:hover img,
+    & .tw-box-art-card:hover img {
+      transform: scale(1.05) !important;
+    }
+
+    /* Browse's section cards: their illustration, a touch more. */
+    & .vertical-selector:hover img {
+      transform: scale(1.08) !important;
+    }
+    
+
+    /* Animated preview images: no scaling. */
+    & .preview-card-thumbnail__image--animated img {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+}

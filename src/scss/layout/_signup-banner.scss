@@ -1,0 +1,16 @@
+// Sign-up banner at the bottom of the window (logged out).
+
+html:not([data-rs="off"]) {
+  /*
+   * Sign-up banner shown at the bottom to logged-out visitors: a rounded
+   * bar inset from the window's edges instead of a full-width band.
+   */
+  & #twilight-sticky-footer-root:has(.upsell-bottom-banner__coolcat) {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+    background: var(--rs-surface) !important;
+
+    & article {
+      border-radius: var(--rs-radius-l) !important;
+    }
+  }
+}

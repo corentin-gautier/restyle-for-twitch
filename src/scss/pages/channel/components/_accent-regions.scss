@@ -1,0 +1,11 @@
+// Regions tinted with a channel's own accent.
+
+html:not([data-rs="off"]) {
+  /*
+   * Regions tinted with a channel's own accent (goals, the highlight above
+   * the chat) redeclare the accent variable: they follow the theme's too.
+   */
+  & [class*="ScAccentRegionCssVars"] {
+    --color-accent: var(--rs-accent) !important;
+  }
+}

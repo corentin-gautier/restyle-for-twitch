@@ -1,0 +1,122 @@
+// Chat: messages.
+
+html:not([data-rs="off"]) {
+  /*
+   * Older messages fade out at the top instead of being cut by the header.
+   * The mask sits on the scroll viewport, so it stays put while lines scroll.
+   */
+  & .chat-list--default [data-a-target="chat-scroller"] {
+    mask-image: linear-gradient(to bottom, transparent, #000 var(--rs-12)) !important;
+  }
+
+  & .chat-line__message,
+  & .chat-line__status,
+  & .user-notice-line {
+    padding: var(--rs-2) var(--rs-4) !important;
+    line-height: 1.55 !important;
+  }
+
+  /*
+   * Messages are quiet until hovered: body text and usernames a step below
+   * full strength, badges and timestamps pushed back. The hovered message
+   * comes back to full strength.
+   *
+   * Hovering changes opacity and nothing else: a colour, background or filter
+   * change repaints the chat on every row the pointer crosses, while opacity
+   * is left to the compositor. So the colours are the same in both states,
+   * and what fades is the element.
+   *
+   * One hover only: Twitch already paints its own on the inset
+   * .chat-line__message-highlight overlay (the one the reply button hangs
+   * from), so that overlay is restyled, and faded in, instead of adding a
+   * second background on the row.
+   */
+  & .chat-line__message {
+    & [data-a-target="chat-line-message-body"],
+    & .text-fragment {
+      color: var(--rs-text) !important;
+    }
+
+    /* On the body alone: on the fragments inside it too, the two would multiply. */
+    & [data-a-target="chat-line-message-body"] {
+      opacity: var(--message-opacity) !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    & .chat-badge {
+      opacity: 0.6 !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    & .chat-line__message-highlight {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+      opacity: 0 !important;
+      transition: opacity var(--rs-ease);
+    }
+
+    /*
+     * Reply button: always laid out, and shown by opacity like the rest.
+     * It takes no clicks while invisible, or it would catch those meant for
+     * the end of the line under it.
+     */
+    & .chat-line__reply-icon {
+      display: block !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+      transition: opacity var(--rs-ease);
+
+      /* Reached with the keyboard, it shows without the pointer on the row. */
+      &:focus-within {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+    }
+
+    &:hover {
+      background: transparent !important;
+
+      & .chat-line__message-highlight {
+        opacity: 1 !important;
+      }
+
+      & .chat-line__reply-icon {
+        opacity: 1 !important;
+        pointer-events: auto !important;
+      }
+
+      & [data-a-target="chat-line-message-body"],
+      & .chat-author__display-name {
+        opacity: 1 !important;
+      }
+
+      & .chat-badge {
+        opacity: 1 !important;
+      }
+    }
+  }
+
+  & .chat-line__username,
+  & .chat-author__display-name {
+    font-weight: 600 !important;
+  }
+
+  & .chat-author__display-name {
+    opacity: var(--message-opacity) !important;
+    transition: opacity var(--rs-ease);
+  }
+
+  /* No extra hover box on the username: the message hover is enough. */
+  & .chat-line__username-container,
+  & .chat-line__username:hover {
+    background: transparent !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+  }
+
+  & .chat-line__timestamp {
+    font-size: var(--rs-text-1) !important;
+    font-variant-numeric: tabular-nums !important;
+    color: var(--rs-faint) !important;
+  }
+}

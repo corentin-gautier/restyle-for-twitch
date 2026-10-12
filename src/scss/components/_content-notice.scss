@@ -1,0 +1,47 @@
+// Notice above a page's content ("Content Hidden…").
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Notice above a page's content ("Content Hidden: some content has been
+   * removed based on your content preference settings"): Twitch sets a
+   * large title run into a sentence, on a black slab narrower than the
+   * column. A quiet bar on the column's edges instead: title and sentence
+   * at text size, the sentence toned down. Only on the directory pages'
+   * column: a channel page's callouts float over the stream info.
+   */
+  @include guarded(".twilight-main .common-centered-column div%g:has(> article .tw-callout-message)") {
+    margin: 0 0 var(--rs-4) !important;
+  }
+
+  @include guarded(".twilight-main .common-centered-column article%g:has(.tw-callout-message)") {
+    padding: var(--rs-2) var(--rs-3) var(--rs-2) var(--rs-4) !important;
+    @include panel(m);
+    box-shadow: none !important;
+
+    & > div > div {
+      align-items: center !important;
+    }
+
+    & .tw-callout-message {
+      margin: 0 !important;
+      font-size: var(--rs-text-3) !important;
+      line-height: 2rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & .tw-callout-message__title {
+      margin-right: var(--rs-2) !important;
+      @include type(3, 600);
+      line-height: 2rem !important;
+      letter-spacing: 0 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & button,
+    & a {
+      font-size: var(--rs-text-2) !important;
+    }
+  }
+}

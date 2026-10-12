@@ -1,0 +1,14 @@
+// Player: the "Just one second…" gate.
+
+html:not([data-rs="off"]) {
+  /*
+   * "Just one second…" gate over a player (content intended for certain
+   * audiences): painted in the floating layers' colour, it vanishes into a
+   * modal of that colour and leaves the black player's edge as a stray
+   * outline. A panel of its own, in the surface colour.
+   */
+  & [data-a-target="content-classification-gate-overlay"] {
+    background: var(--rs-surface) !important;
+    border-radius: inherit !important;
+  }
+}

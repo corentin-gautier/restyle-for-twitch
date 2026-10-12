@@ -1,14 +1,16 @@
 # Restyle for Twitch
 
-Chrome and Firefox MV3 extension that restyles twitch.tv with a stylesheet. No build step.
+Chrome and Firefox MV3 extension that restyles twitch.tv with a stylesheet,
+written in Sass and compiled to one file (see "Sass").
 The user is French-speaking: reply in French, write code and docs in English.
 
 ## Files
 
 | Path | Role |
 | --- | --- |
-| `src/tokens.css` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
-| `src/twitch/` | All the rules, one file per area (table below), each scoped under `html:not([data-rs="off"])`. |
+| `src/scss/` | The stylesheet's source (see "Sass" and "Stylesheets"): `restyle.scss` lists the partials in cascade order, every rule scoped under `html:not([data-rs="off"])`; `base/` (tokens, theme), `tools/` (the guard mixin, the shared mixins), `layout/`, `components/`, `pages/`. |
+| `src/restyle.css` | Compiled from `src/scss/` and loaded by `manifest.json`. Never edited by hand, and not in the repository: after a clone, `npm install` then `npm run build`. The packages (local and GitHub release) are built with it inside. |
+| `src/scss/base/_tokens.scss` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
 | `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Sets what the stylesheet reads instead of working it out itself (see "Performance"): page state on `<html>` (`data-rs-nav`, `data-rs-channel`, `data-rs-info`, `data-rs-has`), each card grid's kind, card count and content (`data-rs-tower`, `data-rs-count`, `data-rs-games`), and `data-rs-hook` on a few elements only a generated class name identifies. Stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
@@ -29,13 +31,38 @@ The user is French-speaking: reply in French, write code and docs in English.
 - Almost every declaration needs `!important` to beat Twitch's styles.
 - Firefox (128+) loads the same files: stick to CSS both engines support, and
   add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
-- Nest only under single-selector parents; `:has()` inside `:has()` is invalid.
+- `:has()` inside `:has()` is invalid.
 - Follow the rules under "Performance": a selector that looks harmless can
   make the browser restyle the whole page on every chat message.
 - On a rounded element, a border goes all round or not at all: never on one
   side only.
-- After an edit, check that the file still parses:
-  `npx --yes lightningcss-cli@1.27.0 src/twitch/<file>.css -o /tmp/out.css`
+- After an edit, `npm run build` must pass without a warning.
+
+## Sass
+
+`npm run watch` while working (readable output, rebuilt on save; the live
+reload picks it up), `npm run build` for the minified file. Both write
+`src/restyle.css`. `scripts/package.sh` builds before it zips.
+
+Sass compiles nesting flat (`.a { &:hover b {} }` gives `.a:hover b`, with no
+`:is()`), so the two nesting rules of "Performance" do not apply to the
+partials: `&:hover` and `& + x` may sit under any parent. Under a selector
+list, each child is written out once per selector of the list.
+
+- **Guards are generated.** `@include guarded("> div%g:has(> img)") { … }`
+  replaces a hand-written `:where()` guard: `%g` becomes the path from the
+  nearest class or id above. `$from: '[role="dialog"]'` names another
+  ancestor to start from. Guards it cannot work out (a union of scopes, a
+  page state ahead of the scope) stay written in full. See
+  `tools/_guard.scss`.
+- **Repeated declarations are mixins** (`tools/_mixins.scss`): `flush`, `bare`,
+  `panel`, `floating`, `clip`, `type`, `muted`, `caps`, `stack`, `row`,
+  `inline-row`. Use them where the same lines would be typed again; add one
+  when a group of declarations with one meaning turns up a third time.
+- A partial loads what it uses, by its path from `src/scss/` (the build's
+  load path): `@use "tools/guard" as *;`, `@use "tools/mixins" as *;`.
+- Sass comments (`//`) for notes on the source; `/* */` comments go to the
+  readable build and are dropped from the minified one.
 
 ## Performance
 
@@ -82,81 +109,87 @@ events of thousands of elements.
 
 ## Stylesheets
 
-`manifest.json` loads these in this order, after `src/tokens.css`. They are
-one cascade split by area, not independent sheets: rules of equal weight are
-settled by order, so a new file goes where its rules belong in the sequence,
-and a rule that must beat another goes in the same file or a later one.
+`src/scss/restyle.scss` loads every partial, in an order that matters: they
+are one cascade split by scope, not independent sheets. Rules of equal weight
+are settled by that order, which is why the list interleaves the folders
+instead of going through them one by one. A new file goes where its rules
+belong in the sequence, and a rule that must beat another goes in the same
+file or a later one. Moving a file in the list can change the rendering.
 
-| File | Sections |
+The root `components/` is for what the whole site shares. A component that
+only one page uses goes in that page's folder, under `components/`
+(`pages/channel/components/chat/`), so that a page's rules stay together.
+
+| Folder | Holds |
 | --- | --- |
-| `shell.css` | Theme remap; Top bar; Left sidebar; Floating panels |
-| `pages.css` | Pages: home, Following, Browse (also Settings, account pages, tabs) |
-| `cards.css` | Cards (grids, thumbnails, hover, loading) |
-| `channel.css` | Channel page |
-| `directory.css` | Category page header; Search results |
-| `channel-tabs.css` | Offline channel page |
-| `shelves.css` | Shelf rhythm (also empty states, filter rows, the Following tabs) |
-| `video.css` | Video (VOD) page (also the clip page) |
-| `team.css` | Team page |
-| `drops.css` | Drops & Rewards (Inventory, All Campaigns, Social Media Badge) |
-| `subscribe.css` | Subscribe and Gift a Sub panels |
-| `forms.css` | Form controls; Filter and sort menus |
-| `chat.css` | Chat |
-| `overlays.css` | Menus, popovers, dialogs (also the clip viewer, the streamer card, `@keyframes`) |
+| `base/` | `_tokens.scss` (the `--rs-*` design tokens), `_theme.scss` (Twitch's palette remapped to them, square corners), `_keyframes.scss`. |
+| `tools/` | `_guard.scss` and `_mixins.scss`: no CSS of their own. |
+| `layout/` | What frames every page: `_top-bar`, `_sidebar`, `_sidebar-collapsed`, `_signup-banner`, `_floating-panels` (the popup option), `_page-column` (the directory pages' gutters). |
+| `components/` | What the whole site shares, and only that: `_page-header`, `_titles`, `_tabs`, `_tabs-in-popovers`, `_shelf` (the shelf rhythm), `_shelf-arrows`, `_empty-state`, `_filter-row`, `_filter-menus`, `_form-controls`, `_loading`, `_tags`, `_content-notice`. |
+| `components/cards/` | `_grid` (`.tw-tower`), `_thumbnail`, `_thumbnail-stats`, `_hover`, `_body` (avatar beside the text), `_text`, `_chapters`, `_category-card`. |
+| `components/overlays/` | `_floating-boxes` (balloons, popovers, dialogs), `_menus`, `_backdrop`, `_modal`, `_whispers`, `_clip-viewer`, `_streamer-card`, `_turbo-offer`, `_empty-dialog`. |
+| `components/player/` | What opens over any player: `_settings-menu`, `_keyboard-shortcuts`, `_stats`, `_content-gate`. |
+| `pages/` | One file per page: `_home`, `_settings`, `_account` (the header Drops, Wallet and Subscriptions share), `_subscriptions`, `_collection`, `_category`, `_event`, `_search`, `_clip`, `_team`. A page with several files has a folder, and what only that page uses sits in the folder's own `components/`. |
+| `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
+| `pages/following/` | `_stories`, `_upcoming-streams`, `_follow-games-banner`, `_channels-tab`. |
+| `pages/channel/` | `_player`, `_info-column`, `_stream-info`, `_about`, `_follow-callout`, `_panels` (a live channel); `_home-hero`, `_home-tab`, `_tabs-content`, `_schedule-tab`, `_videos-tab`, `_shelf-titles` (its tabs). |
+| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, and its popups `_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`. |
+| `pages/video/` | `_info` (the video's own block), and in `components/`: `_chat-replay`, `_seek-preview`, `_chapter-list`, `_muted-audio-alert`. |
+| `pages/drops/` | `_shared`, then one file per tab: `_inventory`, `_campaigns`, `_social-badge`. |
 
 ## Pages
 
-Each page type, an address to test it on, and the section its rules live in
-(see the table above for the section's file). "Public" pages can be opened logged out, so they can be
+Each page type, an address to test it on, and the files its rules live in
+(paths from `src/scss/`). "Public" pages can be opened logged out, so they can be
 checked in a headless Chrome; the others need the user's session.
 
 ### Shell, on every page
 
-| Part | Section | Main hooks |
+| Part | Files | Main hooks |
 | --- | --- | --- |
-| Top bar | Top bar | search field, nav links, icon buttons |
-| Left sidebar | Left sidebar | `.side-nav`, `[data-a-target="side-nav-card-metadata"]` |
-| Sign-up banner (logged out only) | Left sidebar (at its end) | `#twilight-sticky-footer-root` |
-| Menus, popovers, dialogs | Menus, popovers, dialogs | `.tw-balloon`, `.ReactModal__Content[role="dialog"]` |
-| Filter and sort menus | Filter and sort menus | `.tw-interactable` rows, `.tw-checkbox` |
-| Floating panels (popup option, `data-rs-floating` on `<html>`) | Floating panels; Chat (at its start) | `.top-nav`, `div:has(> .side-nav)`, `.right-column:not(.right-column--theatre) .channel-root__right-column > div` |
+| Top bar | `layout/_top-bar` | search field, nav links, icon buttons |
+| Left sidebar | `layout/_sidebar`, `layout/_sidebar-collapsed` | `.side-nav`, `[data-a-target="side-nav-card-metadata"]` |
+| Sign-up banner (logged out only) | `layout/_signup-banner` | `#twilight-sticky-footer-root` |
+| Menus, popovers, dialogs | `components/overlays/` | `.tw-balloon`, `.ReactModal__Content[role="dialog"]` |
+| Filter and sort menus | `components/_filter-menus` | `.tw-interactable` rows, `.tw-checkbox` |
+| Floating panels (popup option, `data-rs-floating` on `<html>`) | `layout/_floating-panels`, `pages/channel/components/chat/_column` | `.top-nav`, `div:has(> .side-nav)`, `.right-column:not(.right-column--theatre) .channel-root__right-column > div` |
 
 ### Directory pages
 
-| Page | Address | Access | Section | Main hooks |
+| Page | Address | Access | Files | Main hooks |
 | --- | --- | --- | --- | --- |
-| Home | `/` | Public | Pages; Cards | shelves of `.tw-tower`, carousel hidden |
-| Following | `/directory/following` | Logged in | Pages; Shelf rhythm | `.common-centered-column`, tabs, `.channel-follow-listing--card` on the Channels tab |
-| Event | `/directory/event/<slug>` | Public | Category page header | `.directory-header-new__description` without `.directory-header-new__info` |
-| Collection | `/directory/collection/<slug>` | Public | Pages | first block of the column's `<section>`, holding an `<h1>` and a `<p>`, over a `.tw-tower` |
-| Browse | `/directory` | Public | Pages | `.vertical-selector`, `section[aria-label="Filter & Sort Options"]` |
-| Browse section | `/directory/gaming` | Public | Pages | `.vertical-directory-home-header` |
-| All live channels | `/directory/all` | Public | Pages; Cards | `.tw-tower` |
-| Category, live | `/directory/category/<slug>` | Public | Category page header | `.directory-header-new__info` |
-| Category, videos | `/directory/category/<slug>/videos/all` | Public | Category page header; Pages (filter row) | filter row |
+| Home | `/` | Public | `pages/_home`, `components/_shelf`, `components/cards/` | shelves of `.tw-tower`, carousel hidden |
+| Following | `/directory/following` | Logged in | `pages/following/`, `components/_shelf` | `.common-centered-column`, tabs, `.channel-follow-listing--card` on the Channels tab |
+| Event | `/directory/event/<slug>` | Public | `pages/_event` | `.directory-header-new__description` without `.directory-header-new__info` |
+| Collection | `/directory/collection/<slug>` | Public | `pages/_collection` | first block of the column's `<section>`, holding an `<h1>` and a `<p>`, over a `.tw-tower` |
+| Browse | `/directory` | Public | `pages/browse/` | `.vertical-selector`, `section[aria-label="Filter & Sort Options"]` |
+| Browse section | `/directory/gaming` | Public | `pages/browse/_filters` | `.vertical-directory-home-header` |
+| All live channels | `/directory/all` | Public | `layout/_page-column`, `components/cards/` | `.tw-tower` |
+| Category, live | `/directory/category/<slug>` | Public | `pages/_category` | `.directory-header-new__info` |
+| Category, videos | `/directory/category/<slug>/videos/all` | Public | `pages/_category`, `components/_filter-row` | filter row |
 | Category, clips | `/directory/category/<slug>/clips?range=7d` | Public | same | filter row |
-| Search | `/search?term=<query>` | Public | Search results | `.search-results`, `.search-result-card` |
-| Settings | `/settings/profile` | Logged in | Pages | `.settings-tabs`, `.settings-root__content` |
-| Drops, Inventory | `/drops/inventory` | Logged in | Pages (account pages: title, tabs, margins); Drops & Rewards | `.drops-tabs`, `.drops-root__content`, `.inventory-campaign-info` (a campaign's head, laid across its panel), tiles around `.inventory-drop-image`, `.reward_tile` |
-| Drops, All Campaigns | `/drops/campaigns` | Logged in | Drops & Rewards | `.accordion-header` and the block after it, `.drop-details__label`, `.drop-benefit__image-container` |
-| Drops, Social Media Badge | `/drops/social-badge` | Logged in | Drops & Rewards | `article` holding `.tw-callout-message`, the box holding `.tw-avatar` |
-| Wallet, Subscriptions | `/wallet`, `/subscriptions` | Logged in | Pages (account pages) | a block holding an `<h2>`, tabs and content |
-| Subscriptions, a tab | `/subscriptions?tab=expired` (also `paid`, `gifts`, `mobile`, `turbo`, `other`) | Logged in | Pages (after the tabs); Shelf rhythm (empty tab) | `.subscription-card` in a grid, `.sub-badge-progress`, `[data-test-selector="SubscriptionsEmptyMessage"]`; the six tabs wrap |
+| Search | `/search?term=<query>` | Public | `pages/_search` | `.search-results`, `.search-result-card` |
+| Settings | `/settings/profile` | Logged in | `pages/_settings` | `.settings-tabs`, `.settings-root__content` |
+| Drops, Inventory | `/drops/inventory` | Logged in | `pages/_account` (title, tabs, margins), `pages/drops/_shared`, `pages/drops/_inventory` | `.drops-tabs`, `.drops-root__content`, `.inventory-campaign-info` (a campaign's head, laid across its panel), tiles around `.inventory-drop-image`, `.reward_tile` |
+| Drops, All Campaigns | `/drops/campaigns` | Logged in | `pages/drops/_shared`, `pages/drops/_campaigns` | `.accordion-header` and the block after it, `.drop-details__label`, `.drop-benefit__image-container` |
+| Drops, Social Media Badge | `/drops/social-badge` | Logged in | `pages/drops/_shared`, `pages/drops/_social-badge` | `article` holding `.tw-callout-message`, the box holding `.tw-avatar` |
+| Wallet, Subscriptions | `/wallet`, `/subscriptions` | Logged in | `pages/_account` | a block holding an `<h2>`, tabs and content |
+| Subscriptions, a tab | `/subscriptions?tab=expired` (also `paid`, `gifts`, `mobile`, `turbo`, `other`) | Logged in | `pages/_subscriptions`, `components/cards/_grid` (its grid), `components/_empty-state` (empty tab) | `.subscription-card` in a grid, `.sub-badge-progress`, `[data-test-selector="SubscriptionsEmptyMessage"]`; the six tabs wrap |
 
 ### Channel pages
 
-| Page | Address | Access | Section | Main hooks |
+| Page | Address | Access | Files | Main hooks |
 | --- | --- | --- | --- | --- |
-| Live channel | `/<channel>` while live | Public | Channel page; Chat | `.persistent-player`, `#live-channel-stream-information`, `.about-section`, `.channel-panels` |
-| Offline channel, Home tab | `/<channel>` while offline | Public | Offline channel page | `.channel-root--home`, `.home-offline-hero`, `.home__lower-content` |
-| About tab | `/<channel>/about` | Public | Offline channel page; Channel page | `.about-section__panel`, `.channel-panels-container` |
-| Clips tab | `/<channel>/clips?range=7d` | Public | Offline channel page; Cards | "Filter By" row, `.tw-tower` |
-| Videos tab | `/<channel>/videos` | Public | Offline channel page; Video page (shelf headers) | `.preview-card-carousel` |
-| Schedule tab | `/<channel>/schedule` | Public | Offline channel page | `.stream-schedule__header`, `.stream-schedule-times`, `.stream-schedule-segment--element` |
-| Video (VOD) | `/videos/<id>` | Public | Video (VOD) page; Chat (replay) | `.metadata-layout__split-top`, `.video-chat`, `.vod-message` |
-| Clip | `/<channel>/clip/<slug>` | Public | Video (VOD) page | `.metadata-layout__split-top` holding `.reedit-clip-button`; guests open the streamer card |
-| Subscribe / Gift a Sub | buttons on a channel | Public (logged-out variant) | Subscribe and Gift a Sub panels | `.sub-modal`, `.support-panel` |
-| Team | `/team/<name>` | Public | Team page | `.teams-page-body__inner-container` (its two columns dissolved into one grid), `.teams-page-body__banner`, `.teams-player`, `.member-list__scrollable-container`; no left sidebar on this page |
+| Live channel | `/<channel>` while live | Public | `pages/channel/` (`_player`, `_info-column`, `_stream-info`, `_about`, `_panels`), `pages/channel/components/chat/` | `.persistent-player`, `#live-channel-stream-information`, `.about-section`, `.channel-panels` |
+| Offline channel, Home tab | `/<channel>` while offline | Public | `pages/channel/_home-hero`, `pages/channel/_home-tab` | `.channel-root--home`, `.home-offline-hero`, `.home__lower-content` |
+| About tab | `/<channel>/about` | Public | `pages/channel/_tabs-content`, `pages/channel/_about`, `pages/channel/_panels` | `.about-section__panel`, `.channel-panels-container` |
+| Clips tab | `/<channel>/clips?range=7d` | Public | `components/_filter-row`, `pages/channel/_videos-tab`, `components/cards/` | "Filter By" row, `.tw-tower` |
+| Videos tab | `/<channel>/videos` | Public | `pages/channel/_videos-tab`, `pages/channel/_shelf-titles` | `.preview-card-carousel` |
+| Schedule tab | `/<channel>/schedule` | Public | `pages/channel/_schedule-tab` | `.stream-schedule__header`, `.stream-schedule-times`, `.stream-schedule-segment--element` |
+| Video (VOD) | `/videos/<id>` | Public | `pages/video/_info`, `pages/channel/_videos-tab` (the shelves under it), `pages/video/components/_chat-replay` | `.metadata-layout__split-top`, `.video-chat`, `.vod-message` |
+| Clip | `/<channel>/clip/<slug>` | Public | `pages/_clip` | `.metadata-layout__split-top` holding `.reedit-clip-button`; guests open the streamer card |
+| Subscribe / Gift a Sub | buttons on a channel | Public (logged-out variant) | `pages/channel/components/_subscribe-panel` | `.sub-modal`, `.support-panel` |
+| Team | `/team/<name>` | Public | `pages/_team` | `.teams-page-body__inner-container` (its two columns dissolved into one grid), `.teams-page-body__banner`, `.teams-player`, `.member-list__scrollable-container`; no left sidebar on this page |
 | Creator Dashboard | `dashboard.twitch.tv` | | not matched in `manifest.json` | |
 
 ### Not styled
@@ -177,21 +210,21 @@ kind found later goes in that list; one served by another site goes in
 
 ### Shared components
 
-| Component | Section | Notes |
+| Component | Files | Notes |
 | --- | --- | --- |
-| Stream, video and clip cards | Cards | `article`, three text layouts; name first, then title, then category or "Clipped by". |
-| Card grids | Cards | Drops tiles use the same grid with narrower columns (`--rs-tower-column`, set in Drops & Rewards). `.tw-tower`: a CSS grid with one gap, at most four cards (eight categories) to a row. Twitch decides how many cards a shelf gets, one per 30rem of the grid's width; the columns follow that count. `data-rs-tower="row"` marks the shelves Twitch keeps on one row. |
-| Category cards | Cards | `.game-card`, `.tw-box-art-card`. |
-| Shelf titles | Pages; Offline channel page | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
-| Tags and category chips | Cards; Channel page | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
-| Live chat | Chat | `.chat-line__message`, leaderboard hidden, highlight cards. |
-| Shelves | Shelf rhythm | A title, a grid, sometimes "Show more": all spacing sits on the title, `--rs-shelf-gap` above and `--rs-shelf-head` under. Same on home, Following, a channel's Home tab and under a video. |
-| Empty states | Shelf rhythm | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found.", "No Clips Found" and an empty tab of Subscriptions. |
-| Loading | Cards | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
-| Streamer card | Menus, popovers, dialogs (end of file) | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
-| Turbo offer | Menus, popovers, dialogs (end of file) | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
-| Clip viewer | Menus, popovers, dialogs (end of file) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
-| Chat popups | Chat | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
+| Stream, video and clip cards | `components/cards/` | `article`, three text layouts; name first, then title, then category or "Clipped by". |
+| Card grids | `components/cards/_grid` | Drops tiles use the same grid with narrower columns (`--rs-tower-column`, set in `pages/drops/_shared`). `.tw-tower`: a CSS grid with one gap, at most four cards (eight categories) to a row. Twitch decides how many cards a shelf gets, one per 30rem of the grid's width; the columns follow that count. `data-rs-tower="row"` marks the shelves Twitch keeps on one row. |
+| Category cards | `components/cards/_category-card` | `.game-card`, `.tw-box-art-card`. |
+| Shelf titles | `components/_titles`, `pages/channel/_shelf-titles` | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
+| Tags and category chips | `components/_tags`, `components/cards/_text`, `components/cards/_chapters`, `pages/channel/_stream-info` | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
+| Live chat | `pages/channel/components/chat/_messages`, `pages/channel/components/chat/_highlights` | `.chat-line__message`, leaderboard hidden, highlight cards. |
+| Shelves | `components/_shelf` | A title, a grid, sometimes "Show more": all spacing sits on the title, `--rs-shelf-gap` above and `--rs-shelf-head` under. Same on home, Following, a channel's Home tab and under a video. |
+| Empty states | `components/_empty-state` | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found.", "No Clips Found" and an empty tab of Subscriptions. |
+| Loading | `components/_loading` | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
+| Streamer card | `components/overlays/_streamer-card` | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
+| Turbo offer | `components/overlays/_turbo-offer` | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
+| Clip viewer | `components/overlays/_clip-viewer`, `pages/_clip` (the clip's own block) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
+| Chat popups | `pages/channel/components/chat/` (`_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`) | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 
 ## Not covered yet
 
@@ -204,8 +237,8 @@ kind found later goes in that list; one served by another site goes in
 ## Checking a change
 
 There is no test suite. For public pages, drive a headless Chrome (for example
-with `puppeteer-core` and the system Chrome), inject `src/tokens.css` and
-the files of `src/twitch/` in the manifest's order at document start (in the top frame only: styled too, the player's extension iframe paints over the video), set `data-rs-space="2"` on `<html>`, and
+with `puppeteer-core` and the system Chrome), inject `src/restyle.css` at
+document start (in the top frame only: styled too, the player's extension iframe paints over the video), set `data-rs-space="2"` on `<html>`, and
 screenshot. Take a capture without the stylesheet too when unsure whether a
 defect comes from Twitch or from the extension. Keep such scripts out of the
 repository.

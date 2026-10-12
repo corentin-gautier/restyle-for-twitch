@@ -1,0 +1,104 @@
+// Drops & Rewards, Social Media Badge tab (/drops/social-badge).
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A form, a note on what is kept, the badge levels and a table of posts.
+   * The note and the levels become panels of the page's width.
+   */
+  @include guarded(".drops-root__content article%g:has(.tw-callout-message)") {
+    padding: var(--rs-4) !important;
+    @include panel(m);
+
+    & .tw-callout-message__header * {
+      @include type(5, 600);
+    }
+
+    & .tw-callout-message > div:not(.tw-callout-message__header) {
+      margin-top: var(--rs-1) !important;
+      @include muted(3);
+    }
+  }
+
+  @include guarded(".drops-root__content div%g:has(> article .tw-callout-message)") {
+    max-width: none !important;
+    margin-top: var(--rs-4) !important;
+  }
+
+  @include guarded(".drops-root__content div%g:has(> div > h3) > div%g:has(.tw-avatar)") {
+    max-width: none !important;
+    margin-top: var(--rs-shelf-head) !important;
+    padding: var(--rs-4) var(--rs-6) !important;
+    @include panel(m);
+  }
+
+  /*
+   * Its rhythm. Twitch spaces everything 8 or 16px apart, and sets the
+   * table right under its heading. From the top: the heading, its
+   * description on the measure of the other tabs, the networks' icons, then
+   * the form a block lower and its note close under it; each later heading
+   * a shelf title's step over what it names.
+   */
+  @include guarded(".drops-root__content div%g:has(> div > h3):has(> div > .tw-svg)") {
+    @include guarded("> div%g:has(> p)") {
+      max-width: 80rem !important;
+      margin: var(--rs-2) 0 0 !important;
+
+      & > p {
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    @include guarded("> div%g:has(> .tw-svg)") {
+      gap: var(--rs-2) !important;
+      margin: var(--rs-3) 0 0 !important;
+
+      & > .tw-svg {
+        margin: 0 !important;
+      }
+    }
+  }
+
+  /* The form: its two fields a step apart, the button level with them. */
+  @include guarded(".drops-root__content div%g:has(> div > h3):has(> div > .tw-svg) + div%g") {
+    margin-top: var(--rs-6) !important;
+
+    @include guarded("div%g:has(> div > .tw-form-group, > div > div > .tw-form-group)") {
+      gap: var(--rs-4) !important;
+
+      @include guarded("> div%g") {
+        @include flush;
+      }
+    }
+
+    @include guarded(".tw-form-group div%g:has(> div > button)") {
+      gap: var(--rs-2) !important;
+
+      /* As tall as the field beside it (Twitch's own offset puts their tops level). */
+      @include guarded("button%g") {
+        height: var(--rs-control-height) !important;
+        padding-inline: var(--rs-2) !important;
+      }
+    }
+  }
+
+  @include guarded(".drops-root__content div%g:has(> table.tw-table)") {
+    margin-top: var(--rs-shelf-head) !important;
+  }
+
+  /* "We'll periodically check your posts…", a footnote to the table. */
+  @include guarded(".drops-root__content div%g:has(> table.tw-table) + div%g") {
+    margin: var(--rs-3) 0 0 !important;
+
+    @include guarded("p%g") {
+      @include muted(3);
+    }
+  }
+
+  /* A shelf's gap before "Badge Levels" and the posts; not over the page's first heading. */
+  @include guarded(".drops-root__content div%g:has(> div > div > h3):not(:has(> div > article))") {
+    margin: var(--rs-shelf-gap) 0 0 !important;
+  }
+}

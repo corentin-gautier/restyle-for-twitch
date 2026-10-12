@@ -1,0 +1,52 @@
+// Settings (/settings/…).
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Settings: same margins as Following, on a different skeleton. The title
+   * (an <h2>) and the tabs sit in a header above the scroll area
+   * (.settings-tabs), the forms in .settings-root__content. The generated
+   * wrappers around both give up their inline padding, and the two blocks
+   * take the page inset themselves.
+   */
+  @include guarded(
+    ".twilight-main > header%g:has(.settings-tabs)",
+    ".twilight-main %g:has(> .settings-tabs)",
+    ".twilight-main %g:has(> .settings-root__content)",
+    ".twilight-main %g:has(> * > .settings-root__content)"
+  ) {
+    padding-inline: 0 !important;
+  }
+
+  @include guarded(
+    ".twilight-main > header%g:has(.settings-tabs)",
+    ".twilight-main %g:has(> .settings-tabs)"
+  ) {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+  }
+
+  & .settings-tabs {
+    margin-top: 0 !important;
+    padding-top: calc(var(--rs-8) + 3rem - 1rem) !important;
+    padding-inline: var(--rs-page-inset) !important;
+
+    /* Same gap under the title as between Following's title and its tabs. */
+    @include guarded("> div%g:has(> h2)") {
+      margin-block: 0 !important;
+      padding-block: 0 1rem !important;
+    }
+
+    & h2 {
+      margin-top: 0 !important;
+      font-weight: 700 !important;
+      line-height: 1 !important;
+      letter-spacing: -0.025em !important;
+    }
+  }
+
+  & .settings-root__content {
+    padding-top: var(--rs-8) !important;
+    padding-inline: var(--rs-page-inset) !important;
+  }
+}

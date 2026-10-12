@@ -1,0 +1,88 @@
+// Chat popups: the cheer card, Power-ups & Rewards.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Cheer card above the chat field: a floating box whose gradient header
+   * is an inset banner, without the second frame Twitch draws inside it.
+   */
+  /*
+   * Both open from the chat field, which is inset from the chat's edges:
+   * they reach a little further out on each side, to a small even gutter.
+   */
+  & .chat-input div[class*="Attached"]:has(> [data-a-target="emote-picker"]),
+  & .bits-card-wrapper {
+    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    right: calc(var(--rs-2) - var(--rs-4)) !important;
+    width: auto !important;
+  }
+
+  & [data-a-target="emote-picker"] {
+    width: 100% !important;
+  }
+
+  /*
+   * Power-ups & Rewards: the same floating box, on the same gutters. It is
+   * anchored to its button's narrow wrapper, so the width is spelled out
+   * from the chat column's (34rem).
+   */
+  & .chat-input div[class*="Attached"]:has(.reward-center__content) {
+    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    right: auto !important;
+    width: calc(34rem - 2 * var(--rs-2)) !important;
+  }
+
+  & .chat-input [role="dialog"]:has(.reward-center__content) > div {
+    width: 100% !important;
+    background: transparent !important;
+  }
+
+  & .reward-center__content {
+    width: 100% !important;
+    @include floating(l);
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & .rewards-popover-header {
+      padding: var(--rs-2) var(--rs-2) 0 var(--rs-1) !important;
+    }
+  }
+
+  & .bits-card-wrapper {
+    @include floating(l);
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    @include guarded('[role="dialog"] > div%g:first-child', $from: '[role="dialog"]') {
+      /* Full width by default: narrowed so the margin shows on the right too. */
+      width: calc(100% - 2 * var(--rs-1)) !important;
+      margin: var(--rs-1) !important;
+      @include clip(m);
+    }
+
+    @include guarded('[role="dialog"] > div%g:not(:first-child)', $from: '[role="dialog"]') {
+      border: 0 !important;
+      border-radius: 0 !important;
+    }
+
+    /* Rows under the banner: options, amounts, pin toggle. */
+    @include guarded('[role="dialog"] > div:not(:first-child) > div%g', $from: '[role="dialog"]') {
+      padding: var(--rs-1) var(--rs-3) !important;
+    }
+
+    /* The pin row pads its content a second time: one left edge for all rows. */
+    @include guarded('[role="dialog"] > div:not(:first-child) > div > div%g:only-child', $from: '[role="dialog"]') {
+      padding-inline: 0 !important;
+    }
+
+    @include guarded('[role="dialog"] > div%g:first-child', $from: '[role="dialog"]') {
+      padding-top: var(--rs-3) !important;
+      padding-left: var(--rs-3) !important;
+    }
+
+    & .tw-interactable {
+      border-radius: var(--rs-radius-m) !important;
+    }
+  }
+}

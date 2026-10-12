@@ -1,0 +1,85 @@
+// Event (/directory/event/…): its header.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Event pages (/directory/event/…) have the same header without the
+   * category header's class names: a picture and, beside it, name, viewer
+   * count, tags and a sentence. The same panel, found by its description.
+   */
+  & .common-centered-column > div:where([data-rs-has~="plain-header"] .common-centered-column > *):has(.directory-header-new__description):not(:has(.tw-tower, .directory-header-new__info)) {
+    margin: calc(var(--rs-8) + 3rem - 1rem) 0 0 !important;
+    padding: var(--rs-6) !important;
+    @include panel(l);
+
+    & > div {
+      padding: 0 !important;
+    }
+
+    /* Picture and text column, centred on each other. */
+    & > div > div {
+      align-items: center !important;
+    }
+
+    & .tw-aspect {
+      @include clip(m);
+    }
+
+    & div:where([data-rs-has~="plain-header"] .common-centered-column > * *):has(> div > h1) {
+      justify-content: center !important;
+      gap: var(--rs-2) !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+    }
+
+    & h1 {
+      margin: 0 !important;
+      @include type(display, 700);
+      line-height: 1.1 !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    /* Viewer count, then tags: one wrapping row, the tags on the next line. */
+    & div:where([data-rs-has~="plain-header"] .common-centered-column > * *):has(> div > p > strong) {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      gap: var(--rs-2) 0 !important;
+
+      & > div {
+        margin: 0 !important;
+      }
+
+      & > div > p {
+        @include caps(2);
+        color: var(--rs-muted) !important;
+      }
+
+      & p strong {
+        color: var(--rs-text) !important;
+      }
+
+      & > div:where([data-rs-has~="plain-header"] .common-centered-column > * * > *):has(.tw-tag) {
+        flex-basis: 100% !important;
+      }
+
+      /* The bullet that led to the tags. */
+      & > div:where([data-rs-has~="plain-header"] .common-centered-column > * * > *):has(+ div .tw-tag) {
+        display: none !important;
+      }
+    }
+
+    & .directory-header-new__description {
+      max-width: 64rem !important;
+      margin: 0 !important;
+
+      & p {
+        font-size: var(--rs-text-4) !important;
+        line-height: 1.5 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+  }
+}

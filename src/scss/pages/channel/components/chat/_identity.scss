@@ -1,0 +1,104 @@
+// Chat popup: Chat Identity.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Chat Identity (logged in): the chat settings popover, with badge and
+   * name colour choosers.
+   */
+  /*
+   * The popover is anchored to the badge button inside the chat field:
+   * stretched to the gutters the other chat popups use, and framed.
+   */
+  & .chat-input [role="dialog"]:has(.chat-identity-menu) {
+    left: calc(var(--rs-2) - var(--rs-4) - 5px) !important;
+    width: calc(34rem - 2 * var(--rs-2)) !important;
+    margin-right: 0 !important;
+
+    & .tw-balloon {
+      display: block !important;
+      width: 100% !important;
+      @include floating(l);
+      box-shadow: none !important;
+      overflow: hidden !important;
+    }
+
+    & .chat-settings__popover {
+      width: 100% !important;
+    }
+  }
+
+  & .chat-identity-menu__header {
+    padding: var(--rs-3) var(--rs-3) var(--rs-1) !important;
+  }
+
+  /* One side margin for the preview and the scrolling part. */
+  @include guarded(
+    ".chat-settings__popover > div%g:has(.name-display__name)",
+    ".chat-identity-menu__content"
+  ) {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+  }
+
+  /* Preview of the name as it shows in chat: an inset card. */
+  @include guarded(".chat-settings__popover div%g:has(> span > .name-display__name)") {
+    margin-top: var(--rs-1) !important;
+    padding: var(--rs-2) var(--rs-3) !important;
+    background: var(--rs-hover) !important;
+    border-radius: var(--rs-radius-m) !important;
+  }
+
+  & .chat-identity-menu__content {
+    /* A hairline: the element has height of its own, so no background. */
+    & [role="separator"] {
+      height: 0 !important;
+      margin-block: var(--rs-3) !important;
+      padding: 0 !important;
+      @include bare;
+      border-top: var(--rs-hairline) !important;
+    }
+
+    /* Twitch frames the campaign card a second time. */
+    @include guarded('div%g:has(> [class*="collapsibleHeader"])') {
+      padding: 0 !important;
+      @include bare;
+    }
+
+    /* Badge campaign ("Active Campaigns"): a quiet card. */
+    & [class*="collapsibleHeader"] {
+      padding: var(--rs-2) !important;
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    & [class*="thumbnailBox"] {
+      @include clip(s);
+    }
+
+    & .tw-progress-bar {
+      background: var(--rs-hover) !important;
+      @include clip(pill);
+
+      & > div {
+        background: var(--rs-accent) !important;
+      }
+    }
+
+    & .edit-appearance__badge-chooser {
+      border-color: transparent !important;
+      border-radius: var(--rs-radius-s) !important;
+      transition: background var(--rs-ease) !important;
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & [class*="edit-appearance__badge-chooser--selected"] {
+      background: var(--rs-accent-tint-strong) !important;
+      border-color: var(--rs-accent) !important;
+    }
+  }
+}

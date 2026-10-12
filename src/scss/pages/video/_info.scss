@@ -1,0 +1,84 @@
+// Video (/videos/…): the video's own block under the player.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Same column as a live channel. The video's own block (date, title,
+   * category, views) sits bare on the column's edges; the channel block
+   * under it is a card.
+   */
+  & .metadata-layout__split-top,
+  & .metadata-layout__split-top > * {
+    padding-inline: 0 !important;
+    margin-inline: 0 !important;
+  }
+
+  & .timestamp-metadata__bar {
+    display: none !important;
+  }
+
+  & div:where([data-rs-info="video"] *):has(> .timestamp-metadata__bar) > p {
+    @include flush;
+    @include type(3, 500);
+    color: var(--rs-muted) !important;
+  }
+
+  /* The title: the block that follows the date. */
+  @include guarded(".metadata-layout__split-top div%g:has(> div > .timestamp-metadata__bar) + div%g") {
+    margin-top: var(--rs-1) !important;
+    padding-right: var(--rs-8) !important;
+    @include type(title, 600);
+    line-height: 1.3 !important;
+    letter-spacing: -0.01em !important;
+    color: var(--rs-text) !important;
+  }
+
+  /* Category chip and view count on one line; the chip replaces the dot. */
+  & div:has(> [data-a-target="video-info-game-boxart-link"]) {
+    @include row;
+    gap: var(--rs-2) !important;
+    margin-top: var(--rs-2) !important;
+
+    & > span {
+      display: none !important;
+    }
+
+    & > p {
+      @include type(3, 500);
+      font-variant-numeric: tabular-nums !important;
+      color: var(--rs-muted) !important;
+    }
+  }
+
+  & .metadata-layout__split-top + div:where(#live-channel-stream-information *) {
+    padding: 0 !important;
+    margin: var(--rs-6) 0 0 !important;
+
+    & > div:where(#live-channel-stream-information * > *) {
+      margin: 0 !important;
+      padding: var(--rs-4) !important;
+      @include panel(l);
+    }
+
+    & h1:where(#live-channel-stream-information * *) {
+      font-size: var(--rs-text-6) !important;
+      color: var(--rs-text) !important;
+    }
+
+    /* "last live" and follower count under the name. */
+    & .metadata-layout__support + div:where(#live-channel-stream-information * *),
+    & .metadata-layout__support + div *:where(#live-channel-stream-information * * *) {
+      @include muted(3);
+    }
+
+    /* Not the "LIVE" tag that line starts with while the channel is live: white on its red. */
+    @include guarded(
+      ".metadata-layout__support + div .tw-channel-status-text-indicator",
+      ".metadata-layout__support + div .tw-channel-status-text-indicator *%g"
+    ) {
+      @include type(2, 600);
+      color: var(--rs-on-scrim) !important;
+    }
+  }
+}

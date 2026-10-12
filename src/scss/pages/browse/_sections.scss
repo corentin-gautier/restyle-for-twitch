@@ -1,0 +1,78 @@
+// Browse (/directory): the "Games / IRL / Music…" section cards.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Browse: the "Games / IRL / Music..." selectors. Twitch paints them as
+   * saturated brand-purple pills; here they are roomy cards like the About
+   * box and the panels (surface, hairline, large radius) with a large label,
+   * and the accent only shows on hover. The illustrations stay. The extra
+   * room is padding on the card's link.
+   */
+  & .vertical-selector {
+    padding: 0 !important;
+    @include panel(l);
+    box-shadow: none !important;
+    transition: background-color var(--rs-ease), border-color var(--rs-ease);
+
+    /*
+     * An inner wrapper has a fill of its own on hover, which showed as a
+     * second, smaller hover inside the card's.
+     */
+    & * {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    & :is(p, span, h2, h3, h4, div) {
+      @include type(title, 600);
+      letter-spacing: -0.01em !important;
+      color: var(--rs-text) !important;
+    }
+
+    &:hover {
+      background: var(--rs-raised) !important;
+      border-color: var(--rs-accent) !important;
+    }
+
+    /* On the link, so the whole card is the target, not just its middle. */
+    & > a {
+      display: block !important;
+      padding: var(--rs-3) var(--rs-2) !important;
+      border-radius: inherit !important;
+    }
+  }
+
+  /*
+   * The selector of the current page: Twitch rings its wrapper in white.
+   * The ring goes and the card takes the accent border instead. Focus
+   * outlines stay, in the accent colour.
+   */
+  & .vertical-selector__wrapper {
+    border-color: transparent !important;
+    box-shadow: none !important;
+  }
+
+  & .vertical-selector__wrapper,
+  & .vertical-selector__wrapper * {
+    outline-color: var(--rs-accent) !important;
+  }
+
+  & .vertical-selector__wrapper :not(:focus-visible) {
+    outline-style: none !important;
+  }
+
+  & .vertical-selector__wrapper[class*="selected" i] .vertical-selector {
+    background: var(--rs-raised) !important;
+    border-color: var(--rs-accent) !important;
+  }
+
+  /*
+   * Each selector has a 0.5rem gutter on both sides: pull the row back onto
+   * the page's edges. Twitch leaves 8px between two of them: the grids' step.
+   */
+  & .vertical-selector-card__container {
+    margin-inline: -0.5rem !important;
+    column-gap: calc(var(--rs-4) - 0.8rem) !important;
+  }
+}

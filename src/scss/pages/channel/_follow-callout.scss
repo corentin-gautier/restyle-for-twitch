@@ -1,0 +1,18 @@
+// Channel: the callout over the stream info ("Thanks for following!").
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Callout over the stream info ("Thanks for following!" next to the Follow
+   * button): its box reads the page colour and vanishes into the page while
+   * still covering the title. It becomes a floating layer like the menus.
+   */
+  @include guarded(".channel-info-content article%g:has(.tw-callout-message) > div") {
+    --color-background-base: var(--rs-float) !important;
+    --color-background-body: var(--rs-float) !important;
+    --color-background-alt: var(--rs-float) !important;
+    @include floating(l);
+    overflow: hidden !important;
+  }
+}

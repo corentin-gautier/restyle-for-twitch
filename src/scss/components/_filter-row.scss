@@ -1,0 +1,67 @@
+// Filter rows ("Filter By", "Sort by") above a grid, and the period menu.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Filter row of Browse and of a category: one step down to the cards.
+   * Twitch leaves 16px, set somewhere under the row.
+   */
+  & .twilight-main section[aria-label="Filter & Sort Options"] {
+    margin-bottom: calc(var(--rs-shelf-head) - 1.6rem) !important;
+  }
+
+  /* A category's live tab has no such 16px under its row. */
+  & .twilight-main .directory-header__filters {
+    margin-bottom: var(--rs-shelf-head) !important;
+  }
+
+  /*
+   * "Filter By" and "Sort by" labels: clear of the menu they name.
+   */
+  @include guarded(".twilight-main div%g:has(> strong:only-child):has(+ div .tw-select-button):not(article *)") {
+    padding-right: 1.2rem !important;
+  }
+
+  @include guarded(".twilight-main div%g:has(> .tw-form-label:only-child):has(+ div :is(button, select))") {
+    padding-right: 0.8rem !important;
+  }
+
+  /*
+   * Clips tab of a channel: the shelf's whole gap sat between the filter
+   * row and the title. One step under the row.
+   */
+  @include guarded(".home__lower-content div%g:has(> div > strong:only-child):has(.top-clips-time-filter)") {
+    margin: 0 !important;
+    padding-block: 0 !important;
+  }
+
+  @include guarded(".home__lower-content div%g:has(> div > strong:only-child):has(.top-clips-time-filter) + div h2.tw-title") {
+    margin-top: var(--rs-shelf-head) !important;
+  }
+
+  /* Videos tab: the same step between the tabs and its filter row. */
+  & .home__lower-content > .tw-transition > div {
+    margin-top: 0 !important;
+  }
+
+  @include guarded(".home__lower-content div%g:not(:has(> .preview-card-carousel)):has(+ div > .preview-card-carousel)") {
+    margin-top: 0 !important;
+  }
+
+  /* The selected period is ticked twice, once in its label and once at the row's end. */
+  @include guarded(
+    '[data-a-target^="time-filter-option"] div%g:has(> div > .tw-pill) + div%g:has(> .tw-svg)',
+    $from: '[data-a-target^="time-filter-option"]'
+  ) {
+    display: none !important;
+  }
+
+  /* Its menu opens flush against the button: the same gap as the other menus. */
+  & .ReactModal__Content [data-popper-placement^="bottom"]:has([data-a-target^="time-filter-option"]) {
+    padding-top: 1rem !important;
+  }
+
+  & .ReactModal__Content [data-popper-placement^="top"]:has([data-a-target^="time-filter-option"]) {
+    padding-bottom: 1rem !important;
+  }
+}

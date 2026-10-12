@@ -1,0 +1,36 @@
+// Channel: shelf titles on every tab and under a video.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Shelf titles on a channel's own page, on every tab, and under a video:
+   * the same display size and air as the shelves of the home page. Panel titles and the
+   * About heading are not shelves and keep their own size.
+   */
+  @include guarded(
+    '.home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"])',
+    ".channel-info-content %g:has(> .preview-card-carousel) p.tw-title"
+  ) {
+    @include type(display, 700);
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--rs-text) !important;
+    padding-block: var(--rs-8) var(--rs-3) !important;
+  }
+
+  /* Shelves of videos space themselves (see "Shelves of other videos"). */
+  @include guarded(".channel-info-content %g:has(> .preview-card-carousel) p.tw-title") {
+    padding-block: 0 !important;
+  }
+
+  @include guarded(
+    '.home__lower-content :is(h2, h3):not(.default-panel *, .about-section *, .tw-tower *, .game-card *, article *, [data-test-selector="schedule-caption"]) *',
+    ".channel-info-content %g:has(> .preview-card-carousel) p.tw-title > span"
+  ) {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+  }
+}

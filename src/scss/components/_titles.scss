@@ -1,0 +1,38 @@
+// Page titles and shelf titles.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /* The title's type, on any page. */
+  & .twilight-main h1:not(.channel-info-content *, article *) {
+    margin-top: 0 !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    letter-spacing: -0.025em !important;
+  }
+
+  /*
+   * Shelf titles ("Live channels we think you'll like", "Continue
+   * Watching"...): the page's main landmarks, so large, tight and with clear
+   * air above. They are <h2>, or a titled <h3>-<h5> outside any card; the
+   * names on category cards are <h2> too and are handled with the cards.
+   * Only on pages that show cards: Settings and the like use the same
+   * headings for form sections and field labels.
+   */
+  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *),
+  & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *),
+  & .twilight-main [data-a-target="following-channels-header"] {
+    @include type(display, 700);
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+    color: var(--rs-text) !important;
+    padding-block: var(--rs-8) var(--rs-3) !important;
+  }
+
+  & .twilight-main:has(.tw-tower, article) h2:not(.sr-only, .channel-root *, .tw-tower *, .game-card *, a *) *,
+  & .twilight-main:has(.tw-tower, article) :is(h3, h4, h5).tw-title:not(article *, .channel-info-content *) * {
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: inherit !important;
+  }
+}

@@ -1,0 +1,188 @@
+// Theme: Twitch's palette remapped to the tokens, and square corners where the corner setting asks for them.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Theme: Twitch declares its palette on the element carrying the theme
+   * class, so the remap has to sit on that same element to win.
+   */
+  /*
+   * The player's settings menu (the gear) is always dark, whatever the
+   * theme: its palette comes from a generated class on one of its wrappers,
+   * so the three of them are named too.
+   */
+  @include guarded(
+    "&.tw-root--theme-dark",
+    "&.tw-root--theme-light",
+    ".tw-root--theme-dark",
+    ".tw-root--theme-light",
+    '.ReactModal__Content div%g:has(> [data-a-target="player-settings-menu"])',
+    '.ReactModal__Content div%g:has(> div > [data-a-target="player-settings-menu"])',
+    '.ReactModal__Content div%g:has(> div > div > [data-a-target="player-settings-menu"])'
+  ) {
+    --color-background-body: var(--rs-bg) !important;
+    --color-background-base: var(--rs-bg) !important;
+    --color-background-alt: var(--rs-surface) !important;
+    --color-background-alt-2: var(--rs-raised) !important;
+    --color-background-float: var(--rs-float) !important;
+    --color-background-input: var(--rs-raised) !important;
+    --color-background-input-focus: var(--rs-surface) !important;
+    --color-background-button-secondary-default: var(--rs-raised) !important;
+    --color-background-button-secondary-hover: var(--rs-hover) !important;
+    --color-background-button-text-hover: var(--rs-hover) !important;
+    --color-background-interactable-hover: var(--rs-hover) !important;
+    --color-background-interactable-alpha-hover: var(--rs-hover) !important;
+    --color-background-interactable-active: var(--rs-hover) !important;
+    --color-background-interactable-alpha-active: var(--rs-hover) !important;
+    --color-background-interactable-selected: var(--rs-hover) !important;
+    --color-background-button-text-active: var(--rs-hover) !important;
+    --color-background-button-secondary-active: var(--rs-hover) !important;
+
+    --color-background-button-primary-default: var(--rs-accent) !important;
+    --color-background-button-primary-hover: var(--rs-accent-hover) !important;
+    --color-background-button-primary-active: var(--rs-accent-active) !important;
+    --color-text-button-primary: var(--rs-on-accent) !important;
+    --color-accent: var(--rs-accent) !important;
+    --color-twitch-purple: var(--rs-accent) !important;
+    --color-text-link: var(--rs-accent) !important;
+    --color-text-link-hover: var(--rs-accent) !important;
+    --color-border-input-focus: var(--rs-accent) !important;
+    --color-border-brand: var(--rs-accent) !important;
+    --color-fill-brand: var(--rs-accent) !important;
+
+    /*
+     * The rest of Twitch's purple: every other variable that resolves to a
+     * brand purple, and the raw purple scale some components read directly,
+     * rebuilt as shades of the accent.
+     */
+    --color-text-brand: var(--rs-accent) !important;
+    --color-text-button-text: var(--rs-accent) !important;
+    --color-text-link-active: var(--rs-accent) !important;
+    --color-text-link-focus: var(--rs-accent) !important;
+    --color-text-link-visited: var(--rs-accent) !important;
+    --color-text-tab-active: var(--rs-accent) !important;
+    --color-text-toggle-checked-hover-icon: var(--rs-accent) !important;
+    --color-background-accent: var(--rs-accent) !important;
+    --color-background-brand: var(--rs-accent) !important;
+    --color-background-button: var(--rs-accent) !important;
+    --color-background-button-brand: var(--rs-accent) !important;
+    --color-background-date-picker-day-selected: var(--rs-accent) !important;
+    --color-background-graph-fill: var(--rs-accent) !important;
+    --color-background-input-checked: var(--rs-accent) !important;
+    --color-background-overlay-brand: var(--rs-accent) !important;
+    --color-background-progress-countdown-status: var(--rs-accent) !important;
+    --color-background-range-ms-thumb: var(--rs-accent) !important;
+    --color-background-toggle-handle-checked: var(--rs-accent) !important;
+    --color-border-brand-decorative: var(--rs-accent) !important;
+    --color-border-button-active: var(--rs-accent) !important;
+    --color-border-button-focus: var(--rs-accent) !important;
+    --color-border-button-hover: var(--rs-accent) !important;
+    --color-border-image-selector-mask: var(--rs-accent) !important;
+    --color-border-image-selector-mask-overlay: var(--rs-accent) !important;
+    --color-border-interactable-selected: var(--rs-accent) !important;
+    --color-border-overlay-brand-decorative: var(--rs-accent) !important;
+    --color-border-tab-focus: var(--rs-accent) !important;
+    --color-border-tab-hover: var(--rs-accent) !important;
+    --color-border-toggle-checked-hover: var(--rs-accent) !important;
+    --color-border-whisper-incoming: var(--rs-accent) !important;
+    --color-fill-brand-overlay: var(--rs-accent) !important;
+    --color-background-button-hover: var(--rs-accent-hover) !important;
+    --color-background-button-focus: var(--rs-accent-hover) !important;
+    --color-background-button-brand-hover: var(--rs-accent-hover) !important;
+    --color-background-input-checkbox-checked-hover: var(--rs-accent-hover) !important;
+    --color-background-input-checkbox-checked-active: var(--rs-accent-hover) !important;
+    --color-background-toggle-handle-checked-hover: var(--rs-accent-hover) !important;
+    --color-background-button-active: var(--rs-accent-active) !important;
+    --color-background-button-brand-active: var(--rs-accent-active) !important;
+    --color-background-accent-alt: var(--rs-accent-active) !important;
+    --color-background-accent-alt-2: var(--rs-accent-tint-strong) !important;
+    --color-background-date-picker-range: var(--rs-accent-tint-strong) !important;
+    --color-background-table-selected: var(--rs-accent-tint-strong) !important;
+    --color-text-button-text-active: var(--rs-accent-tint-strong) !important;
+    --color-twitch-purple-1: color-mix(in srgb, var(--rs-accent), black 92%) !important;
+    --color-twitch-purple-2: color-mix(in srgb, var(--rs-accent), black 86%) !important;
+    --color-twitch-purple-3: color-mix(in srgb, var(--rs-accent), black 80%) !important;
+    --color-twitch-purple-4: color-mix(in srgb, var(--rs-accent), black 70%) !important;
+    --color-twitch-purple-5: color-mix(in srgb, var(--rs-accent), black 58%) !important;
+    --color-twitch-purple-6: color-mix(in srgb, var(--rs-accent), black 45%) !important;
+    --color-twitch-purple-7: color-mix(in srgb, var(--rs-accent), black 28%) !important;
+    --color-twitch-purple-8: color-mix(in srgb, var(--rs-accent), black 14%) !important;
+    --color-twitch-purple-9: var(--rs-accent) !important;
+    --color-twitch-purple-10: color-mix(in srgb, var(--rs-accent), white 14%) !important;
+    --color-twitch-purple-11: color-mix(in srgb, var(--rs-accent), white 28%) !important;
+    --color-twitch-purple-12: color-mix(in srgb, var(--rs-accent), white 42%) !important;
+    --color-twitch-purple-13: color-mix(in srgb, var(--rs-accent), white 60%) !important;
+    --color-twitch-purple-14: color-mix(in srgb, var(--rs-accent), white 74%) !important;
+    --color-twitch-purple-15: color-mix(in srgb, var(--rs-accent), white 84%) !important;
+    --color-opac-p-1: color-mix(in srgb, var(--rs-accent) 5%, transparent) !important;
+    --color-opac-p-2: color-mix(in srgb, var(--rs-accent) 10%, transparent) !important;
+    --color-opac-p-3: color-mix(in srgb, var(--rs-accent) 15%, transparent) !important;
+    --color-opac-p-4: color-mix(in srgb, var(--rs-accent) 20%, transparent) !important;
+    --color-opac-p-5: color-mix(in srgb, var(--rs-accent) 25%, transparent) !important;
+    --color-opac-p-6: color-mix(in srgb, var(--rs-accent) 30%, transparent) !important;
+    --color-opac-p-7: color-mix(in srgb, var(--rs-accent) 40%, transparent) !important;
+    --color-opac-p-8: color-mix(in srgb, var(--rs-accent) 50%, transparent) !important;
+    --color-opac-p-9: color-mix(in srgb, var(--rs-accent) 60%, transparent) !important;
+    --color-opac-p-10: color-mix(in srgb, var(--rs-accent) 70%, transparent) !important;
+    --color-opac-p-11: color-mix(in srgb, var(--rs-accent) 75%, transparent) !important;
+    --color-opac-p-12: color-mix(in srgb, var(--rs-accent) 80%, transparent) !important;
+    --color-opac-p-13: color-mix(in srgb, var(--rs-accent) 85%, transparent) !important;
+    --color-opac-p-14: color-mix(in srgb, var(--rs-accent) 90%, transparent) !important;
+    --color-opac-p-15: color-mix(in srgb, var(--rs-accent) 95%, transparent) !important;
+
+    --color-text-base: var(--rs-text) !important;
+    --color-text-alt: var(--rs-text) !important;
+    --color-text-alt-2: var(--rs-muted) !important;
+    --color-text-input: var(--rs-text) !important;
+    /* White under Twitch's dark theme, lost on a light custom background. */
+    --color-text-input-placeholder: var(--rs-muted) !important;
+    --color-text-label: var(--rs-text) !important;
+
+    --color-border-base: var(--rs-border) !important;
+    --color-border-input: transparent !important;
+    --color-border-button: var(--rs-border) !important;
+
+    --border-radius-small: var(--rs-radius-s) !important;
+    --border-radius-medium: var(--rs-radius-m) !important;
+    --border-radius-large: var(--rs-radius-l) !important;
+    --input-border-radius-default: var(--rs-radius-m) !important;
+    /*
+     * The radii left at Twitch's values still follow the popup's corner
+     * setting. --border-radius-rounded is not touched: it also makes the
+     * avatars round.
+     */
+    --border-radius-extra-large: calc(1rem * var(--rs-round)) !important;
+    --border-radius-extra-extra-large: calc(1.6rem * var(--rs-round)) !important;
+    --input-border-radius-small: calc(6px * var(--rs-round)) !important;
+    --input-border-radius-large: calc(8px * var(--rs-round)) !important;
+    --button-border-radius-small: var(--rs-radius-pill) !important;
+    --button-border-radius-default: var(--rs-radius-pill) !important;
+    --button-border-radius-large: var(--rs-radius-pill) !important;
+
+    --font-base: var(--rs-font) !important;
+    --font-display: var(--rs-font) !important;
+
+    /* Flat: no elevation shadows under menus, popovers, dialogs or tooltips. */
+    --shadow-elevation-1: none !important;
+    --shadow-elevation-2: none !important;
+    --shadow-elevation-3: none !important;
+    --shadow-elevation-4: none !important;
+    --shadow-elevation-5: none !important;
+  }
+
+  & body {
+    background: var(--rs-bg) !important;
+    font-family: var(--rs-font) !important;
+  }
+
+  /*
+   * Square corners: some buttons, and the boxes that clip them, take their
+   * shape from --border-radius-rounded, which cannot be remapped (see above).
+   */
+  &[data-rs-round="0"] button[class*="ScCoreButton"],
+  &[data-rs-round="0"] div:where([data-rs-round="0"] *):has(> button[class*="ScCoreButton"]),
+  /* A channel's Follow button sits in a second, outer clip. */
+  &[data-rs-round="0"] div:where([data-rs-round="0"] *):has(> div > div[style] > div > div > button[data-a-target="follow-button"]) {
+    border-radius: 0 !important;
+  }
+}

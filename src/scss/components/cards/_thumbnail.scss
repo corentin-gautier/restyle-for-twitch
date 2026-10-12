@@ -1,0 +1,51 @@
+// Thumbnails: one rounded shape, without Twitch's lifted-card effect.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Thumbnails: one rounded shape. The image sits inside several wrappers
+   * (link, aspect box, Twitch's hover-accent frame); all of them take the
+   * radius and clip, and none keeps a fill of its own, otherwise square or
+   * accent-coloured corners show behind the rounded image.
+   */
+  & [data-a-target="preview-card-image-link"],
+  & [data-a-target="preview-card-image-link"] > div,
+  & [data-a-target="preview-card-image-link"] img,
+  & [data-a-target="preview-card-image-link"] .tw-aspect,
+  & [data-a-target="tw-box-art-card-link"],
+  & [data-a-target="tw-box-art-card-link"] > div,
+  & [data-a-target="tw-box-art-card-link"] img,
+  & [data-a-target="tw-box-art-card-link"] .tw-aspect,
+  & .tw-box-art-card,
+  & .tw-box-art-card img,
+  & .tw-card-image,
+  & .tw-card-image img,
+  & .preview-card-thumbnail__image,
+  & .preview-card-thumbnail__image img,
+  & .tw-hover-accent-effect,
+  & .tw-hover-accent-effect > div {
+    @include clip(l);
+  }
+
+  /* Drop the coloured "lifted card" hover effect, keep a quiet fade. */
+  & .tw-hover-accent-effect,
+  & .tw-hover-accent-effect > div {
+    transform: none !important;
+    background-color: transparent !important;
+  }
+
+  /* Its corner and edge pieces are the empty siblings of the thumbnail wrapper. */
+  /*
+   * Shared streams ("guest star") frame their thumbnail with a gradient: the
+   * picture is cut out of it by a square inset. The cut-out follows the
+   * rounded corners instead, for a frame of even width all around.
+   */
+  & .guest-star-live-card-clip-edge {
+    clip-path: inset(3px round calc(var(--rs-radius-l) - 3px)) !important;
+  }
+
+  @include guarded(".tw-hover-accent-effect > div%g:empty") {
+    display: none !important;
+  }
+}

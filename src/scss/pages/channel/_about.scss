@@ -1,0 +1,103 @@
+// Channel: About and the goal beside it.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * About: heading, then one card. The panel is a header row followed by
+   * .about-section__panel--content, which Twitch already boxes. The panel
+   * itself stays bare, so the heading lines up with the avatar above, and
+   * the content box is the card.
+   */
+  & .about-section__panel {
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  @include guarded(".about-section__panel > div%g:first-child") {
+    display: none !important;
+  }
+
+  & .about-section h3 {
+    @include type(6, 600);
+    color: var(--rs-text) !important;
+  }
+
+  & .about-section__panel--content {
+    @include panel(l);
+    padding: var(--rs-4) var(--rs-6) !important;
+    margin-top: 0 !important;
+
+    /* Text on the left, links on the right, both starting on the same line. */
+    & > div {
+      align-items: flex-start !important;
+    }
+
+    @include guarded(
+      "> div > div%g:last-child",
+      "%g:has(> .social-media-link)",
+      "%g:has(> div > .social-media-link)"
+    ) {
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+    }
+  }
+
+  & .about-section__panel--content,
+  & .about-section__panel--content p,
+  & .about-section__panel--content span {
+    font-size: var(--rs-text-4) !important;
+    line-height: 1.6 !important;
+    color: var(--rs-muted) !important;
+  }
+
+  & .about-section .social-media-link,
+  & .about-section .social-media-link * {
+    @include type(3, 500);
+    color: var(--rs-muted) !important;
+    transition: color var(--rs-ease);
+  }
+
+  & .about-section .social-media-link:hover,
+  & .about-section .social-media-link:hover * {
+    color: var(--rs-text) !important;
+  }
+
+  & .about-section__panel + div:where(.about-section *) {
+    margin-bottom: 0 !important;
+  }
+
+  /*
+   * Goal beside About ("Plus Goal", sub and follower goals): the same
+   * heading-then-card pair. Its heading starts level with About's, and its
+   * card, which reads the page colour, gets the About card's surface.
+   */
+  & .about-section__actions {
+
+    @include guarded("div%g:has(> div > h3)") {
+      /* As tall as About's heading row, so both cards start level. */
+      margin-bottom: 0 !important;
+      padding-bottom: 0 !important;
+    }
+
+    @include guarded("div%g:has(> h3)") {
+      margin: 0 !important;
+    }
+
+    & [role="region"] {
+      margin-top: var(--rs-2) !important;
+    }
+
+    & [role="region"] > div {
+      @include panel(l);
+      padding: var(--rs-3) var(--rs-4) !important;
+    }
+
+    /* The backing Twitch puts under the progress track is the card's now. */
+    @include guarded('div%g:has(> * > * > [role="progressbar"])') {
+      background: transparent !important;
+    }
+  }
+}

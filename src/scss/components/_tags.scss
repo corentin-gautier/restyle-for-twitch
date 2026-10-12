@@ -1,0 +1,22 @@
+// Tags, everywhere.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /* Tags, everywhere: small accent-tinted chips instead of bold grey pills. */
+  & .tw-tag {
+    background: var(--rs-accent-tint) !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-pill) !important;
+    box-shadow: none !important;
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  & .tw-tag,
+  & .tw-tag * {
+    @include type(1, 500);
+    color: var(--rs-accent-quiet) !important;
+  }
+}

@@ -1,0 +1,22 @@
+// Centred modals.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Centred modals (a category's full description...): the box is the
+   * element holding the close button. Framed like the other floating layers,
+   * with room around its content.
+   */
+  @include guarded(".modal-wrapper__content > div%g:has(> .modal__close-button)") {
+    padding: var(--rs-6) !important;
+    @include floating(l);
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  & .modal__close-button {
+    top: var(--rs-3) !important;
+    right: var(--rs-3) !important;
+  }
+}

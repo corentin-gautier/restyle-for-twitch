@@ -1,0 +1,78 @@
+// Channel: the main player's frame.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Main player: inset from the sidebar, top bar and chat, with rounded
+   * corners. The inset shows what is behind the player, which becomes the
+   * page background. Theatre and fullscreen stay edge to edge.
+   */
+  & .persistent-player:not(.persistent-player--theatre) {
+    /*
+     * No inset below: the block under the player starts where Twitch's
+     * script puts it, at the height of an unpadded player, and brings its
+     * own top padding.
+     */
+    padding: var(--rs-4) var(--rs-4) 0 !important;
+    background: var(--rs-bg) !important;
+
+    /*
+     * In a short window Twitch caps the player's height, inset included:
+     * the video takes what is left, or its bottom is cut off flush against
+     * the block below.
+     */
+    & .video-player__container {
+      max-height: calc(100vh - 16rem - var(--rs-4)) !important;
+    }
+
+    & .video-player {
+      background: var(--rs-bg) !important;
+    }
+
+    & .video-player,
+    & .video-player__container,
+    & .video-ref,
+    & video {
+      @include clip(l);
+    }
+  }
+
+  /*
+   * "Floating panels" option (see layout/_floating-panels.scss): the gap under the top bar is
+   * already above the player, whose top then lines up with the panels' on
+   * either side.
+   */
+  &[data-rs-floating] .persistent-player:not(.persistent-player--theatre) {
+    padding-top: 0 !important;
+  }
+
+  /*
+   * The last one is a black backdrop Twitch scales to twice the player:
+   * it reaches under the chat column, and shows in the gap around a
+   * floating chat (the "Floating panels" option).
+   */
+  @include guarded(
+    '[class*="channel-root__player"]',
+    ".channel-root__upper-watch",
+    ".channel-root__player div%g:has(> div > .channel-root__player-background)"
+  ) {
+    background: var(--rs-bg) !important;
+  }
+
+  /*
+   * A video's progress bar: the played part is painted inline in Twitch's
+   * purple, out of reach of the palette's variables. Told by that colour,
+   * the only thing that sets it apart from the buffered part.
+   */
+  & .seekbar-segment:is([style*="169, 112, 255"], [style*="a970ff" i]) {
+    background-color: var(--rs-accent) !important;
+  }
+
+  & :fullscreen,
+  & :fullscreen .video-player__container,
+  & :fullscreen .video-ref,
+  & :fullscreen video {
+    border-radius: 0 !important;
+  }
+}

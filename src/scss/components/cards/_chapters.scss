@@ -1,0 +1,130 @@
+// "Chapters" under a video card's title, and its popup.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * "Chapters" under a video's title: a small button in the tags' accent
+   * tint, but taller and squarer than a tag, since it opens a menu. Its
+   * count loses its own pill and joins the label.
+   */
+  /*
+   * On a channel's own videos the name's line is left empty, and its margins
+   * add to the gap under the title.
+   */
+  & article [class*="ScTextMargin"]:empty {
+    display: none !important;
+  }
+
+  /* A button, not a line of text: a full step under the title. */
+  & article .preview-card-game-balloon:has(.tw-pill) {
+    margin-top: var(--rs-2) !important;
+  }
+
+  @include guarded("article button%g:has(.tw-pill)", $from: "article") {
+    height: 2.8rem !important;
+    min-height: 0 !important;
+    margin-top: 0 !important;
+    padding: 0 1rem !important;
+    border-radius: var(--rs-radius-s) !important;
+    background: var(--rs-accent-tint) !important;
+    color: var(--rs-accent-quiet) !important;
+    transition: background-color var(--rs-ease);
+
+    & p,
+    & .tw-pill {
+      @include type(2, 600);
+      line-height: 2.8rem !important;
+      color: inherit !important;
+    }
+
+    & .tw-pill {
+      padding: 0 !important;
+      background: transparent !important;
+    }
+
+    & svg {
+      width: 1.6rem !important;
+      height: 1.6rem !important;
+      fill: currentColor !important;
+    }
+
+    @include guarded(
+      ".tw-core-button-icon",
+      "%g:has(> .tw-core-button-icon)",
+      $from: "article"
+    ) {
+      display: flex !important;
+      width: auto !important;
+      height: auto !important;
+      @include flush;
+    }
+
+    /* Twitch's paddings between icon, label and count, replaced by one small gap. */
+    & [data-a-target="tw-core-button-label-text"] {
+      padding: 0 0 0 0.4rem !important;
+    }
+
+    @include guarded("%g:has(> .tw-pill)", $from: "article") {
+      margin: 0 0 0 0.4rem !important;
+      padding: 0 !important;
+    }
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  /*
+   * Its popup, the list of chapters: a small-caps heading, then padded rows
+   * that light up on hover, each with a small rounded box art.
+   */
+  & .tw-balloon:has(.preview-card-game-balloon__content) {
+    & > div {
+      padding: var(--rs-1) !important;
+    }
+
+    & > div > :not(.preview-card-game-balloon__content) {
+      padding: var(--rs-2) var(--rs-2) var(--rs-1) !important;
+      border: 0 !important;
+
+      & p {
+        @include caps(1);
+        color: var(--rs-label) !important;
+      }
+    }
+
+    & .media-row > a {
+      border-radius: var(--rs-radius-s) !important;
+      transition: background-color var(--rs-ease);
+
+      & > div {
+        align-items: center !important;
+        padding: var(--rs-1) var(--rs-2) !important;
+      }
+
+      &:hover, &:focus-visible {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    & .media-row__image-wrapper {
+      flex: 0 0 var(--rs-avatar-card) !important;
+      width: var(--rs-avatar-card) !important;
+      @include clip(xs);
+    }
+
+    & :where(.tw-balloon *):has(> .media-row__info-text) {
+      padding: 0 0 0 var(--rs-2) !important;
+    }
+
+    & .media-row__info-text p {
+      @include type(3, 600);
+      color: var(--rs-text) !important;
+    }
+
+    & .media-row__info-description p {
+      @include muted(2);
+    }
+  }
+}

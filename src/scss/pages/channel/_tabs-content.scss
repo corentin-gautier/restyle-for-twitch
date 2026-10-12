@@ -1,0 +1,20 @@
+// Channel: the step from the tabs down to a tab's content.
+
+html:not([data-rs="off"]) {
+  /*
+   * The About tab lives in the same wrapper as the other tabs' content: it
+   * keeps that wrapper's inset, which the live page's About rule removes.
+   */
+  & .channel-root__info--home .channel-info-content .home__lower-content:has(.about-section__panel) {
+    padding-inline: 3.2rem !important;
+  }
+
+  /*
+   * Under a channel's tabs: one step down to the tab's content, set here for
+   * every tab. Twitch gives each tab its own (none, 16px, 20px, 30px).
+   */
+  & .home__lower-content,
+  & .channel-root__info--home .channel-info-content .home__lower-content:has(.about-section__panel) {
+    padding-block-start: var(--rs-shelf-head) !important;
+  }
+}

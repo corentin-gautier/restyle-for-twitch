@@ -1,0 +1,9 @@
+// Whispers.
+
+html:not([data-rs="off"]) {
+  /* Whispers (logged in): the search row is painted a step darker. */
+  & div:has(> div > [data-a-target="whisper-search-input"]) {
+    padding: 0 var(--rs-1) var(--rs-2) !important;
+    background: transparent !important;
+  }
+}

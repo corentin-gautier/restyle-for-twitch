@@ -1,0 +1,144 @@
+// Drops & Rewards, All Campaigns tab (/drops/campaigns).
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A list of campaigns that open in place. Twitch joins them into one
+   * block ruled between rows; each is a panel of its own here, its picture
+   * clipped by the panel's corner, its dates as a quiet second column.
+   */
+  @include guarded(".drops-root__content div%g:has(> .accordion-header)") {
+    margin: 0 0 var(--rs-2) !important;
+    @include panel(m);
+    overflow: hidden !important;
+
+    & > .accordion-header,
+    & > .accordion-header > button,
+    & > .accordion-header > button > div {
+      background: transparent !important;
+      border-radius: 0 !important;
+    }
+
+    & > .accordion-header > button {
+      transition: background-color var(--rs-ease);
+
+      /* The dates. */
+      @include guarded("> div > div%g:nth-child(3)") {
+        @include muted(3);
+      }
+
+      @include guarded("p + p%g") {
+        @include muted(3);
+      }
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+    }
+
+    /* What a campaign holds, once open. */
+    @include guarded("> .accordion-header + div%g") {
+      padding: var(--rs-4) !important;
+      background: transparent !important;
+      border-radius: 0 !important;
+
+      @include guarded("> div%g") {
+        @include flush;
+      }
+
+      @include guarded("> div + div%g") {
+        margin-top: var(--rs-6) !important;
+      }
+    }
+
+    /*
+     * Its rows: a label and what it names. Twitch sizes each label to its
+     * text, so no two rows start at the same place, and insets the blocks
+     * by different amounts. One label column, no insets.
+     */
+    @include guarded("div%g:has(> div > .drop-details__label)") {
+      @include flush;
+      background: transparent !important;
+    }
+
+    @include guarded("div%g:has(> .drop-details__label)") {
+      margin: var(--rs-4) 0 0 !important;
+    }
+
+    & .drop-details__label {
+      flex: none !important;
+      width: 18rem !important;
+      padding: 0 var(--rs-4) 0 0 !important;
+
+      /* Any label: "Connection (Required)" is set larger than the others. */
+      & * {
+        @include type(3, 600);
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    @include guarded(".drop-details__label + div%g") {
+      flex: 1 1 0 !important;
+    }
+
+    @include guarded(
+      ".drop-details__label + div%g",
+      ".drop-details__label + div > div%g:not(.tw-tower)"
+    ) {
+      min-width: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* The campaign's own name, with its dates at the right. */
+    @include guarded(".accordion-header + div div%g:has(> div > strong):not(.drop-details__label, :has(.drop-details__label))") {
+      margin: 0 !important;
+
+      @include guarded("strong%g") {
+        @include type(6, 700);
+      }
+
+      @include guarded("p%g") {
+        @include muted(3);
+      }
+    }
+
+    /* "Progress & Redemption", a grey band: a panel set into the campaign. */
+    @include guarded("> .accordion-header + div > div > div%g:has(> div > .drop-details__label)") {
+      margin-top: var(--rs-4) !important;
+      padding: var(--rs-4) !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+
+      @include guarded("> div%g:first-child") {
+        margin-top: 0 !important;
+      }
+
+      @include guarded("%g:is(h3, h4, h5)") {
+        @include type(3, 600);
+        color: var(--rs-muted) !important;
+      }
+    }
+  }
+
+  /*
+   * The groups of campaigns: a shelf title's step under the description,
+   * the list's own gap between two groups, a shelf's gap before the next
+   * heading.
+   */
+  @include guarded(".drops-root__content > div%g:has(.accordion-header)") {
+    margin: 0 !important;
+  }
+
+  @include guarded(".drops-root__content > div%g:not(:has(.accordion-header))") {
+    margin-bottom: 0 !important;
+  }
+
+  @include guarded(".drops-root__content > div%g:not(:has(.accordion-header)) + div%g:has(.accordion-header)") {
+    margin-top: var(--rs-shelf-head) !important;
+  }
+
+  @include guarded(".drops-root__content > div%g:has(.accordion-header) + div%g:has(h4)") {
+    margin-top: calc(var(--rs-shelf-gap) - var(--rs-2)) !important;
+  }
+}

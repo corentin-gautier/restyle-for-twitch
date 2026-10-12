@@ -1,0 +1,160 @@
+// Turbo offer, the popover of "Try 1-Month Ad-Free".
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Turbo offer ("Try 1-Month Ad-Free", in the top bar): a popover with an
+   * empty header strip holding only its close button, over a banner, a
+   * centred pitch, two benefits with their small print, three more as bare
+   * icons over a caption, and two small buttons at the right.
+   *
+   * The banner goes to the top edge, the close button floating on it. The
+   * pitch gets a title's type; the benefits become one tinted panel and
+   * three tiles, their icons in the accent; the buttons share the width.
+   * Everything sits on one inset.
+   */
+  @include guarded(".ReactModal__Content div%g:has(> .tw-popover-header + .turbo-ballon-content__scroll-container)") {
+    --rs-turbo-pad: var(--rs-4);
+
+    position: relative !important;
+
+    & > .tw-popover-header {
+      position: absolute !important;
+      z-index: 1 !important;
+      top: var(--rs-3) !important;
+      right: var(--rs-3) !important;
+      left: auto !important;
+      width: auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      padding: 0 !important;
+      background: transparent !important;
+      border: 0 !important;
+
+      & > :not(.tw-popover-header__icon-slot--right) {
+        display: none !important;
+      }
+
+      & button {
+        background: var(--rs-scrim) !important;
+        color: var(--rs-on-scrim) !important;
+      }
+    }
+
+    /* The banner, then the pitch. */
+    & img[alt="Turbo Header"] {
+      display: block !important;
+      width: 100% !important;
+    }
+
+    @include guarded("div%g:has(> strong)") {
+      padding: 0 var(--rs-turbo-pad) !important;
+
+      & > strong {
+        display: block !important;
+        @include type(title, 700);
+        line-height: 1.2 !important;
+        letter-spacing: -0.015em !important;
+      }
+
+      & > p {
+        margin-top: var(--rs-2) !important;
+        @include muted(3);
+      }
+
+      & > div {
+        margin: var(--rs-1) 0 0 !important;
+
+        & p {
+          font-size: var(--rs-text-3) !important;
+          color: var(--rs-label) !important;
+        }
+      }
+    }
+
+    & .turbo-ballon-content__scroll-container .tw-svg svg {
+      fill: var(--rs-accent) !important;
+    }
+
+    /* The two benefits with small print: rows of one panel. */
+    @include guarded(".turbo-ballon-content__scroll-container > div > %g:nth-child(2)") {
+      margin: var(--rs-4) var(--rs-turbo-pad) 0 !important;
+      padding: var(--rs-3) !important;
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+
+      @include guarded("> div%g") {
+        margin: 0 !important;
+      }
+
+      @include guarded("> div + div%g") {
+        margin-top: var(--rs-3) !important;
+      }
+
+      @include guarded("> div > div%g:first-child") {
+        margin-right: var(--rs-2) !important;
+      }
+
+      @include guarded("p%g") {
+        margin-top: 0.2rem !important;
+        font-size: var(--rs-text-2) !important;
+        line-height: 1.45 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /* The three others: tiles sharing a row. */
+    @include guarded(".turbo-ballon-content__scroll-container > div > %g:nth-child(3)") {
+      display: grid !important;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+      gap: var(--rs-2) !important;
+      margin: var(--rs-2) var(--rs-turbo-pad) 0 !important;
+      padding: 0 !important;
+
+      @include guarded("> div%g") {
+        align-items: center !important;
+        gap: var(--rs-1) !important;
+        width: auto !important;
+        padding: var(--rs-3) var(--rs-2) !important;
+        background: var(--rs-hover) !important;
+        border-radius: var(--rs-radius-m) !important;
+        text-align: center !important;
+      }
+
+      @include guarded("p%g") {
+        font-size: var(--rs-text-2) !important;
+        line-height: 1.35 !important;
+        color: var(--rs-label) !important;
+      }
+    }
+
+    /* "Billed Monthly • Cancel Anytime". */
+    @include guarded(".turbo-ballon-content__scroll-container > div > %g:nth-child(4)") {
+      margin: var(--rs-3) 0 0 !important;
+
+      @include guarded("span%g") {
+        font-size: var(--rs-text-1) !important;
+        color: var(--rs-faint) !important;
+      }
+    }
+
+    /* The buttons. */
+    @include guarded("> .turbo-ballon-content__scroll-container + div%g") {
+      gap: var(--rs-2) !important;
+      margin: 0 !important;
+      padding: var(--rs-3) var(--rs-turbo-pad) var(--rs-turbo-pad) !important;
+
+      @include guarded("> button%g") {
+        flex: 1 1 0 !important;
+        height: 3.6rem !important;
+        justify-content: center !important;
+      }
+
+      /* "Gift Turbo": on the float surface its own fill hardly shows. */
+      @include guarded("> button%g:first-child:not(:only-child)") {
+        background: var(--rs-hover) !important;
+      }
+    }
+  }
+}

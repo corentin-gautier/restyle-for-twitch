@@ -1,0 +1,12 @@
+// A dialog box left mounted with nothing in it.
+@use "tools/guard" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A dialog box Twitch leaves mounted with nothing in it (on a clip's
+   * page): its border alone showed as a stray line.
+   */
+  @include guarded(".ReactModal__Content .tw-transition > div%g:empty", $from: ".ReactModal__Content") {
+    display: none !important;
+  }
+}

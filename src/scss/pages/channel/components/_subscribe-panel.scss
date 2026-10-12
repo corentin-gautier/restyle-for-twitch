@@ -1,0 +1,536 @@
+// Subscribe and Gift a Sub panels.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Twitch separates their blocks with background steps that the palette
+   * flattens into one colour. The steps are redrawn: a bordered floating box,
+   * tinted cards for the gift options, bordered fields, a ruled footer.
+   */
+  & .sub-modal {
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+  }
+
+  /*
+   * Logged in, the panel is not a centred dialog but a sheet laid over the
+   * right of the player, as tall as it. It takes the player's inset, so it
+   * sits inside the video's rounded frame instead of touching the top bar
+   * and the chat, with the border and corners of the other floating boxes.
+   */
+  & .support-panel-container {
+    inset: var(--rs-8) var(--rs-8) calc(var(--rs-4) + 2px) auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    border: 1px solid var(--rs-float-border) !important;
+    border-radius: var(--rs-radius-l) !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  /*
+   * With floating panels the video loses its top padding and sits that much
+   * higher in its box: the sheet follows it, to keep the same inset all round.
+   */
+  &[data-rs-floating] .support-panel-container {
+    top: var(--rs-4) !important;
+    bottom: calc(2 * var(--rs-4) + 2px) !important;
+  }
+
+  /* Bundle offers: the framed group follows the rounding of its cards. */
+  @include guarded(".support-panel div%g:has(> .gifting-option):not(:has(> .gifting-option:only-child))") {
+    @include clip(m);
+  }
+
+  & .support-panel {
+    background: var(--rs-float) !important;
+
+    & .gifting-option,
+    & .gift-theme-selector {
+      background: var(--rs-hover) !important;
+      @include clip(m);
+    }
+
+    & .gifting-option {
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-accent-tint) !important;
+      }
+    }
+
+    /*
+     * The themes: Twitch frames each picture in a thick border, with a
+     * square tile showing at the rounded corners, and rings the chosen one
+     * three times. One rounded tile each, the chosen one ringed in the
+     * accent.
+     */
+    & .gift-theme-selector .tw-selectable {
+      & label {
+        padding: 0 !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-s) !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        transition: box-shadow var(--rs-ease);
+      }
+
+      & label > div,
+      & .gift-theme-selector__background {
+        border-radius: var(--rs-radius-s) !important;
+      }
+
+      & .gift-theme-selector__background {
+        @include row;
+        justify-content: center !important;
+        box-sizing: border-box !important;
+        width: 3.6rem !important;
+        height: 3.6rem !important;
+        padding: 0.4rem !important;
+        background: var(--rs-hover) !important;
+      }
+
+      @include guarded("input:focus-visible + label%g") {
+        box-shadow: 0 0 0 2px var(--rs-text) !important;
+      }
+
+      @include guarded("input:checked + label%g") {
+        box-shadow: 0 0 0 2px var(--rs-accent) !important;
+      }
+    }
+
+    & .tw-select,
+    & input:is([type="text"], [type="number"]) {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-s) !important;
+      box-shadow: inset 0 0 0 1px var(--rs-float-border) !important;
+    }
+
+    /* The channel's name heads the panel: a title, not body text. */
+    & p.tw-title {
+      @include type(title, 700);
+      letter-spacing: -0.01em !important;
+    }
+
+    /* Footer with the actions, under the scrolling part. */
+    @include guarded("> .scrollable-area + div%g") {
+      border-top: var(--rs-hairline) !important;
+
+      /* Over a player the footer comes darker than the sheet it closes. */
+      @include guarded(
+        "&",
+        "> div%g",
+        "> div > div%g"
+      ) {
+        background: var(--rs-float) !important;
+      }
+
+      /* "All prices are shown in ...": a footnote under the buttons. */
+      @include guarded("> div > div:last-child%g:not(:has(*))") {
+        margin: var(--rs-2) 0 0 !important;
+        font-size: var(--rs-text-2) !important;
+        color: var(--rs-faint) !important;
+        text-align: right !important;
+      }
+    }
+
+    /*
+     * Subscribe: the panel lists what a sub brings. The advert for another
+     * tier's benefit above that list goes, and the legal note under it
+     * steps back.
+     */
+    @include guarded('.scrollable-area div%g:has(> div > [class*="ScCoreGraphic"]):has(> div > strong)', $from: ".support-panel") {
+      display: none !important;
+    }
+
+    @include guarded(".scrollable-area div:last-child > p:only-child%g:has(> a.tw-link)", $from: ".support-panel") {
+      font-size: var(--rs-text-2) !important;
+      color: var(--rs-faint) !important;
+    }
+
+    /* The channel's bio under its name: a quiet aside, without the
+       quotation mark drawn over its first letters. */
+    @include guarded(".scrollable-area div%g:has(> div > div > p.tw-title) > div:last-child%g:not(:has(.tw-title))", $from: ".support-panel") {
+      @include guarded("> div%g:has(> img)", $from: ".support-panel") {
+        display: none !important;
+      }
+
+      @include guarded("> div%g", $from: ".support-panel") {
+        padding: 0 !important;
+      }
+
+      @include guarded("p%g", $from: ".support-panel") {
+        font-size: var(--rs-text-3) !important;
+        line-height: 1.45 !important;
+        color: var(--rs-muted) !important;
+      }
+    }
+
+    /*
+     * The benefits. Twitch writes them as sentences with a bold start ("62
+     * Custom Emotes to express yourself in chat") under a bold introduction,
+     * then four captioned icons in a row. They become three labelled groups:
+     * the bold start alone as a small label, and the perks as a two-column
+     * list, icon then name.
+     */
+    @include guarded(".scrollable-area div%g:has(> strong):has(> div > p > span)", $from: ".support-panel") {
+      & > strong {
+        display: none !important;
+      }
+
+      @include guarded(
+        "> div%g:has(> p > span)",
+        "> div%g:has(> strong)",
+        $from: ".support-panel"
+      ) {
+        margin: var(--rs-4) 0 var(--rs-2) !important;
+        padding: 0 !important;
+      }
+
+      @include guarded("> div%g:first-of-type", $from: ".support-panel") {
+        margin-top: 0 !important;
+      }
+
+      @include guarded("> div > p%g:has(> span)", $from: ".support-panel") {
+        font-size: 0 !important;
+        line-height: 0 !important;
+      }
+
+      & > div > p > span,
+      & > div > strong {
+        display: block !important;
+        @include type(1, 600);
+        line-height: 1.4 !important;
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      /* Emotes and badges: one gap, and "Show All" level with them. */
+      @include guarded("> div%g:has(> div > div > img, .chat-badge)", $from: ".support-panel") {
+        align-items: center !important;
+        gap: 0.8rem 1rem !important;
+
+        & > div {
+          @include flush;
+        }
+
+        & > button {
+          height: auto !important;
+          padding: 0 !important;
+          font-size: var(--rs-text-2) !important;
+        }
+      }
+
+      @include guarded("> div%g:has(> div > div > img):not(:has(.chat-badge)) > div", $from: ".support-panel") {
+        display: flex !important;
+        height: 2.8rem !important;
+      }
+
+      /* Perks. */
+      @include guarded("> div%g:has(> div > div > .tw-svg)", $from: ".support-panel") {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: var(--rs-2) var(--rs-4) !important;
+        margin: 0 !important;
+
+        & > div {
+          flex-direction: row !important;
+          align-items: center !important;
+          gap: 0.8rem !important;
+          width: auto !important;
+        }
+
+        & > div > div {
+          display: flex !important;
+          margin: 0 !important;
+        }
+
+        & p {
+          font-size: var(--rs-text-3) !important;
+          text-align: left !important;
+          color: var(--rs-label) !important;
+        }
+      }
+    }
+
+    /* "Elevate your Subscription": a full row under the list, not a
+       button adrift on the right. */
+    @include guarded('.scrollable-area div%g:has(> [data-a-target^="elevate-your-subscription"])', $from: ".support-panel") {
+      margin: var(--rs-4) 1.6rem var(--rs-3) !important;
+
+      & > button {
+        width: 100% !important;
+      }
+    }
+
+    /* "Save ...", "10% off": chips in the tags' tint, not bright green labels. */
+    & .scrollable-area .tw-pill {
+      padding: 0.2rem 0.8rem !important;
+      border-radius: var(--rs-radius-pill) !important;
+      background: var(--rs-accent-tint) !important;
+      @include type(1, 500);
+      text-transform: none !important;
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    /*
+     * Choices of a duration (a sub renewed every 1, 3 or 6 months, a gift of
+     * as many): Twitch frames each in a thick border around a second box.
+     * One tinted card each, the chosen one in the accent.
+     */
+    & .tw-selectable:not(.gift-theme-selector *) {
+      & label {
+        padding: 0 !important;
+        border: 1px solid var(--rs-float-border) !important;
+        border-radius: var(--rs-radius-m) !important;
+        background: var(--rs-hover) !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        transition: background-color var(--rs-ease), border-color var(--rs-ease);
+      }
+
+      & input:checked + label:where(.tw-selectable *) {
+        border-color: var(--rs-accent) !important;
+        background: var(--rs-accent-tint) !important;
+      }
+
+      & label > div > div {
+        padding: 0.8rem 1rem !important;
+        background: transparent !important;
+      }
+    }
+
+    /* The months of a gift: three equal cards from gutter to gutter. */
+    @include guarded(".scrollable-area div%g:has(> div > .tw-selectable):not(.gift-theme-selector)", $from: ".support-panel") {
+      margin-right: -0.4rem !important;
+
+      & > div {
+        flex: 1 1 0 !important;
+      }
+    }
+
+    /*
+     * "Elevate your Subscription": the higher tiers, then the longer
+     * renewals. On the panel's gutters, under the same small labels as the
+     * benefits, each tier a card with its button across it.
+     */
+    @include guarded(".scrollable-area div%g:has(> div > div > .upgrade-options)", $from: ".support-panel") {
+      margin-inline: 1.6rem !important;
+    }
+
+    @include guarded(".scrollable-area div%g:has(> div > .upgrade-options)", $from: ".support-panel") {
+      @include guarded(
+        "> div:first-child > strong%g",
+        "> strong",
+        $from: ".support-panel"
+      ) {
+        display: block !important;
+        margin: 0 0 var(--rs-2) !important;
+        @include type(1, 600);
+        letter-spacing: 0.08em !important;
+        text-transform: uppercase !important;
+        color: var(--rs-muted) !important;
+      }
+
+      & > strong {
+        margin-top: var(--rs-4) !important;
+      }
+
+      /* "Renew every" repeats the label over it. */
+      @include guarded('> div%g:has([data-a-target^="multimonth-option"]) > strong', $from: ".support-panel") {
+        display: none !important;
+      }
+
+      /* The cards keep their margins: the row is pulled out by as much. */
+      @include guarded('div%g:has(> [data-a-target^="multimonth-option"])', $from: ".support-panel") {
+        margin-inline: -0.4rem !important;
+      }
+
+      & [data-a-target^="multimonth-option"] {
+        flex: 1 1 0 !important;
+      }
+
+      & [data-a-target^="multimonth-option"] :is(.tw-selectable, label, label > div, label > div > div) {
+        box-sizing: border-box !important;
+        width: 100% !important;
+        height: 100% !important;
+      }
+
+      @include guarded("div%g:has(> .upgrade-options)", $from: ".support-panel") {
+        background: transparent !important;
+      }
+    }
+
+    & .upgrade-options {
+      width: 100% !important;
+
+      & > div {
+        gap: 1rem !important;
+        margin-bottom: var(--rs-2) !important;
+        padding: 1.2rem !important;
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+        background: var(--rs-hover) !important;
+      }
+
+      @include guarded("> div%g:last-child") {
+        margin-bottom: 0 !important;
+      }
+
+      & p {
+        font-size: var(--rs-text-3) !important;
+        line-height: 1.45 !important;
+      }
+
+      @include guarded(
+        "div%g:has(> .tw-purchase-button)",
+        ".tw-purchase-button"
+      ) {
+        width: 100% !important;
+      }
+
+      & .tw-purchase-button {
+        justify-content: space-between !important;
+      }
+    }
+
+    /*
+     * Gift a Sub: a list of offers. Twitch draws each one differently (a
+     * framed advert, a row, a purple box of bundles with a banner, a field)
+     * with titles as large as the channel's name. They become rows of one
+     * kind: picture, label, then the price button with the price before
+     * discount beside it, the buttons in one column.
+     */
+    & [role="dialog"] {
+      /* "Gift to the Community" beside the tier select. */
+      @include guarded("> div%g:first-child", $from: '[role="dialog"]') {
+        align-items: center !important;
+        padding-bottom: var(--rs-3) !important;
+      }
+
+      /* "Gift a specific viewer" and "Gift Anonymously": one row on the
+         panel's gutters, without the rules that ran edge to edge. */
+      @include guarded("> div%g:has(> .tw-checkbox)", $from: '[role="dialog"]') {
+        align-items: center !important;
+        justify-content: space-between !important;
+        margin-bottom: var(--rs-3) !important;
+        padding: 0 1.6rem 0 0.6rem !important;
+        border: 0 !important;
+      }
+
+      /* The advert ("Complete the goal!"): a tinted card like the theme
+         picker under it, instead of an accent frame. */
+      & [data-rs-hook="gift-hero"] {
+        border: 0 !important;
+        border-radius: var(--rs-radius-m) !important;
+        background: var(--rs-hover) !important;
+        overflow: hidden !important;
+
+        & > div {
+          align-items: center !important;
+          padding: 0.8rem !important;
+          background: transparent !important;
+        }
+      }
+
+      /* The rows. */
+      @include guarded(
+        'div%g:has(> div > .gifting-option__image, > div > div > [data-a-target="gift-custom-quantity-input"])',
+        $from: '[role="dialog"]'
+      ) {
+        align-items: center !important;
+        min-height: 5.6rem !important;
+        margin: 0 !important;
+        padding: 0.6rem 0 !important;
+        background: transparent !important;
+
+        & > div,
+        & [id^="gift-text-oneclick"] {
+          align-items: center !important;
+          margin-top: 0 !important;
+          margin-bottom: 0 !important;
+        }
+      }
+
+      & .gifting-option__image {
+        width: 5.6rem !important;
+        height: auto !important;
+      }
+
+      & p.tw-title {
+        @include type(5, 600);
+        letter-spacing: 0 !important;
+      }
+
+      /* The custom quantity closes the list, on the same gutters. */
+      @include guarded('div%g:has(> div > div > [data-a-target="gift-custom-quantity-input"])', $from: '[role="dialog"]') {
+        margin: var(--rs-2) 1.6rem 0 !important;
+      }
+
+      /* Price button, with the price before discount on its left. */
+      @include guarded("div%g:has(> button):has(> div > p)", $from: '[role="dialog"]') {
+        flex-direction: row-reverse !important;
+        align-items: center !important;
+        gap: var(--rs-2) !important;
+        @include flush;
+
+        & > div {
+          @include flush;
+        }
+
+        & > div > p {
+          font-size: var(--rs-text-2) !important;
+          color: var(--rs-faint) !important;
+        }
+      }
+
+      @include guarded(
+        'button[data-a-target^="gift-button-oneclick"]',
+        "div%g:has(> button):has(> div > p) > button",
+        $from: '[role="dialog"]'
+      ) {
+        min-width: 11rem !important;
+      }
+
+      /* Bundles: no frame, and their banner is a small label over them. */
+      & .discounted-bundle-box {
+        margin: var(--rs-2) 0 0 !important;
+        padding-top: var(--rs-3) !important;
+        border: 0 !important;
+        border-top: var(--rs-hairline) !important;
+        border-radius: 0 !important;
+      }
+
+      & .discounted-bundle-box__header {
+        min-height: 0 !important;
+        margin: 0 0 var(--rs-2) !important;
+        padding: 0 !important;
+        background: transparent !important;
+
+        & img {
+          display: none !important;
+        }
+
+        & div {
+          height: auto !important;
+          padding: 0 !important;
+        }
+
+        & p {
+          @include type(1, 600);
+          letter-spacing: 0.08em !important;
+          text-transform: uppercase !important;
+          color: var(--rs-muted) !important;
+        }
+      }
+    }
+  }
+
+  /* Checkboxes stay square: only radio buttons are round. */
+  & .tw-checkbox__label::before {
+    border-radius: calc(0.4rem * var(--rs-round)) !important;
+  }
+}

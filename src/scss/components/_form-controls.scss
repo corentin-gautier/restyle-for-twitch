@@ -80,4 +80,15 @@ html:not([data-rs="off"]) {
   & .tw-combo-input:not(.top-nav *) button {
     height: var(--rs-control-height) !important;
   }
+
+  /*
+   * A date field (Wallet's history tabs): its calendar button is pinned to
+   * the corner of Twitch's shorter field. Centred on this one's height.
+   */
+  & [data-a-target="date-picker"] > button {
+    top: 0 !important;
+    bottom: 0 !important;
+    right: 0.6rem !important;
+    margin-block: auto !important;
+  }
 }

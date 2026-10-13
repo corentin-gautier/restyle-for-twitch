@@ -142,7 +142,7 @@ only one page uses goes in that page's folder, under `components/`
 | `layout/` | What frames every page: `_top-bar`, `_sidebar`, `_sidebar-collapsed`, `_signup-banner`, `_cookie-banner`, `_floating-panels` (the popup option), `_page-column` (the directory pages' gutters). |
 | `components/` | What the whole site shares, and only that: `_page-header`, `_titles`, `_tabs`, `_tabs-in-popovers`, `_shelf` (the shelf rhythm), `_shelf-arrows`, `_empty-state`, `_filter-row`, `_filter-menus`, `_form-controls`, `_loading`, `_tags`, `_content-notice`. |
 | `components/cards/` | `_grid` (`.tw-tower`), `_thumbnail`, `_thumbnail-stats`, `_hover`, `_body` (avatar beside the text), `_text`, `_chapters`, `_category-card`. |
-| `components/overlays/` | `_floating-boxes` (balloons, popovers, dialogs), `_menus`, `_backdrop`, `_modal`, `_whispers`, `_clip-viewer`, `_streamer-card`, `_turbo-offer`, `_buy-bits`, `_empty-dialog`. |
+| `components/overlays/` | `_floating-boxes` (balloons, popovers, dialogs), `_menus`, `_backdrop`, `_modal`, `_whispers`, `_clip-viewer`, `_streamer-card`, `_turbo-offer`, `_buy-bits`, `_prime-offers`, `_empty-dialog`. |
 | `components/player/` | What opens over any player: `_settings-menu`, `_keyboard-shortcuts`, `_stats`, `_content-gate`. |
 | `pages/` | One file per page: `_home`, `_settings`, `_account` (the header Drops, Wallet and Subscriptions share), `_subscriptions`, `_collection`, `_category`, `_event`, `_search`, `_error`, `_clip`, `_team`. A page with several files has a folder, and what only that page uses sits in the folder's own `components/`. |
 | `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
@@ -241,6 +241,7 @@ kind found later goes in that list; one served by another site goes in
 | Streamer card | `components/overlays/_streamer-card` | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
 | Turbo offer | `components/overlays/_turbo-offer` | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
 | Buy Bits | `components/overlays/_buy-bits` | Popover of the top bar's Bits button (logged in): `[role="dialog"][aria-labelledby="GetBitsPopover-header"]`, the featured pack (`[class*="bitsHeroPrice"]`), the packs (`[role="listitem"]`). |
+| Prime offers | `components/overlays/_prime-offers` | Popover of the top bar's crown button (logged in): `.prime-offers-upsell` (the pitch), `.prime-offer-list__content` (tabs and list), `.prime-offer__data` (a game's card), `[data-a-target="prime-claim-button"]`. |
 | Clip viewer | `components/overlays/_clip-viewer`, `pages/_clip` (the clip's own block) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
 | Viewer and emote cards | `pages/channel/components/chat/_cards` | Opened from a name or an emote in chat: `.viewer-card`, `.emote-card`, both inside `.viewer-card-layer__draggable`, which Twitch positions inline (the gutter is its padding). |
 | Community list | `pages/channel/components/chat/_community` | `.chatter-list-item`; the list is marked by `content.js` (`chatters`). |

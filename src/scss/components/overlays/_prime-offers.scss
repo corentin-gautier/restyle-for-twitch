@@ -1,0 +1,134 @@
+// Prime offers, the popover of the top bar's crown button.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Prime offers (logged in): a pitch for Luna with its button, two tabs,
+   * then a long list of games, each a title, a picture, two lines and a
+   * full-width purple button, parted by hairlines. The pitch gets the type
+   * of the other popups; a game becomes a quiet card like the chat's
+   * power-ups, its button tinted, so that the pitch's is the only solid one.
+   */
+  & .prime-offers-upsell {
+    padding: 0 var(--rs-2) var(--rs-3) !important;
+    border: 0 !important;
+
+    & .tw-title {
+      @include type(6, 700);
+      line-height: 1.25 !important;
+      letter-spacing: -0.01em !important;
+    }
+
+    & p {
+      margin-top: var(--rs-1) !important;
+      @include muted(3);
+      line-height: 1.45 !important;
+    }
+
+    @include guarded("> div%g:last-child") {
+      margin-top: var(--rs-3) !important;
+    }
+  }
+
+  /* One inset for the pitch, the tabs and the cards. */
+  & .prime-offer-list__content {
+    padding: 0 var(--rs-2) var(--rs-2) !important;
+
+    & .tw-tabs {
+      width: auto !important;
+      margin-inline: var(--rs-2) !important;
+    }
+
+    & .tw-tabs [role="tablist"] {
+      padding-inline: 0 !important;
+    }
+  }
+
+  /*
+   * A game's card: the picture leads, then the name, one quiet line, and the
+   * buttons side by side when there are two.
+   */
+  & .prime-offer__data {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    margin: var(--rs-3) var(--rs-2) 0 !important;
+    padding: var(--rs-4) !important;
+    background: var(--rs-hover) !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-l) !important;
+
+    & > img {
+      order: -1 !important;
+      display: block !important;
+      width: 100% !important;
+      border-radius: var(--rs-radius-m) !important;
+    }
+
+    /* (A flex column: the margins under its blocks no longer collapse.) */
+    & > div {
+      margin-bottom: 0 !important;
+    }
+
+    @include guarded("> div%g:first-child") {
+      padding: var(--rs-3) 0 0 !important;
+    }
+
+    & .prime-offer__title p {
+      @include type(5, 700);
+      line-height: 1.3 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .prime-offer__description {
+      padding-top: var(--rs-1) !important;
+
+      & p {
+        @include muted(3);
+        line-height: 1.4 !important;
+      }
+    }
+
+    & .prime-offer__publisher p {
+      @include muted(2);
+      line-height: 1.4 !important;
+    }
+
+    & .prime-claim {
+      display: flex !important;
+      gap: var(--rs-2) !important;
+      margin: var(--rs-4) 0 0 !important;
+
+      & > div {
+        flex: 1 !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+      }
+
+      & > div > div {
+        width: 100% !important;
+      }
+
+      & a {
+        width: 100% !important;
+        transition: background-color var(--rs-ease), color var(--rs-ease);
+      }
+    }
+
+    & [data-a-target="prime-claim-button"] {
+      background: var(--rs-accent-tint-strong) !important;
+      color: var(--rs-text) !important;
+
+      &:hover {
+        background: var(--rs-accent) !important;
+        color: var(--rs-on-accent) !important;
+      }
+    }
+
+    & [data-a-target="prime-claim-description-button"] {
+      background: var(--rs-border) !important;
+      color: var(--rs-text) !important;
+    }
+  }
+}

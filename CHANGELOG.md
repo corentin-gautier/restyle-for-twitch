@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.16.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.15.0...v1.16.0) (2026-10-13)
+
+
+### Features
+
+* options to show the home carousel and the stories, both restyled ([229a509](https://github.com/corentin-gautier/restyle-for-twitch/commit/229a50940eae1c1d467afa0912b654565a52912c))
+* soft corners by default ([2c57c28](https://github.com/corentin-gautier/restyle-for-twitch/commit/2c57c28b9e9684b4ed55503338ec36535d0afdda))
+* style the confirmation dialogs ([c43a26f](https://github.com/corentin-gautier/restyle-for-twitch/commit/c43a26f8604a3046d3c8d287febea22603ad06b2))
+* update installation instructions for Chrome and Firefox ([1ae871c](https://github.com/corentin-gautier/restyle-for-twitch/commit/1ae871cfd7ece9f24fb3323f54a50447eee067c6))
+
+
+### Documentation
+
+* the carousel and stories options, the confirmation dialogs ([44e4995](https://github.com/corentin-gautier/restyle-for-twitch/commit/44e4995600dc7ea775d9b482a9c1cd0705a4a29b))
+
 ## [1.15.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.14.0...v1.15.0) (2026-10-13)
 
 

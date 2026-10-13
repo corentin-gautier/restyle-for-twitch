@@ -1,0 +1,163 @@
+// Chat popups: the viewer card (click on a name) and the emote card (click on an emote).
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Both are laid over the chat, as wide as it, by a box Twitch positions
+   * (and lets the viewer drag) with inline offsets: the gutter is padding
+   * inside that box, so the offsets keep working. One floating card like
+   * the other chat popups, instead of a band cut across the messages.
+   */
+  & .viewer-card-layer__draggable {
+    box-sizing: border-box !important;
+    /* As wide as the chat usually is: see --rs-chat-overhang. */
+    margin-left: calc(-1 * var(--rs-chat-overhang)) !important;
+    padding-inline: var(--rs-2) !important;
+  }
+
+  & .viewer-card,
+  & .emote-card {
+    @include floating(l);
+    box-shadow: none !important;
+    overflow: hidden !important;
+  }
+
+  /*
+   * Viewer card. Its head is the viewer's banner under a dark veil, the
+   * name in white on it: the veil takes the card's colour instead, and the
+   * name and the line under it the palette's ink.
+   */
+  & .viewer-card-header__background {
+    background-size: cover !important;
+    background-position: center !important;
+  }
+
+  /* An even veil down to the head's lower edge, a hairline under it. */
+  & .viewer-card-header__overlay {
+    padding: var(--rs-3) !important;
+    background: color-mix(in srgb, var(--rs-float) 72%, transparent) !important;
+    box-shadow: inset 0 -1px 0 var(--rs-float-border) !important;
+  }
+
+  & .viewer-card-header__banner {
+    align-items: center !important;
+    gap: var(--rs-3) !important;
+    @include flush;
+  }
+
+  & .viewer-card-header__display-name {
+    min-width: 0 !important;
+    @include flush;
+
+    & h4,
+    & h4 a {
+      @include type(5, 700);
+      color: var(--rs-text) !important;
+      text-shadow: none !important;
+    }
+
+    & p {
+      @include muted(2);
+      text-shadow: none !important;
+    }
+
+    & .tw-svg {
+      color: var(--rs-muted) !important;
+      fill: currentColor !important;
+    }
+  }
+
+  /* The close button: the card's top-right corner, on both cards. */
+  & .viewer-card [data-a-target="viewer-card-close-button"],
+  & .viewer-card-layer__draggable > [data-a-target="viewer-card-close-button"] {
+    position: absolute !important;
+    top: var(--rs-1) !important;
+    right: calc(var(--rs-2) + var(--rs-1)) !important;
+    @include flush;
+  }
+
+  & .viewer-card [data-a-target="viewer-card-close-button"] {
+    right: var(--rs-1) !important;
+  }
+
+  /* "Badges": a small-caps label over the row of badges. */
+  & .viewer-card > .viewer-card-drag-cancel > div {
+    padding: var(--rs-3) var(--rs-3) var(--rs-2) !important;
+  }
+
+  /* Twitch paints the actions, and a strip over them, a step darker. */
+  & .viewer-card > div:not(.viewer-card-header__background) {
+    background: transparent !important;
+  }
+
+  /*
+   * A badge, once clicked: "Back", the badges in a row, then what the badge
+   * is, on a dark slab. An inset panel, like the others set into a card.
+   */
+  @include guarded(".viewer-card > .viewer-card-drag-cancel > div > div%g:nth-child(3):not(:has(> button.tw-link))") {
+    margin: var(--rs-2) 0 var(--rs-1) !important;
+    padding: var(--rs-3) !important;
+    background: var(--rs-hover) !important;
+    border-radius: var(--rs-radius-m) !important;
+  }
+
+  & .viewer-card h5.tw-title {
+    @include caps(1);
+    margin-bottom: var(--rs-2) !important;
+    color: var(--rs-label) !important;
+  }
+
+  & .viewer-card button.tw-link {
+    font-size: var(--rs-text-2) !important;
+  }
+
+  /*
+   * Its actions: four buttons in Twitch's purple. Quiet buttons on one
+   * small gap, only "Follow" keeping the accent.
+   */
+  & .viewer-card button[data-test-selector="gift-subscribe-button"],
+  & .viewer-card button[data-a-target="usercard-whisper-button"],
+  & .viewer-card button[data-a-target="viewer-card-gift-turbo-button"] {
+    background: var(--rs-hover) !important;
+    color: var(--rs-text) !important;
+
+    &:hover {
+      background: var(--rs-border) !important;
+    }
+  }
+
+  @include guarded(".viewer-card > div%g:has(> div > div > .viewer-card-drag-cancel > button)") {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+    border-top: var(--rs-hairline) !important;
+
+    @include guarded("> div%g:first-child") {
+      gap: var(--rs-1) !important;
+    }
+
+    @include guarded("> div:first-child > div%g") {
+      @include flush;
+    }
+  }
+
+  /* Emote card: the emote, its name and where it comes from. */
+  & .emote-card__banner {
+    align-items: center !important;
+    gap: var(--rs-3) !important;
+    padding: var(--rs-3) !important;
+    background: transparent !important;
+  }
+
+  & .emote-card__display-name {
+    @include flush;
+
+    & h4 {
+      @include type(5, 700);
+      color: var(--rs-text) !important;
+    }
+
+    & p {
+      @include muted(2);
+    }
+  }
+}

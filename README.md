@@ -152,7 +152,7 @@ Secrets and variables > Actions**):
 
 | Secret | Where it comes from |
 | --- | --- |
-| `CWS_PUBLISHER_ID` | The publisher ID shown in the Chrome Web Store developer dashboard, under **Account**. |
+| `CWS_PUBLISHER_ID` | The publisher ID shown in the Chrome Web Store developer dashboard, under **Publisher > Settings**. |
 | `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET` | An OAuth client of a Google Cloud project with the Chrome Web Store API enabled. Set the consent screen to "In production": a refresh token issued in "Testing" expires after a week. |
 | `CWS_REFRESH_TOKEN` | A refresh token for that client with the scope `https://www.googleapis.com/auth/chromewebstore`, obtained once with the account that owns the extension (see [Use the Chrome Web Store API](https://developer.chrome.com/docs/webstore/using-api)). |
 | `AMO_JWT_ISSUER`, `AMO_JWT_SECRET` | The API credentials generated on [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/). |

@@ -3,6 +3,13 @@
 
 html:not([data-rs="off"]) {
   --message-opacity: 0.8;
+  /*
+   * How far the chat's popups reach out of it on the left. They are built
+   * for the column's full width; as a floating panel the chat is narrower,
+   * and rather than squeeze them they keep their width and their right
+   * gutter, and overhang the panel's left edge by the difference.
+   */
+  --rs-chat-overhang: 0px;
 
   & .channel-root__right-column,
   & .right-column,
@@ -68,6 +75,9 @@ html:not([data-rs="off"]) {
     & .video-chat__header {
       background: transparent !important;
     }
+
+    /* The panel is the column less the gap and its own border. */
+    --rs-chat-overhang: calc(var(--rs-panel-gap) + 2px);
 
     & .channel-root__right-column > div {
       width: calc(100% - var(--rs-panel-gap)) !important;

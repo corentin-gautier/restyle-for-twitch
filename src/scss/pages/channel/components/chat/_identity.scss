@@ -12,7 +12,7 @@ html:not([data-rs="off"]) {
    * stretched to the gutters the other chat popups use, and framed.
    */
   & .chat-input [role="dialog"]:has(.chat-identity-menu) {
-    left: calc(var(--rs-2) - var(--rs-4) - 5px) !important;
+    left: calc(var(--rs-2) - var(--rs-4) - 5px - var(--rs-chat-overhang)) !important;
     width: calc(34rem - 2 * var(--rs-2)) !important;
     margin-right: 0 !important;
 

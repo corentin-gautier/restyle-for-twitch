@@ -9,11 +9,12 @@ html:not([data-rs="off"]) {
    */
   /*
    * Both open from the chat field, which is inset from the chat's edges:
-   * they reach a little further out on each side, to a small even gutter.
+   * they reach a little further out on each side, to a small even gutter
+   * (and past the left edge of a floating chat: see --rs-chat-overhang).
    */
   & .chat-input div[class*="Attached"]:has(> [data-a-target="emote-picker"]),
   & .bits-card-wrapper {
-    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    left: calc(var(--rs-2) - var(--rs-4) - var(--rs-chat-overhang)) !important;
     right: calc(var(--rs-2) - var(--rs-4)) !important;
     width: auto !important;
   }
@@ -28,7 +29,7 @@ html:not([data-rs="off"]) {
    * from the chat column's (34rem).
    */
   & .chat-input div[class*="Attached"]:has(.reward-center__content) {
-    left: calc(var(--rs-2) - var(--rs-4)) !important;
+    left: calc(var(--rs-2) - var(--rs-4) - var(--rs-chat-overhang)) !important;
     right: auto !important;
     width: calc(34rem - 2 * var(--rs-2)) !important;
   }

@@ -1,13 +1,181 @@
-// Chat: the message field.
+// Chat: the message field and the row of buttons under it.
+@use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
   & .chat-input {
-    padding: var(--rs-3) var(--rs-4) var(--rs-4) !important;
+    border-block-start: var(--rs-hairline) !important;
+    padding: var(--rs-4) !important;
+    /* The outline of the field and of the notice over it: stronger than a panel's hairline. */
+    --rs-chat-outline: color-mix(in srgb, var(--rs-text) 26%, transparent);
   }
 
-  & .chat-wysiwyg-input__box,
+  /*
+   * The field is the one outlined thing down here: no fill, a border that
+   * turns to the accent while typing. Drawn as a shadow, as Twitch does, so
+   * the box keeps its size.
+   */
+  & .chat-wysiwyg-input-box {
+    background: transparent !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: inset 0 0 0 1px var(--rs-chat-outline) !important;
+    transition: box-shadow var(--rs-ease) !important;
+
+    &:hover {
+      box-shadow: inset 0 0 0 1px var(--rs-faint) !important;
+    }
+
+    &:focus-within {
+      box-shadow: inset 0 0 0 1px var(--rs-accent) !important;
+    }
+  }
+
   & [data-a-target="chat-input"] {
-    border-radius: var(--rs-radius-l) !important;
+    border-radius: var(--rs-radius-m) !important;
+  }
+
+  /*
+   * The notice Twitch keeps over the field ("Followers-Only Chat"): a tab
+   * joined to its top, in a tint of the accent, outline included. It runs
+   * down behind the field's top corners, so that the two outlines meet
+   * whatever the radius; Twitch already clips its bottom edge.
+   */
+  & .chat-input-tray__open {
+    background: var(--rs-accent-tint) !important;
+    border: 0 !important;
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--rs-accent) 50%, transparent) !important;
+    border-radius: var(--rs-radius-m) var(--rs-radius-m) 0 0 !important;
+    margin: 0 0 calc(-1 * var(--rs-radius-m)) !important;
+    padding: 0 0 var(--rs-radius-m) !important;
+
+    /* The title and the icon beside it (an "i", a thread's bubble), not the buttons' icons. */
+    & strong,
+    & .tw-svg {
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    & button .tw-svg {
+      color: inherit !important;
+    }
+
+    & .chat-restriction-tray-icon svg {
+      fill: currentColor !important;
+    }
+
+    & strong {
+      @include type(3, 500);
+    }
+
+    /*
+     * Clicked open, with its explanation and a button: Twitch widens it
+     * and the field's wrapper into a card around the field. Kept to the
+     * field's width, the title where it was.
+     */
+    &--web-nonpersistent {
+      padding: var(--rs-1) var(--rs-1) calc(var(--rs-radius-m) + var(--rs-1)) !important;
+    }
+
+    & .common-tray-body p {
+      @include type(3, 400);
+      color: var(--rs-text-soft) !important;
+    }
+
+    & button[aria-label="Close"] {
+      color: var(--rs-muted) !important;
+
+      &:hover {
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+
+  /* The field's wrapper: Twitch's fill, border and shadow off, the field over the notice. */
+  & .chat-input-container__open {
+    @include bare;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    @include flush;
+
+    & .chat-input-container__input-wrapper {
+      margin: 0 !important;
+    }
+
+    & .chat-wysiwyg-input-box {
+      background: var(--rs-surface) !important;
+    }
+  }
+
+  /*
+   * Everything else steps back until pointed at: the buttons inside the
+   * field (badge, Cheer, emotes), the balances and the settings wheel under
+   * it.
+   */
+  & .chat-input__textarea button,
+  & .chat-input__buttons-container [data-a-target="chat-settings"] {
+    color: var(--rs-muted) !important;
+    transition: color var(--rs-ease), opacity var(--rs-ease) !important;
+
+    &:hover,
+    &:focus-visible,
+    &[aria-expanded="true"] {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* The badge is a picture: faded instead. */
+  & .chat-input__badge-carousel {
+    opacity: var(--rs-recede) !important;
+    transition: opacity var(--rs-ease) !important;
+
+    &:hover,
+    &:focus-within {
+      opacity: 1 !important;
+    }
+  }
+
+  /* Bits and channel points: small grey figures, their icons faded with them. */
+  & .community-points-summary {
+    & button[aria-label="Bits and Points Balances"] {
+      color: var(--rs-muted) !important;
+      opacity: 0.75 !important;
+      transition: opacity var(--rs-ease) !important;
+
+      &:hover,
+      &:focus-visible {
+        opacity: 1 !important;
+      }
+    }
+
+    & [data-test-selector="bits-balance-string"],
+    & [data-test-selector="copo-balance-string"] {
+      @include muted(3);
+      font-weight: 500 !important;
+    }
+
+    /* "Claim Bonus": Twitch's green pill, in the accent's tint. */
+    & button[aria-label="Claim Bonus"] {
+      background: var(--rs-accent-tint-strong) !important;
+      color: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * "Chat": a tinted pill at rest, the full accent while the field has the
+   * focus. The field sits too deep for a sibling test, hence the `:has()`:
+   * on a class, and only looked at again when the focus moves.
+   */
+  & .chat-input [data-a-target="chat-send-button"] {
+    background: var(--rs-accent-tint) !important;
+    color: var(--rs-accent) !important;
+    transition: background-color var(--rs-ease), color var(--rs-ease) !important;
+
+    &:hover {
+      background: var(--rs-accent-tint-strong) !important;
+    }
+  }
+
+  & .chat-input:has([data-a-target="chat-input"]:focus) [data-a-target="chat-send-button"] {
+    background: var(--rs-accent) !important;
+    color: var(--rs-on-accent) !important;
   }
 
   /*

@@ -249,6 +249,7 @@ kind found later goes in that list; one served by another site goes in
 | Viewer and emote cards | `pages/channel/components/chat/_cards` | Opened from a name or an emote in chat: `.viewer-card`, `.emote-card`, both inside `.viewer-card-layer__draggable`, which Twitch positions inline (the gutter is its padding). |
 | Community list | `pages/channel/components/chat/_community` | `.chatter-list-item`; the list is marked by `content.js` (`chatters`). |
 | Chat notices | `pages/channel/components/chat/_notices` | `[data-test-selector^="chat-private-callout-queue"] article`, above the message field. |
+| Message field | `pages/channel/components/chat/_input` | `.chat-wysiwyg-input-box` (the outlined field), `.chat-input__buttons-container` (balances, settings, "Chat"). The tab joined to its top ("Followers-Only Chat", a reply's thread) is `.chat-input-tray__open`, `--web-nonpersistent` once clicked open; the field's wrapper is then `.chat-input-container__open`. |
 | Error page | `pages/_error` | `.core-error__container`: an unknown address, an unavailable channel. |
 | Chat popups | `pages/channel/components/chat/` (`_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`) | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 

@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Nas páginas de um canal, se continuarem legíveis"
+  },
+  "carousel": {
+    "message": "Carrossel do início"
+  },
+  "carouselHint": {
+    "message": "Diretos em destaque no topo da página inicial"
+  },
+  "stories": {
+    "message": "Histórias"
+  },
+  "storiesHint": {
+    "message": "Na barra lateral e em A seguir"
   }
 }

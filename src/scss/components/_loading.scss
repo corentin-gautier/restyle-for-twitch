@@ -8,7 +8,7 @@ html:not([data-rs="off"]) {
    * They are kept as invisible boxes, so nothing jumps when the content
    * arrives, and a spinner stands in for each group of them: one at the
    * start of a run of ghost cards in a grid, one in a list of search
-   * results, one in a popup.
+   * results, one in a popup, one in the home page's carousel.
    *
    * A ghost item is told from a card that is still loading its picture by
    * having no link. Per group rather than per page: grids keep ghosts at
@@ -41,7 +41,9 @@ html:not([data-rs="off"]) {
     ".tw-tower > :first-child%g:has(.tw-placeholder):not(:has(a))::before",
     ".tw-tower > %g:has(a) + %g:has(.tw-placeholder):not(:has(a))::before",
     '.search-results [data-test-selector="placeholder-result"]:not([data-test-selector="placeholder-result"] ~ *)::before',
-    ".ReactModal__Content .tw-transition > div:where(.ReactModal__Content * > *):has(> div > .tw-placeholder-wrapper)::after"
+    ".ReactModal__Content .tw-transition > div:where(.ReactModal__Content * > *):has(> div > .tw-placeholder-wrapper)::after",
+    // The home carousel's middle item (pages/_home.scss).
+    ".featured-content-carousel__item-container--center > .featured-content-carousel__item-placeholder::before"
   ) {
     content: "";
     position: absolute;

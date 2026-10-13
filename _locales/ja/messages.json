@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "チャンネルのページで、読みやすさを保てる場合"
+  },
+  "carousel": {
+    "message": "ホームのカルーセル"
+  },
+  "carouselHint": {
+    "message": "ホーム上部のおすすめ配信"
+  },
+  "stories": {
+    "message": "ストーリー"
+  },
+  "storiesHint": {
+    "message": "サイドバーとフォロー中のページ"
   }
 }

@@ -5,7 +5,7 @@ const DEFAULTS = {
   twitch: true,
   space: 2,
   // Corner rounding: 0 square, 1 soft, 2 round.
-  round: 2,
+  round: 1,
   // Top bar, sidebar and chat as rounded panels off the window's edges.
   floating: false,
   accent: "#8b7cf6",
@@ -15,6 +15,10 @@ const DEFAULTS = {
   plainChat: false,
   // On channel pages, take the accent and background from the channel's colour.
   channelColors: false,
+  // The featured carousel at the top of the home page: hidden unless asked for.
+  carousel: false,
+  // Stories, in the sidebar and on Following: hidden unless asked for.
+  stories: false,
 };
 
 const root = document.documentElement;
@@ -121,6 +125,8 @@ function apply() {
   root.setAttribute("data-rs-round", String(settings.round));
   root.toggleAttribute("data-rs-plain-chat", settings.plainChat);
   root.toggleAttribute("data-rs-floating", settings.floating);
+  root.toggleAttribute("data-rs-carousel", settings.carousel);
+  root.toggleAttribute("data-rs-stories", settings.stories);
 
   let { accent, background } = settings;
   const rgb = settings.channelColors && channelColor();
@@ -230,7 +236,8 @@ function towers() {
 // sync with the rules of src/scss/ that select data-rs-hook.
 const UPCOMING = 'header:has([data-a-target="upcoming-streams-header"]) + div';
 const HOOKS = [
-  [".side-nav", { streak: '[class*="saveYourStreakSideNavRow"]' }],
+  // "Save your Streak", and the stories' row when the popup shows them.
+  [".side-nav", { streak: '[class*="saveYourStreakSideNavRow"]', stories: '[class*="storiesLeftNavSection"]' }],
   [".support-panel", { "gift-hero": '[class*="giftHeroSlot"]' }],
   // The "Community" list of a chat.
   [".chat-room__content", { chatters: ".scrollable-area:has(.chatter-list-item)" }],
@@ -241,6 +248,8 @@ const HOOKS = [
   [
     ".common-centered-column",
     {
+      // The row of stories, when the popup shows them.
+      "stories-row": '.scrollable-area:has([class*="avatarHalo"])',
       upcoming: UPCOMING,
       "upcoming-entry": `${UPCOMING} div:has(> div > div > strong > a):has(button)`,
       "upcoming-art": `${UPCOMING} div:has(> div[style*="url("])`,
@@ -369,8 +378,9 @@ for (const type of ["mouseover", "mouseout", "pointerover", "pointerout"]) {
   );
 }
 
-// Home: scss/pages/_home.scss hides the featured carousel, but a hidden video keeps
-// autoplaying and streaming. Pause it whenever Twitch (re)starts it.
+// Home: scss/pages/_home.scss hides the featured carousel unless the popup
+// asks for it, but a hidden video keeps autoplaying and streaming. Pause it
+// whenever Twitch (re)starts it.
 // Keep these selectors in sync with the carousel rule in scss/pages/_home.scss.
 const CAROUSEL_VIDEOS = [
   '[class*="front-page-carousel"] video',
@@ -379,7 +389,7 @@ const CAROUSEL_VIDEOS = [
 ].join(", ");
 
 setInterval(() => {
-  if (root.getAttribute("data-rs") === "off") return;
+  if (root.getAttribute("data-rs") === "off" || settings.carousel) return;
   for (const video of document.querySelectorAll(CAROUSEL_VIDEOS)) {
     if (!video.paused) video.pause();
   }

@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "在频道页面上使用，前提是保持清晰可读"
+  },
+  "carousel": {
+    "message": "首页轮播"
+  },
+  "carouselHint": {
+    "message": "首页顶部的推荐直播"
+  },
+  "stories": {
+    "message": "动态"
+  },
+  "storiesHint": {
+    "message": "侧边栏和关注页面"
   }
 }

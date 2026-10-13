@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Nelle pagine di un canale, se restano leggibili"
+  },
+  "carousel": {
+    "message": "Carosello della home"
+  },
+  "carouselHint": {
+    "message": "Dirette in evidenza in cima alla home"
+  },
+  "stories": {
+    "message": "Storie"
+  },
+  "storiesHint": {
+    "message": "Nella barra laterale e in Seguiti"
   }
 }

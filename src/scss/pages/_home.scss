@@ -1,7 +1,9 @@
-// Home (/): the featured carousel, hidden. Its shelves are in components/.
+// Home (/): the featured carousel, hidden unless the popup asks for it. Its
+// shelves are in components/.
+@use "tools/guard" as *;
 @use "tools/mixins" as *;
 
-html:not([data-rs="off"]) {
+html:not([data-rs="off"]):not([data-rs-carousel]) {
   /*
    * Home: no featured carousel. Hiding it does not stop its stream:
    * content.js pauses the video inside (keep its selectors in sync).
@@ -16,5 +18,213 @@ html:not([data-rs="off"]) {
     @include flush;
     overflow: hidden !important;
     visibility: hidden !important;
+  }
+}
+
+// The carousel's playing item: a 16:9 player beside its details.
+$carousel-player: 64rem;
+$carousel-details: 30rem;
+$carousel-height: calc($carousel-player * 9 / 16);
+$carousel-width: $carousel-player + $carousel-details;
+// Side of an arrow's disc, as Twitch sets it.
+$carousel-arrow: 3.6rem;
+
+/*
+ * The carousel when it is shown: a row of streams, the one in the middle
+ * playing beside its details, the others scaled down behind it. Twitch lays
+ * the items out inline (position, scale, a transition between the two): the
+ * sizes and the places are set again here. The playing item is larger, a
+ * rounded card like the ones under the carousel, and the others stand
+ * further back: smaller and dimmed into the page.
+ */
+html:not([data-rs="off"]) {
+  & .front-page-carousel {
+    padding-top: var(--rs-6) !important;
+  }
+
+  & .featured-content-carousel,
+  & .featured-content-carousel__item-container,
+  & .featured-content-carousel-featured-item {
+    height: $carousel-height !important;
+  }
+
+  & .featured-content-carousel__item-container {
+    inset-inline-start: calc(50% - #{$carousel-width} / 2) !important;
+    width: $carousel-width !important;
+  }
+
+  /* The items beside the playing one: how far their middle is from the row's, and their scale. */
+  & .featured-content-carousel__item-container--left-1 {
+    transform: translateX(-18rem) scale(0.8) !important;
+  }
+
+  & .featured-content-carousel__item-container--right-1 {
+    transform: translateX(18rem) scale(0.8) !important;
+  }
+
+  & .featured-content-carousel__item-container--left-2 {
+    transform: translateX(-36rem) scale(0.64) !important;
+  }
+
+  & .featured-content-carousel__item-container--right-2 {
+    transform: translateX(36rem) scale(0.64) !important;
+  }
+
+  & .featured-content-carousel-featured-item {
+    @include clip(l);
+    background: var(--rs-raised) !important;
+    border: var(--rs-hairline) !important;
+  }
+
+  /*
+   * An item's picture is the stream's 16:9 preview, stretched to the item,
+   * which is wider than that: it fills the item cropped instead. Only the
+   * picture laid straight in the item: a vertical stream has its own pair,
+   * one of them blurred, sized by Twitch.
+   */
+  & .featured-content-carousel-featured-item > div > img {
+    object-fit: cover !important;
+  }
+
+  /* The veil over the items that are not playing: the page's colour, thicker. */
+  & .featured-content-carousel-featured-item__overlay--offset-1 {
+    background: var(--rs-bg) !important;
+    opacity: 0.8 !important;
+  }
+
+  & .featured-content-carousel-featured-item__overlay--offset-2 {
+    background: var(--rs-bg) !important;
+    opacity: 0.9 !important;
+  }
+
+  /*
+   * The details: three lines of one size beside a small avatar, a link in
+   * the accent among them. A poster for the stream instead, read from the
+   * top: the avatar in a ring of the accent, the name as a title, the
+   * category, the viewers as the pill of a live channel, then the tags and
+   * the description.
+   */
+  & .carousel-metadata {
+    @include stack;
+    /* In the middle of the panel; from its top once the description outgrows it. */
+    justify-content: safe center !important;
+    width: $carousel-details !important;
+    padding: var(--rs-4) var(--rs-8)  !important;
+    /*
+     * The stream's picture fills the whole item, behind the player and the
+     * panel: it shows faintly through the panel's fill. As it is, a small
+     * picture stretched to the item: a blur of the backdrop only comes in
+     * once the item has slid into place, with a jump.
+     */
+    background: color-mix(in srgb, var(--rs-raised) 92%, transparent) !important;
+
+    box-shadow: inset 1px 0 0 var(--rs-border) !important;
+
+    & .tw-avatar {
+      width: 6.4rem !important;
+      height: 6.4rem !important;
+      border-radius: 50% !important;
+      outline: 0.2rem solid var(--rs-accent) !important;
+      outline-offset: 0.2rem !important;
+    }
+
+    & [data-a-target="carousel-display-name"] {
+      @include type(title, 700);
+      line-height: 1.2 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & a.carousel-metadata--top-text {
+      @include type(4, 400);
+      color: var(--rs-text-soft) !important;
+    }
+
+    /* The viewers: the red-tinted pill of a live channel, led by its dot. */
+    & p {
+      @include inline-row;
+      @include type(2, 600);
+      align-self: flex-start !important;
+      margin-top: var(--rs-2) !important;
+      padding: 0.3rem 1rem !important;
+      background: var(--rs-live-tint) !important;
+      border-radius: var(--rs-radius-pill) !important;
+      color: var(--rs-live) !important;
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    & p::before {
+      content: "";
+      width: 0.6rem;
+      height: 0.6rem;
+      margin-right: 0.6rem;
+      background: var(--rs-live-dot);
+      border-radius: 50%;
+    }
+
+    & [data-test-selector="carousel-description"] {
+      @include type(3, 400);
+      margin-top: var(--rs-2) !important;
+      line-height: 1.55 !important;
+      color: var(--rs-text-soft) !important;
+    }
+  }
+
+  /* The avatar over the text, not beside it; the text on the panel's left edge. */
+  @include guarded(".carousel-metadata > div%g:has(> div > .tw-avatar)") {
+    flex-direction: column !important;
+    gap: var(--rs-3) !important;
+    margin-bottom: var(--rs-3) !important;
+  }
+
+  @include guarded(".carousel-metadata div%g:has(> a.carousel-metadata--top-text)") {
+    margin: 0 !important;
+  }
+
+  /*
+   * Twitch fades a long description out at the foot of the panel, into a
+   * solid fill: over a fill the picture shows through, that is a band.
+   */
+  & .carousel-metadata--fadeout {
+    display: none !important;
+  }
+
+  /*
+   * While the carousel loads, each item is a grey block. No blocks: the
+   * spinner of components/_loading.scss, in the middle of the playing item's
+   * place.
+   */
+  & .featured-content-carousel__item-placeholder {
+    position: relative !important;
+    width: 100% !important;
+    height: 100% !important;
+    @include bare;
+    box-shadow: none !important;
+  }
+
+  /* That sheet comes later in the cascade, with a margin for a grid's first row. */
+  & .featured-content-carousel__item-container--center > .featured-content-carousel__item-placeholder::before {
+    top: calc(50% - 1.4rem) !important;
+    margin-top: 0 !important;
+  }
+
+  /*
+   * The two arrows: the discs of the shelves' arrows. Twitch pins them to
+   * the ends of the page's width, far from the row on a wide window: they
+   * sit over the row's outer items instead, 52rem from its middle, and no
+   * further out than the page's edge on a narrow one.
+   */
+  & .carousel-player-nav-arrow__container {
+    @include floating;
+    top: calc(50% - #{$carousel-arrow} / 2) !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+  }
+
+  & .carousel-player-nav-arrow__container:has([data-a-target="featured-item-left-button"]) {
+    inset-inline: max(0px, calc(50% - 52rem - var(--rs-3) - #{$carousel-arrow})) auto !important;
+  }
+
+  & .carousel-player-nav-arrow__container:has([data-a-target="featured-item-right-button"]) {
+    inset-inline: auto max(0px, calc(50% - 52rem - var(--rs-3) - #{$carousel-arrow})) !important;
   }
 }

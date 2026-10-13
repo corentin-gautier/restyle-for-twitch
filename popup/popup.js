@@ -3,7 +3,7 @@ const DEFAULTS = {
   twitch: true,
   space: 2,
   // Corner rounding: 0 square, 1 soft, 2 round.
-  round: 2,
+  round: 1,
   // Top bar, sidebar and chat as rounded panels off the window's edges.
   floating: false,
   accent: "#8b7cf6",
@@ -13,6 +13,10 @@ const DEFAULTS = {
   plainChat: false,
   // On channel pages, take the accent and background from the channel's colour.
   channelColors: false,
+  // The featured carousel at the top of the home page: hidden unless asked for.
+  carousel: false,
+  // Stories, in the sidebar and on Following: hidden unless asked for.
+  stories: false,
 };
 
 // Labels come from _locales, in the browser's language (English otherwise).

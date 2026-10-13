@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Auf den Seiten eines Kanals, sofern sie lesbar bleiben"
+  },
+  "carousel": {
+    "message": "Startseiten-Karussell"
+  },
+  "carouselHint": {
+    "message": "Empfohlene Streams oben auf der Startseite"
+  },
+  "stories": {
+    "message": "Storys"
+  },
+  "storiesHint": {
+    "message": "In der Seitenleiste und unter „Folge ich“"
   }
 }

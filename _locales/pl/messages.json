@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Na stronach kanału, jeśli pozostają czytelne"
+  },
+  "carousel": {
+    "message": "Karuzela na stronie głównej"
+  },
+  "carouselHint": {
+    "message": "Polecane transmisje na górze strony głównej"
+  },
+  "stories": {
+    "message": "Relacje"
+  },
+  "storiesHint": {
+    "message": "Na pasku bocznym i w Obserwowanych"
   }
 }

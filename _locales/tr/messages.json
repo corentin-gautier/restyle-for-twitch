@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Kanal sayfalarında, okunaklı kaldıkları sürece"
+  },
+  "carousel": {
+    "message": "Ana sayfa karuseli"
+  },
+  "carouselHint": {
+    "message": "Ana sayfanın üstündeki öne çıkan yayınlar"
+  },
+  "stories": {
+    "message": "Hikâyeler"
+  },
+  "storiesHint": {
+    "message": "Kenar çubuğunda ve Takip Edilenler'de"
   }
 }

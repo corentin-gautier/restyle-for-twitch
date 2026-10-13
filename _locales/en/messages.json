@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "On a channel's pages, when they stay readable"
+  },
+  "carousel": {
+    "message": "Home carousel"
+  },
+  "carouselHint": {
+    "message": "Featured streams at the top of the home page"
+  },
+  "stories": {
+    "message": "Stories"
+  },
+  "storiesHint": {
+    "message": "In the sidebar and on Following"
   }
 }

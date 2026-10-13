@@ -1,12 +1,30 @@
-// Following: the row of stories, hidden.
+// Following: the row of stories, hidden unless the popup asks for it.
 @use "tools/guard" as *;
+@use "tools/mixins" as *;
 
-html:not([data-rs="off"]) {
+html:not([data-rs="off"]):not([data-rs-stories]) {
   /*
    * Stories row on the Following page: a scroll area of haloed avatars. The
    * whole row goes, found through those halos since nothing else names it.
    */
   @include guarded('.twilight-main div%g:has(> .scrollable-area [class*="avatarHalo"])') {
     display: none !important;
+  }
+}
+
+/*
+ * The row when it is shown: avatars in a ring of Twitch's gradient, at
+ * Twitch's size, over the channel's name at the page's text size. The name
+ * is set like a card's, and the row starts on the page's left edge: Twitch
+ * keeps an empty 1.6rem block ahead of it, and each story pads its ring by
+ * 0.2rem. content.js marks the row.
+ */
+html:not([data-rs="off"]) [data-rs-hook~="stories-row"] {
+  margin-inline-start: -1.8rem !important;
+
+  /* The channel's name: a card's name, a step smaller. */
+  & p {
+    @include type(3, 600);
+    color: var(--rs-text) !important;
   }
 }

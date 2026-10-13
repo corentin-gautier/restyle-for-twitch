@@ -22,17 +22,18 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Stories. Their classes are generated in camelCase, hence the
+   * Stories, hidden unless the popup asks for them (data-rs-stories on
+   * <html>). Their classes are generated in camelCase, hence the
    * case-insensitive matches; kept away from a bare "stories" match outside
    * the sidebar so a channel avatar with a story ring survives.
    */
-  & .side-nav [class*="stories" i],
-  & .side-nav-section[aria-label*="stories" i],
-  & [class*="storiesLeftNav" i],
-  & [class*="stories-left-nav" i],
-  & [class*="storiesShelf" i],
-  & [class*="stories-shelf" i],
-  & [aria-label="Stories" i] {
+  &:not([data-rs-stories]) .side-nav [class*="stories" i],
+  &:not([data-rs-stories]) .side-nav-section[aria-label*="stories" i],
+  &:not([data-rs-stories]) [class*="storiesLeftNav" i],
+  &:not([data-rs-stories]) [class*="stories-left-nav" i],
+  &:not([data-rs-stories]) [class*="storiesShelf" i],
+  &:not([data-rs-stories]) [class*="stories-shelf" i],
+  &:not([data-rs-stories]) [aria-label="Stories" i] {
     display: none !important;
   }
 
@@ -264,6 +265,56 @@ html:not([data-rs="off"]) {
 
   @include guarded('.side-nav div%g:has(> [data-rs-hook="streak"])') {
     margin-top: 0 !important;
+  }
+
+  /*
+   * Stories, when the popup shows them: a row above the channel lists, the
+   * avatars of the channels with a story stacked inside a ring of Twitch's
+   * gradient, beside "Open stories" as a purple link, and no hover. A row
+   * like "Save your Streak": the first avatar on the channels' axis, the
+   * label in that row's size and colour, the same hover box, stopping short
+   * of the collapse arrow. The avatars and their ring are left as Twitch
+   * draws them. content.js marks the row.
+   */
+  & .side-nav [data-rs-hook~="stories"] {
+    margin: 0 calc(4.6rem - var(--rs-2)) 0 0 !important;
+    /* Twitch's own hover, a square block under the button's. */
+    background: transparent !important;
+
+    & button {
+      width: 100% !important;
+      border-radius: var(--rs-radius-m) !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    & button:hover,
+    & button:focus-visible {
+      background-color: var(--rs-hover) !important;
+    }
+
+    /* The ring stands 0.4rem out of the avatars: room for it above and under. */
+    & button > div {
+      align-items: center !important;
+      min-height: 3rem !important;
+      margin: 0 !important;
+      padding: 1rem 0.4rem 1rem calc(var(--rs-3) - 0.4rem) !important;
+    }
+
+    /* The stack has no height of its own: the avatars hang from its top. */
+    & button > div > div:first-child {
+      height: 3rem !important;
+    }
+
+    /* The label: on the row's middle line, at Twitch's distance from the stack. */
+    & button > div > div:last-child {
+      margin: 0 0 0 6rem !important;
+    }
+
+    & p {
+      font-size: 1.25rem !important;
+      font-weight: 600 !important;
+      color: var(--rs-accent-quiet) !important;
+    }
   }
 
   /* Same for the sidebar's icon buttons (collapse arrow). */

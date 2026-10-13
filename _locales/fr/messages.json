@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Sur les pages d'une chaîne, si elles restent lisibles"
+  },
+  "carousel": {
+    "message": "Carrousel de l'accueil"
+  },
+  "carouselHint": {
+    "message": "Les streams à la une, en haut de l'accueil"
+  },
+  "stories": {
+    "message": "Stories"
+  },
+  "storiesHint": {
+    "message": "Dans la barre latérale et sur Suivis"
   }
 }

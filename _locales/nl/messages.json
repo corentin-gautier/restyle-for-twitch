@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "Op de pagina's van een kanaal, als ze leesbaar blijven"
+  },
+  "carousel": {
+    "message": "Carrousel op de startpagina"
+  },
+  "carouselHint": {
+    "message": "Uitgelichte streams boven aan de startpagina"
+  },
+  "stories": {
+    "message": "Verhalen"
+  },
+  "storiesHint": {
+    "message": "In de zijbalk en bij Volgend"
   }
 }

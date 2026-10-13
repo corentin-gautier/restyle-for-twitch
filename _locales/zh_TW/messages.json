@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "在頻道頁面上使用，前提是保持清晰易讀"
+  },
+  "carousel": {
+    "message": "首頁輪播"
+  },
+  "carouselHint": {
+    "message": "首頁頂端的精選實況"
+  },
+  "stories": {
+    "message": "限時動態"
+  },
+  "storiesHint": {
+    "message": "側邊欄和追隨頁面"
   }
 }

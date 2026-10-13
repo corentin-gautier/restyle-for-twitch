@@ -82,5 +82,17 @@
   },
   "channelColorsHint": {
     "message": "채널 페이지에서, 가독성이 유지될 때"
+  },
+  "carousel": {
+    "message": "홈 캐러셀"
+  },
+  "carouselHint": {
+    "message": "홈 상단의 추천 방송"
+  },
+  "stories": {
+    "message": "스토리"
+  },
+  "storiesHint": {
+    "message": "사이드바와 팔로잉 페이지"
   }
 }

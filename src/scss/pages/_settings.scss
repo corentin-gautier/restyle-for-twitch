@@ -1,5 +1,6 @@
 // Settings (/settings/…).
 @use "tools/guard" as *;
+@use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
   /*
@@ -48,5 +49,219 @@ html:not([data-rs="off"]) {
   & .settings-root__content {
     padding-top: var(--rs-8) !important;
     padding-inline: var(--rs-page-inset) !important;
+  }
+
+  /*
+   * A tab's panels (a bordered block of rows) are in the page's colour:
+   * raised a step, like the panels of the other pages.
+   */
+  @include guarded(".settings-root__content div%g:has(> .settings-row)") {
+    background: var(--rs-surface) !important;
+  }
+
+  /*
+   * A row's type. Twitch sets a row's name at three weights (a <label>, a
+   * <strong>, a <p>) and what explains it in full white, in grey or in
+   * small print from one tab to the next. One name (medium, in the text
+   * colour) over one quiet explanation, as on the Notifications tab.
+   */
+  & .settings-root__content .settings-row {
+    & .tw-form-label,
+    & strong {
+      @include type(4, 600);
+      color: var(--rs-text) !important;
+    }
+
+    /* Text set straight in the row, without an element of its own. */
+    & .tw-form-group,
+    & p,
+    & li,
+    & footer {
+      @include muted(3);
+      line-height: 1.45 !important;
+    }
+
+    & p strong,
+    & footer strong {
+      font-size: inherit !important;
+    }
+
+    & .tw-link strong {
+      color: inherit !important;
+    }
+
+    /* A choice's own label (a radio button, a switch) and a row that is a link stay text. */
+    & .tw-radio__label p,
+    & .tw-toggle + div p,
+    & a.tw-interactable p {
+      @include type(4, 500);
+      color: var(--rs-text) !important;
+    }
+
+    & a.tw-interactable span {
+      @include muted(3);
+    }
+  }
+
+  /* "Save Changes", under a panel's rows: a lighter slab with square corners, past the panel's round ones. */
+  @include guarded('.settings-root__content div%g:has(> div > div > [data-a-target="save-user-settings-button"])') {
+    background: transparent !important;
+    border-top: var(--rs-hairline) !important;
+  }
+
+  /*
+   * Content Preferences: the three feedback lists are titled smaller than
+   * the tab's other sections, and set against one another. A feedback, or
+   * the line that says there is none, is a panel too.
+   */
+  & .settings-root__content [data-a-target^="recommendations-"] {
+    margin-top: var(--rs-6) !important;
+
+    & h4 {
+      font-size: 1.8rem !important;
+      font-weight: 500 !important;
+      line-height: 1.1 !important;
+    }
+
+    @include guarded("> div > div%g", "> div%g:not(:has(> *))") {
+      background: var(--rs-surface) !important;
+    }
+
+    /* The channel or category, then what was said about it. */
+    & strong {
+      margin-right: var(--rs-1) !important;
+      @include type(4, 600);
+    }
+
+    & em {
+      font-style: normal !important;
+      @include muted(3);
+    }
+  }
+
+  /* Notifications opens lower than the other tabs. */
+  @include guarded(".settings-root__content > div > div%g:first-child:has(> div > h2.tw-title)") {
+    margin-top: 0 !important;
+  }
+
+  /*
+   * Notifications tab. The other tabs set their fields in bordered panels;
+   * this one has blocks in the page's colour with nothing round them: two
+   * switches with a heading squeezed into a narrow column, six groups that
+   * open, and the list of followed channels. The same panels here.
+   */
+  & .settings-root__content {
+    /* Switches: off is a white ring, on a black pill. The accent instead. */
+    & .tw-toggle__button {
+      border-color: var(--rs-muted) !important;
+    }
+
+    & .tw-toggle__input:checked + .tw-toggle__button {
+      background: var(--rs-accent-tint-strong) !important;
+      border-color: var(--rs-accent) !important;
+
+      &::after {
+        background: var(--rs-accent) !important;
+      }
+
+      @include guarded("*%g") {
+        color: var(--rs-accent) !important;
+        fill: var(--rs-accent) !important;
+      }
+    }
+  }
+
+  /* "Desktop Notifications", "Smart Delivery": a label, then its switch over a sentence. */
+  & #desktop_notifications,
+  & #smart_notifications {
+    align-items: flex-start !important;
+    gap: var(--rs-4) !important;
+    /* The groups' own padding, set by Twitch. */
+    padding: 1.6rem !important;
+    @include panel(l);
+
+    @include guarded("> div%g:has(> h2)") {
+      flex: none !important;
+      width: 18rem !important;
+    }
+
+    & h2 {
+      @include type(4, 600);
+      /* The switch's height, so the two sit on one line. */
+      line-height: 2rem !important;
+    }
+
+    & p {
+      @include muted(3);
+      line-height: 1.45 !important;
+    }
+  }
+
+  /* A group ("Channels You Follow", "Social"…): one panel, which grows when opened. */
+  & .settings-root__content [id$="_category"] {
+    padding: 0 !important;
+    @include panel(l);
+    overflow: hidden !important;
+
+    & .accordion-header {
+      background: transparent !important;
+    }
+
+    & .accordion-header > button {
+      border-radius: 0 !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    & .accordion-header > button:hover {
+      background: var(--rs-hover) !important;
+    }
+
+    /* What it covers, under its name, and its state ("All notifications are OFF") at the right. */
+    & .accordion-header p:last-child {
+      @include muted(3);
+    }
+
+    @include guarded(".accordion-header + div%g") {
+      padding: 0 0 var(--rs-2) !important;
+      background: transparent !important;
+    }
+
+    /* Its rows start on the header's left edge. */
+    @include guarded(".accordion-header + div > div%g") {
+      margin-inline: 0 !important;
+    }
+
+    /* "All Notifications", over the rows: Twitch sets it larger than the group's own name. */
+    @include guarded(".accordion-header + div > div > div:first-child > div:first-child p%g") {
+      @include type(4, 600);
+    }
+
+    /* A row's explanation, under its name. */
+    @include guarded(".accordion-header + div p%g:last-child:not(:only-child)") {
+      @include muted(3);
+      line-height: 1.45 !important;
+    }
+  }
+
+  /* "Manage Channel Notifications": the filters and the list, in one panel. */
+  & #manage_channels {
+    @include guarded("div%g:has(> .scrollable-area)") {
+      @include panel(l);
+      overflow: hidden !important;
+    }
+
+    /* A channel's row has the block's old colour. */
+    @include guarded(".scrollable-area > div > div > div%g") {
+      background: transparent !important;
+    }
+
+    & .scrollable-area .tw-title {
+      @include type(4, 600);
+    }
+
+    & .scrollable-area .tw-title + p,
+    & .scrollable-area a + p {
+      @include muted(2);
+    }
   }
 }

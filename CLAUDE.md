@@ -186,6 +186,7 @@ checked in a headless Chrome; the others need the user's session.
 | Category, clips | `/directory/category/<slug>/clips?range=7d` | Public | same | filter row |
 | Search | `/search?term=<query>` | Public | `pages/_search` | `.search-results`, `.search-result-card` |
 | Settings | `/settings/profile` | Logged in | `pages/_settings` | `.settings-tabs`, `.settings-root__content` |
+| Settings, Notifications | `/settings/notifications` | Logged in | `pages/_settings` | `#desktop_notifications`, `#smart_notifications`, the groups `[id$="_category"]` (an `.accordion-header` and the block after it), `#manage_channels` |
 | Drops, Inventory | `/drops/inventory` | Logged in | `pages/_account` (title, tabs, margins), `pages/drops/_shared`, `pages/drops/_inventory` | `.drops-tabs`, `.drops-root__content`, `.inventory-campaign-info` (a campaign's head, laid across its panel), tiles around `.inventory-drop-image`, `.reward_tile` |
 | Drops, All Campaigns | `/drops/campaigns` | Logged in | `pages/drops/_shared`, `pages/drops/_campaigns` | `.accordion-header` and the block after it, `.drop-details__label`, `.drop-benefit__image-container` |
 | Drops, Social Media Badge | `/drops/social-badge` | Logged in | `pages/drops/_shared`, `pages/drops/_social-badge` | `article` holding `.tw-callout-message`, the box holding `.tw-avatar` |

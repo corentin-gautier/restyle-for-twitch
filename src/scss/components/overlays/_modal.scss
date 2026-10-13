@@ -19,4 +19,50 @@ html:not([data-rs="off"]) {
     top: var(--rs-3) !important;
     right: var(--rs-3) !important;
   }
+
+  /*
+   * Confirmations ("Unfollow <channel>?"): Twitch's other modal, an
+   * alertdialog holding .tw-modal. Framed like the centred modals and
+   * narrower, a question over a quieter line, with room above its buttons.
+   */
+  & .ReactModal__Content[role="alertdialog"] .tw-modal {
+    width: 44rem !important;
+    max-width: calc(100vw - 2 * var(--rs-6)) !important;
+    margin-inline: auto !important;
+    @include floating(l);
+    box-shadow: none !important;
+    overflow: hidden !important;
+
+    & > div {
+      padding: var(--rs-6) !important;
+    }
+
+    & .tw-title {
+      @include type(title, 700);
+      line-height: 1.2 !important;
+      letter-spacing: -0.01em !important;
+      color: var(--rs-text) !important;
+    }
+
+    & [id$="-body"] {
+      @include muted(4);
+      line-height: 1.5 !important;
+      text-wrap: balance;
+    }
+
+    @include guarded("> div > div%g:last-child") {
+      margin-top: var(--rs-3) !important;
+    }
+
+    /* "No, cancel": Twitch's fill is lost on the box under the dark theme. */
+    @include guarded("> div > div%g:last-child > div%g:first-child button%g") {
+      background: color-mix(in srgb, var(--rs-text) 9%, transparent) !important;
+      color: var(--rs-text) !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    @include guarded("> div > div%g:last-child > div%g:first-child button%g:hover") {
+      background: color-mix(in srgb, var(--rs-text) 16%, transparent) !important;
+    }
+  }
 }

@@ -3,9 +3,11 @@
 html:not([data-rs="off"]) {
   /*
    * ...and the page dims behind them. The overlay has no area of its own: it
-   * is stretched over the viewport to carry the backdrop.
+   * is stretched over the viewport to carry the backdrop. A confirmation
+   * (an alertdialog) brings a darker backdrop of its own, an empty box that
+   * components/overlays/_empty-dialog hides: it gets this one instead.
    */
-  & .ReactModal__Overlay:has(> .ReactModal__Content[role="dialog"]:is([aria-label], [aria-labelledby])) {
+  & .ReactModal__Overlay:has(> .ReactModal__Content:is([role="dialog"], [role="alertdialog"]):is([aria-label], [aria-labelledby])) {
     position: fixed !important;
     inset: 0 !important;
     background: var(--rs-backdrop) !important;

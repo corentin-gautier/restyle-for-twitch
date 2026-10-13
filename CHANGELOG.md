@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.15.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.14.0...v1.15.0) (2026-10-13)
+
+
+### Features
+
+* rework the chat's highlight cards ([e5fd779](https://github.com/corentin-gautier/restyle-for-twitch/commit/e5fd7797013c3e6afbe98c3ca1f2a652d0051111))
+* rework the notices in the chat ([a9be9c0](https://github.com/corentin-gautier/restyle-for-twitch/commit/a9be9c03534a8bba17b2eb3322bc12da7da7bc5f))
+* style a prediction's details ([85ff972](https://github.com/corentin-gautier/restyle-for-twitch/commit/85ff97217aebea982999959b63d41052cd6fd802))
+
+
+### Documentation
+
+* hooks of the chat's highlight cards, notices and predictions ([4733d20](https://github.com/corentin-gautier/restyle-for-twitch/commit/4733d20c865e81e369abd063e0b7136245e03b5c))
+
 ## [1.14.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.13.0...v1.14.0) (2026-10-13)
 
 

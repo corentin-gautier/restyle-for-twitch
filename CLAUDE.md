@@ -16,7 +16,8 @@ The user is French-speaking: reply in French, write code and docs in English.
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
 | `docs/` | GitHub Pages site. |
-| `.github/workflows/release.yml` | On a `v*` tag, publishes a GitHub release with the package as `restyle-for-twitch.zip`, and the Firefox one as `restyle-for-twitch-firefox.zip`. |
+| `.github/workflows/release.yml` | On a `v*` tag, publishes a GitHub release with the package as `restyle-for-twitch.zip`, and the Firefox one as `restyle-for-twitch-firefox.zip`, then submits each to its store (Chrome Web Store API v2, `web-ext sign --channel listed`). A store whose secrets are missing is skipped; they are listed under "Releasing" in the README. |
+| `promo/` | GIFs, stills and post drafts (`posts.md`) for Reddit and Bluesky. Local only for now (untracked), and not part of the packages. |
 
 ## Conventions
 

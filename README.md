@@ -141,8 +141,24 @@ dependencies (`npm install`): it compiles the stylesheet, minified, before
 zipping. The Firefox manifest is derived from `manifest.json`: it gains the
 add-on id and the data collection statement Firefox asks for.
 
+### Releasing
+
 Releases are cut with `npm run release` (version bump, changelog, tag).
-Pushing the tag publishes a GitHub release with both zips attached.
+Pushing the tag publishes a GitHub release with both zips attached, then
+submits each package to its store, where it waits for review as usual.
+
+A store is skipped until its repository secrets are set (**Settings >
+Secrets and variables > Actions**):
+
+| Secret | Where it comes from |
+| --- | --- |
+| `CWS_PUBLISHER_ID` | The publisher ID shown in the Chrome Web Store developer dashboard, under **Account**. |
+| `CWS_CLIENT_ID`, `CWS_CLIENT_SECRET` | An OAuth client of a Google Cloud project with the Chrome Web Store API enabled. Set the consent screen to "In production": a refresh token issued in "Testing" expires after a week. |
+| `CWS_REFRESH_TOKEN` | A refresh token for that client with the scope `https://www.googleapis.com/auth/chromewebstore`, obtained once with the account that owns the extension (see [Use the Chrome Web Store API](https://developer.chrome.com/docs/webstore/using-api)). |
+| `AMO_JWT_ISSUER`, `AMO_JWT_SECRET` | The API credentials generated on [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/). |
+
+Each store has its own job in the workflow: one that fails can be re-run
+alone from the Actions tab.
 
 ## Known limits
 

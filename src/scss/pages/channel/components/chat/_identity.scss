@@ -29,6 +29,19 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * Twitch paints its three parts (header, preview, list) in the page's
+   * colour: the box's own surface shows instead, as in the other popups.
+   */
+  & .chat-identity-menu__header,
+  & .chat-identity-menu__content {
+    background: transparent !important;
+  }
+
+  @include guarded(".chat-settings__popover > div%g:has(.name-display__name)") {
+    background: transparent !important;
+  }
+
   & .chat-identity-menu__header {
     padding: var(--rs-3) var(--rs-3) var(--rs-1) !important;
   }
@@ -49,7 +62,69 @@ html:not([data-rs="off"]) {
     border-radius: var(--rs-radius-m) !important;
   }
 
+  /*
+   * Its type. Twitch sets section titles and their explanations at the same
+   * size, the titles only greyer and a few pixels in from the text. Titles
+   * become the small-caps labels of the other panels, on the text's edge;
+   * explanations a quiet, smaller paragraph.
+   */
+  & .chat-identity-menu__header p {
+    @include type(4, 700);
+  }
+
+  & .chat-identity-menu__content p,
+  & .chat-settings__popover [data-test-selector="display-name-description"] p {
+    @include muted(3);
+    line-height: 1.45 !important;
+  }
+
+  /* A section's title: the lone line of its first block… */
+  @include guarded(
+    '.chat-identity-menu__content div:first-child > p%g:only-child:not([class*="collapsibleHeader"] *)',
+    ".chat-identity-menu__content div%g:has(> [role='separator']) + div > p%g:only-child",
+    ".chat-settings__popover > div%g:has(.name-display__name) > div > div:first-child > p%g"
+  ) {
+    @include caps(1);
+    line-height: 1.6 !important;
+    color: var(--rs-label) !important;
+  }
+
+  /* …and that block, which insets it. */
+  @include guarded(
+    '.chat-identity-menu__content div%g:first-child:has(> p:only-child):not([class*="collapsibleHeader"] *)',
+    ".chat-identity-menu__content div%g:has(> [role='separator']) + div%g:has(> p:only-child)",
+    ".chat-settings__popover > div%g:has(.name-display__name) > div > div%g:first-child"
+  ) {
+    margin-bottom: var(--rs-1) !important;
+    /* Level with the explanations, which Twitch insets by this much. */
+    padding-inline: 0.4rem !important;
+  }
+
   & .chat-identity-menu__content {
+    /* "Subscriber Badge": a sub-heading, a step under the explanation. */
+    & strong {
+      display: block !important;
+      margin: var(--rs-3) 0 var(--rs-1) !important;
+      @include type(3, 600);
+      color: var(--rs-text) !important;
+    }
+
+    /* The badge shown when there is none to choose: Twitch rings it in white. */
+    & .edit-appearance__static-badge {
+      border-color: var(--rs-border) !important;
+      border-radius: var(--rs-radius-s) !important;
+    }
+
+    & .tw-drop-down-menu-input-item__label {
+      @include type(3, 500);
+      color: var(--rs-text) !important;
+    }
+
+    /* Choosers: one small gap under the explanation. */
+    & [role="radiogroup"] {
+      margin-top: var(--rs-2) !important;
+    }
+
     /* A hairline: the element has height of its own, so no background. */
     & [role="separator"] {
       height: 0 !important;
@@ -59,31 +134,120 @@ html:not([data-rs="off"]) {
       border-top: var(--rs-hairline) !important;
     }
 
-    /* Twitch frames the campaign card a second time. */
+    /*
+     * Badge campaign ("Active Campaigns"). Twitch sets the picture against
+     * the text, the count alone on a line at the right and the bar under
+     * it, and opens the campaign's badges under the card. One quiet card
+     * that holds both: the picture, then the name over its game, with the
+     * bar and its count on one line, and the arrow in a disc at the end.
+     */
     @include guarded('div%g:has(> [class*="collapsibleHeader"])') {
       padding: 0 !important;
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      @include clip(m);
+    }
+
+    & [class*="collapsibleHeader"] {
+      align-items: center !important;
+      gap: var(--rs-3) !important;
+      padding: var(--rs-2) !important;
       @include bare;
     }
 
-    /* Badge campaign ("Active Campaigns"): a quiet card. */
-    & [class*="collapsibleHeader"] {
-      padding: var(--rs-2) !important;
+    /* Its badges, once open: an explanation, then a row of four. */
+    @include guarded('div%g:has(> [class*="badgeRow"])') {
+      padding: var(--rs-1) var(--rs-2) var(--rs-2) !important;
+    }
+
+    & [class*="badgeRow"] {
+      gap: var(--rs-1) !important;
+      margin-top: var(--rs-2) !important;
+    }
+
+    & [class*="badgeSlot"]:not(img) {
+      flex: 1 !important;
+      min-width: 0 !important;
       background: var(--rs-hover) !important;
-      border: 0 !important;
-      border-radius: var(--rs-radius-m) !important;
+      border-radius: var(--rs-radius-s) !important;
     }
 
     & [class*="thumbnailBox"] {
+      flex: none !important;
+      width: 4.8rem !important;
+      height: 6.4rem !important;
+      margin: 0 !important;
       @include clip(s);
     }
 
+    & [class*="thumbnailImg"] {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+    }
+
+    /* The text beside it: no margins of its own, the card's gap spaces it. */
+    @include guarded('[class*="collapsibleHeader"] > div%g:has(.tw-progress-bar)', $from: ".chat-identity-menu__content") {
+      flex: 1 !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    & [class*="collapsibleHeader"] h3 {
+      @include type(3, 600);
+      line-height: 1.3 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & [class*="collapsibleHeader"] p {
+      font-size: var(--rs-text-2) !important;
+      line-height: 1.3 !important;
+    }
+
+    /* The count and the bar, on one line. */
+    @include guarded("div%g:has(> .tw-progress-bar)") {
+      display: flex !important;
+      flex-direction: row-reverse !important;
+      align-items: center !important;
+      gap: var(--rs-2) !important;
+      margin-top: var(--rs-2) !important;
+      padding: 0 !important;
+
+      & > div:not(.tw-progress-bar) {
+        flex: none !important;
+        width: auto !important;
+        margin: 0 !important;
+      }
+    }
+
     & .tw-progress-bar {
-      background: var(--rs-hover) !important;
+      flex: 1 !important;
+      height: 0.4rem !important;
+      margin: 0 !important;
+      background: var(--rs-border) !important;
       @include clip(pill);
 
       & > div {
         background: var(--rs-accent) !important;
       }
+    }
+
+    /* The arrow that opens the campaign's badges. */
+    & [class*="collapsibleHeader"] .tw-interactable {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 2.8rem !important;
+      height: 2.8rem !important;
+      border-radius: 50% !important;
+      color: var(--rs-label) !important;
+      transition: background-color var(--rs-ease), color var(--rs-ease);
+    }
+
+    & [class*="collapsibleHeader"] .tw-interactable:hover {
+      background: var(--rs-hover) !important;
+      color: var(--rs-text) !important;
     }
 
     & .edit-appearance__badge-chooser {

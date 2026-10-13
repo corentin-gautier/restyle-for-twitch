@@ -23,7 +23,7 @@
   --rs-shelf-gap: var(--rs-12);
 
   /* Corner rounding multiplier, driven by the popup (data-rs-round="0|1|2"). */
-  --rs-round: 1;
+  --rs-round: 0.5;
   --rs-radius-xs: calc(6px * var(--rs-round)); /* box art, small pictures */
   --rs-radius-s: calc(8px * var(--rs-round));
   --rs-radius-m: calc(12px * var(--rs-round));
@@ -90,7 +90,7 @@
 :root[data-rs-space="3"] { --rs-scale: 1.6; }
 
 :root[data-rs-round="0"] { --rs-round: 0; }
-:root[data-rs-round="1"] { --rs-round: 0.5; }
+:root[data-rs-round="2"] { --rs-round: 1; }
 
 /*
  * Palette, in two layers.

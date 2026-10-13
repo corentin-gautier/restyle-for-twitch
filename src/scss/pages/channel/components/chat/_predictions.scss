@@ -1,0 +1,68 @@
+// Chat: a prediction's details, a view of the Power-ups & Rewards popup.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) .reward-center__content {
+  /* The view has a "Back" button ahead of the popup's title, tight against it. */
+  & .rewards-popover-header div + h2:where(.rewards-popover-header *) {
+    margin-left: var(--rs-1) !important;
+  }
+
+  /*
+   * The question and its state ("Submissions closed", "Prediction ended 4
+   * minutes ago"): a title on a block of the page's colour. A tinted box, as
+   * in the hype train's panel, the question at a card title's size over a
+   * caption.
+   */
+  & .prediction-checkout-details-header {
+    margin-bottom: var(--rs-2) !important;
+    padding: var(--rs-2) var(--rs-3) !important;
+    background: var(--rs-hover) !important;
+    border-radius: var(--rs-radius-m) !important;
+
+    & .tw-title {
+      @include type(5, 600);
+      line-height: 1.3 !important;
+    }
+
+    & p:not(.tw-title) {
+      @include muted(2);
+      margin-top: 0.2rem !important;
+    }
+  }
+
+  /*
+   * The two outcomes, mirrored on a centre line: a name, four figures, the
+   * share of the votes over a bar. Twitch sets the name as a title and the
+   * share larger still: the share is the one large figure, the name a label
+   * over it.
+   */
+  & [data-test-selector="prediction-summary-outcome__title"] .tw-title {
+    @include type(4, 600);
+  }
+
+  & .prediction-summary-stat p {
+    font-size: var(--rs-text-2) !important;
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  & [data-test-selector="prediction-summary-outcome__percentage"] .tw-title {
+    @include type(title, 600);
+    font-variant-numeric: tabular-nums !important;
+  }
+
+  & .prediction-summary-outcome-bar {
+    height: 0.4rem !important;
+    border-radius: var(--rs-radius-pill) !important;
+  }
+
+  /* "Prediction started 17 minutes ago", "Waiting for result": a caption under them. */
+  & .prediction-checkout-details-header ~ div:where(.reward-center__content *) > p:where(.reward-center__content *) {
+    @include muted(2);
+
+    /* The time, which Twitch sets apart. */
+    & span {
+      font-size: inherit !important;
+      color: inherit !important;
+    }
+  }
+}

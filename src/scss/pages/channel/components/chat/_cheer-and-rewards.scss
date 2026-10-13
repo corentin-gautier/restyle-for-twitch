@@ -56,6 +56,17 @@ html:not([data-rs="off"]) {
         padding-left: 0 !important;
       }
 
+      /*
+       * The title takes the focus when the popup opens from a highlight card
+       * ("See Details"), and Twitch then frames it like a field. It is not a
+       * control: no frame.
+       */
+      & h2 {
+        background: transparent !important;
+        outline: 0 !important;
+        box-shadow: none !important;
+      }
+
       /* Twitch sets the title large and light. */
       & .tw-title,
       & .tw-title * {

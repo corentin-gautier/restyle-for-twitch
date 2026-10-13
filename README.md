@@ -157,8 +157,9 @@ Secrets and variables > Actions**):
 | `CWS_REFRESH_TOKEN` | A refresh token for that client with the scope `https://www.googleapis.com/auth/chromewebstore`, obtained once with the account that owns the extension (see [Use the Chrome Web Store API](https://developer.chrome.com/docs/webstore/using-api)). |
 | `AMO_JWT_ISSUER`, `AMO_JWT_SECRET` | The API credentials generated on [addons.mozilla.org](https://addons.mozilla.org/developers/addon/api/key/). |
 
-Each store has its own job in the workflow: one that fails can be re-run
-alone from the Actions tab.
+Each store has its own job in the workflow. To submit the current version to
+a store again without a new tag (after fixing a secret, say), run the
+"Release" workflow by hand from the Actions tab and pick the store.
 
 ## Known limits
 

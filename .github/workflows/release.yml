@@ -11,6 +11,15 @@ name: Release
 on:
   push:
     tags: ["v*"]
+  # By hand, from the Actions tab: submits the current version to a store
+  # again, without a new tag or release (after fixing a secret, say).
+  workflow_dispatch:
+    inputs:
+      store:
+        description: Store to submit to
+        type: choice
+        options: [chrome, firefox, both]
+        default: chrome
 
 jobs:
   package:
@@ -47,6 +56,7 @@ jobs:
 
   github:
     needs: package
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -63,6 +73,7 @@ jobs:
   # publishes it once the review passes.
   chrome:
     needs: package
+    if: github.event_name == 'push' || inputs.store != 'firefox'
     runs-on: ubuntu-latest
     permissions: {}
     env:
@@ -90,15 +101,27 @@ jobs:
           api=https://chromewebstore.googleapis.com
           item="v2/publishers/$PUBLISHER_ID/items/$EXTENSION_ID"
 
-          token=$(curl -sS --fail-with-body https://oauth2.googleapis.com/token \
-            -d client_id="$CLIENT_ID" \
+          # Prints the response; on an HTTP error, shows it and fails.
+          call() {
+            out=$(curl -sS -w '\n%{http_code}' "$@")
+            status=${out##*$'\n'}
+            if [ "$status" -ge 400 ]; then
+              echo "::error::HTTP $status from the request to ${*: -1}" >&2
+              echo "${out%$'\n'*}" >&2
+              return 1
+            fi
+            echo "${out%$'\n'*}"
+          }
+
+          token=$(call -d client_id="$CLIENT_ID" \
             -d client_secret="$CLIENT_SECRET" \
             -d refresh_token="$REFRESH_TOKEN" \
-            -d grant_type=refresh_token | jq -r .access_token)
+            -d grant_type=refresh_token \
+            https://oauth2.googleapis.com/token | jq -r .access_token)
           echo "::add-mask::$token"
 
-          upload=$(curl -sS --fail-with-body -X POST "$api/upload/$item:upload" \
-            -H "Authorization: Bearer $token" -T restyle-for-twitch.zip)
+          upload=$(call -X POST -H "Authorization: Bearer $token" \
+            -T restyle-for-twitch.zip "$api/upload/$item:upload")
           echo "$upload"
           # The store may still be unpacking the zip when the upload returns.
           state=$(echo "$upload" | jq -r .uploadState)
@@ -106,19 +129,18 @@ jobs:
           while [ "${state%IN_PROGRESS}" != "$state" ] && [ "$tries" -lt 30 ]; do
             sleep 10
             tries=$((tries + 1))
-            state=$(curl -sS --fail-with-body "$api/$item:fetchStatus" \
-              -H "Authorization: Bearer $token" | jq -r .lastAsyncUploadState)
+            state=$(call -H "Authorization: Bearer $token" "$api/$item:fetchStatus" | jq -r .lastAsyncUploadState)
             echo "upload: $state"
           done
           [ "$state" = "SUCCEEDED" ] || { echo "::error::Upload ended as $state"; exit 1; }
 
-          curl -sS --fail-with-body -X POST "$api/$item:publish" \
-            -H "Authorization: Bearer $token" -H "Content-Length: 0"
+          call -X POST -H "Authorization: Bearer $token" -H "Content-Length: 0" "$api/$item:publish"
 
   # Adds the version to the listing on addons.mozilla.org and leaves it to
   # Mozilla's review, without waiting for it.
   firefox:
     needs: package
+    if: github.event_name == 'push' || inputs.store != 'chrome'
     runs-on: ubuntu-latest
     permissions: {}
     env:

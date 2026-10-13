@@ -1,4 +1,9 @@
 // Chat: messages.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+// Width of the bar down the left edge of a notice.
+$notice-bar: 0.3rem;
 
 html:not([data-rs="off"]) {
   /*
@@ -10,8 +15,7 @@ html:not([data-rs="off"]) {
   }
 
   & .chat-line__message,
-  & .chat-line__status,
-  & .user-notice-line {
+  & .chat-line__status {
     padding: var(--rs-2) var(--rs-4) !important;
     line-height: 1.55 !important;
   }
@@ -94,6 +98,187 @@ html:not([data-rs="off"]) {
         opacity: 1 !important;
       }
     }
+  }
+
+  /*
+   * "Replying to @name: …" over a reply: Twitch sets it at the message's own
+   * size, tight against it. A caption a step smaller, its icon with it, and
+   * a little room before the reply. The room is padding on the text: the row
+   * holding it has no name to select it by, only its place: the first row of
+   * the line (a clip's card, further down, has a titled line too).
+   */
+  & .chat-line__message-container > div > div > div > p[title] {
+    padding-bottom: var(--rs-1) !important;
+    font-size: var(--rs-text-2) !important;
+    line-height: 1.6rem !important;
+  }
+
+  & .chat-line__message-container > div > div > .tw-svg {
+    height: 1.6rem !important;
+
+    & svg {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+    }
+  }
+
+  /*
+   * A notice in the chat (a subscription, a redeemed reward, a highlighted
+   * message): a coloured bar down the chat's left edge, then the notice.
+   * The bar stays on that edge, which is what sets a notice apart from the
+   * messages; it is thinner, and the notice's text starts on the messages'
+   * left edge, on their vertical rhythm (Twitch keeps 4px of margin around
+   * the pair, taken off here).
+   *
+   * The bar has no name: it is the block Twitch colours inline. Its depth
+   * under the list varies (a batch of gifted subscriptions wraps its notices
+   * once more), so it is found by that style alone.
+   */
+  & .chat-scrollable-area__message-container div[style^="background:"] {
+    flex: none !important;
+    width: $notice-bar !important;
+  }
+
+  /*
+   * What the notice says ("<icon> <name> Subscribed at Tier 1. They've
+   * subscribed for 4 months!"): Twitch sets it in four colours, two weights
+   * and the message's own size. One caption instead: small, grey, regular,
+   * with the name alone at full strength. The message under it is what a
+   * viewer wrote, and the only thing at the chat's size.
+   */
+  & [data-test-selector="user-notice-line"] {
+    @include muted(2);
+    padding: calc(var(--rs-2) - 4px) var(--rs-4) calc(var(--rs-2) - 4px) calc(var(--rs-4) - #{$notice-bar}) !important;
+    line-height: 1.5 !important;
+
+    & :is(div, p, span, strong, a):where(:not(.chat-line__message *)) {
+      font-size: inherit !important;
+      font-weight: 400 !important;
+      color: inherit !important;
+    }
+
+    & .chatter-name:where(:not(.chat-line__message *)),
+    & .chatter-name:where(:not(.chat-line__message *)) span {
+      font-weight: 600 !important;
+      color: var(--rs-text) !important;
+    }
+
+    /*
+     * The star, crown or flame beside the name: the name's colour, at the
+     * caption's size. Twitch centres it in a 2rem box, in a 2rem column: the
+     * box shrinks to the icon, so that it sits on the name's line, and the
+     * column with it, so that it sits beside the name.
+     */
+    & .tw-svg:where(:not(.chat-line__message *)) {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+      color: var(--rs-text) !important;
+
+      & svg {
+        width: 1.4rem !important;
+        height: 1.4rem !important;
+        fill: currentColor !important;
+      }
+    }
+
+    /*
+     * The message a notice carries is already inset by the notice. Twitch
+     * sets it inline: around the blocks it holds, that leaves an empty line
+     * under it.
+     */
+    & .chat-line__message {
+      @include type(4, 400);
+      display: block !important;
+      margin-top: var(--rs-1) !important;
+      padding: 0 !important;
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /* The icon's column (see above). A reward's icon sits in the text: left as it is. */
+  @include guarded('[data-test-selector="user-notice-line"] div%g:not(.channel-points-reward-line__icon):has(> .tw-svg)', $from: '[data-test-selector="user-notice-line"]') {
+    flex: none !important;
+    width: auto !important;
+    margin-right: 0.2rem !important;
+  }
+
+  /* Twitch fills some notices (subscriptions, raids) and not others: none. */
+  & .chat-scrollable-area__message-container > div > div > div:not(.chat-line__message) {
+    background: transparent !important;
+  }
+
+  /* Twitch spaces a reward's icon with two blank characters set at 2rem. */
+  & .channel-points-reward-line__icon::before,
+  & .channel-points-reward-line__icon::after {
+    font-size: inherit !important;
+  }
+
+  /*
+   * An announcement (/announce): a filled block between two thick borders in
+   * the announcement's colour, under a grey header. The same as a notice:
+   * one thin bar on the chat's left edge, drawn from those borders (their
+   * colour, or the gradient of a coloured announcement), the header as a
+   * caption, and the message without the inset it has as a line of its own.
+   */
+  & .announcement-line {
+    position: relative !important;
+    padding: calc(var(--rs-2) - 4px) var(--rs-4) !important;
+    background: transparent !important;
+    border-width: 0 !important;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      border-style: solid;
+      border-width: 0 calc(#{$notice-bar} / 2);
+      border-color: inherit;
+      border-image: inherit;
+    }
+
+    /* The header; the other block carries an inline margin. */
+    & > div:not([style]) {
+      @include bare;
+      @include muted(2);
+      padding: 0 !important;
+      font-weight: 400 !important;
+    }
+
+    & > div:not([style]) div {
+      font-weight: 400 !important;
+    }
+
+    /* An empty block that only pushes the icon 4px off the left edge. */
+    & > div:not([style]) > div:empty {
+      display: none !important;
+    }
+
+    & > div:not([style]) svg {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+    }
+
+    & > div[style] {
+      margin: var(--rs-1) 0 0 !important;
+    }
+
+    & .chat-line__message {
+      padding: 0 !important;
+    }
+  }
+
+  /*
+   * A highlighted message: Twitch paints each line of its text on a block of
+   * purple. One box under the name instead, in a tint of the accent.
+   */
+  & .chat-line__message-body--highlighted {
+    display: block !important;
+    margin-top: var(--rs-1) !important;
+    padding: var(--rs-2) var(--rs-3) !important;
+    background: var(--rs-accent-tint-strong) !important;
+    border: 0 !important;
+    border-radius: var(--rs-radius-m) !important;
+    color: var(--rs-text) !important;
   }
 
   & .chat-line__username,

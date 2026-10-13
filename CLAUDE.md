@@ -185,6 +185,7 @@ checked in a headless Chrome; the others need the user's session.
 | Category, videos | `/directory/category/<slug>/videos/all` | Public | `pages/_category`, `components/_filter-row` | filter row |
 | Category, clips | `/directory/category/<slug>/clips?range=7d` | Public | same | filter row |
 | Search | `/search?term=<query>` | Public | `pages/_search` | `.search-results`, `.search-result-card` |
+| Search, one type | `/search?term=<query>&type=channels` (also `categories`, `videos`) | Public | `pages/_search` | the block holding an `h2.tw-title` and the "Back to all results" `<span>`; `[data-a-target="search-result-category"]`, `.search-result-card__category` |
 | Settings | `/settings/profile` | Logged in | `pages/_settings` | `.settings-tabs`, `.settings-root__content` |
 | Settings, Notifications | `/settings/notifications` | Logged in | `pages/_settings` | `#desktop_notifications`, `#smart_notifications`, the groups `[id$="_category"]` (an `.accordion-header` and the block after it), `#manage_channels` |
 | Drops, Inventory | `/drops/inventory` | Logged in | `pages/_account` (title, tabs, margins), `pages/drops/_shared`, `pages/drops/_inventory` | `.drops-tabs`, `.drops-root__content`, `.inventory-campaign-info` (a campaign's head, laid across its panel), tiles around `.inventory-drop-image`, `.reward_tile` |

@@ -1,4 +1,5 @@
 // Search results (/search).
+@use "tools/guard" as *;
 @use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
@@ -9,9 +10,34 @@ html:not([data-rs="off"]) {
   & .search-results {
     padding-inline: var(--rs-page-inset) !important;
 
-    /* One result: name, then quieter lines for category, viewers and title. */
+    /*
+     * One result. Twitch sets a thumbnail against four or five lines of one
+     * size: name, category, viewers, title, tags. A row like the site's
+     * other lists instead: it lights up as a whole on hover, and its text
+     * follows the cards' order, the name, then the title, then one quiet
+     * line for the category and the viewers.
+     */
     & .search-result-card {
-      gap: var(--rs-2) !important;
+      align-items: center !important;
+      gap: var(--rs-4) !important;
+      margin: 0 calc(-1 * var(--rs-2)) var(--rs-1) !important;
+      padding: var(--rs-2) !important;
+      border-radius: var(--rs-radius-l) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-hover) !important;
+      }
+
+      /* The text is inset a second time: the row's gap spaces it. */
+      @include guarded("> div > div%g") {
+        padding-inline: 0 !important;
+      }
+    }
+
+    /* Each row sits in blocks with 16 or 24px under them: the rows' own insets space them. */
+    @include guarded("div%g:has(> div > .search-result-card, > div > div > .search-result-card)") {
+      margin-bottom: 0 !important;
     }
 
     & .search-result-card__img,
@@ -19,22 +45,295 @@ html:not([data-rs="off"]) {
       @include clip(m);
     }
 
+    /* A category: its box art floats in the middle of a thumbnail's width, square. */
+    & [data-a-target="search-result-category"] .search-result-card__img-wrapper {
+      width: auto !important;
+    }
+
+    & .search-result-card__category {
+      @include clip(m);
+    }
+
     & strong a {
       @include type(5, 600);
+      line-height: 1.3 !important;
       color: var(--rs-text) !important;
     }
 
     & p:not(.tw-title),
-    & p:not(.tw-title) a {
+    & p:not(.tw-title) a,
+    & [data-a-target="search-result-video"] span {
       @include muted(3);
+      line-height: 1.5 !important;
+    }
+
+    /* A live channel's lines, reordered: the title second, category and viewers together. */
+    @include guarded('.search-result-card div%g:has(> p[data-test-selector$="live-channel__viewer-count"])') {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: baseline !important;
+
+      & > div,
+      & > p[data-test-selector$="__title"] {
+        flex: 0 0 100% !important;
+        min-width: 0 !important;
+      }
+
+      & > p[data-test-selector$="__title"] {
+        order: 1 !important;
+      }
+
+      & > p[data-test-selector$="__category"] {
+        order: 2 !important;
+      }
+
+      & > p[data-test-selector$="__viewer-count"] {
+        order: 3 !important;
+
+        &::before {
+          content: "·";
+          margin-inline: 0.5em;
+        }
+      }
     }
 
     & p[data-test-selector$="__title"] {
+      @include type(4, 400);
       color: var(--rs-text-soft) !important;
+    }
+
+    & [data-test-selector$="__tags"] {
+      margin-top: var(--rs-1) !important;
     }
 
     & .tw-aspect:not(.tw-avatar *) {
       @include clip(m);
+    }
+
+    /*
+     * A channel found by its name, offline: Twitch sets it among the live
+     * results as one more row, with its last videos under the description.
+     * It is another kind of result (the channel itself, not a stream), so
+     * it is a panel, laid on the rows' columns: the avatar in the middle of
+     * a thumbnail's width, so the name starts where the rows' text does,
+     * with Follow beside it; the description under; the videos at the end.
+     */
+    @include guarded("div%g:has(> .search-result-offline_channel--body)") {
+      display: flex !important;
+      align-items: center !important;
+      gap: var(--rs-4) !important;
+      width: 100% !important;
+      margin-block: var(--rs-3) var(--rs-4) !important;
+      padding: var(--rs-4) !important;
+      @include panel(l);
+    }
+
+    /* (21.4rem: the thumbnails' width, less the panel's own inset and border.) */
+    & .search-result-card__img-wrapper:has(.tw-avatar) {
+      flex: none !important;
+      align-self: center !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: calc(21.4rem - var(--rs-4) - 1px) !important;
+      height: auto !important;
+
+      /* The link keeps the height of Twitch's larger avatar. */
+      & > a {
+        width: auto !important;
+        height: auto !important;
+      }
+    }
+
+    /* Twitch rings the avatar in grey. */
+    & .search-result-offline_channel--avatar {
+      border: 0 !important;
+
+      &,
+      & .tw-avatar,
+      & .tw-image-avatar {
+        width: 9.6rem !important;
+        height: 9.6rem !important;
+      }
+    }
+
+    & .search-result-offline_channel--body {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto !important;
+      gap: var(--rs-1) var(--rs-6) !important;
+      flex: 1 !important;
+      min-width: 0 !important;
+      max-width: none !important;
+
+      /* The name's line, Follow beside it. */
+      @include guarded("> div%g:first-child") {
+        grid-column: 1 !important;
+        align-self: end !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        gap: var(--rs-3) !important;
+      }
+
+      @include guarded("> div%g:has(> .search-result-offline_channel--description)") {
+        grid-column: 1 !important;
+        align-self: start !important;
+        margin: 0 !important;
+      }
+
+      @include guarded("> div%g:has(> .offline_result-featured-videos--container)") {
+        grid-column: 2 !important;
+        grid-row: 1 / span 2 !important;
+        margin: 0 !important;
+      }
+
+      & strong a {
+        @include type(6, 700);
+        letter-spacing: -0.01em !important;
+      }
+    }
+
+    & p.search-result-offline_channel--description {
+      max-width: 60rem !important;
+      @include type(4, 400);
+      line-height: 1.5 !important;
+      color: var(--rs-text-soft) !important;
+    }
+
+    & .offline_result-featured-videos--container p {
+      @include caps(1);
+      color: var(--rs-label) !important;
+    }
+
+    & .offline_result-featured-videos--body {
+      width: 16rem !important;
+      margin-right: 0 !important;
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      @include clip(m);
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-border) !important;
+      }
+
+      & .tw-aspect {
+        border-radius: 0 !important;
+      }
+
+      & h4 {
+        @include type(3, 600);
+      }
+    }
+
+    & .offline_result-featured-videos--test {
+      gap: var(--rs-2) !important;
+
+      & > div {
+        width: auto !important;
+      }
+    }
+
+    /*
+     * "People searching for … also watch", a shelf inside the Channels
+     * group: a step under the groups' titles.
+     */
+    &.search-results .search-result-related-live-channels__row-container h2.tw-title {
+      @include type(title, 700);
+      padding-block: var(--rs-4) var(--rs-3) !important;
+    }
+
+    /* The shelf stops short of the results' width. */
+    & .search-result-related-live-channels__row-container {
+      width: 100% !important;
+      max-width: none !important;
+    }
+
+    /* Its four cards are columns 8px apart: the card grids' gap. */
+    & .search-result-related-live-channels__row-container .tw-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+      gap: var(--rs-6) !important;
+      width: 100% !important;
+      max-width: none !important;
+      margin: 0 !important;
+
+      & > .tw-col {
+        width: auto !important;
+        max-width: none !important;
+        padding: 0 !important;
+      }
+    }
+
+    /*
+     * Its cards: the name, the category as plain text, then a bare count
+     * in white. As on the other cards, a quiet line then the category's
+     * pill (styled with the cards' own, in components/cards/_text).
+     */
+    & .search-result-related-live-channels__row-container [data-rs-hook~="card-text"] {
+      @include stack;
+      @include muted(3);
+
+      @include guarded("> div%g:has(> p > a.tw-link)") {
+        order: 1 !important;
+        margin-top: var(--rs-2) !important;
+      }
+
+      & > div > p {
+        display: flex !important;
+        min-width: 0 !important;
+      }
+    }
+
+    /* "Live channels tagged <tag>": the tag is a link, underlined, with a large arrow. */
+    & h2.tw-title a {
+      color: var(--rs-accent-quiet) !important;
+      text-decoration: none !important;
+
+      & svg {
+        width: 0.6em !important;
+        height: 0.6em !important;
+      }
+    }
+
+    /*
+     * One type of result ("View All" from a group): a small title with
+     * "· Back to all results" stuck under it. The title gets the shelf
+     * titles' type, as on the page of all results, and the link becomes a
+     * quiet pill beside it.
+     */
+    @include guarded("div%g:has(> h2.tw-title + span)") {
+      display: flex !important;
+      align-items: center !important;
+      gap: var(--rs-4) !important;
+      padding-block: var(--rs-8) var(--rs-3) !important;
+
+      & > h2 {
+        @include type(display, 700);
+        line-height: 1.2 !important;
+        letter-spacing: -0.02em !important;
+        color: var(--rs-text) !important;
+      }
+
+      /* The dot before the link is bare text. */
+      & > span {
+        font-size: 0 !important;
+      }
+
+      & > span a {
+        display: inline-flex !important;
+        align-items: center !important;
+        height: 3rem !important;
+        padding: 0 var(--rs-3) !important;
+        background: var(--rs-hover) !important;
+        border-radius: var(--rs-radius-pill) !important;
+        @include type(3, 600);
+        color: var(--rs-text) !important;
+        text-decoration: none !important;
+        transition: background-color var(--rs-ease);
+      }
+
+      & > span a:hover {
+        background: var(--rs-border) !important;
+      }
     }
   }
 }

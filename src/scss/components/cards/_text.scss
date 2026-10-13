@@ -87,9 +87,11 @@ html:not([data-rs="off"]) {
    * The category is a tag, like the category chip under a player and the
    * tags beside it: an accent-tinted pill, cut with an ellipsis when the
    * name is longer than the card. It sits a full step under the title, as
-   * the "Chapters" button does.
+   * the "Chapters" button does. The cards of the search page's "also watch"
+   * shelf have the same link without its hook.
    */
-  & article [data-a-target="preview-card-game-link"] {
+  & article [data-a-target="preview-card-game-link"],
+  & .search-result-related-live-channels__row-container article p > a.tw-link {
     display: inline-block !important;
     box-sizing: border-box !important;
     max-width: 100% !important;

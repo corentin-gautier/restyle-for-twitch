@@ -63,7 +63,13 @@ and Chinese (simplified and traditional). Other languages get English.
 
 ## Install
 
-The extension is not on the Chrome Web Store yet. To install it by hand:
+### Chrome
+
+Install it from the [Chrome Web Store](https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl).
+It needs Chrome 120 or later, and should work in other Chromium browsers of
+the same generation. Chrome keeps it up to date.
+
+To install it by hand instead:
 
 1. Download [restyle-for-twitch.zip](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest/download/restyle-for-twitch.zip)
    from the [latest release](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest)
@@ -75,14 +81,11 @@ Keep that folder: Chrome loads the extension from it. To update, replace its
 contents with a newer release and click the reload button on the extension's
 card.
 
-It needs Chrome 120 or later, and should work in other Chromium browsers of
-the same generation.
-
 ### Firefox
 
-A Firefox package is built with each release, but it is not on Firefox
-Add-ons yet, and Firefox only installs signed add-ons for good. Until it is
-published there, it can be loaded for the current session:
+The extension has been submitted to Firefox Add-ons and is waiting for
+review. Firefox only installs signed add-ons for good, so until it is listed
+there it can only be loaded for the current session:
 
 1. Download [restyle-for-twitch-firefox.zip](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest/download/restyle-for-twitch-firefox.zip)
    from the [latest release](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest).

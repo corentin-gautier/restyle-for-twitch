@@ -1,0 +1,58 @@
+// Chat: the "Community" list (who is in the chat), opened from the chat's header.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A filter, then groups (Broadcaster, Moderators, VIPs, Users…) ruled
+   * apart, each a bold title over bold names. Here: small-caps group titles
+   * like the sidebar's, names as quiet rows that light up when pointed at,
+   * and air between groups instead of rules. content.js marks the list
+   * (data-rs-hook): it has no class of its own.
+   */
+  & .chat-room__content [data-rs-hook~="chatters"] > div > div {
+    padding: 0 var(--rs-2) !important;
+    border: 0 !important;
+  }
+
+  & .chat-room__content [data-rs-hook~="chatters"] > div > div:first-child {
+    padding: var(--rs-2) var(--rs-3) var(--rs-3) !important;
+  }
+
+  /* A group's title: its badge, its name, then what the group is and the fold arrow. */
+  @include guarded('.chat-room__content [data-rs-hook~="chatters"] button%g:has(.expandable-indicator__wrapper)') {
+    margin-top: var(--rs-3) !important;
+    padding: var(--rs-1) var(--rs-2) !important;
+    border-radius: var(--rs-radius-s) !important;
+
+    & strong {
+      @include caps(1);
+      color: var(--rs-label) !important;
+    }
+
+    & img {
+      width: 1.6rem !important;
+      height: 1.6rem !important;
+    }
+
+    & svg {
+      fill: var(--rs-muted) !important;
+    }
+  }
+
+  & .chatter-list-item {
+    padding: var(--rs-1) var(--rs-2) !important;
+    border-radius: var(--rs-radius-s) !important;
+    transition: background-color var(--rs-ease);
+
+    &:hover {
+      background: var(--rs-hover) !important;
+    }
+
+    & button,
+    & button span {
+      @include type(3, 500);
+      color: var(--rs-text) !important;
+    }
+  }
+}

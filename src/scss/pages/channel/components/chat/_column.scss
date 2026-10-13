@@ -34,6 +34,22 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * The arrow that folds the chat away, at the left of its header: Twitch
+   * sets it for a taller header, and it sits lower than the "Community"
+   * button at the right. Level with it, the same distance from the edge.
+   */
+  & .toggle-visibility__right-column--expanded {
+    top: 0.4rem !important;
+    left: 0.8rem !important;
+  }
+
+  /* As a floating panel, the header starts inside the panel's border. */
+  &[data-rs-floating] .right-column:not(.right-column--theatre) .toggle-visibility__right-column--expanded {
+    top: calc(0.4rem + 1px) !important;
+    left: calc(0.8rem + 1px) !important;
+  }
+
+  /*
    * Chat collapsed: the arrow that brings it back is a bare white glyph
    * astride the player's right edge. It moves onto the video, 1rem inside
    * its top right corner (the player's inset is --rs-4), as a floating

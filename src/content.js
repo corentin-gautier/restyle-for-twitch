@@ -232,6 +232,8 @@ const UPCOMING = 'header:has([data-a-target="upcoming-streams-header"]) + div';
 const HOOKS = [
   [".side-nav", { streak: '[class*="saveYourStreakSideNavRow"]' }],
   [".support-panel", { "gift-hero": '[class*="giftHeroSlot"]' }],
+  // The "Community" list of a chat.
+  [".chat-room__content", { chatters: ".scrollable-area:has(.chatter-list-item)" }],
   // The text column of a stream, video or clip card.
   [null, { "card-text": 'article [class*="ScTextWrapper"]' }],
   // Following, "Upcoming Streams": the box under its title, an entry, and

@@ -148,7 +148,7 @@ only one page uses goes in that page's folder, under `components/`
 | `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
 | `pages/following/` | `_stories`, `_upcoming-streams`, `_follow-games-banner`, `_channels-tab`. |
 | `pages/channel/` | `_player`, `_info-column`, `_stream-info`, `_about`, `_follow-callout`, `_panels` (a live channel); `_home-hero`, `_home-tab`, `_tabs-content`, `_schedule-tab`, `_videos-tab`, `_shelf-titles` (its tabs). |
-| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, `_community` (who is in the chat), `_notices`, and its popups `_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`, `_cards` (viewer card, emote card). |
+| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, `_community` (who is in the chat), `_notices`, and its popups `_emote-picker`, `_cheer-and-rewards`, `_predictions`, `_identity`, `_drops`, `_cards` (viewer card, emote card). |
 | `pages/video/` | `_info` (the video's own block), and in `components/`: `_chat-replay`, `_seek-preview`, `_chapter-list`, `_muted-audio-alert`. |
 | `pages/drops/` | `_shared`, then one file per tab: `_inventory`, `_campaigns`, `_social-badge`. |
 
@@ -237,7 +237,7 @@ kind found later goes in that list; one served by another site goes in
 | Category cards | `components/cards/_category-card` | `.game-card`, `.tw-box-art-card`. |
 | Shelf titles | `components/_titles`, `pages/channel/_shelf-titles` | Display size (`--rs-text-display`) on home, channel tabs and under a video. |
 | Tags and category chips | `components/_tags`, `components/cards/_text`, `components/cards/_chapters`, `pages/channel/_stream-info` | Accent-tinted pills. "Chapters" is a taller, squarer button in the same tint. |
-| Live chat | `pages/channel/components/chat/_messages`, `pages/channel/components/chat/_highlights` | `.chat-line__message`, leaderboard hidden, highlight cards. |
+| Live chat | `pages/channel/components/chat/_messages`, `pages/channel/components/chat/_highlights` | `.chat-line__message`, leaderboard hidden, highlight cards (`.community-highlight`, its box `.highlight`). A pinned message is `.pinned-chat__highlight-card`: `.pinned-chat__pinned-by`, `.pinned-chat__message`, the buttons in `.pinned-chat__scrollable-area`; `.highlight__collapsed` once folded to one line. A notice in the messages (subscription, redeemed reward) is `[data-test-selector="user-notice-line"]`, after a bar Twitch colours inline; a highlighted message's text is `.chat-line__message-body--highlighted`, a reward's icon `.channel-points-reward-line__icon`. An announcement is `.announcement-line`, its colour an inline `border-color` or a `--blue`/`--green`/… class. A prediction's card is `.highlight__click-target`; with several cards, `.community-highlight-stack__backlog-card` shows behind. A hype train is `.sticky-community-highlight`, over those cards: its banner `button[aria-controls="hype-train-expanded-view"]`, and under it the panel, all generated classes, restyled through Twitch's palette variables set on the card. |
 | Shelves | `components/_shelf` | A title, a grid, sometimes "Show more": all spacing sits on the title, `--rs-shelf-gap` above and `--rs-shelf-head` under. Same on home, Following, a channel's Home tab and under a video. |
 | Empty states | `components/_empty-state` | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found.", "No Clips Found" and an empty tab of Subscriptions. |
 | Loading | `components/_loading` | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
@@ -251,7 +251,7 @@ kind found later goes in that list; one served by another site goes in
 | Chat notices | `pages/channel/components/chat/_notices` | `[data-test-selector^="chat-private-callout-queue"] article`, above the message field. |
 | Message field | `pages/channel/components/chat/_input` | `.chat-wysiwyg-input-box` (the outlined field), `.chat-input__buttons-container` (balances, settings, "Chat"). The tab joined to its top ("Followers-Only Chat", a reply's thread) is `.chat-input-tray__open`, `--web-nonpersistent` once clicked open; the field's wrapper is then `.chat-input-container__open`. |
 | Error page | `pages/_error` | `.core-error__container`: an unknown address, an unavailable channel. |
-| Chat popups | `pages/channel/components/chat/` (`_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`) | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
+| Chat popups | `pages/channel/components/chat/` (`_emote-picker`, `_cheer-and-rewards`, `_predictions`, `_identity`, `_drops`) | Emote picker, cheer card, Power-ups & Rewards (and its prediction view, logged in: `.prediction-checkout-details-header`, `.prediction-summary-outcome`, `.prediction-summary-stat`, `.prediction-summary-outcome-bar`), Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 
 ## Not covered yet
 

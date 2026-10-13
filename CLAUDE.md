@@ -144,7 +144,7 @@ only one page uses goes in that page's folder, under `components/`
 | `components/cards/` | `_grid` (`.tw-tower`), `_thumbnail`, `_thumbnail-stats`, `_hover`, `_body` (avatar beside the text), `_text`, `_chapters`, `_category-card`. |
 | `components/overlays/` | `_floating-boxes` (balloons, popovers, dialogs), `_menus`, `_backdrop`, `_modal`, `_whispers`, `_clip-viewer`, `_streamer-card`, `_turbo-offer`, `_buy-bits`, `_prime-offers`, `_empty-dialog`. |
 | `components/player/` | What opens over any player: `_settings-menu`, `_keyboard-shortcuts`, `_stats`, `_content-gate`. |
-| `pages/` | One file per page: `_home`, `_settings`, `_account` (the header Drops, Wallet and Subscriptions share), `_subscriptions`, `_collection`, `_category`, `_event`, `_search`, `_error`, `_clip`, `_team`. A page with several files has a folder, and what only that page uses sits in the folder's own `components/`. |
+| `pages/` | One file per page: `_home`, `_settings`, `_account` (the header Drops, Wallet and Subscriptions share), `_wallet`, `_subscriptions`, `_collection`, `_category`, `_event`, `_search`, `_error`, `_clip`, `_team`. A page with several files has a folder, and what only that page uses sits in the folder's own `components/`. |
 | `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
 | `pages/following/` | `_stories`, `_upcoming-streams`, `_follow-games-banner`, `_channels-tab`. |
 | `pages/channel/` | `_player`, `_info-column`, `_stream-info`, `_about`, `_follow-callout`, `_panels` (a live channel); `_home-hero`, `_home-tab`, `_tabs-content`, `_schedule-tab`, `_videos-tab`, `_shelf-titles` (its tabs). |
@@ -192,6 +192,8 @@ checked in a headless Chrome; the others need the user's session.
 | Drops, All Campaigns | `/drops/campaigns` | Logged in | `pages/drops/_shared`, `pages/drops/_campaigns` | `.accordion-header` and the block after it, `.drop-details__label`, `.drop-benefit__image-container` |
 | Drops, Social Media Badge | `/drops/social-badge` | Logged in | `pages/drops/_shared`, `pages/drops/_social-badge` | `article` holding `.tw-callout-message`, the box holding `.tw-avatar` |
 | Wallet, Subscriptions | `/wallet`, `/subscriptions` | Logged in | `pages/_account` | a block holding an `<h2>`, tabs and content |
+| Wallet, first tab | `/wallet` | Logged in | `pages/_wallet` | `.payment-methods-tab` on every block: the welcome and the two balances (panels), the row holding the `.tw-title` "Saved Payment Methods", then the methods (the last one), `[data-a-target="saved-payment-method"]` |
+| Wallet, history tabs | `/wallet?tab=purchase-history`, `/wallet?tab=bits-usage-history` | Logged in | `pages/_wallet` | `.tw-table` (`.tw-table-heading`, `.tw-table-row`, `.tw-table-cell`), `#transaction_range_start_label`, `[data-test-selector^="table-pagination__"]` |
 | Subscriptions, a tab | `/subscriptions?tab=expired` (also `paid`, `gifts`, `mobile`, `turbo`, `other`) | Logged in | `pages/_subscriptions`, `components/cards/_grid` (its grid), `components/_empty-state` (empty tab) | `.subscription-card` in a grid, `.sub-badge-progress`, `[data-test-selector="SubscriptionsEmptyMessage"]`; the six tabs wrap |
 
 ### Channel pages

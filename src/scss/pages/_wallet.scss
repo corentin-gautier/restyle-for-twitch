@@ -1,0 +1,220 @@
+// Wallet: its first tab, and the tables of the two history tabs.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Wallet (logged in): a welcome, two balances, then the saved payment
+   * methods. Twitch outlines the first three on the page's own colour and
+   * draws the methods as square boxes stacked under a light title. Panels
+   * like the Settings tabs': a raised surface, one type scale, and the
+   * methods in one panel under a title of the same weight as the others.
+   */
+  /* (Every block carries the class: the panels are those that are neither the title's row nor the methods.) */
+  & .payment-methods-tab:not(:last-child):not(:has(> div > .tw-title)) {
+    margin-bottom: var(--rs-3) !important;
+    @include panel(l);
+  }
+
+  /*
+   * The welcome is a notice that can be closed, not a part of the wallet:
+   * the accent's tint instead of the panels' surface, without a frame.
+   */
+  & .payment-methods-tab:not(:last-child):not(:has(> div > .tw-title)):has(.tw-avatar) {
+    margin-bottom: var(--rs-4) !important;
+    background: var(--rs-accent-tint) !important;
+    border-color: transparent !important;
+  }
+
+  & .payment-methods-tab {
+    /* The welcome's title, a balance's value. */
+    & .tw-title {
+      @include type(title, 700);
+      line-height: 1.25 !important;
+      letter-spacing: -0.015em !important;
+    }
+
+    & p:not(.tw-title) {
+      line-height: 1.5 !important;
+    }
+
+    & [data-test-selector="balance-unavailable-text"] {
+      @include muted(3);
+    }
+
+    & .tw-svg {
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    & button .tw-svg {
+      color: inherit !important;
+    }
+
+    & .tw-link {
+      @include type(3, 500);
+      color: var(--rs-accent-quiet) !important;
+      text-decoration: none !important;
+
+      &:hover {
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+
+  /*
+   * A balance: its name, its value beside an icon, a line of help, a
+   * button, all a few pixels apart. A step under the name and the value,
+   * a larger one above the button.
+   */
+  & .payment-methods-tab div:where(.payment-methods-tab *):has(> div > .tw-svg):has(> .tw-title) {
+    align-items: center !important;
+    gap: var(--rs-1) !important;
+    padding: var(--rs-2) 0 0 !important;
+  }
+
+  & .payment-methods-tab > div > p {
+    margin-top: var(--rs-2) !important;
+  }
+
+  & .payment-methods-tab > div > p + div:where(.payment-methods-tab > * > *) {
+    padding-top: var(--rs-4) !important;
+  }
+
+  /* "Saved Payment Methods": a section's title, with the country at the end of its line. */
+  & .payment-methods-tab:has(> div > .tw-title) {
+    align-items: baseline !important;
+    margin-top: var(--rs-6) !important;
+
+    & .tw-title {
+      @include type(6, 700);
+    }
+
+    & > div:where(.payment-methods-tab > *):last-child {
+      @include muted(3);
+    }
+  }
+
+  /* The methods: square boxes, one per card and one for what renews on it. One panel. */
+  & .payment-methods-tab:last-child > div:where(.payment-methods-tab > *) {
+    margin-block: var(--rs-3) 0 !important;
+    @include panel(l);
+    overflow: hidden !important;
+  }
+
+  & .payment-methods-tab:last-child > div > div:where(.payment-methods-tab > * > *) {
+    @include bare;
+    border-radius: 0 !important;
+  }
+
+  & .payment-methods-tab:last-child > div > div:where(.payment-methods-tab > * > *):not(:first-child) {
+    border-top: var(--rs-hairline) !important;
+  }
+
+  & .payment-methods-tab [data-a-target="saved-payment-method"] p {
+    @include type(4, 600);
+    color: var(--rs-text) !important;
+  }
+
+  & .payment-methods-tab .payment-method-display--expired p {
+    color: var(--rs-muted) !important;
+  }
+
+  /*
+   * Payment History, Bits History: two date fields (and a "Location"
+   * select) over a table, its header a grey band, its rows bare or striped.
+   * One panel like the first tab's: small-caps column names, rows parted by
+   * hairlines that light up on hover, and one text scale.
+   */
+  & .twilight-main .tw-table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    @include panel(l);
+    overflow: hidden !important;
+
+    & .tw-table-heading {
+      padding: 0 !important;
+      background: none !important;
+      border-bottom: var(--rs-hairline) !important;
+      border-radius: 0 !important;
+
+      & > div,
+      & .tw-interactable > div {
+        padding: var(--rs-2) var(--rs-4) !important;
+      }
+
+      & strong {
+        @include caps(1);
+        color: var(--rs-label) !important;
+      }
+
+      /* A column that sorts: Twitch sets it in the accent. */
+      & .tw-interactable {
+        color: var(--rs-label) !important;
+        transition: color var(--rs-ease);
+      }
+
+      & .tw-interactable:hover,
+      & .tw-interactable:hover strong {
+        color: var(--rs-text) !important;
+      }
+    }
+
+    & .tw-table-row {
+      background: none !important;
+    }
+
+    & .tw-table-cell {
+      padding: var(--rs-3) var(--rs-4) !important;
+      background: none !important;
+      vertical-align: middle !important;
+      transition: background-color var(--rs-ease);
+
+      & p {
+        @include type(4, 400);
+        color: var(--rs-text-soft) !important;
+      }
+
+      & strong,
+      & strong .tw-link {
+        @include type(4, 600);
+        color: var(--rs-text) !important;
+      }
+
+      &:first-child p {
+        @include muted(3);
+        white-space: nowrap !important;
+      }
+
+      & .tw-avatar,
+      & .tw-image-avatar {
+        width: 3.2rem !important;
+        height: 3.2rem !important;
+      }
+    }
+
+    & .tw-table-row:not(:first-child) > .tw-table-cell {
+      border-top: var(--rs-hairline) !important;
+    }
+
+    & .tw-table-body .tw-table-row:hover > .tw-table-cell {
+      background: var(--rs-hover) !important;
+    }
+  }
+
+  /* The fields' names over them: the small-caps labels of the other panels. */
+  & .twilight-main :is(#transaction_range_start_label, #transaction_range_end_label) {
+    margin-bottom: var(--rs-1) !important;
+    @include caps(1);
+    color: var(--rs-label) !important;
+  }
+
+  /* Pages under the table: quiet discs, the open one in the accent's tint. */
+  & [data-test-selector^="table-pagination__"] {
+    background: var(--rs-hover) !important;
+    color: var(--rs-label) !important;
+  }
+
+  & [data-test-selector="table-pagination__current-page"] {
+    background: var(--rs-accent-tint-strong) !important;
+    color: var(--rs-text) !important;
+  }
+}

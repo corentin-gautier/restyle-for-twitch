@@ -1,9 +1,16 @@
 // Whispers.
 
 html:not([data-rs="off"]) {
-  /* Whispers (logged in): the search row is painted a step darker. */
-  & div:has(> div > [data-a-target="whisper-search-input"]) {
-    padding: 0 var(--rs-1) var(--rs-2) !important;
+  /*
+   * Whispers (logged in): the search row is painted a step darker, and its
+   * field sits in two insets of different sizes. One even inset.
+   */
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> div > [data-a-target="whisper-search-input"]) {
+    padding: var(--rs-2) !important;
     background: transparent !important;
+  }
+
+  & .ReactModal__Content div:where(.ReactModal__Content *):has(> [data-a-target="whisper-search-input"]) {
+    padding: 0 !important;
   }
 }

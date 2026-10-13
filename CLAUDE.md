@@ -202,7 +202,7 @@ checked in a headless Chrome; the others need the user's session.
 | About tab | `/<channel>/about` | Public | `pages/channel/_tabs-content`, `pages/channel/_about`, `pages/channel/_panels` | `.about-section__panel`, `.channel-panels-container` |
 | Clips tab | `/<channel>/clips?range=7d` | Public | `components/_filter-row`, `pages/channel/_videos-tab`, `components/cards/` | "Filter By" row, `.tw-tower` |
 | Videos tab | `/<channel>/videos` | Public | `pages/channel/_videos-tab`, `pages/channel/_shelf-titles` | `.preview-card-carousel` |
-| Schedule tab | `/<channel>/schedule` | Public | `pages/channel/_schedule-tab` | `.stream-schedule__header`, `.stream-schedule-times`, `.stream-schedule-segment--element` |
+| Schedule tab | `/<channel>/schedule` | Public | `pages/channel/_schedule-tab` | `.stream-schedule__header`, `.stream-schedule-times`, `.stream-schedule-segment--element`; an event's popup is `[data-test-selector="segment-popover-content"]` |
 | Video (VOD) | `/videos/<id>` | Public | `pages/video/_info`, `pages/channel/_videos-tab` (the shelves under it), `pages/video/components/_chat-replay` | `.metadata-layout__split-top`, `.video-chat`, `.vod-message` |
 | Clip | `/<channel>/clip/<slug>` | Public | `pages/_clip` | `.metadata-layout__split-top` holding `.reedit-clip-button`; guests open the streamer card |
 | Subscribe / Gift a Sub | buttons on a channel | Public (logged-out variant) | `pages/channel/components/_subscribe-panel` | `.sub-modal`, `.support-panel` |

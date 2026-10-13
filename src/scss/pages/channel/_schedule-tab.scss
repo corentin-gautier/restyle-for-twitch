@@ -64,7 +64,14 @@ html:not([data-rs="off"]) {
     border: var(--rs-hairline) !important;
     border-radius: var(--rs-radius-m) !important;
     background: var(--rs-raised) !important;
+    /* The open event is ringed with a glow in the channel's colour. */
+    box-shadow: none !important;
     transition: background-color var(--rs-ease);
+  }
+
+  /* It keeps the hover's surface instead, while its popup is open. */
+  @include guarded('.stream-schedule-day div%g[style*="box-shadow"]:has(> .stream-schedule-segment--element)') {
+    background: var(--rs-float) !important;
   }
 
   @include guarded(".stream-schedule-day button:hover > div%g:has(> .stream-schedule-segment--element)") {
@@ -138,6 +145,64 @@ html:not([data-rs="off"]) {
 
     &:hover {
       background: var(--rs-accent-hover) !important;
+    }
+  }
+
+  /*
+   * An event's popup, opened from its card: a picture, the channel, the
+   * title, the category and views, a button in the channel's colour, the
+   * date after a bar of that colour, then "Copy Link". The colours become
+   * the accent's, the bar goes and the date is a quiet line.
+   */
+  & [data-test-selector="segment-popover-content"] {
+    & [data-test-selector="segment-title"] {
+      @include type(6, 700);
+      line-height: 1.25 !important;
+      letter-spacing: -0.01em !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-link {
+      color: var(--rs-accent-quiet) !important;
+    }
+
+    & span.stream-schedule-segment--text {
+      @include type(3, 500);
+      color: var(--rs-muted) !important;
+    }
+
+    & a[class*="ScCoreButton"] {
+      background: var(--rs-accent) !important;
+      color: var(--rs-on-accent) !important;
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-accent-hover) !important;
+      }
+    }
+
+    & .stream-schedule-segment--vertical-line {
+      display: none !important;
+    }
+
+    /* The date: a span for a past event, a paragraph otherwise. */
+    /* (Guards written out: the popup has no class of its own to start them from.) */
+    & .stream-schedule-segment--vertical-line + div span:where([data-test-selector="segment-popover-content"] *),
+    & .stream-schedule-segment--vertical-line + div p:where([data-test-selector="segment-popover-content"] *) {
+      @include type(3, 500);
+      line-height: 1.4 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & button[class*="ScCoreButton"]:not([class*="ScButtonIcon"]) {
+      background: var(--rs-hover) !important;
+      color: var(--rs-text) !important;
+    }
+
+    /* The close button sits on the picture. */
+    & button[class*="ScButtonIcon"] {
+      background: var(--rs-scrim) !important;
+      color: var(--rs-on-scrim) !important;
     }
   }
 }

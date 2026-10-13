@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.13.0...v1.14.0) (2026-10-13)
+
+
+### Features
+
+* rework the Chat Identity popup ([db545e4](https://github.com/corentin-gautier/restyle-for-twitch/commit/db545e426debdaad6c2502ae4664d68b732e92d2))
+* rework the chat's message field and the notice over it ([8314dc5](https://github.com/corentin-gautier/restyle-for-twitch/commit/8314dc57a22d61c58729cd36c823deda9334d5a1))
+* rework the Power-ups & Rewards popup ([d9d1d3a](https://github.com/corentin-gautier/restyle-for-twitch/commit/d9d1d3ae458f6edcbcddd605430601ec7518c146))
+* rework the search results ([271148d](https://github.com/corentin-gautier/restyle-for-twitch/commit/271148dd2fefca4b0e45aeb6f45872c35bdca585))
+* rework the Settings tabs ([eb58314](https://github.com/corentin-gautier/restyle-for-twitch/commit/eb58314e18c8ab0c56ad8c1a8a65394489bd4fb9))
+* rework the Wallet's tabs ([1f613ee](https://github.com/corentin-gautier/restyle-for-twitch/commit/1f613ee94baf0a2fcca689097ca37a156248d9cb))
+* style the Buy Bits popover ([21c1d52](https://github.com/corentin-gautier/restyle-for-twitch/commit/21c1d5270786c5f9ea75c317ab2cd15924f98b90))
+* style the chat's Community list ([5f04c45](https://github.com/corentin-gautier/restyle-for-twitch/commit/5f04c45708c6ad67fbd7a126622b9c815adc7ddd))
+* style the cookie banner ([a170d61](https://github.com/corentin-gautier/restyle-for-twitch/commit/a170d61e9935efb1ea1171777ad8ef97eea0c57f))
+* style the error page ([2e042a9](https://github.com/corentin-gautier/restyle-for-twitch/commit/2e042a950d56070b5c35cf8ce50146be50f7392d))
+* style the notices above the chat field ([f12f441](https://github.com/corentin-gautier/restyle-for-twitch/commit/f12f4414cd98e5ebe4bb594a2ff7e52fcadb87a6))
+* style the Prime offers popover ([c0ec992](https://github.com/corentin-gautier/restyle-for-twitch/commit/c0ec992f566edb52155e23b45bfaf16d119625a9))
+* style the schedule's event popup ([180eaae](https://github.com/corentin-gautier/restyle-for-twitch/commit/180eaae94aee63b5ceeb1ea2b657f947c14ca201))
+* style the viewer and emote cards of the chat ([14910a0](https://github.com/corentin-gautier/restyle-for-twitch/commit/14910a0a10cefed7c57f99d4d58ef74f74f4adca))
+
+
+### Fixes
+
+* centre the calendar button in date fields ([2474c3c](https://github.com/corentin-gautier/restyle-for-twitch/commit/2474c3c2fb1776008a45fe4c5c84dfc373a1912e))
+* even inset around the whispers search field ([bac5a1a](https://github.com/corentin-gautier/restyle-for-twitch/commit/bac5a1a3d60d6c952e1ad00138f4534dfaf43faa))
+* keep the Prime offers list inside the window ([97c89d9](https://github.com/corentin-gautier/restyle-for-twitch/commit/97c89d945e8ccf4a7f47b049bb72891f3d6ee5eb))
+* let the chat's popups overhang a floating chat instead of shrinking ([283a66c](https://github.com/corentin-gautier/restyle-for-twitch/commit/283a66cf932854ccf96ede99224008ca883345f1))
+* one inset for the Power-ups & Rewards popup, three tiles to a row ([915ab9b](https://github.com/corentin-gautier/restyle-for-twitch/commit/915ab9be020ebc70d2943654ee89dc13db9ceaaa))
+
 ## [1.13.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.12.0...v1.13.0) (2026-10-12)
 
 

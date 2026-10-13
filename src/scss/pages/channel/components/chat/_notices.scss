@@ -1,0 +1,33 @@
+// Chat: the notices Twitch slides in above the message field ("Animated Emotes can be disabled in Settings").
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A block of Twitch's purple with a white button. A floating box like the
+   * other chat popups, its text in the palette's ink and its button quiet.
+   */
+  & .chat-input [data-test-selector^="chat-private-callout-queue"] article {
+    @include floating(m);
+    box-shadow: none !important;
+    color: var(--rs-text) !important;
+
+    & > div,
+    & .tw-callout-message {
+      background: transparent !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-callout-message * {
+      color: inherit !important;
+    }
+
+    & button:not([aria-label="Close"]) {
+      background: var(--rs-hover) !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-callout__close button {
+      color: var(--rs-muted) !important;
+    }
+  }
+}

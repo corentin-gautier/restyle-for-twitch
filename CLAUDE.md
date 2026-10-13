@@ -148,7 +148,7 @@ only one page uses goes in that page's folder, under `components/`
 | `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
 | `pages/following/` | `_stories`, `_upcoming-streams`, `_follow-games-banner`, `_channels-tab`. |
 | `pages/channel/` | `_player`, `_info-column`, `_stream-info`, `_about`, `_follow-callout`, `_panels` (a live channel); `_home-hero`, `_home-tab`, `_tabs-content`, `_schedule-tab`, `_videos-tab`, `_shelf-titles` (its tabs). |
-| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, `_community` (who is in the chat), and its popups `_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`, `_cards` (viewer card, emote card). |
+| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, `_community` (who is in the chat), `_notices`, and its popups `_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`, `_cards` (viewer card, emote card). |
 | `pages/video/` | `_info` (the video's own block), and in `components/`: `_chat-replay`, `_seek-preview`, `_chapter-list`, `_muted-audio-alert`. |
 | `pages/drops/` | `_shared`, then one file per tab: `_inventory`, `_campaigns`, `_social-badge`. |
 
@@ -242,6 +242,7 @@ kind found later goes in that list; one served by another site goes in
 | Clip viewer | `components/overlays/_clip-viewer`, `pages/_clip` (the clip's own block) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
 | Viewer and emote cards | `pages/channel/components/chat/_cards` | Opened from a name or an emote in chat: `.viewer-card`, `.emote-card`, both inside `.viewer-card-layer__draggable`, which Twitch positions inline (the gutter is its padding). |
 | Community list | `pages/channel/components/chat/_community` | `.chatter-list-item`; the list is marked by `content.js` (`chatters`). |
+| Chat notices | `pages/channel/components/chat/_notices` | `[data-test-selector^="chat-private-callout-queue"] article`, above the message field. |
 | Error page | `pages/_error` | `.core-error__container`: an unknown address, an unavailable channel. |
 | Chat popups | `pages/channel/components/chat/` (`_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`) | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 

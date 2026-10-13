@@ -1,5 +1,13 @@
 // Chat: the leaderboard (hidden) and highlight cards above the messages.
 @use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+// Side of the two buttons in a pinned message's corner.
+$pin-button: 2.4rem;
+// How far an emote (2.8rem) may stand out of a line of the pinned message.
+$emote-overhang: 0.5rem;
+// The hype train's banner: the button that opens its panel.
+$hype-train-banner: 'button[aria-controls="hype-train-expanded-view"]';
 
 html:not([data-rs="off"]) {
   /*
@@ -36,6 +44,281 @@ html:not([data-rs="off"]) {
     & [data-a-target="tw-progress-bar-animation"] {
       height: 100% !important;
       background: var(--rs-accent) !important;
+    }
+  }
+
+  /*
+   * A highlight card (pinned message, prediction, hype train): the radius of
+   * the message field under the chat, and a fill a step off the column's, so
+   * that it reads as a card and not as an outlined message. The radius goes
+   * through Twitch's variable: the card, its border and the wrapper clipping
+   * it all read that one.
+   */
+  & .community-highlight-stack__card {
+    --border-radius-large: var(--rs-radius-m) !important;
+  }
+
+  & .community-highlight {
+    background: var(--rs-raised) !important;
+  }
+
+  /*
+   * With several highlights, the next one shows as the edges of a card
+   * behind the first: the same card.
+   */
+  & .community-highlight-stack__backlog-card {
+    @include bare;
+    background: var(--rs-raised) !important;
+    border: var(--rs-hairline) !important;
+    border-radius: var(--rs-radius-m) !important;
+    box-shadow: none !important;
+  }
+
+  /*
+   * A prediction (and any card that opens a popup): Twitch sets its second
+   * line as a title, beside a full-size button. A caption over a line at the
+   * chat's size, like a pinned message, and a small button beside them.
+   */
+  & .highlight__click-target {
+    & .highlight {
+      padding: var(--rs-2) !important;
+    }
+
+    & [data-test-selector$="highlight-header__title"] {
+      @include muted(2);
+    }
+
+    & .tw-title {
+      @include type(4, 500);
+      line-height: 1.55 !important;
+    }
+
+    /* "See Details", "Predict": the card's one labelled button. */
+    & button:not([aria-label]) {
+      height: $pin-button !important;
+      font-size: var(--rs-text-2) !important;
+
+      & [data-a-target="tw-core-button-label-text"] {
+        padding: 0 0.2rem !important;
+      }
+    }
+
+    /* "More Options": the size and grey of a pinned message's buttons. */
+    & button[aria-label] {
+      width: $pin-button !important;
+      height: $pin-button !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & button[aria-label]:hover {
+      color: var(--rs-text) !important;
+    }
+  }
+
+  /*
+   * Pinned message. Twitch sets it as a title, in a column narrowed all the
+   * way down by the two buttons of its corner. It becomes a chat message
+   * under a caption: the buttons share the caption's line, and the message
+   * and the "sent at" line run the card's width, on the left edge of the
+   * messages under the card.
+   */
+  & .pinned-chat__highlight-card .highlight {
+    padding: var(--rs-2) !important;
+  }
+
+  /* The scroll area overhangs the card by 1rem, for its scrollbar. */
+  @include guarded(".pinned-chat__scrollable-area div%g:has(> .pinned-chat__pinned-by)") {
+    width: auto !important;
+    margin-right: 1rem !important;
+  }
+
+  & .pinned-chat__pinned-by {
+    min-height: $pin-button !important;
+    /* Room for the two buttons. */
+    padding-right: calc(2 * #{$pin-button} + var(--rs-2)) !important;
+
+    & .tw-svg {
+      color: var(--rs-accent) !important;
+    }
+  }
+
+  & .pinned-chat__message {
+    @include type(4, 400);
+    /*
+     * Folded, the message is one clipped line: the padding leaves an emote
+     * room to overhang it, and the margin takes that padding back, so the
+     * text sits at the same distance from the caption folded or not.
+     */
+    margin: calc(var(--rs-2) - #{$emote-overhang}) 0 calc(-1 * #{$emote-overhang}) !important;
+    padding: $emote-overhang 0 !important;
+    line-height: 1.55 !important;
+    color: var(--rs-text) !important;
+
+    /* An emote is taller than a line: it overhangs it, as in the chat, instead of pushing the lines apart. */
+    & .chat-line__message--emote-button {
+      margin: calc(-1 * #{$emote-overhang}) 0 !important;
+      vertical-align: middle !important;
+    }
+
+    /* A long address breaks where the line ends, not after its last slash. */
+    & .link-fragment {
+      overflow-wrap: anywhere !important;
+    }
+  }
+
+  & .pinned-chat__scrollable-area {
+    /* "Pinned by <name>" over the message, "<name> sent at <time>" under it. */
+    & p:not(.pinned-chat__message) {
+      @include muted(2);
+    }
+
+    @include guarded("div%g:not(.pinned-chat__pinned-by):has(> p:not(.pinned-chat__message))") {
+      margin: var(--rs-2) 0 0 !important;
+    }
+
+    & .chat-badge {
+      width: 1.4rem !important;
+      height: 1.4rem !important;
+      opacity: 0.6 !important;
+    }
+
+    /* Hide, collapse: on the caption's line, and as quiet as it is. */
+    @include guarded("div%g:has(> button)") {
+      padding-top: 0 !important;
+    }
+
+    & button:not(.pinned-chat__replyline) {
+      width: $pin-button !important;
+      height: $pin-button !important;
+      color: var(--rs-muted) !important;
+
+      &:hover {
+        color: var(--rs-text) !important;
+      }
+    }
+
+    /*
+     * "Replying to @name: …" when the pinned message is a reply: a button
+     * too, on a line of its own between the caption and the message, under
+     * a rule Twitch draws across the card.
+     */
+    & .pinned-chat__replyline {
+      display: block !important;
+      width: 100% !important;
+      padding: var(--rs-1) 0 0 !important;
+      border: 0 !important;
+      text-align: left !important;
+    }
+  }
+
+  /*
+   * Hype train: a banner stuck over the highlight cards, opening on a panel
+   * (the level's goal, the emotes to unlock, the conductors, a gift button).
+   * The same card as a pinned message. Twitch paints it from its palette
+   * variables, on generated classes: the variables are set again on the card
+   * instead, so the parts follow without being named. It opens over the
+   * chat: the fill and border of a floating box for the card, the banner and
+   * the panel, a tint for the boxes in the panel and its foot.
+   */
+  & .sticky-community-highlight {
+    --border-radius-large: var(--rs-radius-m) !important;
+    --color-background-base: var(--rs-float) !important;
+    --color-background-alt: var(--rs-hover) !important;
+    --color-background-alt-2: var(--rs-raised) !important;
+    overflow: hidden !important;
+    border: 1px solid var(--rs-float-border) !important;
+    box-shadow: none !important;
+
+    /*
+     * The banner and the panel each draw the card's border a second time,
+     * one pixel inside it. The foot's top border goes with them: its tint
+     * already sets it apart. They round their own corners too, to the card's
+     * radius: inside its border that is a pixel too wide, and the chat shows
+     * in the corner. The card clips them instead. The boxes inside the panel
+     * are a step squarer than the card.
+     */
+    & > div {
+      --border-width-default: 0px !important;
+      --border-radius-large: 0px !important;
+    }
+
+    & .tw-transition {
+      --border-radius-large: var(--rs-radius-s) !important;
+    }
+
+    /* "Unlockable Emotes", "Info": Twitch's gap to the row under them, doubled. */
+    & h5 {
+      @include caps(1);
+      margin-bottom: 0.4rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    /*
+     * The panel's spacing, on Twitch's own step of 1.6rem: its side inset
+     * and the gap between its blocks. Three distances are off it. The first
+     * block sits half a step under the banner.
+     */
+    @include guarded("> div > div > .tw-transition > div > div%g:first-child") {
+      padding-top: 1.6rem !important;
+    }
+
+    /* A row that scrolls sideways keeps room under it for a scrollbar it does not show. */
+    & .scrollable-area > div {
+      padding-bottom: 0 !important;
+    }
+
+    /* And the foot's button is tight under its two lines of text. */
+    @include guarded("> div > div > .tw-transition > div > div%g:last-child") {
+      gap: 1.2rem !important;
+    }
+
+    /* Emotes of the levels to come: greyed by Twitch, and pushed back. */
+    & [class*="locked--"] {
+      opacity: 0.5 !important;
+    }
+  }
+
+  /*
+   * The banner: level and progress over a fill as wide as the progress, in
+   * the accent instead of Twitch's orange. Its text stays at full strength:
+   * it has to read on the fill and beside it.
+   */
+  & #{$hype-train-banner} {
+    & [role="progressbar"] > div {
+      background: var(--rs-accent) !important;
+    }
+
+    /* "Hype Train" and the time left: captions over the two figures. */
+    & strong {
+      @include type(2, 500);
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    & .tw-title {
+      @include type(5, 600);
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    /* The arrow's right edge on the panel's side inset: it sits 0.4rem inside its disc. */
+    & .tw-transition > div {
+      padding-right: 1.2rem !important;
+    }
+  }
+
+  /*
+   * A Golden Kappa train: Twitch lays the banner in gold, as a light-themed
+   * region inside the dark page, and turns the bar round: it covers what is
+   * left to fill. The gold stays. The bar goes back to Twitch's amber (the
+   * accent would be a block of another colour at the gold's end), and the
+   * ink is the light theme's: the palette's ink follows the page's theme,
+   * not a region's, and would be white on the gold.
+   */
+  & .sticky-community-highlight .tw-root--theme-light {
+    --rs-text: #16171a;
+    --rs-muted: #6b6d75;
+
+    & [role="progressbar"] > div {
+      background: var(--hype-train-progress) !important;
     }
   }
 }

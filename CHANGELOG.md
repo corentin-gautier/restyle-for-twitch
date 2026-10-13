@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.16.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.16.0...v1.16.1) (2026-10-13)
+
+
+### Features
+
+* update settings popup image dimensions and replace the image ([32f2668](https://github.com/corentin-gautier/restyle-for-twitch/commit/32f2668988aa98b6b8ba9c61b211ce70efdc5b70))
+
+
+### Build and release
+
+* submit each release to the Chrome Web Store and Firefox Add-ons ([c7aad4a](https://github.com/corentin-gautier/restyle-for-twitch/commit/c7aad4ab6e89b4ae929aac18d7fff252a2b65015))
+
 ## [1.16.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.15.0...v1.16.0) (2026-10-13)
 
 

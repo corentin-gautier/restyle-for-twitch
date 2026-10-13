@@ -31,6 +31,12 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /* The list is 80rem tall whatever the window: it stops short of the window's foot. */
+  & .prime-offer-list {
+    height: auto !important;
+    max-height: min(60rem, calc(100vh - 14rem)) !important;
+  }
+
   /* One inset for the pitch, the tabs and the cards. */
   & .prime-offer-list__content {
     padding: 0 var(--rs-2) var(--rs-2) !important;

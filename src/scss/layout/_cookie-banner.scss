@@ -1,0 +1,55 @@
+// Cookie banner across the top of the window (visitors who have not chosen yet).
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * A slab of Twitch's purple a fifth of the window tall, its three buttons
+   * in translucent white. A bar on the chrome's surface instead, like the
+   * top bar under it: the text in the palette's ink, one accent button for
+   * "Accept" and two quiet ones.
+   */
+  & .consent-banner {
+    background: var(--rs-surface) !important;
+    border-bottom: var(--rs-hairline) !important;
+    color: var(--rs-text) !important;
+
+    & > div,
+    & [class*="consent-banner__content"] {
+      background: transparent !important;
+    }
+
+    & img.tw-image {
+      width: 8rem !important;
+      height: auto !important;
+    }
+
+    & p.tw-title {
+      @include type(6, 700);
+      margin-bottom: var(--rs-1) !important;
+      color: var(--rs-text) !important;
+    }
+
+    & p:not(.tw-title) {
+      @include muted(3);
+      line-height: 1.5 !important;
+    }
+
+    & .tw-link {
+      color: var(--rs-accent) !important;
+    }
+
+    & button {
+      background: var(--rs-hover) !important;
+      color: var(--rs-text) !important;
+
+      &:hover {
+        background: var(--rs-border) !important;
+      }
+    }
+
+    & button[data-a-target="consent-banner-accept"] {
+      background: var(--rs-accent) !important;
+      color: var(--rs-on-accent) !important;
+    }
+  }
+}

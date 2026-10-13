@@ -139,7 +139,7 @@ only one page uses goes in that page's folder, under `components/`
 | --- | --- |
 | `base/` | `_tokens.scss` (the `--rs-*` design tokens), `_theme.scss` (Twitch's palette remapped to them, square corners), `_keyframes.scss`. |
 | `tools/` | `_guard.scss` and `_mixins.scss`: no CSS of their own. |
-| `layout/` | What frames every page: `_top-bar`, `_sidebar`, `_sidebar-collapsed`, `_signup-banner`, `_floating-panels` (the popup option), `_page-column` (the directory pages' gutters). |
+| `layout/` | What frames every page: `_top-bar`, `_sidebar`, `_sidebar-collapsed`, `_signup-banner`, `_cookie-banner`, `_floating-panels` (the popup option), `_page-column` (the directory pages' gutters). |
 | `components/` | What the whole site shares, and only that: `_page-header`, `_titles`, `_tabs`, `_tabs-in-popovers`, `_shelf` (the shelf rhythm), `_shelf-arrows`, `_empty-state`, `_filter-row`, `_filter-menus`, `_form-controls`, `_loading`, `_tags`, `_content-notice`. |
 | `components/cards/` | `_grid` (`.tw-tower`), `_thumbnail`, `_thumbnail-stats`, `_hover`, `_body` (avatar beside the text), `_text`, `_chapters`, `_category-card`. |
 | `components/overlays/` | `_floating-boxes` (balloons, popovers, dialogs), `_menus`, `_backdrop`, `_modal`, `_whispers`, `_clip-viewer`, `_streamer-card`, `_turbo-offer`, `_empty-dialog`. |
@@ -165,6 +165,7 @@ checked in a headless Chrome; the others need the user's session.
 | Top bar | `layout/_top-bar` | search field, nav links, icon buttons |
 | Left sidebar | `layout/_sidebar`, `layout/_sidebar-collapsed` | `.side-nav`, `[data-a-target="side-nav-card-metadata"]` |
 | Sign-up banner (logged out only) | `layout/_signup-banner` | `#twilight-sticky-footer-root` |
+| Cookie banner (until a choice is made) | `layout/_cookie-banner` | `.consent-banner`, `[data-a-target="consent-banner-accept"]` |
 | Menus, popovers, dialogs | `components/overlays/` | `.tw-balloon`, `.ReactModal__Content[role="dialog"]` |
 | Filter and sort menus | `components/_filter-menus` | `.tw-interactable` rows, `.tw-checkbox` |
 | Floating panels (popup option, `data-rs-floating` on `<html>`) | `layout/_floating-panels`, `pages/channel/components/chat/_column` | `.top-nav`, `div:has(> .side-nav)`, `.right-column:not(.right-column--theatre) .channel-root__right-column > div` |

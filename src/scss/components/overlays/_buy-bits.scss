@@ -1,0 +1,70 @@
+// Buy Bits, the popover of the top bar's Bits button.
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Buy Bits (logged in): a title and the balance, a featured pack on one
+   * row, then the other packs as a grid of saturated purple cards. The
+   * title gets the type of the other popups; the packs become quiet tiles
+   * like the chat's power-ups, the gems the only colour left, with the
+   * price in the accent where Twitch has one.
+   */
+  & [role="dialog"][aria-labelledby="GetBitsPopover-header"] {
+    & #GetBitsPopover-header,
+    & h2 {
+      @include type(4, 700);
+      line-height: 1.2 !important;
+    }
+
+    /* The featured pack. */
+    /* (Guards written out: the popover has no class of its own to start them from.) */
+    & button:where(.ReactModal__Content *):has([class*="bitsHeroPrice"]) {
+      background: var(--rs-hover) !important;
+      border-radius: var(--rs-radius-m) !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    & button:where(.ReactModal__Content *):has([class*="bitsHeroPrice"]):hover {
+      background: var(--rs-border) !important;
+    }
+
+    & [class*="bitsHeroPrice"] {
+      /* Twitch sets it against the row's right edge. */
+      margin-right: var(--rs-3) !important;
+      background: var(--rs-accent) !important;
+      color: var(--rs-on-accent) !important;
+    }
+
+    /* A pack of the grid. */
+    & [role="listitem"] {
+      background: var(--rs-hover) !important;
+      border: 0 !important;
+      @include clip(m);
+      transition: background-color var(--rs-ease);
+
+      &:hover {
+        background: var(--rs-border) !important;
+      }
+
+      & > div {
+        width: 100% !important;
+        border-radius: 0 !important;
+      }
+    }
+
+    & [class*="bitsProductGridImage"],
+    & [class*="bitsProductGridMetadata"] {
+      background: none !important;
+      border-radius: 0 !important;
+    }
+
+    & [class*="bitsProductGridMetadata"] {
+      padding: 0 var(--rs-2) var(--rs-2) !important;
+
+      /* The price, under the count. */
+      & > p {
+        @include muted(2);
+      }
+    }
+  }
+}

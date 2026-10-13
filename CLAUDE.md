@@ -144,7 +144,7 @@ only one page uses goes in that page's folder, under `components/`
 | `components/cards/` | `_grid` (`.tw-tower`), `_thumbnail`, `_thumbnail-stats`, `_hover`, `_body` (avatar beside the text), `_text`, `_chapters`, `_category-card`. |
 | `components/overlays/` | `_floating-boxes` (balloons, popovers, dialogs), `_menus`, `_backdrop`, `_modal`, `_whispers`, `_clip-viewer`, `_streamer-card`, `_turbo-offer`, `_empty-dialog`. |
 | `components/player/` | What opens over any player: `_settings-menu`, `_keyboard-shortcuts`, `_stats`, `_content-gate`. |
-| `pages/` | One file per page: `_home`, `_settings`, `_account` (the header Drops, Wallet and Subscriptions share), `_subscriptions`, `_collection`, `_category`, `_event`, `_search`, `_clip`, `_team`. A page with several files has a folder, and what only that page uses sits in the folder's own `components/`. |
+| `pages/` | One file per page: `_home`, `_settings`, `_account` (the header Drops, Wallet and Subscriptions share), `_subscriptions`, `_collection`, `_category`, `_event`, `_search`, `_error`, `_clip`, `_team`. A page with several files has a folder, and what only that page uses sits in the folder's own `components/`. |
 | `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
 | `pages/following/` | `_stories`, `_upcoming-streams`, `_follow-games-banner`, `_channels-tab`. |
 | `pages/channel/` | `_player`, `_info-column`, `_stream-info`, `_about`, `_follow-callout`, `_panels` (a live channel); `_home-hero`, `_home-tab`, `_tabs-content`, `_schedule-tab`, `_videos-tab`, `_shelf-titles` (its tabs). |
@@ -240,6 +240,7 @@ kind found later goes in that list; one served by another site goes in
 | Streamer card | `components/overlays/_streamer-card` | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
 | Turbo offer | `components/overlays/_turbo-offer` | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
 | Clip viewer | `components/overlays/_clip-viewer`, `pages/_clip` (the clip's own block) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
+| Error page | `pages/_error` | `.core-error__container`: an unknown address, an unavailable channel. |
 | Chat popups | `pages/channel/components/chat/` (`_emote-picker`, `_cheer-and-rewards`, `_identity`, `_drops`) | Emote picker, cheer card, Power-ups & Rewards, Chat Identity (`.chat-identity-menu`), Drops & More (`[class*="panelContainer"]`): one floating box on the same gutters. |
 
 ## Not covered yet

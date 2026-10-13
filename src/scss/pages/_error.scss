@@ -1,0 +1,48 @@
+// Error page: an address that leads nowhere, a channel that is unavailable.
+html:not([data-rs="off"]) {
+  /*
+   * A grey ghost beside two lines and a button, small in the middle of an
+   * empty page. Stacked and centred instead, the ghost in the accent.
+   */
+  & .core-error__container {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--rs-4) !important;
+    width: auto !important;
+    max-width: 44rem !important;
+    text-align: center !important;
+
+    & > div {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    & .tw-svg,
+    & .tw-svg svg {
+      width: 7.2rem !important;
+      height: 7.2rem !important;
+    }
+
+    & .tw-svg svg,
+    & .tw-svg svg path {
+      fill: var(--rs-accent) !important;
+    }
+  }
+
+  & .core-error__message-container {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: var(--rs-4) !important;
+
+    & p {
+      font-size: var(--rs-text-5) !important;
+      line-height: 1.5 !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & > div {
+      margin: 0 !important;
+    }
+  }
+}

@@ -45,8 +45,16 @@ html:not([data-rs="off"]) {
     box-shadow: none !important;
     overflow: hidden !important;
 
+    /*
+     * One inset for the title, the filter, the list and the balances:
+     * Twitch has three left edges, and tiles that stop short of the right one.
+     */
     & .rewards-popover-header {
-      padding: var(--rs-2) var(--rs-2) 0 var(--rs-3) !important;
+      padding: var(--rs-2) var(--rs-2) 0 !important;
+
+      & h2 > div {
+        padding-left: 0 !important;
+      }
 
       /* Twitch sets the title large and light. */
       & .tw-title,
@@ -67,7 +75,7 @@ html:not([data-rs="off"]) {
      */
     & [role="radiogroup"] {
       gap: var(--rs-1) !important;
-      padding: var(--rs-1) var(--rs-3) var(--rs-2) !important;
+      padding: var(--rs-1) var(--rs-2) var(--rs-2) !important;
     }
 
     & [role="radio"] {
@@ -90,6 +98,38 @@ html:not([data-rs="off"]) {
       &[aria-checked="true"] {
         background: var(--rs-accent-tint-strong) !important;
         color: var(--rs-text) !important;
+      }
+    }
+
+    @include guarded(".scrollable-area > div%g:has(> .rewards-list)") {
+      padding: 0 var(--rs-2) var(--rs-2) !important;
+    }
+
+    /* Three tiles to a row, sharing its whole width. */
+    & .rewards-list > [class*="ewardListItem"] {
+      flex: none !important;
+      width: calc((100% - 1.6rem) / 3) !important;
+
+      & > .tw-interactable,
+      & > div {
+        width: 100% !important;
+      }
+    }
+
+    /* A channel's reward sits one block deeper, at the same fixed width. */
+    @include guarded('.rewards-list > div%g:has(> [class*="rewardListItem"])') {
+      flex: none !important;
+      width: calc((100% - 1.6rem) / 3) !important;
+
+      & > div,
+      & .tw-interactable {
+        width: 100% !important;
+      }
+
+      & .reward-icon {
+        width: 100% !important;
+        height: auto !important;
+        aspect-ratio: 1 !important;
       }
     }
 
@@ -172,6 +212,10 @@ html:not([data-rs="off"]) {
     }
 
     /* The balances under the list: two quiet buttons. */
+    @include guarded("> div:last-child > div > div%g") {
+      margin: var(--rs-2) !important;
+    }
+
     @include guarded("> div:last-child button%g") {
       background: var(--rs-hover) !important;
       color: var(--rs-text) !important;

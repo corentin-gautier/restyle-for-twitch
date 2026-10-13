@@ -11,7 +11,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 | `src/scss/` | The stylesheet's source (see "Sass" and "Stylesheets"): `restyle.scss` lists the partials in cascade order, every rule scoped under `html:not([data-rs="off"])`; `base/` (tokens, theme), `tools/` (the guard mixin, the shared mixins), `layout/`, `components/`, `pages/`. |
 | `src/restyle.css` | Compiled from `src/scss/` and loaded by `manifest.json`. Never edited by hand, and not in the repository: after a clone, `npm install` then `npm run build`. The packages (local and GitHub release) are built with it inside. |
 | `src/scss/base/_tokens.scss` | Design tokens (`--rs-*`): spacing, the shelf rhythm (`--rs-shelf-head`, `--rs-shelf-gap`), the page gutter (`--rs-page-inset`), the gap around floating panels (`--rs-panel-gap`), radii (all multiplied by `--rs-round`, the popup's corner setting), type scale, palette. |
-| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>`. With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Sets what the stylesheet reads instead of working it out itself (see "Performance"): page state on `<html>` (`data-rs-nav`, `data-rs-channel`, `data-rs-info`, `data-rs-following`, `data-rs-has`), each card grid's kind, card count and content (`data-rs-tower`, `data-rs-count`, `data-rs-games`), and `data-rs-hook` on the elements the stylesheet could only find with a costly selector (`HOOKS`). Stops the hover events that start a video card's animated preview. |
+| `src/content.js` | Applies the popup's settings as attributes and variables on `<html>` (among them `data-rs-carousel` and `data-rs-stories`, without which the home carousel and the stories are hidden). With "Channel colours" on, derives a palette from the inline background of `.channel-root`. Sets what the stylesheet reads instead of working it out itself (see "Performance"): page state on `<html>` (`data-rs-nav`, `data-rs-channel`, `data-rs-info`, `data-rs-following`, `data-rs-has`), each card grid's kind, card count and content (`data-rs-tower`, `data-rs-count`, `data-rs-games`), and `data-rs-hook` on the elements the stylesheet could only find with a costly selector (`HOOKS`). Stops the hover events that start a video card's animated preview. |
 | `popup/` | Settings popup. Texts come from `_locales/`, one folder per language with the same keys as `en`. The three spacing labels must each fit on one line of the segmented control. |
 | `src/dev-reload.js` | Live reload for unpacked installs; left out of the store package. |
 | `scripts/package.sh` | Builds `dist/restyle-<version>.zip` for the Chrome Web Store, or with `firefox` the `-firefox.zip` for Firefox Add-ons (manifest derived from `manifest.json`, with the gecko id). |
@@ -27,7 +27,7 @@ The user is French-speaking: reply in French, write code and docs in English.
 - Use the `--rs-*` tokens rather than raw values. Twitch sets `1rem = 10px`.
 - A radius is a `--rs-radius-*` token, or a raw value times `--rs-round`, so
   that it follows the popup's corner setting (`data-rs-round="0|1|2"`: square,
-  soft, round). Circles (`50%`) stay as they are.
+  soft, round; soft is the default). Circles (`50%`) stay as they are.
 - Almost every declaration needs `!important` to beat Twitch's styles.
 - Firefox (128+) loads the same files: stick to CSS both engines support, and
   add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
@@ -163,7 +163,7 @@ checked in a headless Chrome; the others need the user's session.
 | Part | Files | Main hooks |
 | --- | --- | --- |
 | Top bar | `layout/_top-bar` | search field, nav links, icon buttons |
-| Left sidebar | `layout/_sidebar`, `layout/_sidebar-collapsed` | `.side-nav`, `[data-a-target="side-nav-card-metadata"]` |
+| Left sidebar | `layout/_sidebar`, `layout/_sidebar-collapsed` | `.side-nav`, `[data-a-target="side-nav-card-metadata"]`; the stories' row (marked `stories`, hidden unless `data-rs-stories`) |
 | Sign-up banner (logged out only) | `layout/_signup-banner` | `#twilight-sticky-footer-root` |
 | Cookie banner (until a choice is made) | `layout/_cookie-banner` | `.consent-banner`, `[data-a-target="consent-banner-accept"]` |
 | Menus, popovers, dialogs | `components/overlays/` | `.tw-balloon`, `.ReactModal__Content[role="dialog"]` |
@@ -174,8 +174,8 @@ checked in a headless Chrome; the others need the user's session.
 
 | Page | Address | Access | Files | Main hooks |
 | --- | --- | --- | --- | --- |
-| Home | `/` | Public | `pages/_home`, `components/_shelf`, `components/cards/` | shelves of `.tw-tower`, carousel hidden |
-| Following | `/directory/following` | Logged in | `pages/following/`, `components/_shelf` | `.common-centered-column`, tabs, `.channel-follow-listing--card` on the Channels tab |
+| Home | `/` | Public | `pages/_home`, `components/_shelf`, `components/cards/` | shelves of `.tw-tower`; the carousel (`.front-page-carousel`, `.featured-content-carousel-featured-item`, `.carousel-metadata`) hidden unless `data-rs-carousel` |
+| Following | `/directory/following` | Logged in | `pages/following/`, `components/_shelf` | `.common-centered-column`, tabs, the stories' row (marked `stories-row` by `content.js`, hidden unless `data-rs-stories`), `.channel-follow-listing--card` on the Channels tab |
 | Event | `/directory/event/<slug>` | Public | `pages/_event` | `.directory-header-new__description` without `.directory-header-new__info` |
 | Collection | `/directory/collection/<slug>` | Public | `pages/_collection` | first block of the column's `<section>`, holding an `<h1>` and a `<p>`, over a `.tw-tower` |
 | Browse | `/directory` | Public | `pages/browse/` | `.vertical-selector`, `section[aria-label="Filter & Sort Options"]` |
@@ -245,6 +245,7 @@ kind found later goes in that list; one served by another site goes in
 | Turbo offer | `components/overlays/_turbo-offer` | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
 | Buy Bits | `components/overlays/_buy-bits` | Popover of the top bar's Bits button (logged in): `[role="dialog"][aria-labelledby="GetBitsPopover-header"]`, the featured pack (`[class*="bitsHeroPrice"]`), the packs (`[role="listitem"]`). |
 | Prime offers | `components/overlays/_prime-offers` | Popover of the top bar's crown button (logged in): `.prime-offers-upsell` (the pitch), `.prime-offer-list__content` (tabs and list), `.prime-offer__data` (a game's card), `[data-a-target="prime-claim-button"]`. |
+| Confirmations | `components/overlays/_modal`, `components/overlays/_backdrop` | "Unfollow <channel>?", from the heart of a card on Following > Channels (logged in): `.ReactModal__Content[role="alertdialog"] .tw-modal`, the title `.tw-title`, the line under it `[id$="-body"]`, then the row of two buttons (cancel first; `[data-a-target="modal-unfollow-button"]`). Twitch's own backdrop is an empty box, hidden by `_empty-dialog`: the overlay carries ours. |
 | Clip viewer | `components/overlays/_clip-viewer`, `pages/_clip` (the clip's own block) | `.modal-wrapper__content > div[class*="clips-modal-view"]`, opened from a clip card on home. |
 | Viewer and emote cards | `pages/channel/components/chat/_cards` | Opened from a name or an emote in chat: `.viewer-card`, `.emote-card`, both inside `.viewer-card-layer__draggable`, which Twitch positions inline (the gutter is its padding). |
 | Community list | `pages/channel/components/chat/_community` | `.chatter-list-item`; the list is marked by `content.js` (`chatters`). |

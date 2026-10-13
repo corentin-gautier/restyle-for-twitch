@@ -243,8 +243,8 @@
       <p>It is a stylesheet laid over twitch.tv. Turn it off in one click and Twitch is back as it was.</p>
 
       <ul class="index" style="margin-top: 32px">
-        <li><a href="#sidebar"><strong>Sidebar and top bar</strong><span>Smaller, quieter, no stories</span></a></li>
-        <li><a href="#pages"><strong>Home, Browse, Search</strong><span>No carousel, clearer cards</span></a></li>
+        <li><a href="#sidebar"><strong>Sidebar and top bar</strong><span>Smaller, quieter, stories off</span></a></li>
+        <li><a href="#pages"><strong>Home, Browse, Search</strong><span>Carousel off, clearer cards</span></a></li>
         <li><a href="#channel"><strong>Channel pages</strong><span>Framed player, one column</span></a></li>
         <li><a href="#chat"><strong>Chat</strong><span>Muted until hovered</span></a></li>
         <li><a href="#menus"><strong>Menus and dialogs</strong><span>Flat, with borders</span></a></li>
@@ -257,7 +257,7 @@
           <h3>A quieter sidebar and top bar</h3>
           <ul>
             <li>Smaller rows, small-caps section headers, viewer counts aligned to the right.</li>
-            <li>No stories, no hover cards, no "For You" header.</li>
+            <li>No hover cards, no "For You" header, and stories hidden unless you turn them back on.</li>
             <li>More room in the top bar, a pill-shaped search field, dimmed icons.</li>
           </ul>
         </div>
@@ -267,7 +267,7 @@
           <div class="tags"><span class="tag">Home</span><span class="tag">Browse</span><span class="tag">Search</span></div>
           <h3>Cleaner pages</h3>
           <ul>
-            <li>The autoplaying carousel is removed from the home page, and its video is paused.</li>
+            <li>The autoplaying carousel is hidden on the home page, and its video paused. A setting brings it back, restyled like the cards under it.</li>
             <li>Large shelf titles, the same on the home page, channel pages and under a video.</li>
             <li>Rounded thumbnails, and cards that put the streamer's name first.</li>
             <li>Tags and categories become small chips in your accent colour.</li>
@@ -326,6 +326,8 @@
         <tr><th scope="row">Plain chat</th><td>Hides chat badges and shows every username in the text colour.</td></tr>
         <tr><th scope="row">Background colour</th><td>The page colour. Sidebars, chat, menus and text colours are derived from it. Reset it to follow Twitch's own light or dark theme.</td></tr>
         <tr><th scope="row">Channel colours</th><td>On a channel's pages, takes the accent and a tinted background from the channel's own colour, adjusted until text stays readable.</td></tr>
+        <tr><th scope="row">Home carousel</th><td>Shows the featured streams at the top of the home page. Off by default.</td></tr>
+        <tr><th scope="row">Stories</th><td>Shows stories in the sidebar and on Following. Off by default.</td></tr>
       </table>
       <figure class="popup-shot">
         <img src="popup.png" width="300" height="695" loading="lazy" alt="The settings popup, with the Midnight theme selected among eight colour swatches." />

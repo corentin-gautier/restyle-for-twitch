@@ -17,9 +17,11 @@ It is an unofficial project, not affiliated with or endorsed by Twitch.
 ## What it changes
 
 - **Sidebar**: smaller, quieter rows, small-caps section headers, viewer counts
-  aligned to the right. Stories, hover cards and the "For You" header are gone.
+  aligned to the right. Hover cards and the "For You" header are gone, and
+  stories are hidden unless you turn them back on.
 - **Top bar**: more breathing room, a pill-shaped search field, dimmed icons.
-- **Home, Following and Browse**: no autoplaying carousel, large shelf titles,
+- **Home, Following and Browse**: no autoplaying carousel unless you ask for
+  it (it is then restyled like the cards under it), large shelf titles,
   rounded thumbnails, and cards that put the streamer's name first. Tags become
   small accent-coloured chips. Hovering a card dims the ones around it, and
   video cards no longer play an animated preview.
@@ -54,6 +56,8 @@ without reloading the page.
 | Plain chat | Hides chat badges and shows every username in the text colour. |
 | Background colour | The page colour. Sidebars, chat, menus and text colours are derived from it. Reset to follow Twitch's own light or dark theme. |
 | Channel colours | On a channel's pages, takes the accent and a tinted background from the channel's own colour, adjusted until text stays readable. Channels without a colour, or with a grey one, keep your settings. |
+| Home carousel | Shows the featured streams at the top of the home page. Off by default: the carousel is hidden and its video paused. |
+| Stories | Shows stories in the sidebar and on Following. Off by default. |
 
 <img src="docs/popup.png" width="300" alt="The settings popup, with the Midnight theme selected" />
 
@@ -116,7 +120,7 @@ and load the folder with **Load unpacked**. The extension is made of:
 | --- | --- |
 | `src/scss/` | The stylesheet's source. `restyle.scss` lists every file in cascade order. `base/` holds the design tokens (spacing, radii, type scale, palette) and the theme; `layout/` the top bar, the sidebar and the page column; `components/` what the whole site shares (cards, tabs, menus, player popups); `pages/` one file per page or per tab of a page, each page's folder holding the components only it uses (the chat under `pages/channel/components/`); `tools/` the shared mixins and the one that writes the selectors' performance guards. |
 | `src/restyle.css` | The compiled stylesheet, the only one the extension loads. Never edited by hand. |
-| `src/content.js` | Applies the settings, marks what the stylesheet needs to know about the page, pauses the hidden carousel's video and stops the video cards' animated previews. |
+| `src/content.js` | Applies the settings, marks what the stylesheet needs to know about the page, pauses the home carousel's video while it is hidden and stops the video cards' animated previews. |
 | `popup/` | The settings popup. |
 | `src/dev-reload.js` | Live reload, for unpacked installs only. |
 

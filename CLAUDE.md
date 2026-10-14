@@ -30,7 +30,7 @@ The user is French-speaking: reply in French, write code and docs in English.
   that it follows the popup's corner setting (`data-rs-round="0|1|2"`: square,
   soft, round; soft is the default). Circles (`50%`) stay as they are.
 - Almost every declaration needs `!important` to beat Twitch's styles.
-- Firefox (128+) loads the same files: stick to CSS both engines support, and
+- Firefox (140+) loads the same files: stick to CSS both engines support, and
   add the `-moz-` twin of any `-webkit-` pseudo-element in the popup.
 - `:has()` inside `:has()` is invalid.
 - Follow the rules under "Performance": a selector that looks harmless can

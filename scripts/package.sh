@@ -37,10 +37,12 @@ node -e '
     manifest.browser_specific_settings = {
       gecko: {
         id: "restyle-for-twitch@corentin-gautier",
-        // Host access is granted at install from 127; 128 is the ESR after it.
-        strict_min_version: "128.0",
+        // 140 (an ESR) is the first to read data_collection_permissions.
+        strict_min_version: "140.0",
         data_collection_permissions: { required: ["none"] },
       },
+      // Firefox for Android reads it from 142.
+      gecko_android: { strict_min_version: "142.0" },
     };
   }
   require("fs").writeFileSync(process.argv[1], JSON.stringify(manifest, null, 2) + "\n");

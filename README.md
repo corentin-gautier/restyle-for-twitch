@@ -96,7 +96,7 @@ there it can only be loaded for the current session:
 2. Open `about:debugging#/runtime/this-firefox`.
 3. Click **Load Temporary Add-on** and select the zip.
 
-Firefox removes it when it closes. It needs Firefox 128 or later.
+Firefox removes it when it closes. It needs Firefox 140 or later.
 
 ## Privacy
 

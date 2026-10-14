@@ -110,6 +110,20 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * A shared stream puts a "Streaming Together" chip ahead of the category,
+   * inside a block of its own: on the block's baseline, it sat higher than
+   * the chips after it. The dot between the two goes: they are chips.
+   */
+  & a[data-a-target="stream-game-link"][href*="/guest-star"] {
+    vertical-align: top !important;
+    margin-right: var(--rs-1) !important;
+  }
+
+  & span:where(#live-channel-stream-information *):has(> div > strong[aria-hidden="true"]:only-child) {
+    display: none !important;
+  }
+
   & [data-a-target="stream-game-link"],
   & [data-a-target="stream-game-link"] *,
   & [data-a-target="video-info-game-boxart-link"],

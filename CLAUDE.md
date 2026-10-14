@@ -149,7 +149,7 @@ only one page uses goes in that page's folder, under `components/`
 | `pages/browse/` | `_sections` (the "Games / IRL…" cards), `_filters`. |
 | `pages/following/` | `_stories`, `_upcoming-streams`, `_follow-games-banner`, `_channels-tab`. |
 | `pages/channel/` | `_player`, `_info-column`, `_stream-info`, `_about`, `_follow-callout`, `_panels` (a live channel); `_home-hero`, `_home-tab`, `_tabs-content`, `_schedule-tab`, `_videos-tab`, `_shelf-titles` (its tabs). |
-| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, `_community` (who is in the chat), `_notices`, and its popups `_emote-picker`, `_cheer-and-rewards`, `_predictions`, `_identity`, `_drops`, `_cards` (viewer card, emote card). |
+| `pages/channel/components/` | `_subscribe-panel`, `_accent-regions`, `_stream-together` (a shared stream's popovers: the chip's, "Live with:", the viewer count's), and `chat/`: `_column`, `_highlights`, `_messages`, `_plain-chat` (the popup option), `_input`, `_community` (who is in the chat), `_notices`, and its popups `_emote-picker`, `_cheer-and-rewards`, `_predictions`, `_identity`, `_drops`, `_cards` (viewer card, emote card). |
 | `pages/video/` | `_info` (the video's own block), and in `components/`: `_chat-replay`, `_seek-preview`, `_chapter-list`, `_muted-audio-alert`. |
 | `pages/drops/` | `_shared`, then one file per tab: `_inventory`, `_campaigns`, `_social-badge`. |
 
@@ -242,6 +242,7 @@ kind found later goes in that list; one served by another site goes in
 | Shelves | `components/_shelf` | A title, a grid, sometimes "Show more": all spacing sits on the title, `--rs-shelf-gap` above and `--rs-shelf-head` under. Same on home, Following, a channel's Home tab and under a video. |
 | Empty states | `components/_empty-state` | One panel (icon in a tinted disc over a line) for "No Channels Live", "No videos found.", "No Clips Found" and an empty tab of Subscriptions. |
 | Loading | `components/_loading` | Twitch's ghosts (`.tw-placeholder`) are invisible; one spinner (`rs-spin`) per group of them. |
+| Guests of a shared stream | `pages/channel/_stream-info` (the "Streaming Together" chip), `pages/channel/components/_stream-together` | The chip is `a[data-a-target="stream-game-link"][href*="/guest-star"]`, its hover popover the box holding an `img` beside a `.tw-title`; the "+1" beside the name opens "Live with:", the box holding rows of a `.tw-avatar` and a `strong > a`; the viewer count opens "Total Viewers", the box holding a second `[data-a-target="animated-channel-viewers-count"]`, its rows `.tw-interactable` around a `.streamer-avatar`. |
 | Streamer card | `components/overlays/_streamer-card` | Popup opened from a guest's name; the box holding `.tw-halo` and an `<h1>`. |
 | Turbo offer | `components/overlays/_turbo-offer` | Popover of the top bar's "Try 1-Month Ad-Free" button (logged in): the box holding `.tw-popover-header` and `.turbo-ballon-content__scroll-container` (Twitch's spelling); its parts are told apart by position. |
 | Buy Bits | `components/overlays/_buy-bits` | Popover of the top bar's Bits button (logged in): `[role="dialog"][aria-labelledby="GetBitsPopover-header"]`, the featured pack (`[class*="bitsHeroPrice"]`), the packs (`[role="listitem"]`). |

@@ -1,0 +1,256 @@
+// A shared stream's popovers: the "Streaming Together" chip's, "Live with:", and the viewer count's.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Hovering the "Streaming Together" chip: an illustration beside a title,
+   * a line and "Learn More". Twitch packs it on 8px gutters with a large
+   * regular title. Here on the floating boxes' inset, the title at a card
+   * title's weight, the line muted, the button a step smaller. The box is
+   * the one holding an image beside a .tw-title.
+   */
+  @include guarded(".ReactModal__Content .tw-transition > div%g:has(> div > img + div > .tw-title)", $from: ".ReactModal__Content") {
+    width: 32rem !important;
+
+    @include guarded("> div%g", $from: ".ReactModal__Content") {
+      align-items: flex-start !important;
+      gap: var(--rs-3) !important;
+      margin: 0 !important;
+      padding: var(--rs-4) !important;
+    }
+
+    @include guarded("> div > img%g", $from: ".ReactModal__Content") {
+      flex: none !important;
+      width: 5.6rem !important;
+      height: auto !important;
+      margin: 0 !important;
+    }
+
+    @include guarded("> div > img + div%g", $from: ".ReactModal__Content") {
+      @include stack;
+      align-items: flex-start !important;
+      gap: var(--rs-1) !important;
+      @include flush;
+
+      & > div {
+        @include flush;
+      }
+    }
+
+    & .tw-title {
+      @include type(5, 600);
+      line-height: 1.3 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & .tw-title + div > span {
+      @include muted(3);
+      line-height: 1.5 !important;
+    }
+
+    /* "Learn More". */
+    @include guarded("> div > img + div > div%g:last-child", $from: ".ReactModal__Content") {
+      margin-top: var(--rs-2) !important;
+
+      & > a {
+        height: 3.2rem !important;
+        padding: 0 var(--rs-4) !important;
+      }
+    }
+  }
+
+  /* Opening upwards, the box touches the chip: the gap the menus have. */
+  & .ReactModal__Content > [data-popper-placement^="top"]:has(> .tw-transition > div > div > img + div > .tw-title) {
+    padding-bottom: var(--rs-2) !important;
+  }
+
+  /*
+   * A label, then one row per guest: avatar and a name in the guest's chat
+   * colour. Here a list like the menus': rows that light up on hover, the
+   * whole row a link, names in the palette's ink. The box has no hook of its
+   * own: it is the one holding rows of an avatar and a link in a <strong>.
+   */
+  @include guarded(".ReactModal__Content .tw-transition > div%g:has(> div > div > strong > a)", $from: ".ReactModal__Content") {
+    min-width: 20rem !important;
+    padding: var(--rs-1) !important;
+
+    @include guarded("> div%g", $from: ".ReactModal__Content") {
+      @include stack;
+      gap: 0.2rem !important;
+      @include flush;
+    }
+
+    /* "Live with:" */
+    @include guarded("> div > div%g:first-child", $from: ".ReactModal__Content") {
+      @include flush;
+      padding: var(--rs-2) var(--rs-3) var(--rs-1) !important;
+
+      & p {
+        @include muted(2);
+        @include caps;
+      }
+    }
+
+    @include guarded("> div > div%g:has(> strong > a)", $from: ".ReactModal__Content") {
+      @include row;
+      position: relative !important;
+      gap: var(--rs-3) !important;
+      min-height: 4.4rem !important;
+      margin: 0 !important;
+      padding: 0.6rem var(--rs-3) 0.6rem 0.6rem !important;
+      border-radius: var(--rs-radius-m) !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    @include guarded("> div > div%g:has(> strong > a):hover", $from: ".ReactModal__Content") {
+      background: var(--rs-hover) !important;
+    }
+
+    & .tw-avatar {
+      width: 3.2rem !important;
+      height: 3.2rem !important;
+    }
+
+    @include guarded("> div > div > div%g:has(> .tw-avatar)", $from: ".ReactModal__Content") {
+      @include flush;
+    }
+
+    & strong {
+      color: var(--rs-text) !important;
+    }
+
+    & strong > a {
+      @include type(4, 600);
+      color: inherit !important;
+      text-decoration: none !important;
+    }
+
+    /* The link covers the row. */
+    & strong > a::after {
+      content: "" !important;
+      position: absolute !important;
+      inset: 0 !important;
+      border-radius: inherit !important;
+    }
+  }
+
+  /*
+   * Hovering the viewer count of a shared stream: "Total Viewers" and the
+   * total, a row per channel (avatar, name, live dot and its own count), a
+   * separator and "Learn more about Shared Viewership". The rows become the
+   * guests' rows above, the total the pill it is on the page, and the link a
+   * quiet footer. The box is the one holding the total.
+   */
+  @include guarded('.ReactModal__Content .tw-transition > div%g:has(> div > div > div > div > [data-a-target="animated-channel-viewers-count"])', $from: ".ReactModal__Content") {
+    min-width: 26rem !important;
+    padding: var(--rs-1) !important;
+
+    @include guarded("> div%g", $from: ".ReactModal__Content") {
+      @include stack;
+      gap: 0.2rem !important;
+      @include flush;
+    }
+
+    /* "Total Viewers" and the total. */
+    @include guarded("> div > div%g:has(> div > strong)", $from: ".ReactModal__Content") {
+      margin: 0 !important;
+      padding: var(--rs-2) var(--rs-2) var(--rs-1) 0.6rem !important;
+
+      @include guarded("> div%g", $from: ".ReactModal__Content") {
+        @include row;
+        justify-content: space-between !important;
+        gap: var(--rs-4) !important;
+      }
+
+      @include guarded("> div > strong%g", $from: ".ReactModal__Content") {
+        @include muted(2);
+        @include caps;
+      }
+
+      @include guarded('> div > div%g:has(> [data-a-target="animated-channel-viewers-count"])', $from: ".ReactModal__Content") {
+        @include inline-row;
+        gap: 0.4rem !important;
+        padding: 0.2rem 1rem 0.2rem 0.8rem !important;
+        border-radius: var(--rs-radius-pill) !important;
+        color: var(--rs-live) !important;
+        background: var(--rs-live-tint) !important;
+
+        & svg {
+          fill: currentColor !important;
+        }
+      }
+    }
+
+    /* A channel. */
+    & .tw-interactable {
+      margin: 0 !important;
+      padding: 0.6rem var(--rs-3) 0.6rem 0.6rem !important;
+      border-radius: var(--rs-radius-m) !important;
+      background: none !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    & .tw-interactable:hover {
+      background: var(--rs-hover) !important;
+    }
+
+    @include guarded(".tw-interactable > div%g", $from: ".ReactModal__Content") {
+      @include row;
+      justify-content: space-between !important;
+      gap: var(--rs-4) !important;
+      @include flush;
+    }
+
+    @include guarded("div%g:has(> .streamer-avatar)", $from: ".ReactModal__Content") {
+      @include row;
+      gap: var(--rs-3) !important;
+    }
+
+    & .streamer-avatar {
+      @include flush;
+    }
+
+    & .streamer-avatar .tw-avatar {
+      width: 3.2rem !important;
+      height: 3.2rem !important;
+    }
+
+    & .streamer-avatar + p {
+      @include type(4, 600);
+      margin: 0 !important;
+      color: var(--rs-text) !important;
+    }
+
+    & [aria-label="individual-view-count"] {
+      @include muted(3);
+      font-weight: 500 !important;
+      font-variant-numeric: tabular-nums !important;
+    }
+
+    /* The separator, then the link, on the avatars' edge. */
+    @include guarded('> div > div%g:has(> [role="separator"])', $from: ".ReactModal__Content") {
+      margin: var(--rs-1) 0.6rem !important;
+      padding: 0 !important;
+
+      & > [role="separator"] {
+        @include flush;
+      }
+    }
+
+    @include guarded("> div > div%g:last-child", $from: ".ReactModal__Content") {
+      margin: 0 !important;
+      padding: var(--rs-1) 0.6rem var(--rs-2) !important;
+
+      & > a {
+        font-size: var(--rs-text-2) !important;
+        color: var(--rs-muted) !important;
+        text-decoration: none !important;
+      }
+
+      & > a:hover {
+        color: var(--rs-text) !important;
+      }
+    }
+  }
+}

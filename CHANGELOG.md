@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.17.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.16.1...v1.17.0) (2026-10-14)
+
+
+### Features
+
+* style a shared stream's chip and popovers ([2767abb](https://github.com/corentin-gautier/restyle-for-twitch/commit/2767abb7b88e354d7c9072a58bc68ba8069b8d75))
+
+
+### Build and release
+
+* show the Chrome Web Store's error, and submit to a store by hand ([ab6ff0d](https://github.com/corentin-gautier/restyle-for-twitch/commit/ab6ff0dbf19031bcfd0fe8d398769c24f503d42c))
+
+
+### Documentation
+
+* where the Chrome Web Store publisher ID is found ([714c104](https://github.com/corentin-gautier/restyle-for-twitch/commit/714c104266adc80d94d5bee7ce4c4c4851665e93))
+
+
+### Fixes
+
+* **firefox:** require Firefox 140, the first to read data_collection_permissions ([dc45e94](https://github.com/corentin-gautier/restyle-for-twitch/commit/dc45e9447187bc262dfca101a83d1ba66544a3c1))
+
 ### [1.16.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.16.0...v1.16.1) (2026-10-13)
 
 

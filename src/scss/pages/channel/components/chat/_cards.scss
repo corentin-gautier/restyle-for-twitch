@@ -11,8 +11,6 @@ html:not([data-rs="off"]) {
    */
   & .viewer-card-layer__draggable {
     box-sizing: border-box !important;
-    /* As wide as the chat usually is: see --rs-chat-overhang. */
-    margin-left: calc(-1 * var(--rs-chat-overhang)) !important;
     padding-inline: var(--rs-2) !important;
   }
 

@@ -1,15 +1,9 @@
 // Chat: the column, its header, the arrow that brings it back, and the column as a floating panel.
+@use "tools/guard" as *;
 @use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
   --message-opacity: 0.8;
-  /*
-   * How far the chat's popups reach out of it on the left. They are built
-   * for the column's full width; as a floating panel the chat is narrower,
-   * and rather than squeeze them they keep their width and their right
-   * gutter, and overhang the panel's left edge by the difference.
-   */
-  --rs-chat-overhang: 0px;
 
   & .channel-root__right-column,
   & .right-column,
@@ -43,10 +37,27 @@ html:not([data-rs="off"]) {
     left: 0.8rem !important;
   }
 
-  /* As a floating panel, the header starts inside the panel's border. */
+  /*
+   * As a floating panel, the header's buttons sit 1rem from the panel's
+   * edges, like the sidebar's arrow: the header comes down by what its
+   * 4rem height leaves around a 3.2rem button, less the border. The arrow
+   * is placed from where the slot would start without its extra width.
+   */
   &[data-rs-floating] .right-column:not(.right-column--theatre) .toggle-visibility__right-column--expanded {
-    top: calc(0.4rem + 1px) !important;
-    left: calc(0.8rem + 1px) !important;
+    top: 1rem !important;
+    left: calc(1rem - var(--rs-chat-extra)) !important;
+  }
+
+  /* A video's chat header is 5rem tall: its title is already level with the arrow. */
+  &[data-rs-floating] .right-column:not(.right-column--theatre) .stream-chat-header {
+    margin-top: calc(1rem - 0.4rem - 1px) !important;
+  }
+
+  /* The "Community" button's box is pinned to the right edge, past the header's padding. */
+  &[data-rs-floating] .right-column:not(.right-column--theatre) .stream-chat-header {
+    @include guarded("> div%g:last-child") {
+      margin-right: calc(1rem - 1px) !important;
+    }
   }
 
   /*
@@ -75,10 +86,24 @@ html:not([data-rs="off"]) {
   /*
    * "Floating panels" option (see layout/_floating-panels.scss): the column keeps its slot and
    * goes transparent, and the box inside it becomes the panel, a gap in from
-   * the window's right and bottom edges. Twitch gives that box the slot's
-   * width, so the gap is taken off it. Not in theatre mode, where the chat
-   * stays edge to edge beside the video.
+   * the window's right and bottom edges. The slot grows by the gap and the
+   * panel's border, taken off the player and the info beside it, so that
+   * the chat inside the panel keeps Twitch's 34rem (the field, the popups
+   * built for that width). Not in theatre mode, where the chat stays edge
+   * to edge beside the video.
    */
+  &[data-rs-floating] {
+    --rs-chat-extra: calc(var(--rs-panel-gap) + 2px);
+  }
+
+  /* Twitch leaves calc(100% - 34rem) beside the chat. */
+  &[data-rs-floating] .channel-root__player--with-chat,
+  &[data-rs-floating] .channel-root__info--with-chat .channel-info-content,
+  &[data-rs-floating] .channel-root--hold-chat + .persistent-player:not(.persistent-player--theatre),
+  &[data-rs-floating] .channel-root--watch-chat + .persistent-player:not(.persistent-player--theatre) {
+    width: calc(100% - 34rem - var(--rs-chat-extra)) !important;
+  }
+
   &[data-rs-floating] .right-column:not(.right-column--theatre) {
     &,
     & .channel-root__right-column,
@@ -92,8 +117,14 @@ html:not([data-rs="off"]) {
       background: transparent !important;
     }
 
-    /* The panel is the column less the gap and its own border. */
-    --rs-chat-overhang: calc(var(--rs-panel-gap) + 2px);
+    /* Open, the slot reaches left by the extra width: Twitch slides it in by 34rem. */
+    & .channel-root__right-column {
+      width: calc(34rem + var(--rs-chat-extra)) !important;
+    }
+
+    & .channel-root__right-column--expanded {
+      margin-left: calc(-1 * var(--rs-chat-extra)) !important;
+    }
 
     & .channel-root__right-column > div {
       width: calc(100% - var(--rs-panel-gap)) !important;

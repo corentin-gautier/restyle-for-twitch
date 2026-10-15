@@ -1,4 +1,5 @@
 // Whispers.
+@use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
   /*
@@ -12,5 +13,60 @@ html:not([data-rs="off"]) {
 
   & .ReactModal__Content div:where(.ReactModal__Content *):has(> [data-a-target="whisper-search-input"]) {
     padding: 0 !important;
+  }
+
+  /*
+   * A conversation's window (logged in, opened from the list or from a
+   * viewer card's "Whisper"). Twitch docks the row of them on the page's
+   * bottom edge, 1rem from the right or 35rem with the chat open beside
+   * (its "theatre" class is there on every channel page). They float
+   * instead, a gap above the bottom and a gap from the chat, which is
+   * wider as a floating panel (--rs-chat-extra).
+   */
+  & .whispers-open-threads {
+    right: var(--rs-panel-gap) !important;
+    bottom: var(--rs-panel-gap) !important;
+  }
+
+  & .whispers-open-threads.whispers--right-column-expanded-beside {
+    right: calc(34rem + var(--rs-chat-extra, 0px) + var(--rs-panel-gap)) !important;
+  }
+
+  /*
+   * One floating box. Its message area must stay as tall as the 20rem
+   * area Twitch keeps in it to load older messages, or the area scrolls
+   * and the first lines slide under the header: the window grows by what
+   * the field (taller than Twitch's 3.2rem) and the border take.
+   */
+  & .whispers-thread {
+    @include floating(l);
+  }
+
+  & .whispers-thread:not(.whispers-thread--collapsed) {
+    height: calc(28.2rem + var(--rs-control-height) - 3.2rem + 2px) !important;
+  }
+
+  /* Its header goes on the box's colour, a hairline under it. */
+  & .thread-header__title-bar-container {
+    background: transparent !important;
+    box-shadow: inset 0 -1px 0 var(--rs-float-border) !important;
+  }
+
+  & .whispers-thread--collapsed .thread-header__title-bar-container {
+    box-shadow: none !important;
+  }
+
+  /* A new message: Twitch fills the header with its purple. */
+  & .thread-header__title-bar-container--highlighted {
+    background: var(--rs-accent) !important;
+    border-radius: calc(var(--rs-radius-l) - 1px) calc(var(--rs-radius-l) - 1px) 0 0 !important;
+  }
+
+  & .whispers-thread--collapsed .thread-header__title-bar-container--highlighted {
+    border-radius: calc(var(--rs-radius-l) - 1px) !important;
+  }
+
+  & .thread-header__display-name--highlighted {
+    color: var(--rs-on-accent) !important;
   }
 }

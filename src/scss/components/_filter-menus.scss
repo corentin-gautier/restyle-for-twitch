@@ -8,11 +8,13 @@ html:not([data-rs="off"]) {
    * margins. One box padding and one row size for all of them. Dialogs with
    * headings, pictures or text fields are not menus and are left alone, and
    * so is the tag search's suggestion list, styled with its field, and the
-   * Gift a Sub panel, whose checkbox row is no menu. Nor the
+   * Gift a Sub panel, whose checkbox row is no menu, and a whisper's
+   * window, a dialog whose header holds its settings menu (that menu, a
+   * dialog in a dialog, is framed once: its balloon). Nor the
    * zero-height anchor of a "Sort by" list: padding gives it a height, which
    * pushes the list that far from its button.
    */
-  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *) {
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *, .whispers-thread > *, .whispers-thread .tw-balloon *) {
     padding: 0.6rem !important;
     /* The variant attached to its button comes without a frame. */
     border: 1px solid var(--rs-float-border) !important;
@@ -82,7 +84,7 @@ html:not([data-rs="off"]) {
    * top padding is the gap to the button. It keeps that gap, as wide as
    * under "Sort by", and the frame goes to the box inside.
    */
-  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *):has(> div > div > .scrollable-area) {
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *, .whispers-thread > *, .whispers-thread .tw-balloon *):has(> div > div > .scrollable-area) {
     padding: 0.8rem 0 0 !important;
     @include bare;
     border-radius: 0 !important;
@@ -95,7 +97,7 @@ html:not([data-rs="off"]) {
   }
 
   /* Checkbox lists scroll and end with a footer: the padding moves inside. */
-  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *):has(.tw-checkbox) {
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *, .whispers-thread > *, .whispers-thread .tw-balloon *):has(.tw-checkbox) {
     padding: 0 !important;
   }
 
@@ -104,7 +106,7 @@ html:not([data-rs="off"]) {
    * video's chat), the wrapper inside it is framed as a popup too: one
    * frame, the box's.
    */
-  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *).tw-balloon > div:where(.tw-balloon > *) {
+  & :where(.ReactModal__Content *, [role="dialog"] *):is(.ReactModal__Content[role="dialog"] > div > .tw-transition > div:first-child, [role="dialog"]:not(.ReactModal__Content) > div):has(.tw-interactable, .tw-checkbox):not(:has(h1, h2, h3, h4, h5, img, textarea, input:not([type="checkbox"])), :has(> [role="listbox"]), [data-a-target="tags-filter-dropdown"] *, .support-panel *, .whispers-thread > *, .whispers-thread .tw-balloon *).tw-balloon > div:where(.tw-balloon > *) {
     padding: 0 !important;
     border: 0 !important;
     background: transparent !important;

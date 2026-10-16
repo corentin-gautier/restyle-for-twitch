@@ -170,6 +170,10 @@ issue with a screenshot and the page's address.
 Some rules match English labels, so a few details may be missing when Twitch is
 displayed in another language.
 
+## Support
+
+If Restyle for Twitch is useful to you, you can support my work with a small donation on [Ko-fi](https://ko-fi.com/corentingautier). Thank you!
+
 ## License
 
 Copyright © 2026 Corentin Gautier.

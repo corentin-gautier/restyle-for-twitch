@@ -94,5 +94,8 @@
   },
   "storiesHint": {
     "message": "サイドバーとフォロー中のページ"
+  },
+  "support": {
+    "message": "Ko-fi でこのプロジェクトを支援"
   }
 }

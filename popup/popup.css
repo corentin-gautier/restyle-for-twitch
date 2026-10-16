@@ -51,6 +51,20 @@ section + section {
   margin-top: 12px;
 }
 
+.support {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 12px;
+}
+
+.support a {
+  color: var(--muted);
+}
+
+.support a:hover {
+  color: var(--text);
+}
+
 .row {
   display: flex;
   align-items: center;

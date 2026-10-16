@@ -94,5 +94,8 @@
   },
   "storiesHint": {
     "message": "In der Seitenleiste und unter „Folge ich“"
+  },
+  "support": {
+    "message": "Dieses Projekt auf Ko-fi unterstützen"
   }
 }

@@ -94,5 +94,8 @@
   },
   "storiesHint": {
     "message": "側邊欄和追隨頁面"
+  },
+  "support": {
+    "message": "在 Ko-fi 上支持這個專案"
   }
 }

@@ -94,5 +94,8 @@
   },
   "storiesHint": {
     "message": "Na barra lateral e em A seguir"
+  },
+  "support": {
+    "message": "Apoie este projeto no Ko-fi"
   }
 }

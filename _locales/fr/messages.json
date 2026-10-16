@@ -94,5 +94,8 @@
   },
   "storiesHint": {
     "message": "Dans la barre latérale et sur Suivis"
+  },
+  "support": {
+    "message": "Soutenir ce projet sur Ko-fi"
   }
 }

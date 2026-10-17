@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.18.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.17.0...v1.18.0) (2026-10-17)
+
+
+### Features
+
+* **popup:** add a Ko-fi support link ([ab51cca](https://github.com/corentin-gautier/restyle-for-twitch/commit/ab51cca394a8a6a1e6fc525b72516fa1b21c6a98))
+* **whispers:** enhance styling for whispers panel and threads ([e9dcfd7](https://github.com/corentin-gautier/restyle-for-twitch/commit/e9dcfd79bff2665df3afa87c14957cfc44ad6a38))
+
+
+### Fixes
+
+* add promo directory to .gitignore ([472b3aa](https://github.com/corentin-gautier/restyle-for-twitch/commit/472b3aa8bfc88f9f2bd90bc3a17695e49b52637d))
+* **floating:** keep the chat 34rem wide inside its panel ([8d307aa](https://github.com/corentin-gautier/restyle-for-twitch/commit/8d307aaba5fb4ca88fdbf3af4c1c0c1c8484753c))
+
+
+### Documentation
+
+* add Ko-fi support link ([6a8ee5e](https://github.com/corentin-gautier/restyle-for-twitch/commit/6a8ee5e67c03adfd0f159e0afd63df9269f97343))
+
 ## [1.17.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.16.1...v1.17.0) (2026-10-14)
 
 

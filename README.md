@@ -14,6 +14,12 @@ content more room, and makes the pages look like they belong to the same site.
 
 It is an unofficial project, not affiliated with or endorsed by Twitch.
 
+## Support
+
+If Restyle for Twitch is useful to you, you can support my work with a small donation on [Ko-fi](https://ko-fi.com/corentingautier). Thank you!
+
+[![Support me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/corentingautier)
+
 ## What it changes
 
 - **Sidebar**: smaller, quieter rows, small-caps section headers, viewer counts
@@ -171,10 +177,6 @@ issue with a screenshot and the page's address.
 
 Some rules match English labels, so a few details may be missing when Twitch is
 displayed in another language.
-
-## Support
-
-If Restyle for Twitch is useful to you, you can support my work with a small donation on [Ko-fi](https://ko-fi.com/corentingautier). Thank you!
 
 ## License
 

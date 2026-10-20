@@ -87,9 +87,11 @@ card.
 
 ### Firefox
 
-The extension has been submitted to Firefox Add-ons and is waiting for
-review. Firefox only installs signed add-ons for good, so until it is listed
-there it can only be loaded for the current session:
+Install it from [Firefox Add-ons](https://addons.mozilla.org/addon/restyle-for-twitch/).
+It needs Firefox 140 or later. Firefox keeps it up to date.
+
+To try a release before it reaches Firefox Add-ons, load it for the current
+session:
 
 1. Download [restyle-for-twitch-firefox.zip](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest/download/restyle-for-twitch-firefox.zip)
    from the [latest release](https://github.com/corentin-gautier/restyle-for-twitch/releases/latest).

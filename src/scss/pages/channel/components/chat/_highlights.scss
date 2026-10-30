@@ -62,6 +62,11 @@ html:not([data-rs="off"]) {
     background: var(--rs-raised) !important;
   }
 
+  /* Shared Chat's banner uses a generated class with a stable semantic prefix. */
+  & .community-highlight .highlight:has([class*="sharedChatHighlight"]) {
+    padding: 0 !important;
+  }
+
   /*
    * With several highlights, the next one shows as the edges of a card
    * behind the first: the same card.

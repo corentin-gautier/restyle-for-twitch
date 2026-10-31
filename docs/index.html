@@ -3,14 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Restyle for Twitch: a calmer interface for twitch.tv</title>
-<meta name="description" content="Free Chrome and Firefox extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
+<title>Restyle for Twitch: free Twitch themes for Chrome and Firefox</title>
+<meta name="description" content="Free Chrome and Firefox extension that restyles twitch.tv: custom themes and colours, a calmer chat and sidebar, no autoplaying carousel. No data collected.">
 <meta name="author" content="Corentin Gautier">
 <link rel="canonical" href="https://corentin-gautier.github.io/restyle-for-twitch/">
 <meta property="og:type" content="website">
+<meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Restyle for Twitch">
-<meta property="og:title" content="Restyle for Twitch: a calmer interface for twitch.tv">
-<meta property="og:description" content="Free Chrome and Firefox extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.">
+<meta property="og:title" content="Restyle for Twitch: free Twitch themes for Chrome and Firefox">
+<meta property="og:description" content="Free Chrome and Firefox extension that restyles twitch.tv: custom themes and colours, a calmer chat and sidebar, no autoplaying carousel. No data collected.">
 <meta property="og:url" content="https://corentin-gautier.github.io/restyle-for-twitch/">
 <meta property="og:image" content="https://corentin-gautier.github.io/restyle-for-twitch/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -24,12 +25,14 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Restyle for Twitch",
-  "description": "Free Chrome and Firefox extension that restyles twitch.tv: a quieter sidebar and chat, cleaner pages, a framed player, and your own colours. No data collected.",
+  "description": "Free Chrome and Firefox extension that restyles twitch.tv: custom themes and colours, a calmer chat and sidebar, no autoplaying carousel. No data collected.",
   "url": "https://corentin-gautier.github.io/restyle-for-twitch/",
   "image": "https://corentin-gautier.github.io/restyle-for-twitch/og-image.png",
   "applicationCategory": "BrowserApplication",
   "operatingSystem": "Chrome 120 or later, Firefox 140 or later",
-  "codeRepository": "https://github.com/corentin-gautier/restyle-for-twitch",
+  "isAccessibleForFree": true,
+  "screenshot": "https://corentin-gautier.github.io/restyle-for-twitch/home-after.webp",
+  "sameAs": ["https://github.com/corentin-gautier/restyle-for-twitch", "https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl", "https://addons.mozilla.org/addon/restyle-for-twitch/"],
   "author": { "@type": "Person", "name": "Corentin Gautier", "url": "https://github.com/corentin-gautier" },
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
   "installUrl": ["https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl", "https://addons.mozilla.org/addon/restyle-for-twitch/"],
@@ -101,6 +104,7 @@
 
   .hero { padding: clamp(48px, 9vw, 96px) 0 56px; }
   .hero h1 { margin: 0 0 24px; font-size: clamp(38px, 7.4vw, 76px); font-weight: 700; line-height: 0.98; letter-spacing: -0.04em; text-wrap: balance; }
+  .hero h1 .kicker { display: block; margin-bottom: 20px; color: var(--muted); font: 500 13px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; }
   .hero h1 em { background: var(--marker); color: var(--marker-ink); font-style: normal; font-weight: 300; }
   .hero p { margin: 0 0 32px; max-width: 60ch; font-size: 19px; line-height: 1.5; color: var(--muted); text-wrap: pretty; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; }
@@ -145,6 +149,9 @@
   .steps > li { position: relative; padding: 0 0 20px 48px; counter-increment: step; }
   .steps > li::before { content: counter(step); position: absolute; left: 0; top: 0; width: 28px; height: 28px; background: var(--accent); color: var(--on-accent); font: 600 13px/28px var(--mono); text-align: center; }
   .steps p { margin: 0 0 10px; }
+  .faq { margin-top: 32px; border-top: var(--rule) solid var(--text); }
+  .faq h3 { margin: 24px 0 8px; font-size: 20px; line-height: 1.2; letter-spacing: -0.02em; }
+  .faq p { margin: 0; max-width: 62ch; }
   .note { margin: 0; padding: 14px 16px; border-left: 4px solid var(--accent); background: var(--surface); }
 
   .support { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 16px 24px; align-items: center; margin: 40px 0 0; padding: 20px 24px; background: var(--accent); color: var(--on-accent); }
@@ -212,6 +219,7 @@
       <a class="hide-sm" href="#features">Features</a>
       <a class="hide-sm" href="#settings">Settings</a>
       <a class="hide-sm" href="#install">Install</a>
+      <a class="hide-sm" href="#faq">FAQ</a>
       <a href="https://github.com/corentin-gautier/restyle-for-twitch" rel="noopener" target="_blank">GitHub</a>
     </nav>
   </div>
@@ -221,7 +229,7 @@
   <div class="wrap">
 
     <div class="hero">
-      <h1>Twitch, with the noise turned <em>down</em></h1>
+      <h1><span class="kicker">Twitch theme extension for Chrome and Firefox</span> Twitch, with the noise turned <em>down</em></h1>
       <p>Restyle for Twitch is a free Chrome and Firefox extension that quiets the busy parts of twitch.tv and gives the content more room. Nothing is added, and nothing works differently.</p>
       <div class="actions">
         <a class="btn primary" href="https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl" rel="noopener" target="_blank">Add to Chrome</a>
@@ -238,7 +246,7 @@
         <button type="button" aria-pressed="false" data-page="video" data-label="a video and its chat replay">Video</button>
       </div>
       <div class="compare__frame">
-        <img data-after src="home-after.webp" width="1700" height="956" alt="Twitch with the extension: the home page">
+        <img data-after src="home-after.webp" width="1700" height="956" fetchpriority="high" alt="Twitch with the Restyle for Twitch extension: the home page">
         <img data-before class="compare__before" src="home-before.webp" width="1700" height="956" alt="Twitch without the extension: the home page">
         <span class="compare__label compare__label--before" aria-hidden="true">Before</span>
         <span class="compare__label compare__label--after" aria-hidden="true">After</span>
@@ -255,7 +263,7 @@
     </aside>
 
     <section id="features">
-      <h2>What the extension changes</h2>
+      <h2>What Restyle for Twitch changes</h2>
       <p>It is a stylesheet laid over twitch.tv. Turn it off in one click and Twitch is back as it was.</p>
 
       <ul class="index" style="margin-top: 32px">
@@ -270,7 +278,7 @@
       <article class="feature text-only" id="sidebar">
         <div>
           <div class="tags"><span class="tag">Navigation</span></div>
-          <h3>A quieter sidebar and top bar</h3>
+          <h3>A quieter Twitch sidebar and top bar</h3>
           <ul>
             <li>Smaller rows, small-caps section headers, viewer counts aligned to the right.</li>
             <li>No hover cards, no "For You" header, and stories hidden unless you turn them back on.</li>
@@ -281,7 +289,7 @@
       <article class="feature text-only" id="pages">
         <div>
           <div class="tags"><span class="tag">Home</span><span class="tag">Browse</span><span class="tag">Search</span></div>
-          <h3>Cleaner pages</h3>
+          <h3>Cleaner Twitch pages, without the carousel</h3>
           <ul>
             <li>The autoplaying carousel is hidden on the home page, and its video paused. A setting brings it back, restyled like the cards under it.</li>
             <li>Large shelf titles, the same on the home page, channel pages and under a video.</li>
@@ -294,7 +302,7 @@
       <article class="feature text-only" id="channel">
         <div>
           <div class="tags"><span class="tag">Channel</span></div>
-          <h3>A framed player</h3>
+          <h3>A framed Twitch player</h3>
           <ul>
             <li>The player is inset and rounded, with the stream information in a centred column below it.</li>
             <li>Offline channels, videos and clips follow the same column and the same cards.</li>
@@ -306,7 +314,7 @@
       <article class="feature text-only" id="chat">
         <div>
           <div class="tags"><span class="tag">Chat</span></div>
-          <h3>A calmer chat</h3>
+          <h3>A calmer Twitch chat</h3>
           <ul>
             <li>Muted messages that return to full contrast on hover, and a soft fade at the top.</li>
             <li>The gifter leaderboard above the messages is hidden.</li>
@@ -328,7 +336,7 @@
     </section>
 
     <section id="settings">
-      <h2>Settings</h2>
+      <h2>Themes, colours and settings</h2>
       <p>Click the extension's icon. Changes apply at once, without reloading the page.</p>
 
       <div class="settings">
@@ -362,7 +370,7 @@
     </section>
 
     <section id="install">
-      <h2>Install the extension</h2>
+      <h2>Install it on Chrome or Firefox</h2>
       <p><strong>Chrome.</strong> Install it from the <a href="https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl" rel="noopener" target="_blank">Chrome Web Store</a>. Requires Chrome 120 or later; Chrome keeps it up to date.</p>
 
       <p>To install it by hand instead:</p>
@@ -384,6 +392,25 @@
       <p>To try a release before it reaches Firefox Add-ons, load it for one session: download <a href="https://github.com/corentin-gautier/restyle-for-twitch/releases/latest/download/restyle-for-twitch-firefox.zip" rel="noopener" target="_blank">restyle-for-twitch-firefox.zip</a>, open <code>about:debugging#/runtime/this-firefox</code>, click <strong>Load Temporary Add-on</strong> and select the zip.</p>
 
       <p class="note">Twitch changes its markup without notice, so an update on their side can break part of the restyle. If something looks wrong, <a href="https://github.com/corentin-gautier/restyle-for-twitch/issues" rel="noopener" target="_blank">open an issue</a> with a screenshot and the page's address.</p>
+    </section>
+
+    <section id="faq">
+      <h2>Questions</h2>
+      <p>What people usually ask before installing it.</p>
+      <div class="faq">
+        <h3>How do I change the theme or colours on Twitch?</h3>
+        <p>Install the extension and click its icon. Pick one of the eight dark and light themes, or set your own accent and background colours. Channel colours can also take them from the channel you are watching. Changes apply without reloading the page.</p>
+        <h3>How do I hide the autoplaying carousel on the Twitch home page?</h3>
+        <p>With the extension on, the carousel is hidden and its video paused. A setting brings it back if you want it.</p>
+        <h3>Can I hide stories on Twitch?</h3>
+        <p>Yes, stories are hidden by default, in the sidebar and on Following. A setting shows them again.</p>
+        <h3>Is it free and safe to use?</h3>
+        <p>It is free and <a href="https://github.com/corentin-gautier/restyle-for-twitch" rel="noopener" target="_blank">open source</a>. It only runs on twitch.tv, collects nothing, and its one permission stores your settings.</p>
+        <h3>Does it block ads?</h3>
+        <p>No. It changes how Twitch looks, not how it works.</p>
+        <h3>Can I go back to the original Twitch design?</h3>
+        <p>Yes. Turn off "Enable on Twitch" in the popup and Twitch is back as it was.</p>
+      </div>
     </section>
 
     <section id="privacy">
@@ -419,7 +446,7 @@
         before.src = button.dataset.page + '-before.webp';
         after.src = button.dataset.page + '-after.webp';
         before.alt = 'Twitch without the extension: ' + button.dataset.label;
-        after.alt = 'Twitch with the extension: ' + button.dataset.label;
+        after.alt = 'Twitch with the Restyle for Twitch extension: ' + button.dataset.label;
       });
     }
   }

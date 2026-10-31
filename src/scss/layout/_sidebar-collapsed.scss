@@ -1,4 +1,4 @@
-// Left sidebar, collapsed: a rail of avatars and its popups.
+// Left sidebar: the collapsed rail of avatars, and the popups of its rows in both modes.
 @use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
@@ -60,13 +60,14 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Its popups. Twitch has four, each built and padded its own way: a live
-   * channel's (name and category, title, viewers), a shared stream's (the
-   * same, over the list of who is on it), an offline channel's (a link to
-   * its videos) and a category's (its name). One box for all: the same
+   * The rows' popups, expanded or collapsed. Twitch has five, each built and
+   * padded its own way: a live channel's (name and category, title, viewers),
+   * a shared stream's (the same, over the list of who is on it), a
+   * co-stream's (category, title, main broadcast, co-streamers), an offline
+   * channel's (a link to its videos) and a category's (its name). One box for all: the same
    * frame, padding and type, a strong first line and quiet ones under.
    */
-  &[data-rs-nav="collapsed"] .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has([class*="side-nav-guest-star-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
+  & .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:is(:has([class*="side-nav-channel-tooltip"]), :has([class*="side-nav-guest-star-tooltip"]), :has([class*="side-nav-costreaming-tooltip"]), :has(a[href*="/videos?filter=all"]:only-child), :has(div[tabindex] p:only-child):not(:has(a, button, img))) {
     /* The wrappers keep the generic popups' large radius and clip the box with it. */
     border-radius: 0 !important;
 
@@ -89,6 +90,12 @@ html:not([data-rs="off"]) {
       @include floating(m);
       box-shadow: none !important;
       white-space: normal !important;
+    }
+
+    /* Twitch focuses the popup as it opens: no ring around its content. */
+    & div[tabindex] {
+      outline: none !important;
+      box-shadow: none !important;
     }
 
     & div[tabindex] div:not(.tw-channel-status-indicator, .tw-avatar),
@@ -119,6 +126,41 @@ html:not([data-rs="off"]) {
 
     & .tw-channel-status-indicator {
       margin-right: 0.6rem !important;
+    }
+
+    /*
+     * A co-stream's: the category leads and the title stays quiet (the first
+     * line's rule would have it the other way round), then two labelled
+     * lists parted by Twitch's line.
+     */
+    & div[tabindex] > [class*="side-nav-costreaming-tooltip"] > div > div > p {
+      @include type(3, 600);
+      line-height: 2rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & div[tabindex] > [class*="side-nav-costreaming-tooltip"] > div > p {
+      @include type(2, 400);
+      line-height: 1.8rem !important;
+      color: var(--rs-muted) !important;
+    }
+
+    & div[tabindex] > [class*="side-nav-costreaming-tooltip"] strong {
+      display: block !important;
+      margin-top: 0.8rem !important;
+      @include type(2, 600);
+      line-height: 1.8rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & div[tabindex] > [class*="side-nav-costreaming-tooltip"] a p {
+      @include type(2, 400);
+      line-height: 1.8rem !important;
+      color: var(--rs-text) !important;
+    }
+
+    & div[tabindex] > [class*="side-nav-costreaming-tooltip"] > div + p + div {
+      margin-top: 0.8rem !important;
     }
 
     /*

@@ -62,14 +62,52 @@ html:not([data-rs="off"]) {
     background: var(--rs-raised) !important;
   }
 
-  /* Shared Chat's banner uses a generated class with a stable semantic prefix. */
+  /*
+   * Shared Chat uses a generated class with a stable semantic prefix, not an
+   * inline gradient. Remove the highlight's inset so its coloured banner
+   * reaches the inner edges of the card.
+   */
   & .community-highlight .highlight:has([class*="sharedChatHighlight"]) {
     padding: 0 !important;
   }
 
   /*
-   * With several highlights, the next one shows as the edges of a card
-   * behind the first: the same card.
+   * Poll choices and the vote action use a radio group, unlike prediction
+   * buttons. Keep each choice and the action on the full card width.
+   */
+  & .community-highlight [role="radiogroup"] {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    min-width: 0 !important;
+
+    & [role="radio"] {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-start !important;
+      gap: var(--rs-2) !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: 3.2rem !important;
+      box-sizing: border-box !important;
+      text-align: left !important;
+    }
+
+    & ~ button,
+    & ~ div button {
+      width: 100% !important;
+      min-width: 0 !important;
+      height: auto !important;
+      min-height: 3.2rem !important;
+      box-sizing: border-box !important;
+    }
+  }
+
+   /*
+    * With several highlights, the next one shows as the edges of a card
+    * behind the first: the same card.
    */
   & .community-highlight-stack__backlog-card {
     @include bare;

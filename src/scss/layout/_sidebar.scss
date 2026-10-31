@@ -1,4 +1,4 @@
-// Left sidebar, expanded: sections, channel rows, the hover cards beside them.
+// Left sidebar, expanded: sections, channel rows.
 @use "tools/guard" as *;
 @use "tools/mixins" as *;
 
@@ -38,37 +38,26 @@ html:not([data-rs="off"]) {
   }
 
   /*
-   * Hover cards on channel rows (stream title preview). They are rendered
-   * outside the sidebar, so they are caught by their content's class and the
-   * balloon around it is dropped with them. Only while the sidebar is
-   * expanded: collapsed, these popups are where the names are (see
-   * "Collapsed sidebar").
+   * A channel-row promotion is rendered as a right-anchored dialog, rather
+   * than one of the channel preview tooltips above. Give its offer copy the
+   * same floating surface and type as the rest of the extension.
    */
-  &:not([data-rs-nav="collapsed"]) [class*="side-nav-channel-tooltip"],
-  &:not([data-rs-nav="collapsed"]) [class*="side-nav-guest-star-tooltip"],
-  &:not([data-rs-nav="collapsed"]) :is(.tw-balloon, [role="dialog"], [role="tooltip"]):has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"]),
-  &:not([data-rs-nav="collapsed"]) div:has(> [class*="side-nav-channel-tooltip"]),
-  &:not([data-rs-nav="collapsed"]) div:has(> [class*="side-nav-guest-star-tooltip"]) {
-    display: none !important;
+  & .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"]:has(img):not(:has([class*="side-nav-channel-tooltip"], [class*="side-nav-guest-star-tooltip"], [class*="side-nav-costreaming-tooltip"])) {
+    @include floating(l);
+    box-sizing: border-box !important;
+    max-width: calc(100vw - 2 * var(--rs-4)) !important;
+    padding: var(--rs-3) !important;
+    color: var(--rs-text) !important;
   }
 
-  /*
-   * Offline rows have their own hover popup, a lone "See all recent videos"
-   * link. It carries no class of its own: told by opening to the right of
-   * its row and holding nothing but a link to a channel's videos.
-   */
-  &:not([data-rs-nav="collapsed"]) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] a[href*="/videos?filter=all"]:only-child) {
-    display: none !important;
+  & .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"] p {
+    @include type(4, 400);
+    line-height: 1.5 !important;
+    color: var(--rs-text) !important;
   }
 
-  /*
-   * Recommended categories repeat their name in a tooltip beside the row.
-   * No class either: a popup opening to the right that holds one unwrapped
-   * line and nothing else. Kept when the sidebar is collapsed, where the
-   * name is not on screen.
-   */
-  &:not([data-rs-nav="collapsed"]) .ReactModal__Content[role="dialog"]:has(> [data-popper-placement^="right"] [style*="nowrap"] > div[tabindex] p:only-child):not(:has(a, button, img)) {
-    display: none !important;
+  & .ReactModal__Content[role="dialog"] > [data-popper-placement^="right"] p strong {
+    font-weight: 600 !important;
   }
 
   & .side-nav-section {
@@ -113,6 +102,12 @@ html:not([data-rs="off"]) {
     font-weight: 600 !important;
     color: var(--rs-label) !important;
     transition: color var(--rs-ease);
+  }
+
+  /* A co-stream's title, a third line of the row: the category's size and tone. */
+  @include guarded('[data-a-target="side-nav-card-metadata"] > div:last-child:not(.side-nav-card__metadata) p%g', $from: '[data-a-target="side-nav-card-metadata"]') {
+    @include type(1, 400);
+    color: var(--rs-faint) !important;
   }
 
   /* Offline channels stay a step back. */

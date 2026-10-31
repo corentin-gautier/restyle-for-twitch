@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.19.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.18.0...v1.19.0) (2026-10-31)
+
+
+### Features
+
+* **modal:** restyle the log in and sign up modal ([baa1de0](https://github.com/corentin-gautier/restyle-for-twitch/commit/baa1de00cc0c2358e2f6323bc383db91f0ed4677))
+
+
+### Documentation
+
+* give the Ko-fi support link its own block near the top ([90d1a44](https://github.com/corentin-gautier/restyle-for-twitch/commit/90d1a444339a3df2ae96b65935db20b9f6c4a5a0))
+* improve the site's SEO and link it from the README ([df52dfb](https://github.com/corentin-gautier/restyle-for-twitch/commit/df52dfba430a769ad9c639393bf5fb03d9b2833e))
+* link the Firefox Add-ons listing ([275c1a8](https://github.com/corentin-gautier/restyle-for-twitch/commit/275c1a89e323a0b1090c2337b92897c7fab76c0c))
+
+
+### Fixes
+
+* open external links in a new tab ([9e4a03e](https://github.com/corentin-gautier/restyle-for-twitch/commit/9e4a03ec02f66de693994f3a5cc6ef0dbe087dd2))
+* **sidebar:** restore the rows' hover popups and style the co-stream's ([6c07294](https://github.com/corentin-gautier/restyle-for-twitch/commit/6c07294baa732aaba14bb61df3fe4f36eb5a2852))
+
 ## [1.18.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.17.0...v1.18.0) (2026-10-17)
 
 

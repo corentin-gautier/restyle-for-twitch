@@ -71,7 +71,8 @@ html:not([data-rs="off"]) {
     /* The wrappers keep the generic popups' large radius and clip the box with it. */
     border-radius: 0 !important;
 
-    & > .tw-transition > div {
+    /* Repeated class: the menu rules frame the wrapper of a box that holds a link. */
+    & > .tw-transition.tw-transition.tw-transition > div {
       padding: 0 0 0 0.8rem !important;
       @include bare;
       border-radius: 0 !important;

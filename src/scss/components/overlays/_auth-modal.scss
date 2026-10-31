@@ -1,0 +1,92 @@
+// Log in / Sign up: the modal a logged-out visitor gets on a page that needs an account.
+@use "tools/guard" as *;
+@use "tools/mixins" as *;
+
+html:not([data-rs="off"]) {
+  /*
+   * Twitch's wrappers pad the content a second time inside the box: the box's
+   * own padding is reduced so that the two add up to the usual margin, and
+   * the fill of the wrapper inside it goes.
+   */
+  & .auth-modal {
+    --color-background-base: transparent;
+    width: 46rem !important;
+    max-width: calc(100vw - 2 * var(--rs-6)) !important;
+
+    /* Repeated class: the centred modals' rule pads this box too. */
+    &.auth-modal.auth-modal {
+      padding: var(--rs-2) !important;
+    }
+
+    & .auth-modal__left-content,
+    & .auth-modal__left-content > div {
+      width: 100% !important;
+      background: none !important;
+    }
+
+    & .tw-title {
+      @include type(title, 700);
+      letter-spacing: -0.01em !important;
+      color: var(--rs-text) !important;
+    }
+
+    /* Both fields alike, focused or not: Twitch fills only the idle one. */
+    & .tw-input {
+      background: color-mix(in srgb, var(--rs-text) 6%, transparent) !important;
+      border: var(--rs-hairline) !important;
+    }
+
+    & .tw-input:focus {
+      border-color: var(--rs-accent) !important;
+      box-shadow: 0 0 0 1px var(--rs-accent) !important;
+    }
+
+    /* "Use phone number instead" is a link's look on another element: same class. */
+    & .tw-link,
+    & .tw-link * {
+      @include type(3, 500);
+      color: var(--rs-accent-quiet) !important;
+      text-decoration: none !important;
+    }
+
+    & .tw-link:hover,
+    & .tw-link:hover * {
+      color: var(--rs-accent) !important;
+    }
+
+    & .or-divider p {
+      @include muted(3);
+    }
+
+    /* Buttons on the fields' radius, in one height. */
+    & form button:not([aria-label]) {
+      min-height: var(--rs-control-height) !important;
+      border-radius: var(--rs-radius-m) !important;
+      transition: background-color var(--rs-ease);
+    }
+
+    /* Disabled, its ink follows Twitch's theme, not the background picked in the popup. */
+    & form button:disabled,
+    & form button:disabled * {
+      color: var(--rs-muted) !important;
+    }
+
+    /*
+     * Twitch's light theme serves these two logos in black: on a dark
+     * background from the popup, turned light, the hue (Amazon's orange) kept.
+     */
+    @at-root html:not([data-rs="off"])[data-rs-bg="dark"] .auth-modal :is(img[src$="/apple-logo.png"], img[src$="/amazon-logo.png"]) {
+      filter: invert(1) hue-rotate(180deg) !important;
+    }
+
+    /* "Continue with…": Twitch's fill is lost on the box under the dark theme. */
+    @include guarded("form button%g:has(picture)", $from: ".auth-modal") {
+      background: color-mix(in srgb, var(--rs-text) 9%, transparent) !important;
+      color: var(--rs-text) !important;
+    }
+
+    @include guarded("form button%g:has(picture):hover", $from: ".auth-modal") {
+      background: color-mix(in srgb, var(--rs-text) 16%, transparent) !important;
+    }
+  }
+}

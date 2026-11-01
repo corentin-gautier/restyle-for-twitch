@@ -211,13 +211,20 @@ function pageState() {
 // Each also gets its number of cards, and whether they are categories: the
 // stylesheet drops the cards past a full row from those. Counted in CSS
 // instead, every change inside a grid restyled all of its cards.
+// Only the counts the stylesheet reads are written: changing the attribute
+// restyles the whole grid, so a long grid would pay for it on every card added.
+const TOWER_COUNTS = new Set(["5", "6", "7", "10", "12", "14"]);
 function towers() {
   for (const tower of document.querySelectorAll(".tw-tower")) {
     if (!tower.hasAttribute("data-rs-tower")) {
       tower.setAttribute("data-rs-tower", getComputedStyle(tower).flexWrap === "nowrap" ? "row" : "grid");
     }
     const count = String(tower.children.length);
-    if (tower.getAttribute("data-rs-count") !== count) tower.setAttribute("data-rs-count", count);
+    const written = TOWER_COUNTS.has(count) ? count : null;
+    if (tower.getAttribute("data-rs-count") !== written) {
+      if (written) tower.setAttribute("data-rs-count", written);
+      else tower.removeAttribute("data-rs-count");
+    }
     tower.toggleAttribute("data-rs-games", tower.querySelector(".game-card") !== null);
   }
 }

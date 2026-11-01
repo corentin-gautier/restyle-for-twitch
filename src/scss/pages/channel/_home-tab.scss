@@ -14,6 +14,11 @@ html:not([data-rs="off"]) {
     @include flush;
   }
 
+  /* Logged in, Twitch titles the row too: the card's title is the shelf's. */
+  & .home__lower-content div[data-rs-hook~="featured-clips-heading"] {
+    display: none !important;
+  }
+
   & .home__lower-content div[data-rs-hook~="featured-clips"] {
     flex-direction: row !important;
     align-items: baseline !important;

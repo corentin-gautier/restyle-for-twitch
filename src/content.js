@@ -275,6 +275,7 @@ const HOOKS = [
     {
       empty: 'div:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)',
       "featured-clips": 'div[style*="background-color"]:has(a[href*="featured=true"])',
+      "featured-clips-heading": 'div:has(> h3.tw-title):has(+ div > div[style*="background-color"] a[href*="featured=true"])',
       "schedule-days": "div:has(> .stream-schedule-week):not(.stream-schedule-times)",
     },
   ],

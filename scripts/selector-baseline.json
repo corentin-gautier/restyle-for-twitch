@@ -1,0 +1,1158 @@
+{
+ "size": 354447,
+ "selectors": {
+  "html:not([data-rs=off]) .search-tray .search-item:not(:has(>:first-child strong,>:first-child p))>:where(.search-item>*):nth-child(2)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .side-nav-card__link>div:not(.side-nav-card__avatar)>div:where(.side-nav-card__link>*>*):not(:has([data-a-target=side-nav-card-metadata])) :is(p,span)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .side-nav-card__link>div:not(.side-nav-card__avatar)>div:where(.side-nav-card__link>*>*):not(:has([data-a-target=side-nav-card-metadata])) [role=img]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .side-nav-card__link>div:not(.side-nav-card__avatar)>div:where(.side-nav-card__link>*>*):not(:has([data-a-target=side-nav-card-metadata])) svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .side-nav-card__link>div:not(.side-nav-card__avatar)>div:where(.side-nav-card__link>*>*):not(:has([data-a-target=side-nav-card-metadata])) :is(.tw-pill,.tw-tag,[class*=ScPill],[class*=ScTag])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) #twilight-sticky-footer-root:has(.upsell-bottom-banner__coolcat) article": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img)))": [
+   "has-in-is"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img)))>.tw-transition.tw-transition.tw-transition>div": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img)))>.tw-transition.tw-transition.tw-transition>div>div": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] div:not(.tw-channel-status-indicator,.tw-avatar)": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] a": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) p": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) span": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>div>p:where([data-popper-placement^=right] *>*>*):first-child": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>div>div>p": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) a p": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) .tw-channel-status-indicator": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>[class*=side-nav-costreaming-tooltip]>div>div>p": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>[class*=side-nav-costreaming-tooltip]>div>p": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>[class*=side-nav-costreaming-tooltip] strong": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>[class*=side-nav-costreaming-tooltip] a p": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex]>[class*=side-nav-costreaming-tooltip]>div+p+div": [
+   "has-in-is",
+   "has-on-ancestor",
+   "unguarded-subject",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] div:where([data-popper-placement^=right] * *):has(>div>.tw-avatar)": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] div:where([data-popper-placement^=right] * *):has(>.tw-avatar)": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) .tw-avatar": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] div:where([data-popper-placement^=right] * *):has(.tw-avatar)+div>p:where([data-popper-placement^=right] * *>*):only-child": [
+   "has-in-is",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off])[data-rs-floating] div:has(>.side-nav)": [
+   "unguarded-has"
+  ],
+  "html:not([data-rs=off]) div:has(>.common-centered-column)": [
+   "unguarded-has"
+  ],
+  "html:not([data-rs=off]) div:has(>.search-results)": [
+   "unguarded-has"
+  ],
+  "html:not([data-rs=off]) #manage_channels .scrollable-area .tw-title+p": [
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) #manage_channels .scrollable-area a+p": [
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .twilight-main div:where(.twilight-main *):has(>h2):has(>div>.tw-tabs,>[role=tablist]):not(.settings-tabs)>h2": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main div:where(.twilight-main *):has(>div>.tw-tabs,>[role=tablist])>h2": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .payment-methods-tab:has(>div>.tw-title) .tw-title": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .payment-methods-tab:has(>div>.tw-title)>div:where(.payment-methods-tab>*):last-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main .tw-table .tw-table-cell:first-child p": [
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) [class*=Attached]:has(>.tw-balloon)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) .tw-balloon": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) .tw-balloon>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) .tw-balloon :is([role=option],button,a)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) .tw-balloon :is([role=option],button,a) *": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) .tw-balloon :is([role=option],button,a):hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main section[aria-label=\"Filter & Sort Options\"]>div>:where(.twilight-main *>*>*):has(input) .tw-balloon :is([role=option],button,a):focus-visible": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>section>div:first-child:where(.common-centered-column>*>*):has(>h1):has(>p)>h1:where(.common-centered-column>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>section>div:first-child:where(.common-centered-column>*>*):has(>h1):has(>p)>p:where(.common-centered-column>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main [role=tablist]:has(>[data-a-target=expired])+div:where(.twilight-main *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main [role=tablist]:has(>[data-a-target=expired])+div:where(.twilight-main *)>div:where(.twilight-main *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main [role=tablist]+div>div:where([role=tablist]+div>*):has(>div>.subscription-card)>div:where([role=tablist]+div>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main [role=tablist]+div>div:where([role=tablist]+div>*):has(>div>.subscription-card)>*:where([role=tablist]+div>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main [role=tablist]+div>div:where([role=tablist]+div>*):has(>div>.subscription-card)>:where([role=tablist]+div>*>*):empty": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-tower>:where(.tw-tower>*):has(a)+:where(.tw-tower>*):has(.tw-placeholder):not(:has(a))::before": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article:has(.tw-channel-status-text-indicator) .tw-media-card-stat::before": [
+   "unguarded-has",
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) [data-a-target=preview-card-image-link]:has(.tw-progress-bar,[role=progressbar]) [class*=ScPositionCorner]:not(:nth-child(1 of [class*=ScPositionCorner]))": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) .tw-pill": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) .tw-core-button-icon": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) :where(article * *):has(>.tw-core-button-icon)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) [data-a-target=tw-core-button-label-text]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article button:where(article *):has(.tw-pill) :where(article * *):has(>.tw-pill)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content)>div>:not(.preview-card-game-balloon__content)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content)>div>:not(.preview-card-game-balloon__content) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row>a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row>a>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row>a:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row>a:focus-visible": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row__image-wrapper": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) :where(.tw-balloon *):has(>.media-row__info-text)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row__info-text p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-balloon:has(.preview-card-game-balloon__content) .media-row__info-description p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article>div:first-child>div:only-child>div:first-child>:where(article>*>*>*>*):has([data-a-target=preview-card-channel-link]):has(:is([data-a-target=preview-card-game-link],[data-a-target=preview-card-clip-curator-link])):not(:has(h3,h4,[data-a-target=preview-card-title-link]))>:is([data-a-target=preview-card-game-link],:where(article>*>*>*>*>*):has([data-a-target=preview-card-game-link]))": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article>div:first-child>div:only-child>div:first-child>:where(article>*>*>*>*):has([data-a-target=preview-card-channel-link]):has(:is([data-a-target=preview-card-game-link],[data-a-target=preview-card-clip-curator-link])):not(:has(h3,h4,[data-a-target=preview-card-title-link]))>:where(article>*>*>*>*>*):has([data-a-target=preview-card-clip-curator-link])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article>div:first-child>div:only-child>div:first-child>:where(article>*>*>*>*):has(:is([data-a-target=preview-card-game-link],[data-a-target=preview-card-clip-curator-link])):not(:has(h3,h4,[data-a-target=preview-card-title-link]))>:is([data-a-target=preview-card-channel-link],:where(article>*>*>*>*>*):has([data-a-target=preview-card-channel-link]))": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article a[data-a-target=preview-card-channel-link]:not(:has(h3,h4,[data-a-target=preview-card-title-link])) :not(.tw-svg,.tw-svg *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article [data-rs-hook=card-text]:has(>p>[data-a-target=preview-card-game-link])>*": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article [data-rs-hook=card-text]:has(>p>[data-a-target=preview-card-game-link])>p:where([data-rs-hook=card-text]>*):has(>[data-a-target=preview-card-game-link])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article [data-rs-hook=card-text]:has(>p>[data-a-target=preview-card-game-link])>p:where([data-rs-hook=card-text]>*):has(>[data-a-target=preview-card-game-link])+div:where([data-rs-hook=card-text]>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article p:where(article *):has(>[data-a-target=preview-card-clip-curator-link])>a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) article a[data-a-target=preview-card-channel-link]:not(:has([data-a-target=preview-card-title-link])):hover p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .feedback-card:not(article:has([data-a-target=preview-card-image-link]) *) button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .channel-root button[aria-expanded]:has([class*=ScCoreButtonIcon]) [data-a-target=tw-core-button-label-text]:has(>.tw-svg)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) #live-channel-stream-information div:where(#live-channel-stream-information *):has(>[data-a-target=animated-channel-viewers-count])>div>.tw-svg>svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .channel-info-content article:where(.channel-info-content *):has(.tw-callout-message)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .directory-header-new__info>div>div:where(.directory-header-new__info>*>*):has(h1)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .directory-header-new__info div:where(.directory-header-new__info *):has(>div>p[title]) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .directory-header-new__info div:where(.directory-header-new__info *):has(>div>p[title]) p strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .directory-header-new__info div:where(.directory-header-new__info *):has(>div>p[title])>div:where(.directory-header-new__info *>*):has(.tw-tag)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .directory-header-new__info div:where(.directory-header-new__info *):has(>div>p[title])>div:where(.directory-header-new__info *>*):has(+div .tw-tag)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .directory-header-new__info>div>div:where(.directory-header-new__info>*>*):has(h1)>div:where(.directory-header-new__info>*>*>*):has([data-a-target=game-directory-follow-button])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info))>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info))>div>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) .tw-aspect": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>h1)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>h1)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) h1": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>p>strong)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>p>strong)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>p>strong)>div>p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>p>strong) p strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>p>strong)>div:where([data-rs-has~=plain-header] .common-centered-column>* *>*):has(.tw-tag)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) div:where([data-rs-has~=plain-header] .common-centered-column>* *):has(>div>p>strong)>div:where([data-rs-has~=plain-header] .common-centered-column>* *>*):has(+div .tw-tag)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) .directory-header-new__description": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column>div:where([data-rs-has~=plain-header] .common-centered-column>*):has(.directory-header-new__description):not(:has(.tw-tower,.directory-header-new__info)) .directory-header-new__description p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main .common-centered-column article:where(.common-centered-column *):has(.tw-callout-message)>div>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main .common-centered-column article:where(.common-centered-column *):has(.tw-callout-message) .tw-callout-message": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main .common-centered-column article:where(.common-centered-column *):has(.tw-callout-message) .tw-callout-message__title": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main .common-centered-column article:where(.common-centered-column *):has(.tw-callout-message) button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main .common-centered-column article:where(.common-centered-column *):has(.tw-callout-message) a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results .search-result-card div:where(.search-result-card *):has(>p[data-test-selector$=live-channel__viewer-count])>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results .search-result-card div:where(.search-result-card *):has(>p[data-test-selector$=live-channel__viewer-count])>p[data-test-selector$=__title]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results .search-result-card div:where(.search-result-card *):has(>p[data-test-selector$=live-channel__viewer-count])>p[data-test-selector$=__category]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results .search-result-card div:where(.search-result-card *):has(>p[data-test-selector$=live-channel__viewer-count])>p[data-test-selector$=__viewer-count]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results .search-result-card div:where(.search-result-card *):has(>p[data-test-selector$=live-channel__viewer-count])>p[data-test-selector$=__viewer-count]::before": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results .search-result-card__img-wrapper:has(.tw-avatar)>a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results div:where(.search-results *):has(>h2.tw-title+span)>h2": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results div:where(.search-results *):has(>h2.tw-title+span)>span": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results div:where(.search-results *):has(>h2.tw-title+span)>span a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .search-results div:where(.search-results *):has(>h2.tw-title+span)>span a:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .home-carousel-info:not(.home-carousel-info--live) .home-notify-cta:has(>p)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .home-carousel-info:not(.home-carousel-info--live) .home-notify-cta:has(>p) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .stream-schedule__header>div:where(.stream-schedule__header>*):has([data-test-selector=schedule-traversal__today-button])>div:where(.stream-schedule__header>*>*):has(>p.tw-title)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .common-centered-column header+div:where(.common-centered-column *):has(>em:only-child)>em:where(.common-centered-column *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .home__lower-content .tw-grid:has(>.tw-col img.tw-image+div strong:only-child)>.tw-col:empty": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .home__lower-content .tw-grid:has(>.tw-col img.tw-image+div strong:only-child)>.tw-col": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .home__lower-content div:where(.home__lower-content *):has(>div>strong:only-child):has(.top-clips-time-filter)+div h2.tw-title": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) [data-a-target^=time-filter-option] div:where([data-a-target^=time-filter-option] *):has(>div>.tw-pill)+div:where([data-a-target^=time-filter-option] *):has(>.tw-svg)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off])[data-rs-has~=clip] .metadata-layout__split-top div:where(.metadata-layout__split-top *):has(>div>a[href*=\"/guest-star\"])+span:where(.metadata-layout__split-top *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off])[data-rs-has~=clip] .metadata-layout__split-top div:where(.metadata-layout__split-top *):has(>a[href*=\"/directory/category/\"])+span:where(.metadata-layout__split-top *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off])[data-rs-has~=clip] .metadata-layout__split-top div:where(.metadata-layout__split-top *):has(>span>button[aria-haspopup=dialog])>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off])[data-rs-has~=clip] .metadata-layout__split-top div:where(.metadata-layout__split-top *):has(>span>button[aria-haspopup=dialog])>span": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off])[data-rs-has~=clip] .metadata-layout__split-top div:where(.metadata-layout__split-top *):has(>span>button[aria-haspopup=dialog]) button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-page-body__column--right>div:where(.teams-page-body__column--right>*):has(>strong)>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-page-body__column--right>div:where(.teams-page-body__column--right>*):has(>strong)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-page-body__column--right>div:where(.teams-page-body__column--right>*):has(>strong)>div *": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-page-body__column--right>div:where(.teams-page-body__column--right>*):has(>strong)>div a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-player div:where(.teams-player *):has(>div>div>.tw-stat)>div:where(.teams-player *>*):nth-child(3)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-page-body__column--left>div:where(.teams-page-body__column--left>*):has(>.member-list__scrollable-container)>div:where(.teams-page-body__column--left>*>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .teams-page-body__column--left>div:where(.teams-page-body__column--left>*):has(>.member-list__scrollable-container)>div:where(.teams-page-body__column--left>*>*):first-child *:where(.teams-page-body__column--left>*>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .member-list__scrollable-container .tw-interactable div:where(.member-list__scrollable-container * *):has(>div>.tw-channel-status-indicator) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=drop-tile] div:where(div[data-rs-hook~=drop-tile] *):has(>div>:is(.inventory-drop-image,.banner_image))>div:where(div[data-rs-hook~=drop-tile] *>*):has(>img)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=drop-tile] div:where(div[data-rs-hook~=drop-tile] *):has(>div>:is(.inventory-drop-image,.banner_image)) img": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=drop-tile] div:where(div[data-rs-hook~=drop-tile] *):has(>div>:is(.inventory-drop-image,.banner_image))>div:where(div[data-rs-hook~=drop-tile] *>*):not(:has(>img))": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=drop-tile] div:where(div[data-rs-hook~=drop-tile] *):has(>div>:is(.inventory-drop-image,.banner_image))>div:where(div[data-rs-hook~=drop-tile] *>*):not(:has(>img)) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=drop-tile]>div:where(div[data-rs-hook~=drop-tile]>*):has(>button,>div>button) button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content .tw-tower div:where(.tw-tower *):has(>img.inventory-drop-image)~div:where(.tw-tower *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content .tw-tower div:where(.tw-tower *):has(>div>div>img.inventory-drop-image)+div>div>div+div>div>div:where(.tw-tower *>*>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .inventory-campaign-info>div:where(.inventory-campaign-info>*):nth-child(3)>div:where(.inventory-campaign-info>*>*):not(:has(>.inventory-boxart))>*:where(.inventory-campaign-info>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .inventory-campaign-info>div:where(.inventory-campaign-info>*):nth-child(3)>div:where(.inventory-campaign-info>*>*):not(:has(>.inventory-boxart))>div:where(.inventory-campaign-info>*>*>*):has(>p)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .inventory-campaign-info>div:where(.inventory-campaign-info>*):nth-child(3)>div:where(.inventory-campaign-info>*>*):not(:has(>.inventory-boxart))>div:where(.inventory-campaign-info>*>*>*):has(>p) p:where(.inventory-campaign-info>*>*>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .inventory-campaign-info>div:where(.inventory-campaign-info>*):nth-child(3)>div:where(.inventory-campaign-info>*>*):not(:has(>.inventory-boxart))>div:where(.inventory-campaign-info>*>*>*):has(>p:empty)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .inventory-campaign-info>div:where(.inventory-campaign-info>*):nth-child(3)>div:where(.inventory-campaign-info>*>*):not(:has(>.inventory-boxart)) a:where(.inventory-campaign-info>*>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=campaign] .accordion-header+div div:where(div[data-rs-hook~=campaign] * *):has(>div>strong):not(.drop-details__label,:has(.drop-details__label)) strong:where(div[data-rs-hook~=campaign] * * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=campaign] .accordion-header+div div:where(div[data-rs-hook~=campaign] * *):has(>div>strong):not(.drop-details__label,:has(.drop-details__label)) p:where(div[data-rs-hook~=campaign] * * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=campaign]>.accordion-header+div>div>div:where(div[data-rs-hook~=campaign]>*>*>*):has(>div>.drop-details__label)>div:where(div[data-rs-hook~=campaign]>*>*>*>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=campaign]>.accordion-header+div>div>div:where(div[data-rs-hook~=campaign]>*>*>*):has(>div>.drop-details__label) :where(div[data-rs-hook~=campaign]>*>*>* *):is(h3,h4,h5)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content article:where(.drops-root__content *):has(.tw-callout-message) .tw-callout-message__header *": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content article:where(.drops-root__content *):has(.tw-callout-message) .tw-callout-message>div:not(.tw-callout-message__header)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=badge-intro]>div:where(div[data-rs-hook~=badge-intro]>*):has(>p)>p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=badge-intro]>div:where(div[data-rs-hook~=badge-intro]>*):has(>.tw-svg)>.tw-svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=badge-form] div:where(div[data-rs-hook~=badge-form] *):has(>div>.tw-form-group,>div>div>.tw-form-group)>div:where(div[data-rs-hook~=badge-form] *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .drops-root__content div[data-rs-hook~=badge-form] .tw-form-group div:where(.tw-form-group *):has(>div>button) button:where(.tw-form-group * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>div>p.tw-title)>div:last-child:where(.support-panel * *>*):not(:has(.tw-title))>div:where(.support-panel * *>*>*):has(>img)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>div>p.tw-title)>div:last-child:where(.support-panel * *>*):not(:has(.tw-title))>div:where(.support-panel * *>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>div>p.tw-title)>div:last-child:where(.support-panel * *>*):not(:has(.tw-title)) p:where(.support-panel * *>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>p>span)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>strong)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):first-of-type": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div>p:where(.support-panel * *>*>*):has(>span)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div>p>span": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>img,.chat-badge)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>img,.chat-badge)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>img,.chat-badge)>button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>img):not(:has(.chat-badge))>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>.tw-svg)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>.tw-svg)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>.tw-svg)>div>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>strong):has(>div>p>span)>div:where(.support-panel * *>*):has(>div>div>.tw-svg) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>[data-a-target^=elevate-your-subscription])>button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.tw-selectable):not(.gift-theme-selector)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options)>div:first-child>strong:where(.support-panel * *>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options)>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options)>div:where(.support-panel * *>*):has([data-a-target^=multimonth-option])>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options) div:where(.support-panel * * *):has(>[data-a-target^=multimonth-option])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options) [data-a-target^=multimonth-option]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options) [data-a-target^=multimonth-option] :is(.tw-selectable,label,label>div,label>div>div)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel .scrollable-area div:where(.support-panel * *):has(>div>.upgrade-options) div:where(.support-panel * * *):has(>.upgrade-options)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel [role=dialog] div:where([role=dialog] *):has(>div>.gifting-option__image,>div>div>[data-a-target=gift-custom-quantity-input])>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel [role=dialog] div:where([role=dialog] *):has(>div>.gifting-option__image,>div>div>[data-a-target=gift-custom-quantity-input]) [id^=gift-text-oneclick]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel [role=dialog] div:where([role=dialog] *):has(>button):has(>div>p)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel [role=dialog] div:where([role=dialog] *):has(>button):has(>div>p)>div>p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .support-panel [role=dialog] div:where([role=dialog] *):has(>button):has(>div>p)>button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .tw-input__icon:not(:has(button))~.tw-input:not(.top-nav *,.chat-input__textarea *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) div:where(.ReactModal__Content * *,[role=dialog] * *):has(>div>.tw-interactable)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) div:where(.ReactModal__Content * *,[role=dialog] * *):has(>div>div>.tw-interactable)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .tw-interactable": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .tw-interactable>div:where(.ReactModal__Content * *>*,[role=dialog] * *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) div:where(.ReactModal__Content * *,[role=dialog] * *):has(>div>div>.tw-checkbox)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .tw-interactable>div:where(.ReactModal__Content * *>*,[role=dialog] * *>*):not(:has(*))": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .tw-interactable div:where(.ReactModal__Content * * *,[role=dialog] * * *):has(>.tw-svg:only-child)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .tw-interactable div:where(.ReactModal__Content * * *,[role=dialog] * * *):has(>.tw-svg:only-child)+div:where(.ReactModal__Content * * *,[role=dialog] * * *):has(>p)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .tw-interactable>div>div>div:where(.ReactModal__Content * *>*>*>*,[role=dialog] * *>*>*>*):has(.tw-pill)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) .scrollable-area>div:where(.ReactModal__Content * *>*,[role=dialog] * *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *) div:where(.ReactModal__Content * *,[role=dialog] * *):has(>div>div>.tw-checkbox):hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *):has(>div>div>.scrollable-area)>div:where(.ReactModal__Content *>*,[role=dialog] *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *).tw-balloon>div:where(.tw-balloon>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .community-highlight [role=radiogroup]~button": [
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .emote-picker .emote-picker__tab-content>div>div:first-child:where(.emote-picker__tab-content>*>*):has(>button) button div:where(.emote-picker__tab-content>*>* * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:has(.reward-center__content)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .reward-center__content .rewards-list>[class*=ewardListItem]>div": [
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .reward-center__content .rewards-list>div:where(.rewards-list>*):has(>[class*=rewardListItem])>div": [
+   "has-on-ancestor",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .reward-center__content .rewards-list>div:where(.rewards-list>*):has(>[class*=rewardListItem]) .tw-interactable": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .reward-center__content .rewards-list>div:where(.rewards-list>*):has(>[class*=rewardListItem]) .reward-icon": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .reward-center__content [class*=rewardListItem]>div": [
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .reward-center__content .scrollable-area>div>div>div>div:where(.scrollable-area>*>*>*>*):has(>img[style*=object-fit])+div:where(.scrollable-area>*>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:has(.chat-identity-menu) .tw-balloon": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:has(.chat-identity-menu) .chat-settings__popover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-identity-menu__content div:where(.chat-identity-menu__content *):has(>[role=separator])+div>p:where(.chat-identity-menu__content *>*):only-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-settings__popover>div:where(.chat-settings__popover>*):has(.name-display__name)>div>div:first-child>p:where(.chat-settings__popover>*>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-identity-menu__content div:where(.chat-identity-menu__content *):has(>[role=separator])+div:where(.chat-identity-menu__content *):has(>p:only-child)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-settings__popover>div:where(.chat-settings__popover>*):has(.name-display__name)>div>div:where(.chat-settings__popover>*>*>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-identity-menu__content [class*=collapsibleHeader] h3": [
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .chat-identity-menu__content [class*=collapsibleHeader] p": [
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .chat-identity-menu__content div:where(.chat-identity-menu__content *):has(>.tw-progress-bar)>div:not(.tw-progress-bar)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:not(:has(.chat-identity-menu,.reward-center__content)) [class*=clickableHeader]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:not(:has(.chat-identity-menu,.reward-center__content)) [class*=clickableHeader] p": [
+   "has-on-ancestor",
+   "generated-class-ahead"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:not(:has(.chat-identity-menu,.reward-center__content)) [class*=featuredIconBox]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:not(:has(.chat-identity-menu,.reward-center__content)) [class*=thumbnailBox]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:not(:has(.chat-identity-menu,.reward-center__content)) .tw-progress-bar": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input [role=dialog]:not(:has(.chat-identity-menu,.reward-center__content)) .tw-progress-bar [data-a-target=tw-progress-bar-animation]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .viewer-card>div:where(.viewer-card>*):has(>div>div>.viewer-card-drag-cancel>button)>div:where(.viewer-card>*>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .viewer-card>div:where(.viewer-card>*):has(>div>div>.viewer-card-drag-cancel>button)>div:first-child>div:where(.viewer-card>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-room__content [data-rs-hook~=chatters] button:where([data-rs-hook~=chatters] *):has(.expandable-indicator__wrapper) strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-room__content [data-rs-hook~=chatters] button:where([data-rs-hook~=chatters] *):has(.expandable-indicator__wrapper) img": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-room__content [data-rs-hook~=chatters] button:where([data-rs-hook~=chatters] *):has(.expandable-indicator__wrapper) svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .chat-input:has([data-a-target=chat-input]:focus) [data-a-target=chat-send-button]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .twilight-main button[role=combobox]>div:last-child:where([role=combobox]>*):has(svg) svg:where([role=combobox]>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) div:has(>#keyboard-shortcuts-overlay)": [
+   "unguarded-has"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table)>div:where(.video-player__overlay *>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) button *": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) table": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) th": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) th>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) th strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) th:last-child>div:where(.video-player__overlay * *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) td": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) td p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) td:where(.video-player__overlay * *):last-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) tbody tr:first-child td:where(.video-player__overlay * * * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player__overlay .scrollable-area>div:where(.video-player__overlay *):has(>table.tw-table) tbody tr:last-child td:where(.video-player__overlay * * * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player .player-controls div:where(.player-controls *):has(>[data-test-selector=vod-seekbar-preview-overlay-preview-image])>[data-test-selector=vod-seekbar-preview-overlay-preview-image]+div:where(.player-controls *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .video-player .player-controls div:where(.player-controls *):has(>[data-test-selector=vod-seekbar-preview-overlay-preview-image]) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) #chapter-select-popover-body .media-row:has(.media-row__image-wrapper>div:last-child:not(.media-row__image-play-overlay)) button": [
+   "has-on-ancestor",
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clips-view-modal-content": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clips-view-modal-content>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .video-player": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .video-player__container": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .video-ref": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div video": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clips-view-modal-content>div:where(.clips-view-modal-content>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clips-view-modal-content>div:first-child .tw-aspect": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .metadata-layout__split-top": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .metadata-layout__split-top+div:where(.modal-wrapper__content>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .metadata-layout__split-top+div:where(.modal-wrapper__content>* *)>div:where(.modal-wrapper__content>* *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .modal__close-button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clip-carousel-button--right": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clip-carousel-button--left": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .modal__close-button button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clip-carousel-button button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .modal__close-button button:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .modal-wrapper__content:has(.clips-view-modal-content)>div .clip-carousel-button button:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div[style*=background-color]:not([style*=background-image]):has(+div[style*=background-image])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>div[style*=background-image])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1)>div>div:where(.ReactModal__Content *>*>*>*):not(:has(>div[style*=background-image]))": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div[style*=\"top: -1rem\"]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>h1)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) h1": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) h1 a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>h1)+div p:where(.ReactModal__Content *>* * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>h1)+div p:where(.ReactModal__Content *>* * *) span:where(.ReactModal__Content *>* * * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) p[title]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>p[title])+p:where(.ReactModal__Content *>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>p[title])+p:where(.ReactModal__Content *>* *) span:where(.ReactModal__Content *>* * *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias .social-media-link": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias .social-media-link:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias :where(.streamer-card-body__social-medias *):has(>.social-media-link)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .streamer-card-body__social-medias div[style*=color]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>p[style*=uppercase])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>p[style*=uppercase]) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>div>.stream-schedule-segment--vertical-line)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>div>.stream-schedule-segment--vertical-line) p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>div>.stream-schedule-segment--vertical-line)>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>div>.stream-schedule-segment--vertical-line)>div:where(.ReactModal__Content *>* *>*):last-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) .stream-schedule-segment--vertical-line": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) div:where(.ReactModal__Content *>* *):has(>button[aria-label=\"More options\"])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) [data-a-target=follow-button]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(.tw-halo):has(h1) [data-a-target=follow-button]:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title)>div:where(.ReactModal__Content *>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title)>div>img:where(.ReactModal__Content *>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title)>div>img+div:where(.ReactModal__Content *>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title)>div>img+div:where(.ReactModal__Content *>*>*>*)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title) .tw-title": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title) .tw-title+div>span": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title)>div>img+div>div:where(.ReactModal__Content *>*>*>*>*):last-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>img+div>.tw-title)>div>img+div>div:where(.ReactModal__Content *>*>*>*>*):last-child>a": [
+   "has-on-ancestor",
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a)>div:where(.ReactModal__Content *>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a)>div>div:where(.ReactModal__Content *>*>*>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a)>div>div:where(.ReactModal__Content *>*>*>*):first-child p": [
+   "has-on-ancestor",
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a)>div>div:where(.ReactModal__Content *>*>*>*):has(>strong>a)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a)>div>div:where(.ReactModal__Content *>*>*>*):has(>strong>a):hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a) .tw-avatar": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a)>div>div>div:where(.ReactModal__Content *>*>*>*>*):has(>.tw-avatar)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a) strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a) strong>a": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>strong>a) strong>a::after": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div:where(.ReactModal__Content *>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>div>strong)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>div>strong)>div:where(.ReactModal__Content *>*>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>div>strong)>div>strong:where(.ReactModal__Content *>*>*>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>div>strong)>div>div:where(.ReactModal__Content *>*>*>*>*>*):has(>[data-a-target=animated-channel-viewers-count])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>div>strong)>div>div:where(.ReactModal__Content *>*>*>*>*>*):has(>[data-a-target=animated-channel-viewers-count]) svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) .tw-interactable": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) .tw-interactable:hover": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) .tw-interactable>div:where(.ReactModal__Content *>* *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) div:where(.ReactModal__Content *>* *):has(>.streamer-avatar)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) .streamer-avatar": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) .streamer-avatar .tw-avatar": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) .streamer-avatar+p": [
+   "has-on-ancestor",
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count]) [aria-label=individual-view-count]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>[role=separator])": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):has(>[role=separator])>[role=separator]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):last-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):last-child>a": [
+   "has-on-ancestor",
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content .tw-transition>div:where(.ReactModal__Content *>*):has(>div>div>div>div>[data-a-target=animated-channel-viewers-count])>div>div:where(.ReactModal__Content *>*>*>*):last-child>a:hover": [
+   "has-on-ancestor",
+   "unguarded-subject"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container)>.tw-popover-header": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container)>.tw-popover-header>:not(.tw-popover-header__icon-slot--right)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container)>.tw-popover-header button": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) img[alt=\"Turbo Header\"]": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) div:where(.ReactModal__Content * *):has(>strong)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) div:where(.ReactModal__Content * *):has(>strong)>strong": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) div:where(.ReactModal__Content * *):has(>strong)>p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) div:where(.ReactModal__Content * *):has(>strong)>div": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) div:where(.ReactModal__Content * *):has(>strong)>div p": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container .tw-svg svg": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(2)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(2)>div:where(.turbo-ballon-content__scroll-container>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(2)>div+div:where(.turbo-ballon-content__scroll-container>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(2)>div>div:where(.turbo-ballon-content__scroll-container>*>*>*>*):first-child": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(2) p:where(.turbo-ballon-content__scroll-container>*>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(3)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(3)>div:where(.turbo-ballon-content__scroll-container>*>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(3) p:where(.turbo-ballon-content__scroll-container>*>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(4)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container) .turbo-ballon-content__scroll-container>div>:where(.turbo-ballon-content__scroll-container>*>*):nth-child(4) span:where(.turbo-ballon-content__scroll-container>*>* *)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container)>.turbo-ballon-content__scroll-container+div:where(.ReactModal__Content *>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container)>.turbo-ballon-content__scroll-container+div:where(.ReactModal__Content *>*)>button:where(.ReactModal__Content *>*>*)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) .ReactModal__Content div:where(.ReactModal__Content *):has(>.tw-popover-header+.turbo-ballon-content__scroll-container)>.turbo-ballon-content__scroll-container+div:where(.ReactModal__Content *>*)>button:where(.ReactModal__Content *>*>*):first-child:not(:only-child)": [
+   "has-on-ancestor"
+  ],
+  "html:not([data-rs=off]) [role=dialog][aria-labelledby=GetBitsPopover-header] [class*=bitsProductGridMetadata]>p": [
+   "generated-class-ahead"
+  ]
+ }
+}

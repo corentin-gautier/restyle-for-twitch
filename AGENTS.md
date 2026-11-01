@@ -38,6 +38,10 @@ The user is French-speaking: reply in French, write code and docs in English.
 - On a rounded element, a border goes all round or not at all: never on one
   side only.
 - After an edit, `npm run build` must pass without a warning.
+- `scripts/check-selectors.mjs` runs after each edit under `src/scss/` (hook in
+  `.claude/settings.json`) and fails on a new selector of a forbidden shape.
+  `selector-baseline.json` holds the ones tolerated; `--update-baseline` only
+  when one of them was removed or is deliberate.
 
 ## Where the rest lives
 

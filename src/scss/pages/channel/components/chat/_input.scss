@@ -1,4 +1,5 @@
 // Chat: the message field and the row of buttons under it.
+@use "tools/guard" as *;
 @use "tools/mixins" as *;
 
 html:not([data-rs="off"]) {
@@ -156,6 +157,31 @@ html:not([data-rs="off"]) {
     & > :first-child {
       flex-shrink: 1 !important;
       min-width: 0 !important;
+    }
+
+    /*
+     * Slow Mode's countdown ("You can chat in 7s") is the first slot of the
+     * group after it, beside the wheel: that group did not shrink, so the
+     * balances went under the countdown. The countdown gives way first (a
+     * shrink factor far above the balances'), on one line, cut at its start
+     * so that the seconds stay: "…chat in 7s". The wheel keeps its size
+     * (its own minimum).
+     */
+    & > :nth-child(2) {
+      flex-shrink: 1000 !important;
+      min-width: 0 !important;
+
+      @include guarded("> :first-child%g") {
+        min-width: 0 !important;
+        overflow: hidden !important;
+      }
+
+      @include guarded("> :first-child > p%g") {
+        overflow: hidden !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
+        direction: rtl !important;
+      }
     }
 
     /* One icon size for the whole row: Twitch's glyphs, the channel's own points icon. */

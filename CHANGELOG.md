@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.19.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.19.0...v1.19.1) (2026-11-05)
+
+
+### Documentation
+
+* split the agent instructions to load less at each session ([e41ebb8](https://github.com/corentin-gautier/restyle-for-twitch/commit/e41ebb8f5e1046945088657791c57fcb626dfb67))
+
+
+### Performance
+
+* stop a card added to a long grid from restyling all of its cards ([2c17279](https://github.com/corentin-gautier/restyle-for-twitch/commit/2c1727973bc4cfd960fc0e2cd0dc58d3db23cca3))
+
+
+### Fixes
+
+* **channel:** drop the second Featured Clips title on the Home tab ([7b363e5](https://github.com/corentin-gautier/restyle-for-twitch/commit/7b363e558c4b0fc6a1855ee4deb6237d14c22e15))
+* **chat:** keep the row under the field on one line when a bonus is claimed ([a5a169f](https://github.com/corentin-gautier/restyle-for-twitch/commit/a5a169f107a29ededbc8aa1f05926601fe852a5a))
+* **sidebar:** drop the second frame around the offline row's popup ([9f5904a](https://github.com/corentin-gautier/restyle-for-twitch/commit/9f5904a8f1405f611a71574bb2119b75178cce20))
+
 ## [1.19.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.18.0...v1.19.0) (2026-10-31)
 
 

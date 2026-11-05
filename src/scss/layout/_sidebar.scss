@@ -219,6 +219,20 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * The same lines' icons drawn as an SVG (Creator Badge Drop, stream
+   * events): Twitch's wrapper keeps its 18px box around the smaller glyph,
+   * which set the label a further 5px off. The wrapper takes the glyph's
+   * size. The extra lines follow the row's first block (name, category,
+   * viewers), hence the position test instead of the guarded :has() above.
+   */
+  & .side-nav-card__link > div:not(.side-nav-card__avatar) > div:not(:first-child) .tw-svg {
+    flex: none !important;
+    width: 1.3rem !important;
+    height: 1.3rem !important;
+    margin: 0 !important;
+  }
+
+  /*
    * "Save your Streak" (logged in): a row above the channel lists, for a
    * followed channel whose watch streak is about to lapse. Twitch gives it
    * its own padding, an underlined purple link and a square grey hover. It

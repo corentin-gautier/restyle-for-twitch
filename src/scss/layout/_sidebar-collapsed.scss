@@ -99,7 +99,9 @@ html:not([data-rs="off"]) {
       box-shadow: none !important;
     }
 
-    & div[tabindex] div:not(.tw-channel-status-indicator, .tw-avatar),
+    // Icons are left out: an empty box drawn as a mask over its background
+    // (the Hype Train's) would lose both its height and its colour.
+    & div[tabindex] div:not(.tw-channel-status-indicator, .tw-avatar, [role="img"]),
     & div[tabindex] a {
       height: auto !important;
       min-height: 0 !important;
@@ -196,6 +198,21 @@ html:not([data-rs="off"]) {
       line-height: 1.8rem !important;
       color: var(--rs-muted) !important;
     }
+  }
+
+  /*
+   * The icon before a quiet line of those popups (Hype Train: an empty box
+   * drawn as a mask): the size of the text, on its middle, in the accent
+   * like the row's own third line in the sidebar. Kept out of the block
+   * above, whose :is(:has()) must not be extended.
+   */
+  & [class*="side-nav-channel-tooltip"] [role="img"] {
+    flex: none !important;
+    width: 1.4rem !important;
+    height: 1.4rem !important;
+    margin: 0 !important;
+    align-self: center !important;
+    background-color: var(--rs-accent-quiet) !important;
   }
 
   /*

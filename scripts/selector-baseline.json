@@ -38,7 +38,7 @@
    "has-in-is",
    "has-on-ancestor"
   ],
-  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] div:not(.tw-channel-status-indicator,.tw-avatar)": [
+  "html:not([data-rs=off]) .ReactModal__Content[role=dialog]>[data-popper-placement^=right]:is(:has([class*=side-nav-channel-tooltip]),:has([class*=side-nav-guest-star-tooltip]),:has([class*=side-nav-costreaming-tooltip]),:has(a[href*=\"/videos?filter=all\"]:only-child),:has(div[tabindex] p:only-child):not(:has(a,button,img))) div[tabindex] div:not(.tw-channel-status-indicator,.tw-avatar,[role=img])": [
    "has-in-is",
    "has-on-ancestor",
    "unguarded-subject",

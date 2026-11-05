@@ -234,6 +234,16 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * Drops comes right after the slot those two sit in, with nothing of
+   * Twitch's between them: the step is on the chest, so that it only shows
+   * with one (and goes with it while typing).
+   */
+  & .community-points-summary button[aria-label="Claim Bonus"],
+  & .community-points-summary .pulse-animation:not(button *) {
+    margin-inline-end: var(--rs-1) !important;
+  }
+
   /* Bits and channel points: small grey figures, their icons faded with them. */
   & .community-points-summary {
     & button[aria-label="Bits and Points Balances"] {

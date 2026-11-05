@@ -132,6 +132,24 @@ html:not([data-rs="off"]) {
     }
   }
 
+  /*
+   * The row under the field stays one line. Twitch lets it wrap (in
+   * reverse), and the left group (balances, "Claim Bonus", the chest) does
+   * not shrink: when a claim shows both balances beside the pill for a
+   * frame, "Chat" went up onto a line of its own and the field jumped. The
+   * left group gives way instead; the wheel and "Chat" keep their size, and
+   * paint over it (Twitch positions them). Not clipped: the balances'
+   * popover is anchored inside the group.
+   */
+  & .chat-input__buttons-container {
+    flex-wrap: nowrap !important;
+
+    & > :first-child {
+      flex-shrink: 1 !important;
+      min-width: 0 !important;
+    }
+  }
+
   /* Bits and channel points: small grey figures, their icons faded with them. */
   & .community-points-summary {
     & button[aria-label="Bits and Points Balances"] {

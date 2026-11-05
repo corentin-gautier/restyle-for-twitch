@@ -1,5 +1,5 @@
 {
- "size": 354447,
+ "size": 358738,
  "selectors": {
   "html:not([data-rs=off]) .search-tray .search-item:not(:has(>:first-child strong,>:first-child p))>:where(.search-item>*):nth-child(2)": [
    "has-on-ancestor"
@@ -762,9 +762,6 @@
    "has-on-ancestor"
   ],
   "html:not([data-rs=off]) .chat-room__content [data-rs-hook~=chatters] button:where([data-rs-hook~=chatters] *):has(.expandable-indicator__wrapper) svg": [
-   "has-on-ancestor"
-  ],
-  "html:not([data-rs=off]) .chat-input:has([data-a-target=chat-input]:focus) [data-a-target=chat-send-button]": [
    "has-on-ancestor"
   ],
   "html:not([data-rs=off]) .twilight-main button[role=combobox]>div:last-child:where([role=combobox]>*):has(svg) svg:where([role=combobox]>* *)": [

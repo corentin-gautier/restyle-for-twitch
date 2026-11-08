@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.19.2](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.19.1...v1.19.2) (2026-11-08)
+
+
+### Fixes
+
+* **channel:** align the Latest Stream Recaps shelf with Featured Clips ([d42b464](https://github.com/corentin-gautier/restyle-for-twitch/commit/d42b46454d5e6b31f11837d2d5645f0fa0c2f7f2))
+* **chat:** keep a gap between the bonus chest and Drops ([9fe3612](https://github.com/corentin-gautier/restyle-for-twitch/commit/9fe361259ca59e0856ed27ba6d9bbc7997bcffe4))
+* **chat:** keep the Slow Mode countdown from overlapping the balances ([1de474d](https://github.com/corentin-gautier/restyle-for-twitch/commit/1de474d9ed1b9f5fb1e3ec1a0e8fe0ac019098e9))
+* **chat:** tidy the field, its notice and the row under it ([ec5cf32](https://github.com/corentin-gautier/restyle-for-twitch/commit/ec5cf3217b40d55ccf2fa47a022225c54681ace9))
+* **sidebar:** align the drop line's icon and show the Hype Train icon in the tooltip ([1eb3f4f](https://github.com/corentin-gautier/restyle-for-twitch/commit/1eb3f4f8b7166eeb23fa1a197d7cf1c32ac792d0))
+
 ### [1.19.1](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.19.0...v1.19.1) (2026-11-05)
 
 

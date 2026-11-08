@@ -275,12 +275,14 @@ const HOOKS = [
       "video-category": 'div:has(> [data-a-target="video-info-game-boxart-link"])',
     },
   ],
-  // A channel's tabs: an empty tab's message, the "Featured Clips" card of
-  // the Home tab, the days of the schedule.
+  // A channel's tabs: an empty tab's message, the "Latest Stream Recaps" and
+  // "Featured Clips" shelves of the Home tab, the days of the schedule.
   [
     ".home__lower-content",
     {
       empty: 'div:has(> div > [data-test-selector="no-videos"], > img.tw-image + div strong:only-child)',
+      // Its cards are buttons holding a portrait preview, not links.
+      recaps: "div:has(> .preview-card-carousel .tw-tower > div > button > div > video)",
       "featured-clips": 'div[style*="background-color"]:has(a[href*="featured=true"])',
       "featured-clips-heading": 'div:has(> h3.tw-title):has(+ div > div[style*="background-color"] a[href*="featured=true"])',
       "schedule-days": "div:has(> .stream-schedule-week):not(.stream-schedule-times)",

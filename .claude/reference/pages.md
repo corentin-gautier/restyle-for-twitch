@@ -47,7 +47,7 @@ checked in a headless Chrome; the others need the user's session.
 | Page | Address | Access | Files | Main hooks |
 | --- | --- | --- | --- | --- |
 | Live channel | `/<channel>` while live | Public | `pages/channel/` (`_player`, `_info-column`, `_stream-info`, `_about`, `_panels`), `pages/channel/components/chat/` | `.persistent-player`, `#live-channel-stream-information`, `.about-section`, `.channel-panels` |
-| Offline channel, Home tab | `/<channel>` while offline | Public | `pages/channel/_home-hero`, `pages/channel/_home-tab` | `.channel-root--home`, `.home-offline-hero`, `.home__lower-content` |
+| Offline channel, Home tab | `/<channel>` while offline | Public ("Latest Stream Recaps": logged in) | `pages/channel/_home-hero`, `pages/channel/_home-tab` | `.channel-root--home`, `.home-offline-hero`, `.home__lower-content`; shelves: "Latest Stream Recaps" (`data-rs-hook~="recaps"`, a `.preview-card-carousel` of portrait `button` cards, two to a clip card's pitch, `15rem`), "Featured Clips" (`featured-clips`, `featured-clips-heading`), categories (`[data-a-target^="home-shelf-title"]`) |
 | About tab | `/<channel>/about` | Public | `pages/channel/_tabs-content`, `pages/channel/_about`, `pages/channel/_panels` | `.about-section__panel`, `.channel-panels-container` |
 | Clips tab | `/<channel>/clips?range=7d` | Public | `components/_filter-row`, `pages/channel/_videos-tab`, `components/cards/` | "Filter By" row, `.tw-tower` |
 | Videos tab | `/<channel>/videos` | Public | `pages/channel/_videos-tab`, `pages/channel/_shelf-titles` | `.preview-card-carousel` |

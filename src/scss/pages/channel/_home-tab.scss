@@ -126,6 +126,65 @@ html:not([data-rs="off"]) {
   }
 
   /*
+   * "Latest Stream Recaps" (logged in, above "Featured Clips"): a sideways
+   * shelf of portrait previews, each a button showing a stack of cards.
+   * Twitch sizes them for a 160px column; they take half of the clips'
+   * pitch instead, two in the room of one clip card, so that every other
+   * edge falls on one of the clips' below (as categories do in a grid).
+   */
+  & .home__lower-content div[data-rs-hook~="recaps"] .tw-tower {
+    grid-auto-columns: 15rem !important;
+  }
+
+  /* The fade at the shelf's end starts on a card's edge: same as in components/cards/_grid, at this pitch. */
+  & .home__lower-content div[data-rs-hook~="recaps"] .preview-card-carousel__child-container {
+    mask-image: linear-gradient(to right, #000 calc(100% - mod(100cqw + var(--rs-6), 15rem) + var(--rs-6)), transparent) !important;
+  }
+
+  /* The air between two shelves sits under this one: "Featured Clips" keeps none above (see components/_filter-row). */
+  & .home__lower-content div[data-rs-hook~="recaps"] > .preview-card-carousel {
+    margin-bottom: var(--rs-shelf-gap) !important;
+  }
+
+  /* First on the tab, its title sits where "Featured Clips" does when it is first. */
+  & .home__lower-content div[data-rs-hook~="recaps"]:first-child h3.tw-title {
+    margin-top: 0 !important;
+  }
+
+  /* The card fills its column; the room above is the stack's. */
+  & .home__lower-content div[data-rs-hook~="recaps"] .tw-tower > div > button {
+    display: block !important;
+    width: 100% !important;
+    padding-inline: 0 !important;
+  }
+
+  & .home__lower-content div[data-rs-hook~="recaps"] .tw-tower > div > button > div:not(:empty) {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 150 / 224 !important;
+    border-radius: var(--rs-radius-l) !important;
+  }
+
+  /*
+   * The two cards stacked behind: Twitch draws only the 6px strip of each
+   * that shows, with small fixed corners. Drawn as whole cards with the
+   * front one's corners, they tuck under it and show the same curve.
+   */
+  & .home__lower-content div[data-rs-hook~="recaps"] .tw-tower > div > button > div:empty:not([aria-hidden]) {
+    height: calc(6px + var(--rs-radius-l)) !important;
+    border-radius: var(--rs-radius-l) var(--rs-radius-l) 0 0 !important;
+  }
+
+  & .home__lower-content div[data-rs-hook~="recaps"] .tw-tower > div > button p {
+    font-size: var(--rs-text-1) !important;
+  }
+
+  & .home__lower-content div[data-rs-hook~="recaps"] .tw-tower > div > button p[title] {
+    @include type(3, 600);
+    line-height: 1.3 !important;
+  }
+
+  /*
    * The Home tab ends flush under its last shelf: the page closes with the
    * air that separates two shelves.
    */

@@ -6,7 +6,7 @@
 
 <p align="center">A calmer, more coherent interface for twitch.tv, as a Chrome and Firefox extension.</p>
 
-<p align="center"><a href="https://corentin-gautier.github.io/restyle-for-twitch/">Website</a> · <a href="https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl">Chrome Web Store</a> · <a href="https://addons.mozilla.org/addon/restyle-for-twitch/">Firefox Add-ons</a></p>
+<p align="center"><a href="https://corentingautier.dev/restyle-for-twitch/">Website</a> · <a href="https://chromewebstore.google.com/detail/restyle-for-twitch/hecbaaniegkffdanpfelapppfnjlbfbl">Chrome Web Store</a> · <a href="https://addons.mozilla.org/addon/restyle-for-twitch/">Firefox Add-ons</a></p>
 
 ![The Twitch home page with Restyle for Twitch enabled](docs/screenshot.png)
 

@@ -49,8 +49,8 @@ html:not([data-rs="off"]) {
    * The cards of the Subscriptions page are no .tw-tower but are laid out
    * the same way, an empty item standing for a channel that is gone: the
    * same grid (their own look is in pages/_subscriptions.scss). A rule of its own, not a
-   * second selector on the one above: see "Nest only under single-selector
-   * parents" in CLAUDE.md. Keep the two in sync.
+   * second selector on the one above (see "Performance" in src/scss/README.md).
+   * Keep the two in sync.
    */
   & .twilight-main [role="tablist"] + div > div:where([role="tablist"] + div > *):has(> div > .subscription-card) {
     --rs-tower-gap: var(--rs-6);

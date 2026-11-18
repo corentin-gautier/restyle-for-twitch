@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 // Compiles the stylesheet in memory and looks in its selectors for the shapes
-// the "Performance" rules forbid (.claude/agents/scss-editor.md). Selectors
+// the "Performance" rules forbid (src/scss/README.md). Selectors
 // already recorded in selector-baseline.json are tolerated; a new one fails.
 //
 //   node scripts/check-selectors.mjs                   check
 //   node scripts/check-selectors.mjs --update-baseline record the current state
-//   node scripts/check-selectors.mjs --hook            as a Claude Code hook: reads
+//   node scripts/check-selectors.mjs --hook            as an editor hook: reads
 //     the edited path on stdin, ignores anything outside src/scss/, exit 2 on failure
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -195,7 +195,7 @@ const gone = Object.keys(baseline.selectors).filter((s) => !results[s]).length;
 if (compiled.warnings.length) console.error(`Sass warnings:\n${compiled.warnings.join("\n")}`);
 for (const [selector, issues] of fresh) console.error(`${issues.join(", ")}\n  ${selector}`);
 if (fresh.length || compiled.warnings.length) {
-  console.error(`\n${fresh.length} selector(s) break the rules under "Performance" in .claude/agents/scss-editor.md.`);
+  console.error(`\n${fresh.length} selector(s) break the rules under "Performance" in src/scss/README.md.`);
   process.exit(fail);
 }
 const delta = size - baseline.size;

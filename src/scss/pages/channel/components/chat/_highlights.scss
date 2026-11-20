@@ -8,6 +8,9 @@ $pin-button: 2.4rem;
 $emote-overhang: 0.5rem;
 // The hype train's banner: the button that opens its panel.
 $hype-train-banner: 'button[aria-controls="hype-train-expanded-view"]';
+// A button of a highlight card's header or corner, as opposed to one in its
+// body: a poll's choices and its "Vote" button.
+$header-button: ':not(.container, [data-test-selector="expanded-content"] *)';
 
 html:not([data-rs="off"]) {
   /*
@@ -71,40 +74,6 @@ html:not([data-rs="off"]) {
     padding: 0 !important;
   }
 
-  /*
-   * Poll choices and the vote action use a radio group, unlike prediction
-   * buttons. Keep each choice and the action on the full card width.
-   */
-  & .community-highlight [role="radiogroup"] {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: stretch !important;
-    width: 100% !important;
-    min-width: 0 !important;
-
-    & [role="radio"] {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: flex-start !important;
-      gap: var(--rs-2) !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      height: auto !important;
-      min-height: 3.2rem !important;
-      box-sizing: border-box !important;
-      text-align: left !important;
-    }
-
-    & ~ button,
-    & ~ div button {
-      width: 100% !important;
-      min-width: 0 !important;
-      height: auto !important;
-      min-height: 3.2rem !important;
-      box-sizing: border-box !important;
-    }
-  }
-
    /*
     * With several highlights, the next one shows as the edges of a card
     * behind the first: the same card.
@@ -136,8 +105,14 @@ html:not([data-rs="off"]) {
       line-height: 1.55 !important;
     }
 
+    /*
+     * The buttons sized here are the header's and its corner's (see
+     * $header-button): a poll's choices (button.container, each labelled
+     * with its text) and its "Vote" button sit in the card's body
+     * ([data-test-selector="expanded-content"]) and keep Twitch's layout.
+     */
     /* "See Details", "Predict": the card's one labelled button. */
-    & button:not([aria-label]) {
+    & button#{$header-button}:not([aria-label]) {
       height: $pin-button !important;
       font-size: var(--rs-text-2) !important;
 
@@ -146,14 +121,14 @@ html:not([data-rs="off"]) {
       }
     }
 
-    /* "More Options": the size and grey of a pinned message's buttons. */
-    & button[aria-label] {
+    /* "More Options", "Expand", "Close": the size and grey of a pinned message's buttons. */
+    & button#{$header-button}[aria-label] {
       width: $pin-button !important;
       height: $pin-button !important;
       color: var(--rs-muted) !important;
     }
 
-    & button[aria-label]:hover {
+    & button#{$header-button}[aria-label]:hover {
       color: var(--rs-text) !important;
     }
   }

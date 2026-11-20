@@ -1,5 +1,5 @@
 {
- "size": 358738,
+ "size": 360448,
  "selectors": {
   "html:not([data-rs=off]) .search-tray .search-item:not(:has(>:first-child strong,>:first-child p))>:where(.search-item>*):nth-child(2)": [
    "has-on-ancestor"
@@ -674,9 +674,6 @@
   ],
   "html:not([data-rs=off]) :where(.ReactModal__Content *,[role=dialog] *):is(.ReactModal__Content[role=dialog]>div>.tw-transition>div:first-child,[role=dialog]:not(.ReactModal__Content)>div):has(.tw-interactable,.tw-checkbox):not(:has(h1,h2,h3,h4,h5,img,textarea,input:not([type=checkbox])),:has(>[role=listbox]),[data-a-target=tags-filter-dropdown] *,.support-panel *,.whispers-thread>*,.whispers-thread .tw-balloon *).tw-balloon>div:where(.tw-balloon>*)": [
    "has-on-ancestor"
-  ],
-  "html:not([data-rs=off]) .community-highlight [role=radiogroup]~button": [
-   "unguarded-subject"
   ],
   "html:not([data-rs=off]) .emote-picker .emote-picker__tab-content>div>div:first-child:where(.emote-picker__tab-content>*>*):has(>button) button div:where(.emote-picker__tab-content>*>* * *)": [
    "has-on-ancestor"

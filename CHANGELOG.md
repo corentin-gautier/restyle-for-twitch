@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.20.0](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.19.2...v1.20.0) (2026-11-20)
+
+
+### Features
+
+* **player:** option to hide the extensions laid over the video ([3a854ea](https://github.com/corentin-gautier/restyle-for-twitch/commit/3a854ead63e6563a3ada69739b00cb0447497c49))
+* **player:** option to pause a live stream with a click ([28b102d](https://github.com/corentin-gautier/restyle-for-twitch/commit/28b102d988e3c26c807843df2c1178e911a428a1))
+
+
+### Documentation
+
+* **scss:** move the selector performance rules to src/scss/README.md ([71a20eb](https://github.com/corentin-gautier/restyle-for-twitch/commit/71a20eb7bc28063b432d5bc0267cbcfec5a9f6b6))
+
+
+### Fixes
+
+* **chat:** leave a poll's choices and vote button to Twitch's layout ([900b4e3](https://github.com/corentin-gautier/restyle-for-twitch/commit/900b4e3f2761ea4d7d901add16e0acfbdc80151c))
+
 ### [1.19.2](https://github.com/corentin-gautier/restyle-for-twitch/compare/v1.19.1...v1.19.2) (2026-11-08)
 
 

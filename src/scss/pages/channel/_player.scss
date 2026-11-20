@@ -69,6 +69,19 @@ html:not([data-rs="off"]) {
     background-color: var(--rs-accent) !important;
   }
 
+  /*
+   * "Player extensions" option turned off (data-rs-no-extensions on <html>):
+   * hides the extensions a streamer lays over the video (full-video overlay,
+   * the dock of cards with its popovers, their notifications). They sit
+   * above the player's click layer and take keyboard focus, so a click on
+   * the video or Space no longer pauses. The panels under the stream stay.
+   */
+  &[data-rs-no-extensions] .extensions-video-overlay-size-container,
+  &[data-rs-no-extensions] .extensions-dock__layout,
+  &[data-rs-no-extensions] .extensions-notifications {
+    display: none !important;
+  }
+
   & :fullscreen,
   & :fullscreen .video-player__container,
   & :fullscreen .video-ref,

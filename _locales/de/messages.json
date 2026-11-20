@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "In der Seitenleiste und unter „Folge ich“"
   },
+  "extensions": {
+    "message": "Player-Erweiterungen"
+  },
+  "extensionsHint": {
+    "message": "Overlays, die über dem Video liegen"
+  },
   "support": {
     "message": "Dieses Projekt auf Ko-fi unterstützen"
   }

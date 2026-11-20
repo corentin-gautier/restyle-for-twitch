@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "Na barra lateral e em A seguir"
   },
+  "extensions": {
+    "message": "Extensões do leitor"
+  },
+  "extensionsHint": {
+    "message": "Sobreposições apresentadas sobre o vídeo"
+  },
   "support": {
     "message": "Apoie este projeto no Ko-fi"
   }

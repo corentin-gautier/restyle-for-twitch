@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "In the sidebar and on Following"
   },
+  "extensions": {
+    "message": "Player extensions"
+  },
+  "extensionsHint": {
+    "message": "Overlays streamers add on top of the video"
+  },
   "support": {
     "message": "Support this project on Ko-fi"
   }

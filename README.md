@@ -66,6 +66,7 @@ without reloading the page.
 | Channel colours | On a channel's pages, takes the accent and a tinted background from the channel's own colour, adjusted until text stays readable. Channels without a colour, or with a grey one, keep your settings. |
 | Home carousel | Shows the featured streams at the top of the home page. Off by default: the carousel is hidden and its video paused. |
 | Stories | Shows stories in the sidebar and on Following. Off by default. |
+| Player extensions | Shows the extensions a streamer lays over the video. On by default: turn it off when they get in the way of clicking the video or pressing Space to pause. |
 
 <img src="docs/popup.png" width="300" alt="The settings popup, with the Midnight theme selected" />
 

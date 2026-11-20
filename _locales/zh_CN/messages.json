@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "侧边栏和关注页面"
   },
+  "extensions": {
+    "message": "播放器扩展"
+  },
+  "extensionsHint": {
+    "message": "显示在视频上方的叠加层"
+  },
   "support": {
     "message": "在 Ko-fi 上支持这个项目"
   }

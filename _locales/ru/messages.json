@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "На боковой панели и в «Отслеживаемое»"
   },
+  "extensions": {
+    "message": "Расширения плеера"
+  },
+  "extensionsHint": {
+    "message": "Оверлеи поверх видео"
+  },
   "support": {
     "message": "Поддержать проект на Ko-fi"
   }

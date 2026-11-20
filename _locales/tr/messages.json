@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "Kenar çubuğunda ve Takip Edilenler'de"
   },
+  "extensions": {
+    "message": "Oynatıcı uzantıları"
+  },
+  "extensionsHint": {
+    "message": "Videonun üzerindeki katmanlar"
+  },
   "support": {
     "message": "Bu projeyi Ko-fi'de destekle"
   }

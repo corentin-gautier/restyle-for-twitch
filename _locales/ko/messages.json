@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "사이드바와 팔로잉 페이지"
   },
+  "extensions": {
+    "message": "플레이어 확장 프로그램"
+  },
+  "extensionsHint": {
+    "message": "영상 위에 표시되는 오버레이"
+  },
   "support": {
     "message": "Ko-fi에서 이 프로젝트 후원하기"
   }

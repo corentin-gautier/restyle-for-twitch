@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "Na pasku bocznym i w Obserwowanych"
   },
+  "extensions": {
+    "message": "Rozszerzenia odtwarzacza"
+  },
+  "extensionsHint": {
+    "message": "Nakładki wyświetlane na wideo"
+  },
   "support": {
     "message": "Wesprzyj ten projekt na Ko-fi"
   }

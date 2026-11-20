@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "側邊欄和追隨頁面"
   },
+  "extensions": {
+    "message": "播放器擴充功能"
+  },
+  "extensionsHint": {
+    "message": "顯示在影片上方的疊加層"
+  },
   "support": {
     "message": "在 Ko-fi 上支持這個專案"
   }

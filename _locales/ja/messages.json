@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "サイドバーとフォロー中のページ"
   },
+  "extensions": {
+    "message": "プレイヤーの拡張機能"
+  },
+  "extensionsHint": {
+    "message": "動画の上に重なるオーバーレイ"
+  },
   "support": {
     "message": "Ko-fi でこのプロジェクトを支援"
   }

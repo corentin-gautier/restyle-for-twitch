@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "Dans la barre latérale et sur Suivis"
   },
+  "extensions": {
+    "message": "Extensions du lecteur"
+  },
+  "extensionsHint": {
+    "message": "Les overlays affichés par-dessus la vidéo"
+  },
   "support": {
     "message": "Soutenir ce projet sur Ko-fi"
   }

@@ -95,6 +95,12 @@
   "storiesHint": {
     "message": "In de zijbalk en bij Volgend"
   },
+  "extensions": {
+    "message": "Extensies in de speler"
+  },
+  "extensionsHint": {
+    "message": "Overlays boven op de video"
+  },
   "support": {
     "message": "Steun dit project op Ko-fi"
   }

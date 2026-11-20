@@ -19,6 +19,8 @@ const DEFAULTS = {
   carousel: false,
   // Stories, in the sidebar and on Following: hidden unless asked for.
   stories: false,
+  // The extensions a streamer lays over the player: shown unless turned off.
+  extensions: true,
 };
 
 const root = document.documentElement;
@@ -127,6 +129,7 @@ function apply() {
   root.toggleAttribute("data-rs-floating", settings.floating);
   root.toggleAttribute("data-rs-carousel", settings.carousel);
   root.toggleAttribute("data-rs-stories", settings.stories);
+  root.toggleAttribute("data-rs-no-extensions", !settings.extensions);
 
   let { accent, background } = settings;
   const rgb = settings.channelColors && channelColor();

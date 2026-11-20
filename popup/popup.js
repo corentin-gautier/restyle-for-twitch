@@ -17,6 +17,8 @@ const DEFAULTS = {
   carousel: false,
   // Stories, in the sidebar and on Following: hidden unless asked for.
   stories: false,
+  // The extensions a streamer lays over the player: shown unless turned off.
+  extensions: true,
 };
 
 // Labels come from _locales, in the browser's language (English otherwise).

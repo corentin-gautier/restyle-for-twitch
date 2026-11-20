@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Оверлеи поверх видео"
   },
+  "clickPause": {
+    "message": "Пауза по клику"
+  },
+  "clickPauseHint": {
+    "message": "Клик по прямой трансляции ставит её на паузу"
+  },
   "support": {
     "message": "Поддержать проект на Ko-fi"
   }

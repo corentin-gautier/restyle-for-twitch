@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Sobreposições apresentadas sobre o vídeo"
   },
+  "clickPause": {
+    "message": "Clicar para pausar"
+  },
+  "clickPauseHint": {
+    "message": "Um clique numa transmissão em direto coloca-a em pausa"
+  },
   "support": {
     "message": "Apoie este projeto no Ko-fi"
   }

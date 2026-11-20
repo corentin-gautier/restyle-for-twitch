@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Overlays boven op de video"
   },
+  "clickPause": {
+    "message": "Klikken om te pauzeren"
+  },
+  "clickPauseHint": {
+    "message": "Een klik op een livestream pauzeert hem"
+  },
   "support": {
     "message": "Steun dit project op Ko-fi"
   }

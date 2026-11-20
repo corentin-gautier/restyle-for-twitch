@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Videonun üzerindeki katmanlar"
   },
+  "clickPause": {
+    "message": "Tıklayınca duraklat"
+  },
+  "clickPauseHint": {
+    "message": "Canlı yayına tıklamak yayını duraklatır"
+  },
   "support": {
     "message": "Bu projeyi Ko-fi'de destekle"
   }

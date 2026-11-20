@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "顯示在影片上方的疊加層"
   },
+  "clickPause": {
+    "message": "點擊暫停"
+  },
+  "clickPauseHint": {
+    "message": "點擊直播畫面即可暫停"
+  },
   "support": {
     "message": "在 Ko-fi 上支持這個專案"
   }

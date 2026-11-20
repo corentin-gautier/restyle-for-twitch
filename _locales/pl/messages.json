@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Nakładki wyświetlane na wideo"
   },
+  "clickPause": {
+    "message": "Kliknięcie wstrzymuje"
+  },
+  "clickPauseHint": {
+    "message": "Kliknięcie transmisji na żywo ją wstrzymuje"
+  },
   "support": {
     "message": "Wesprzyj ten projekt na Ko-fi"
   }

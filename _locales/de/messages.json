@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Overlays, die über dem Video liegen"
   },
+  "clickPause": {
+    "message": "Klick pausiert"
+  },
+  "clickPauseHint": {
+    "message": "Ein Klick auf einen Livestream pausiert ihn"
+  },
   "support": {
     "message": "Dieses Projekt auf Ko-fi unterstützen"
   }

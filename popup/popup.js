@@ -19,6 +19,8 @@ const DEFAULTS = {
   stories: false,
   // The extensions a streamer lays over the player: shown unless turned off.
   extensions: true,
+  // A click on a live stream pauses it, as it does on a video.
+  clickPause: false,
 };
 
 // Labels come from _locales, in the browser's language (English otherwise).

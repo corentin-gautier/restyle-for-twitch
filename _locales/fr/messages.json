@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Les overlays affichés par-dessus la vidéo"
   },
+  "clickPause": {
+    "message": "Clic pour mettre en pause"
+  },
+  "clickPauseHint": {
+    "message": "Un clic sur un stream en direct le met en pause"
+  },
   "support": {
     "message": "Soutenir ce projet sur Ko-fi"
   }

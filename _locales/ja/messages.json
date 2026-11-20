@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "動画の上に重なるオーバーレイ"
   },
+  "clickPause": {
+    "message": "クリックで一時停止"
+  },
+  "clickPauseHint": {
+    "message": "ライブ配信をクリックすると一時停止します"
+  },
   "support": {
     "message": "Ko-fi でこのプロジェクトを支援"
   }

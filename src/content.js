@@ -21,6 +21,8 @@ const DEFAULTS = {
   stories: false,
   // The extensions a streamer lays over the player: shown unless turned off.
   extensions: true,
+  // A click on a live stream pauses it, as it does on a video.
+  clickPause: false,
 };
 
 const root = document.documentElement;
@@ -390,6 +392,28 @@ for (const type of ["mouseover", "mouseout", "pointerover", "pointerout"]) {
     true,
   );
 }
+
+// "Click to pause": Twitch's click layer toggles playback on videos and
+// clips, not on a live stream: on a live channel's page, a click on the
+// video presses the player's own play button. Left alone on the pages of a
+// video, a clip or a collection, where Twitch pauses itself (some 80 ms
+// later, so waiting to see whether it did is not reliable), and in the mini
+// player and the home carousel, which have clicks of their own.
+const CLICK_LAYER = '[data-a-target="player-overlay-click-handler"]';
+const PLAY_BUTTON = '[data-a-target="player-play-pause-button"]';
+const NOT_LIVE = /^\/(videos|collections)\/|^\/[^/]+\/(clip|v|video)\//;
+
+window.addEventListener(
+  "click",
+  (event) => {
+    if (!event.isTrusted || event.button !== 0 || !settings.clickPause || root.getAttribute("data-rs") === "off") return;
+    if (NOT_LIVE.test(location.pathname) || /[?&](video|collection)=/.test(location.search)) return;
+    if (!(event.target instanceof Element) || !event.target.closest(CLICK_LAYER)) return;
+    const player = event.target.closest('.video-player[data-a-player-type="site"]');
+    player?.querySelector(PLAY_BUTTON)?.click();
+  },
+  true,
+);
 
 // Home: scss/pages/_home.scss hides the featured carousel unless the popup
 // asks for it, but a hidden video keeps autoplaying and streaming. Pause it

@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Overlays streamers add on top of the video"
   },
+  "clickPause": {
+    "message": "Click to pause"
+  },
+  "clickPauseHint": {
+    "message": "A click on a live stream pauses it"
+  },
   "support": {
     "message": "Support this project on Ko-fi"
   }

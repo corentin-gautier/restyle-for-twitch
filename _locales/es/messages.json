@@ -101,6 +101,12 @@
   "extensionsHint": {
     "message": "Superposiciones sobre el vídeo"
   },
+  "clickPause": {
+    "message": "Clic para pausar"
+  },
+  "clickPauseHint": {
+    "message": "Un clic en un directo lo pone en pausa"
+  },
   "support": {
     "message": "Apoya este proyecto en Ko-fi"
   }
